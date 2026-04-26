@@ -12,7 +12,7 @@ const FAQS = [
 ];
 
 const LEGAL_POLICIES = [
-  { id: "01", title: "Privacy Policy", desc: "We collect basic data (Name, Email, Business Sector) strictly for service inquiries and Meta/Google analysis. We use encrypted SSL channels for all telemetry. You may request data removal via WhatsApp anytime. We utilize Meta Pixel and Cookies for performance optimization." },
+  { id: "01", title: "Privacy Policy", desc: "We collect basic data strictly for service inquiries and performance analysis. You may request data removal via contact@adyantnexa.com anytime. We utilize Meta Pixel and Cookies for optimization." },
   { id: "02", title: "Execution Terms", desc: "7-day delivery cycles start upon 100% asset submission. Delays in client-side approval or asset delivery will pro-rate the timeline accordingly." },
   { id: "03", title: "Refund Logic", desc: "Nexa Audit fees are 100% refundable if identified growth leaks do not total at least 3 actionable items. Build costs are pro-rated based on phase completion." },
   { id: "04", title: "Technical Security", desc: "Standard deployment includes 256-bit SSL, static Next.js architecture (unhackable), and server-side tracking sync for total data integrity." }

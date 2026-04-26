@@ -1,7 +1,30 @@
 import { NextResponse } from "next/server";
 
+// ─── BACKEND RATE LIMITING (IP-BASED) ───
+const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
+const MAX_LEADS_PER_DAY = 5;
+
 export async function POST(request: Request) {
   try {
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
+    const now = Date.now();
+    const userLimit = rateLimitMap.get(ip);
+
+    if (userLimit) {
+      // Reset count every 24 hours
+      if (now - userLimit.lastReset > 24 * 60 * 60 * 1000) {
+        rateLimitMap.set(ip, { count: 1, lastReset: now });
+      } else if (userLimit.count >= MAX_LEADS_PER_DAY) {
+        return NextResponse.json({ 
+          error: "Neural link saturated. Please try again in 24 hours or use WhatsApp for priority sync." 
+        }, { status: 429 });
+      } else {
+        userLimit.count += 1;
+      }
+    } else {
+      rateLimitMap.set(ip, { count: 1, lastReset: now });
+    }
+
     const { name, email, phone, business, message, budget } = await request.json();
 
     // 1. Get Tenant Access Token from Lark
@@ -36,7 +59,7 @@ export async function POST(request: Request) {
             "Email": email,
             "Phone": phone,
             "Service Type": business || "Not Specified",
-            "Project Status": "Lead",
+            "Project Status": (message && message.includes("CRITICAL")) ? "HOT LEAD" : "Lead",
             "Timeline": Date.now(),
             "Message": message || "No message provided",
             "Revenue": budget ? (typeof budget === 'string' ? parseInt(budget.replace(/[^0-9]/g, "")) : budget) : 0,
@@ -53,8 +76,9 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true, record_id: bitableData.data.record.record_id });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
     console.error("Lead Automation Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

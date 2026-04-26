@@ -487,3 +487,14 @@ body {
   .service-card-offset { margin-top: 0 !important; }
 }
 
+/* ─────────────────────────────────────────
+   SKELETON LOADER
+───────────────────────────────────────── */
+@keyframes skeleton-shimmer-anim {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-shimmer {
+  animation: skeleton-shimmer-anim 2s linear infinite;
+}

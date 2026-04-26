@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Globe, Target, Cpu, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { FadeSection } from "./FadeSection";
 
 const SERVICES = [
@@ -9,25 +10,25 @@ const SERVICES = [
     id: "01", 
     Icon: Target, 
     tag: "Diagnostic", 
-    title: "Rapid Funnel Audit",
-    desc: "A low-risk 'x-ray' of your digital presence. 15-20 min Loom teardown + 5-7 page action plan for UX, speed, and tracking fixes.",
-    tags: ["UX Teardown", "Performance Audit", "Lead Flow Map"] 
+    title: "Leaky Funnel Recovery",
+    desc: "Feature: 48-hour deep-scan of your digital ecosystem. Advantage: Identifies revenue leakage points that standard agencies miss. Benefit: Stop burning ad spend and reclaim up to 30% of lost leads instantly.",
+    tags: ["UX Teardown", "Pixel Health Check", "Leakage Audit"] 
   },
   { 
     id: "02", 
-    Icon: Globe, 
-    tag: "Architecture", 
-    title: "High-Performance Build",
-    desc: "Not 'fragile' WordPress. Fast, structured, conversion-driven Next.js sites engineered to handle high-traffic without breaking.",
-    tags: ["Next.js 15+", "GSC/SEO Ready", "Sub-0.5s LCP"] 
+    Icon: Cpu, 
+    tag: "NEXA AI", 
+    title: "Autonomous Sales Engine",
+    desc: "Feature: Custom-trained BANT-qualified AI agent (NEXA). Advantage: 24/7 autonomous lead qualification and booking. Benefit: $15k+ monthly labor savings with a pipeline of pre-qualified, ready-to-buy clients.",
+    tags: ["BANT Qualification", "24/7 Engagement", "CRM Auto-Sync"] 
   },
   { 
     id: "03", 
-    Icon: Cpu, 
-    tag: "Growth Engine", 
-    title: "Performance Scaling",
-    desc: "Meta & Google Ads management paired with monthly landing page tweaks and CRM automation. Built for serious ROI.",
-    tags: ["Meta/Google Ads", "CRM Automation", "ROI Dashboards"] 
+    Icon: Globe, 
+    tag: "Growth", 
+    title: "Market Dominance Scaling",
+    desc: "Feature: Full-stack Meta/Google Ads + Server-side Tracking. Advantage: 100% data accuracy for algorithmic scaling. Benefit: Predictable revenue growth and market-leading Customer Acquisition Costs (CAC).",
+    tags: ["CAPI Integration", "LTV Optimization", "ROI Dashboards"] 
   },
 ];
 
@@ -43,9 +44,9 @@ export const ServicesSection = () => {
         <FadeSection>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: 32, marginBottom: 72 }}>
             <div>
-              <span className="editorial-tag" style={{ display: "block", marginBottom: 20 }}>The Trinity_</span>
+              <span className="editorial-tag" style={{ display: "block", marginBottom: 20 }}>Revenue Frameworks_</span>
               <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", lineHeight: 1, letterSpacing: "-0.03em", color: "#E5E5E5" }}>
-                Core <span style={{ color: "#00F2FF" }}>Pillars</span>
+                Growth <span style={{ color: "#00F2FF" }}>Architecture</span>
               </h2>
             </div>
             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.38)", lineHeight: 1.8, maxWidth: 280 }}>
@@ -86,7 +87,26 @@ export const ServicesSection = () => {
               <div style={{ marginTop: "auto" }}>
                 <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, display: "block", marginBottom: 16 }}>{svc.tag}</span>
                 <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "clamp(1.4rem, 2.5vw, 1.8rem)", color: "#E5E5E5", lineHeight: 1.2, marginBottom: 20 }}>{svc.title}</h3>
-                <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, color: "rgba(229,229,229,0.45)", lineHeight: 1.8, marginBottom: 32 }}>{svc.desc}</p>
+                <div style={{ marginBottom: 32 }}>
+                  {svc.desc.split(/(Feature:|Advantage:|Benefit:)/).map((part, idx) => {
+                    const isLabel = ["Feature:", "Advantage:", "Benefit:"].includes(part);
+                    return (
+                      <span key={idx} style={{ 
+                        display: isLabel ? "block" : "inline",
+                        fontFamily: "var(--font-geist-mono)",
+                        fontSize: isLabel ? 10 : 13,
+                        color: isLabel ? "#00F2FF" : "rgba(229,229,229,0.45)",
+                        fontWeight: isLabel ? 800 : 400,
+                        letterSpacing: isLabel ? "0.1em" : "normal",
+                        textTransform: isLabel ? "uppercase" : "none",
+                        marginTop: isLabel && idx > 0 ? 12 : 0,
+                        marginBottom: isLabel ? 4 : 0
+                      }}>
+                        {part}
+                      </span>
+                    );
+                  })}
+                </div>
                 
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 36 }}>
                   {svc.tags.map(t => (
@@ -94,10 +114,17 @@ export const ServicesSection = () => {
                   ))}
                 </div>
 
-                <a href="#contact" style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#00F2FF", textDecoration: "none" }}>
-                  <span>Engage Protocol</span>
-                  <ArrowRight size={14} />
-                </a>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 24, alignItems: "center" }}>
+                  <a href="#contact" style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#00F2FF", textDecoration: "none" }}>
+                    <span>Engage Protocol</span>
+                    <ArrowRight size={14} />
+                  </a>
+                  {svc.id === "03" && (
+                    <Link href="/marketing" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(229,229,229,0.3)", textDecoration: "none", borderBottom: "1px solid rgba(229,229,229,0.1)", paddingBottom: 2 }}>
+                      View Marketing Dept_
+                    </Link>
+                  )}
+                </div>
               </div>
             </motion.div>
           ))}

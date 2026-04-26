@@ -3,6 +3,7 @@ import { Syne, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/CustomCursor";
 import { ChatWidget } from "@/components/ChatWidget";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -58,6 +59,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { TransitionProvider } from "@/context/TransitionContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -69,9 +72,13 @@ export default function RootLayout({
       className={`${syne.variable} ${inter.variable} ${geistMono.variable}`}
     >
       <body className="antialiased" suppressHydrationWarning>
-        <CustomCursor />
-        {children}
-        <ChatWidget />
+        <ErrorBoundary>
+          <TransitionProvider>
+            <CustomCursor />
+            {children}
+          </TransitionProvider>
+          <ChatWidget />
+        </ErrorBoundary>
       </body>
     </html>
   );

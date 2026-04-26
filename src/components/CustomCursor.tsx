@@ -1,50 +1,99 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export const CustomCursor = () => {
-  const [pos, setPos] = useState({ x: -200, y: -200 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  // Ultra-precise MotionValues
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  // Super-tight spring for "Instant" feeling (Pro-grade)
+  const springConfig = { damping: 50, stiffness: 1000, mass: 0.05 };
+  const cursorX = useSpring(mouseX, springConfig);
+  const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
     setMounted(true);
+    
     const updatePos = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
+      // Show cursor as soon as it moves
+      if (!isVisible) setIsVisible(true);
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
+
+    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseEnter = () => setIsVisible(true);
+
     const handleOver = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      setIsHovering(!!(t.tagName === "A" || t.tagName === "BUTTON" || t.closest("a") || t.closest("button")));
+      setIsHovering(!!(t.tagName === "A" || t.tagName === "BUTTON" || t.closest("a") || t.closest("button") || t.style.cursor === "pointer"));
     };
+
     window.addEventListener("mousemove", updatePos);
+    window.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mouseenter", handleMouseEnter);
     window.addEventListener("mouseover", handleOver);
+    
     return () => {
       window.removeEventListener("mousemove", updatePos);
+      window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("mouseenter", handleMouseEnter);
       window.removeEventListener("mouseover", handleOver);
     };
-  }, []);
+  }, [mouseX, mouseY, isVisible]);
 
   if (!mounted) return null;
 
   return (
     <>
+      {/* Outer Ring */}
       <motion.div
-        animate={{ x: pos.x - (isHovering ? 20 : 6), y: pos.y - (isHovering ? 20 : 6) }}
-        transition={{ type: "spring", mass: 0.01, stiffness: 2500, damping: 30 }}
         style={{
           position: "fixed",
           top: 0,
           left: 0,
-          width: isHovering ? 40 : 12,
-          height: isHovering ? 40 : 12,
+          x: cursorX,
+          y: cursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+          width: isHovering ? 50 : 24,
+          height: isHovering ? 50 : 24,
           borderRadius: "50%",
-          background: isHovering ? "rgba(0,242,255,0.15)" : "#00F2FF",
-          border: isHovering ? "1px solid #00F2FF" : "none",
-          boxShadow: "0 0 10px rgba(0,242,255,0.6)",
+          border: "1.5px solid #00F2FF",
+          background: isHovering ? "rgba(0, 242, 255, 0.1)" : "transparent",
+          boxShadow: isHovering ? "0 0 15px rgba(0, 242, 255, 0.4)" : "none",
+          opacity: isVisible ? 1 : 0,
           pointerEvents: "none",
           zIndex: 999999,
           mixBlendMode: "screen",
+          transition: "width 0.25s, height 0.25s, opacity 0.3s",
+        }}
+      />
+      {/* Inner Dot for Precision */}
+      <motion.div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          x: mouseX, // No spring on the center dot for "zero-latency" feel
+          y: mouseY,
+          translateX: "-50%",
+          translateY: "-50%",
+          width: 4,
+          height: 4,
+          borderRadius: "50%",
+          background: "#00F2FF",
+          boxShadow: "0 0 10px #00F2FF",
+          opacity: isVisible ? 1 : 0,
+          pointerEvents: "none",
+          zIndex: 999999,
+          transition: "opacity 0.3s",
         }}
       />
     </>

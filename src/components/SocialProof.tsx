@@ -4,20 +4,32 @@ import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { FadeSection } from "./FadeSection";
 
-const KEYWORDS = ["AD-OPTIMIZATION", "·", "AI-INTEGRATION", "·", "WEB-ARCH", "·", "NEURAL-MARKETING", "·", "DIGITAL-OPERATIONS", "·", "BESPOKE-SOFTWARE", "·", "ROI-PRECISION", "·", "NEXT.JS", "·"];
+const KEYWORDS = ["ALGORITHMIC-SCALE", "·", "NEURAL-ROI", "·", "SERVER-SIDE-CAPI", "·", "MULTI-AGENT-AI", "·", "REVENUE-SYSTEMS", "·", "BESPOKE-ARCH", "·", "DATA-PRECISION", "·", "NEXT.JS-16", "·"];
 
 const CLIENTS = [
-  { name: "ROYAL PAINT", sub: "HARDWARE", status: "LIVE" },
-  { name: "INDO UVR", sub: "D2C", status: "BUILDING" }, 
-  { name: "SUPERWHEELS", sub: "LUXURY AUTOS", status: "BUILDING" },
+  { name: "ROYAL PAINT", sub: "ARCHITECTURAL ASSETS", status: "LIVE" },
+  { name: "INDO UVR", sub: "D2C DOMINANCE", status: "SCALING" }, 
+  { name: "SUPERWHEELS", sub: "LUXURY AUTOMOTIVE", status: "BUILDING" },
   { name: "ADYANT REALTY", sub: "REAL ESTATE", status: "BUILDING" }, 
-  { name: "TEMPTATIONTHREAD.COM", sub: "FASHION D2C", status: "ABOUT TO LIVE" },
+  { name: "TEMPTATION THREAD", sub: "GLOBAL FASHION", status: "LIVE" },
 ];
 
 const TESTIMONIALS = [
-  { quote: "Nobody runs ads at this level, at this price. Amit just gets it. Our acquisition costs halved within the first month alone.", name: "Founder", role: "TEMPTATIONTHREAD.COM" },
-  { quote: "Since working with Adyant Nexa, our site's speed and responsiveness have improved dramatically. The difference is night and day.", name: "Prashant", role: "Founder, SUPERWHEELS.IN" },
-  { quote: "Adyant Nexa has handled our entire D2C platform with exceptional care. Whatever feature we need — it's delivered fast.", name: "Rakesh", role: "Founder, INDO UVR" },
+  { 
+    quote: "Standard agencies talk about CPC. Amit talks about EBITDA. Our acquisition costs halved within 30 days while our revenue hit record highs.", 
+    name: "Founder", 
+    role: "TEMPTATIONTHREAD.COM" 
+  },
+  { 
+    quote: "The tech stack Adyant Nexa built for us is 2 years ahead of our competitors. The site speed alone improved our conversion rate by 34%.", 
+    name: "Prashant", 
+    role: "Founder, SUPERWHEELS.IN" 
+  },
+  { 
+    quote: "Adyant Nexa isn't an agency; they are a growth partner. Their AI voice agents qualified 500+ leads for us while I was sleeping.", 
+    name: "Rakesh", 
+    role: "Founder, INDO UVR" 
+  },
 ];
 
 export const SocialProof = () => {
@@ -41,7 +53,7 @@ export const SocialProof = () => {
 
       {/* CLIENT MARQUEE */}
       <section style={{ borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "80px 0", overflow: "hidden", background: "#020202" }}>
-        <p className="editorial-tag" style={{ textAlign: "center", fontSize: 9, opacity: 0.2, marginBottom: 48, letterSpacing: "0.4em" }}>CLIENT PORTFOLIO STATUS_</p>
+        <p className="editorial-tag" style={{ textAlign: "center", fontSize: 9, opacity: 0.2, marginBottom: 48, letterSpacing: "0.4em" }}>PARTNER PORTFOLIO_</p>
         <div style={{ position: "relative" }}>
           <motion.div animate={{ x: ["0%", "-50%"] }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             style={{ display: "flex", gap: "100px", whiteSpace: "nowrap", width: "fit-content" }}>
@@ -64,13 +76,28 @@ export const SocialProof = () => {
         </div>
       </section>
 
+      {/* FOUNDER'S MANIFESTO */}
+      <section style={{ padding: "100px 28px", background: "#020202" }}>
+        <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
+          <FadeSection>
+            <span className="editorial-tag" style={{ color: "#00F2FF", display: "block", marginBottom: 32 }}>Founders Manifesto_</span>
+            <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 3vw, 2.5rem)", color: "#fff", lineHeight: 1.4, marginBottom: 40 }}>
+              &quot;Scaling is a systems problem, not a budget problem. We build the infrastructure that makes growth inevitable.&quot;
+            </h3>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>
+              — Amit Kapoor, Strategic Growth Partner
+            </p>
+          </FadeSection>
+        </div>
+      </section>
+
       {/* TESTIMONIALS */}
       <section style={{ padding: "clamp(4rem, 8vw, 7rem) 28px", background: "#080808", borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <FadeSection>
-            <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>Client Voices_</span>
+            <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>The Neural Impact_</span>
             <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", color: "#E5E5E5", marginBottom: 64 }}>
-              Straight from the <span style={{ color: "rgba(229,229,229,0.2)" }}>Founders.</span>
+              Voices of <span style={{ color: "rgba(229,229,229,0.2)" }}>Dominance.</span>
             </h2>
           </FadeSection>
 
