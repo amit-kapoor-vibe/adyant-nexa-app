@@ -53,7 +53,7 @@ const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <div style={{ marginBottom: 40 }}>
-          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em", display: "block", marginBottom: 12 }}>TOTAL ANNUAL IMPACT</span>
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em", display: "block", marginBottom: 12 }}>ESTIMATED NEURAL IMPACT</span>
           <div style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2rem, 6vw, 4.5rem)", color: "#00F2FF", lineHeight: 1 }}>
             {isINR ? "₹" : "$"}{Math.round(stats.totalImpact).toLocaleString()}
           </div>
@@ -132,7 +132,7 @@ export const ROICalculator = ({ currency = "USD" }: { currency?: Currency }) => 
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>REVENUE INFRASTRUCTURE AUDIT_</span>
             <Heading level="h2" style={{ color: "#E5E5E5", marginBottom: 24 }}>
-              Calculate Your <span style={{ color: "#00F2FF" }}>Nexa Advantage.</span>
+              Calculate Your <span style={{ color: "#00F2FF" }}>Neural Impact.</span>
             </Heading>
             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.35)", lineHeight: 1.85, maxWidth: 600, margin: "0 auto" }}>
               Standard calculators only show cost savings. We show **Revenue Recovery**.
