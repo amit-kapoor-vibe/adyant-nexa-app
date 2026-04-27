@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, Send, Cpu, Zap, ArrowRight, Bot } from "lucide-react";
+import { useNeuralTransition } from "@/context/TransitionContext";
 
 type Message = {
   role: "user" | "assistant";
@@ -10,6 +11,7 @@ type Message = {
 };
 
 export function ChatWidget() {
+  const { setScannerOpen } = useNeuralTransition();
   const [isOpen, setIsOpen] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -121,7 +123,7 @@ export function ChatWidget() {
               borderRadius: "14px", boxShadow: "0 10px 40px rgba(0,242,255,0.2)",
               color: "#fff", display: "flex", alignItems: "center", gap: 10, cursor: "pointer"
             }}
-            onClick={() => { setIsOpen(true); setShowHint(false); }}
+            onClick={() => { setScannerOpen(true); setShowHint(false); }}
           >
             <Zap size={14} color="#00F2FF" fill="#00F2FF" />
             <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 700, letterSpacing: "0.05em" }}>WANT A NEURAL AUDIT?</span>

@@ -58,7 +58,7 @@ export function ScannerResult({ score, url, currency }: ScannerResultProps) {
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-      <div style={{ display: "flex", gap: 32, alignItems: "flex-start" }}>
+      <div style={{ display: "flex", gap: "clamp(20px, 4vw, 32px)", alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
         {/* Score Circle */}
         <div style={{ position: "relative", width: 140, height: 140, flexShrink: 0 }}>
           <svg viewBox="0 0 100 100" aria-label={`Performance score: ${score} out of 100`} style={{ width: "100%", height: "100%", transform: "rotate(-90deg)" }}>
@@ -78,7 +78,7 @@ export function ScannerResult({ score, url, currency }: ScannerResultProps) {
         </div>
 
         {/* Info */}
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: "1 1 250px" }}>
           <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 22, color: isCritical ? "#FF3333" : "#fff", marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
             {isCritical ? <AlertTriangle size={20} /> : <CheckCircle size={20} />}
             {scoreLabel}
@@ -95,7 +95,7 @@ export function ScannerResult({ score, url, currency }: ScannerResultProps) {
               <p style={{ fontFamily: "var(--font-inter)", fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 16 }}>
                 Enter your email. We will manually verify your Pixel setup, send you a 10-Page Audit Report, and share the payment link. Audit fee is 100% redeemable on a Nexa Growth build.
               </p>
-              <form onSubmit={handleLeadSubmit} style={{ display: "flex", gap: 8 }}>
+              <form onSubmit={handleLeadSubmit} style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 <input
                   type="email"
                   placeholder="Enter business email"
@@ -103,12 +103,12 @@ export function ScannerResult({ score, url, currency }: ScannerResultProps) {
                   onChange={(e) => setLeadEmail(e.target.value)}
                   required
                   aria-label="Business email for audit report"
-                  style={{ flex: 1, background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", padding: "10px 12px", fontSize: 12, outline: "none", fontFamily: "var(--font-inter)" }}
+                  style={{ flex: "1 1 100%", minWidth: "200px", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", padding: "12px 16px", fontSize: 13, outline: "none", fontFamily: "var(--font-inter)" }}
                 />
                 <button
                   type="submit"
                   disabled={submittingLead}
-                  style={{ background: "#00F2FF", color: "#000", border: "none", padding: "0 16px", fontWeight: 700, fontSize: 11, cursor: "pointer", fontFamily: "var(--font-geist-mono)", textTransform: "uppercase" }}
+                  style={{ background: "#00F2FF", color: "#000", border: "none", padding: "12px 24px", flex: "1 1 100%", fontWeight: 700, fontSize: 12, cursor: "pointer", fontFamily: "var(--font-geist-mono)", textTransform: "uppercase" }}
                 >
                   {submittingLead ? "..." : "Send"}
                 </button>

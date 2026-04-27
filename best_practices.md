@@ -1,5 +1,11 @@
 # Adyant Nexa — Elite Developer Manifesto
 
+## 🔒 Execution Protocol (MANDATORY)
+- **NO AUTO-RUN**: Do not use `run_command` or `browser_subagent` directly.
+- **COMMAND HANDOVER**: Always provide terminal commands to the USER in chat for manual execution.
+- **TASK NOTIFICATION**: Inform the USER immediately after any code edit is completed for verification.
+- **CREDIT OPTIMIZATION**: Prioritize file edits over complex research/browser tasks.
+
 Follow these rules to keep the codebase modular, secure, and high-performance.
 
 ## 1. Modular Architecture (The 200-Line Rule)

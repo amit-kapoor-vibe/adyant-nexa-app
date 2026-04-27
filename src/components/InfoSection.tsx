@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { X, Zap, MessageCircle } from "lucide-react";
 import { FadeSection } from "./FadeSection";
+import { Heading } from "./ui/Heading";
 
 const FAQS = [
   { q: "WHY NEXT.JS INSTEAD OF WORDPRESS?", a: "WORDPRESS is built on 20-year-old PHP architecture. It's fragile, slow, and prone to hacking. NEXT.JS is the 'Digital OS' used by top-tier platforms—it's unhackable, loads in sub-seconds, and provides a native app-like experience." },
@@ -27,9 +28,9 @@ export const InfoSection = () => {
           <FadeSection>
             <div style={{ textAlign: "center", marginBottom: 64 }}>
               <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>Intel Core_</span>
-              <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2rem, 4.5vw, 3.5rem)", color: "#E5E5E5", lineHeight: 1.1 }}>
+              <Heading level="h2" style={{ color: "#E5E5E5" }}>
                 Frequently Asked <span style={{ color: "#00F2FF" }}>Intel.</span>
-              </h2>
+              </Heading>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {FAQS.map((f, i) => (
@@ -51,9 +52,9 @@ export const InfoSection = () => {
           <FadeSection>
             <div style={{ textAlign: "center" }}>
               <span className="editorial-tag" style={{ display: "block", marginBottom: 24, opacity: 0.6, fontSize: 9 }}>Brand Story_</span>
-              <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.8rem, 4vw, 3rem)", color: "#E5E5E5", lineHeight: 1.2, marginBottom: 40 }}>
+              <Heading level="h2" style={{ color: "#E5E5E5", marginBottom: 40 }}>
                 We Exist Because the Market<br /><span style={{ color: "rgba(229,229,229,0.2)" }}>Failed Businesses Like Yours.</span>
-              </h2>
+              </Heading>
               <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, color: "rgba(229,229,229,0.42)", lineHeight: 1.9, display: "flex", flexDirection: "column", gap: 20, maxWidth: 580, margin: "0 auto" }}>
                 <p>We exist because the Indian market is flooded with slow sites that bottleneck growth. Cheap freelancers disappear, and agencies overcharge for diluted attention.</p>
                 <p>Adyant Nexa filled the &quot;Elite Gap&quot;—providing Next.js architecture and conversion engines with the speed and focus your roadmap demands.</p>
@@ -72,7 +73,7 @@ export const InfoSection = () => {
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 2, textAlign: "center" }}>
           <FadeSection>
             <span className="editorial-tag" style={{ display: "block", marginBottom: 24, color: "#000", opacity: 0.6, fontSize: 10, letterSpacing: "0.5em" }}>FINAL PROTOCOL</span>
-            <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.5rem, 6vw, 5rem)", lineHeight: 0.9, marginBottom: 32 }}>STOP BUILDING ON<br />FRAGILE TECH.</h2>
+            <Heading level="h2" style={{ color: "#000" }}>STOP BUILDING ON<br />FRAGILE TECH.</Heading>
             <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap", marginTop: 48 }}>
               <a href="#contact" style={{ padding: "20px 40px", background: "#000", color: "#fff", fontFamily: "var(--font-geist-mono)", fontWeight: 700, fontSize: 12, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}>Initialize Scale</a>
               <a href="https://wa.me/918700720477" style={{ padding: "20px 40px", border: "2px solid #000", color: "#000", fontFamily: "var(--font-geist-mono)", fontWeight: 700, fontSize: 12, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}>WhatsApp Direct</a>

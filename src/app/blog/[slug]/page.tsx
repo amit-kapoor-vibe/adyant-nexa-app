@@ -34,19 +34,6 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
 
   return (
     <div style={{ minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
-      {/* ─── NAVIGATION ─── */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, background: "rgba(2,2,2,0.9)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "20px 0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px" }}>
-          <Link href="/blog" onClick={(e) => handleNavigate(e, "/blog")} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none", color: "rgba(255,255,255,0.4)" }}>
-            <ArrowLeft size={16} />
-            <span className="editorial-tag" style={{ fontSize: 9 }}>Back to Journal</span>
-          </Link>
-          <div style={{ display: "flex", gap: 24 }}>
-             <button style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer" }}><Share2 size={18} /></button>
-             <Link href="/#contact" onClick={(e) => handleNavigate(e, "/#contact")} className="btn-primary" style={{ fontSize: 10, padding: "8px 24px" }}>Engage Protocol</Link>
-          </div>
-        </div>
-      </nav>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1 }}

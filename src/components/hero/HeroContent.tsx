@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { trackEvent } from "@/utils/analytics";
+import { containerVars, itemVars } from "@/lib/animations";
+import { Heading } from "@/components/ui/Heading";
 
 const HERO_STATS: [string, string][] = [
   ["0.5s", "LCP Speed"],
@@ -11,19 +13,16 @@ const HERO_STATS: [string, string][] = [
   ["∞", "Market Dominance"],
 ];
 
-const containerVars = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-};
-
-const itemVars = {
-  hidden: { opacity: 0, y: 15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
-  },
-};
+const StatStrip = () => (
+  <motion.div variants={itemVars} style={{ display: "flex", gap: "clamp(32px, 6vw, 80px)", flexWrap: "wrap", justifyContent: "center" }}>
+    {HERO_STATS.map(([v, l]) => (
+      <div key={l} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+        <span className="text-glow-cyan" style={{ fontFamily: "var(--font-syne)", fontWeight: 900, fontSize: "clamp(20px, 3.5vw, 36px)", color: "#00F2FF" }}>{v}</span>
+        <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.35 }}>{l}</span>
+      </div>
+    ))}
+  </motion.div>
+);
 
 interface HeroContentProps {
   onScan?: (url: string) => void;
@@ -59,10 +58,10 @@ export function HeroContent({ onScan }: HeroContentProps) {
       </motion.div>
 
       {/* Headlines */}
-      <motion.h1 variants={itemVars} style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(72px, 12vw, 130px)", lineHeight: 0.9, letterSpacing: "-0.04em", marginBottom: 40, userSelect: "none" }}>
-        <span className="glitch-text glitch-shimmer" data-text="ADYANT" style={{ display: "block" }}>ADYANT</span>
-        <span className="glitch-text glitch-shimmer" data-text="NEXA" style={{ display: "block", animationDelay: "0.2s" }}>NEXA</span>
-      </motion.h1>
+      <Heading level="h1" style={{ marginBottom: 40, userSelect: "none" }}>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer" data-text="ADYANT" style={{ display: "block" }}>ADYANT</motion.span>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer" data-text="NEXA" style={{ display: "block", animationDelay: "0.2s" }}>NEXA</motion.span>
+      </Heading>
 
       {/* Descriptor */}
       <motion.p variants={itemVars} style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.5)", lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>
@@ -97,15 +96,8 @@ export function HeroContent({ onScan }: HeroContentProps) {
         </form>
       </motion.div>
 
-      {/* Stat Strip */}
-      <motion.div variants={itemVars} style={{ display: "flex", gap: "clamp(32px, 6vw, 80px)", flexWrap: "wrap", justifyContent: "center" }}>
-        {HERO_STATS.map(([v, l]) => (
-          <div key={l} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-            <span className="text-glow-cyan" style={{ fontFamily: "var(--font-syne)", fontWeight: 900, fontSize: "clamp(24px, 3.5vw, 36px)", color: "#00F2FF" }}>{v}</span>
-            <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.35 }}>{l}</span>
-          </div>
-        ))}
-      </motion.div>
+      <StatStrip />
     </motion.div>
   );
 }
+

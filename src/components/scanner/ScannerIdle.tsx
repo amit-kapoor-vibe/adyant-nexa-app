@@ -18,8 +18,8 @@ export function ScannerIdle({ url, onUrlChange, onSubmit }: ScannerIdleProps) {
       <p style={{ fontFamily: "var(--font-inter)", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, marginBottom: 32 }}>
         Enter your URL to initiate a deep-level performance scan. We will analyze your mobile load speeds, Core Web Vitals, and potential ad-spend bleed.
       </p>
-      <form onSubmit={onSubmit} style={{ display: "flex", gap: 12 }}>
-        <div style={{ flex: 1, position: "relative" }}>
+      <form onSubmit={onSubmit} style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+        <div style={{ flex: "1 1 100%", minWidth: "250px", position: "relative" }}>
           <Search size={16} color="rgba(255,255,255,0.3)" style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)" }} />
           <input
             type="text"
@@ -40,9 +40,9 @@ export function ScannerIdle({ url, onUrlChange, onSubmit }: ScannerIdleProps) {
         <button
           type="submit"
           style={{
-            background: "#00F2FF", color: "#000", border: "none", padding: "0 24px",
+            background: "#00F2FF", color: "#000", border: "none", padding: "16px 24px",
             fontFamily: "var(--font-geist-mono)", fontWeight: 700, fontSize: 12, letterSpacing: "0.1em",
-            textTransform: "uppercase", cursor: "pointer"
+            textTransform: "uppercase", cursor: "pointer", flex: "1 1 100%"
           }}
         >
           Initiate Scan

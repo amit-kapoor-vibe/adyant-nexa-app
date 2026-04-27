@@ -4,6 +4,10 @@ import "./globals.css";
 import { CustomCursor } from "@/components/CustomCursor";
 import { ChatWidget } from "@/components/ChatWidget";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Navbar } from "@/components/Navbar";
+import { GlobalUI } from "@/components/GlobalUI";
+import { TransitionProvider } from "@/context/TransitionContext";
+import { ExitIntentAllocator } from "@/components/gamification/ExitIntentAllocator";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -34,8 +38,18 @@ export const metadata: Metadata = {
   keywords:
     "digital agency india, neural marketing, AI tools, next.js agency, meta ads india, web architecture, adyant nexa",
   icons: {
-    icon: "/Favicon transparent.png",
+    icon: [
+      { url: "/Favicon transparent.png", sizes: "32x32", type: "image/png" },
+      { url: "/Favicon transparent.png", sizes: "16x16", type: "image/png" }
+    ],
+    shortcut: "/Favicon transparent.png",
     apple: "/Favicon transparent.png",
+    other: [
+      {
+        rel: "apple-touch-icon-precomposed",
+        url: "/Favicon transparent.png",
+      },
+    ],
   },
   openGraph: {
     title: "Adyant Nexa | Digital Operating System for the Future",
@@ -59,8 +73,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { TransitionProvider } from "@/context/TransitionContext";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -74,10 +86,12 @@ export default function RootLayout({
       <body className="antialiased" suppressHydrationWarning>
         <ErrorBoundary>
           <TransitionProvider>
-            <CustomCursor />
+            <GlobalUI />
+            <Navbar />
             {children}
+            <ChatWidget />
+            <ExitIntentAllocator />
           </TransitionProvider>
-          <ChatWidget />
         </ErrorBoundary>
       </body>
     </html>

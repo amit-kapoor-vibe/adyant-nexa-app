@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Heading } from "./ui/Heading";
 
 export const ProblemSection = () => {
   const painPoints = [
@@ -30,10 +31,10 @@ export const ProblemSection = () => {
           style={{ textAlign: "center", marginBottom: 80 }}
         >
           <span className="editorial-tag" style={{ color: "#00F2FF", display: "block", marginBottom: 20 }}>The Digital Liability</span>
-          <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(40px, 8vw, 80px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#fff", marginBottom: 32 }}>
+          <Heading level="h2" style={{ color: "#fff", marginBottom: 32 }}>
             MOST WEBSITES ARE <br />
             <span style={{ color: "rgba(255,255,255,0.15)" }}>REVENUE BLACK HOLES.</span>
-          </h2>
+          </Heading>
           <p style={{ maxWidth: 600, margin: "0 auto", color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
             Standard websites are overhead. Adyant Nexa assets are high-performance revenue engines that replace manual processes with elite AI automation.
           </p>

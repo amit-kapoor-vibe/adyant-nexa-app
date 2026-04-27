@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, MessageCircle, AlertCircle } from "lucide-react";
 import { FadeSection } from "./FadeSection";
 import { trackEvent } from "@/utils/analytics";
+import { Heading } from "./ui/Heading";
 
 type FormData = { name: string; email: string; phone: string; business: string; budget: string; message: string };
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -52,7 +53,7 @@ function validateForm(form: FormData): FormErrors {
   return errors;
 }
 
-export const ContactSection = () => {
+export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" }) => {
   const [form, setForm] = useState<FormData>({ name: "", email: "", phone: "", business: "", budget: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -103,9 +104,9 @@ export const ContactSection = () => {
         <FadeSection>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>Get In Touch_</span>
-            <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", color: "#E5E5E5", lineHeight: 1.1 }}>
+            <Heading level="h2" style={{ color: "#E5E5E5", lineHeight: 1.1 }}>
               Ready to Build Something<br /><span style={{ color: "#00F2FF" }}>That Actually Works?</span>
-            </h2>
+            </Heading>
           </div>
         </FadeSection>
 
@@ -137,7 +138,7 @@ export const ContactSection = () => {
                   {/* Name */}
                   <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                     <label htmlFor="contact-name" className="editorial-tag" style={{ fontSize: 8, opacity: 0.32 }}>Your Name</label>
-                    <input id="contact-name" type="text" placeholder="e.g. Mukesh" value={form.name}
+                    <input id="contact-name" type="text" placeholder="e.g. Adyant" value={form.name}
                       onChange={e => { setForm({ ...form, name: e.target.value }); setErrors(prev => ({ ...prev, name: undefined })); }}
                       style={fieldStyle("name")}
                       onFocus={e => !errors.name && (e.currentTarget.style.borderColor = "#00F2FF")}
@@ -197,9 +198,22 @@ export const ContactSection = () => {
                     onFocus={e => !errors.budget && (e.currentTarget.style.borderColor = "#00F2FF")}
                     onBlur={e => !errors.budget && (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
                     aria-invalid={!!errors.budget} aria-describedby="error-budget">
-                    <option value="">Select scope</option>
-                    <option>Under ₹20,000</option><option>₹20,000 – ₹50,000</option>
-                    <option>₹50,000 – ₹1,00,000</option><option>₹1,00,000+</option>
+                    <option value="">Select monthly ad budget</option>
+                    {currency === "INR" ? (
+                      <>
+                        <option>₹1,00,000 – ₹5,00,000</option>
+                        <option>₹5,00,000 – ₹25,00,000</option>
+                        <option>₹25,00,000 – ₹1,00,00,000</option>
+                        <option>₹1,00,00,000+ (Enterprise Scale)</option>
+                      </>
+                    ) : (
+                      <>
+                        <option>$1,500 – $5,000</option>
+                        <option>$5,000 – $25,000</option>
+                        <option>$25,000 – $100,000</option>
+                        <option>$100,000+ (Global Scale)</option>
+                      </>
+                    )}
                   </select>
                   {errors.budget && <span id="error-budget" role="alert" style={errorStyle}><AlertCircle size={10} />{errors.budget}</span>}
                 </div>

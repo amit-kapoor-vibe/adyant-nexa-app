@@ -21,16 +21,6 @@ export default function LegalPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
-      {/* ─── NAVIGATION ─── */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, background: "rgba(2,2,2,0.9)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "20px 0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px" }}>
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <img src="/Favicon transparent.png" alt="Adyant Nexa" width={28} height={28} />
-            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 14, color: "#fff" }}>ADYANT NEXA</span>
-          </Link>
-          <Link href="/" className="btn-primary" style={{ fontSize: 10, padding: "8px 24px" }}>Back to Nexus</Link>
-        </div>
-      </nav>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1 }}
@@ -59,6 +49,13 @@ export default function LegalPage() {
             <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "1.5rem", marginBottom: 24, color: "#00F2FF" }}>03. Refund Policy</h2>
             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, lineHeight: 1.8, color: "rgba(229,229,229,0.5)" }}>
               Due to the high-intensity technical setup required, commitment fees for the "Systems Build" phase are non-refundable once work begins. Retainers can be canceled with a 30-day notice.
+            </p>
+          </section>
+
+          <section style={{ marginBottom: 64 }}>
+            <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "1.5rem", marginBottom: 24, color: "#00F2FF" }}>04. Service Continuity (Force Majeure)</h2>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, lineHeight: 1.8, color: "rgba(229,229,229,0.5)" }}>
+              Adyant Nexa shall not be liable for any failure or delay in performance due to circumstances beyond our control, including but not limited to natural disasters, acts of war, global pandemics, or complete regional/global internet shutdowns. In such events, our obligations will be suspended, and services will resume immediately upon the restoration of stable infrastructure and public safety.
             </p>
           </section>
         </FadeSection>

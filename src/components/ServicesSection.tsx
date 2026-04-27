@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Globe, Target, Cpu, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FadeSection } from "./FadeSection";
+import { Heading } from "./ui/Heading";
 
 const SERVICES = [
   { 
@@ -45,9 +46,9 @@ export const ServicesSection = () => {
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: 32, marginBottom: 72 }}>
             <div>
               <span className="editorial-tag" style={{ display: "block", marginBottom: 20 }}>Revenue Frameworks_</span>
-              <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", lineHeight: 1, letterSpacing: "-0.03em", color: "#E5E5E5" }}>
+              <Heading level="h2" style={{ color: "#E5E5E5" }}>
                 Growth <span style={{ color: "#00F2FF" }}>Architecture</span>
-              </h2>
+              </Heading>
             </div>
             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.38)", lineHeight: 1.8, maxWidth: 280 }}>
               Three heavily focused verticals. One singular mission — dominate your market.
@@ -86,7 +87,7 @@ export const ServicesSection = () => {
 
               <div style={{ marginTop: "auto" }}>
                 <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, display: "block", marginBottom: 16 }}>{svc.tag}</span>
-                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "clamp(1.4rem, 2.5vw, 1.8rem)", color: "#E5E5E5", lineHeight: 1.2, marginBottom: 20 }}>{svc.title}</h3>
+                <Heading level="h3" style={{ color: "#E5E5E5", marginBottom: 20 }}>{svc.title}</Heading>
                 <div style={{ marginBottom: 32 }}>
                   {svc.desc.split(/(Feature:|Advantage:|Benefit:)/).map((part, idx) => {
                     const isLabel = ["Feature:", "Advantage:", "Benefit:"].includes(part);

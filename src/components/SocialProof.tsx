@@ -7,18 +7,18 @@ import { FadeSection } from "./FadeSection";
 const KEYWORDS = ["ALGORITHMIC-SCALE", "·", "NEURAL-ROI", "·", "SERVER-SIDE-CAPI", "·", "MULTI-AGENT-AI", "·", "REVENUE-SYSTEMS", "·", "BESPOKE-ARCH", "·", "DATA-PRECISION", "·", "NEXT.JS-16", "·"];
 
 const CLIENTS = [
-  { name: "ROYAL PAINT", sub: "ARCHITECTURAL ASSETS", status: "LIVE" },
-  { name: "INDO UVR", sub: "D2C DOMINANCE", status: "SCALING" }, 
-  { name: "SUPERWHEELS", sub: "LUXURY AUTOMOTIVE", status: "BUILDING" },
-  { name: "ADYANT REALTY", sub: "REAL ESTATE", status: "BUILDING" }, 
-  { name: "TEMPTATION THREAD", sub: "GLOBAL FASHION", status: "LIVE" },
+  { name: "ROYAL PAINT", sub: "ARCHITECTURAL ASSETS", status: "LIVE", url: "https://royalpaintsandhardware.com" },
+  { name: "INDO UVR", sub: "D2C DOMINANCE", status: "SCALING", url: "https://indouvr.com" }, 
+  { name: "SUPERWHEELS", sub: "LUXURY AUTOMOTIVE", status: "BUILDING", url: "#" },
+  { name: "ADYANT REALTY", sub: "REAL ESTATE", status: "BUILDING", url: "#" }, 
+  { name: "TEMPTATION THREAD", sub: "FASHION D2C", status: "BUILDING", url: "#" },
 ];
 
 const TESTIMONIALS = [
   { 
     quote: "Standard agencies talk about CPC. Amit talks about EBITDA. Our acquisition costs halved within 30 days while our revenue hit record highs.", 
-    name: "Founder", 
-    role: "TEMPTATIONTHREAD.COM" 
+    name: "Homesh", 
+    role: "Founder, TEMPTATION THREAD" 
   },
   { 
     quote: "The tech stack Adyant Nexa built for us is 2 years ahead of our competitors. The site speed alone improved our conversion rate by 34%.", 
@@ -60,15 +60,25 @@ export const SocialProof = () => {
             {[...Array(2)].map((_, di) => (
               <div key={di} style={{ display: "flex", gap: "100px", alignItems: "center" }}>
                 {CLIENTS.map(c => (
-                  <div key={`${di}-${c.name}`} style={{ textAlign: "left" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
-                      <p style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "#fff" }}>{c.name}</p>
-                      <span style={{ fontSize: 8, padding: "2px 8px", border: `1px solid ${c.status === "LIVE" ? "#00FF66" : "rgba(255,255,255,0.15)"}`, color: c.status === "LIVE" ? "#00FF66" : "rgba(255,255,255,0.3)", fontFamily: "var(--font-geist-mono)" }}>
-                        {c.status}
-                      </span>
+                  <a 
+                    key={`${di}-${c.name}`} 
+                    href={c.url} 
+                    target={c.url !== "#" ? "_blank" : undefined} 
+                    rel="noreferrer"
+                    style={{ textDecoration: "none", color: "inherit", cursor: c.url !== "#" ? "pointer" : "default" }}
+                    onMouseEnter={e => { if (c.url !== "#") e.currentTarget.style.opacity = "0.7"; }}
+                    onMouseLeave={e => { e.currentTarget.style.opacity = "1"; }}
+                  >
+                    <div style={{ textAlign: "left" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
+                        <p style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "#fff" }}>{c.name}</p>
+                        <span style={{ fontSize: 8, padding: "2px 8px", border: `1px solid ${c.status === "LIVE" ? "#00FF66" : c.status === "SCALING" ? "#00F2FF" : "rgba(255,255,255,0.15)"}`, color: c.status === "LIVE" ? "#00FF66" : c.status === "SCALING" ? "#00F2FF" : "rgba(255,255,255,0.3)", fontFamily: "var(--font-geist-mono)" }}>
+                          {c.status}
+                        </span>
+                      </div>
+                      <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.3 }}>{c.sub}</span>
                     </div>
-                    <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.3 }}>{c.sub}</span>
-                  </div>
+                  </a>
                 ))}
               </div>
             ))}

@@ -8,9 +8,10 @@ import { ScannerIdle } from "./scanner/ScannerIdle";
 import { ScannerTerminal } from "./scanner/ScannerTerminal";
 import { ScannerResult } from "./scanner/ScannerResult";
 import { trackLatency, trackEvent } from "@/utils/analytics";
+import { QuantumAllocator } from "./gamification/QuantumAllocator";
 
-const TERMINAL_LOGS = [
-  "INIT: Establishing handshake with edge nodes...",
+const INITIAL_LOGS = [
+  "INIT: Establishing handshake with global edge nodes...",
   "FETCH: Scraping DOM structure and critical CSS path...",
   "ANALYZE: Benchmarking Core Web Vitals (LCP/FID/CLS)...",
   "CHECK: Inspecting React 19 / Next.js hydration efficiency...",
@@ -19,6 +20,18 @@ const TERMINAL_LOGS = [
   "WARN: Heavy image payloads detected without WebP compression...",
   "TECH: Analyzing server-side rendering (SSR) overhead...",
   "EVAL: Compiling revenue-leak diagnostic report...",
+];
+
+const EXTENDED_LOGS = [
+  "TRACE: Mapping redundant <div> nesting levels...",
+  "DEEP: Auditing font-swap and layout shift triggers...",
+  "NETWORK: Testing TTFB from 5 global regions...",
+  "AI: Simulating buyer persona navigation paths...",
+  "SECURE: Scanning for exposed API endpoints...",
+  "FLOW: Testing mobile touch targets and accessibility...",
+  "CACHE: Measuring edge-cache hit ratio and cache-control...",
+  "LOGIC: Verifying server-action execution latency...",
+  "NEURAL: Calculating potential conversion uplift...",
 ];
 
 interface ScannerModalProps {
@@ -33,6 +46,7 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
   const [scanState, setScanState] = useState<ScanState>("idle");
   const [logs, setLogs] = useState<string[]>([]);
   const [score, setScore] = useState<number | null>(null);
+  const [isAllocatorOpen, setIsAllocatorOpen] = useState(false);
 
   // Sync URL and auto-scan when modal opens with a URL
   useEffect(() => {
@@ -48,9 +62,24 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
       setScanState("idle");
       setLogs([]);
       setScore(null);
+      setIsAllocatorOpen(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, initialUrl]);
+
+  // Trigger Quantum Allocator 5 seconds after result
+  useEffect(() => {
+    if (scanState === "result") {
+      const timer = setTimeout(() => {
+        setIsAllocatorOpen(true);
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("quantum_allocator_shown"));
+          sessionStorage.setItem("quantum_allocator_triggered", "true");
+        }
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [scanState]);
 
   const runScan = async (targetRaw: string) => {
     let targetUrl = targetRaw;
@@ -61,16 +90,36 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
     setLogs([]);
 
     let currentLog = 0;
+    const allPredefinedLogs = [...INITIAL_LOGS, ...EXTENDED_LOGS];
+    
     const logInterval = setInterval(() => {
-      if (currentLog < TERMINAL_LOGS.length) {
-        setLogs((prev) => [
-          ...prev,
-          `[${new Date().toISOString().split("T")[1].substring(0, 8)}] TARGET: ${targetUrl.replace(/^https?:\/\//, "")}`,
-          `[${new Date().toISOString().split("T")[1].substring(0, 8)}] ${TERMINAL_LOGS[currentLog]}`,
-        ].slice(-TERMINAL_LOGS.length)); // keep log list bounded
-        currentLog++;
+      let logText = "";
+      if (currentLog < allPredefinedLogs.length) {
+        logText = allPredefinedLogs[currentLog];
+      } else {
+        // Dynamic logs after predefined ones are exhausted
+        const dynamicPrefixes = ["DEEP", "META", "NEURAL", "TECH", "GRID", "FLOW"];
+        const dynamicSuffxes = [
+          "Optimizing hydration buckets...",
+          "Refining paint cycles...",
+          "Analyzing third-party script impact...",
+          "Checking semantic structure integrity...",
+          "Verifying viewport responsiveness...",
+          "Benchmarking total blocking time (TBT)..."
+        ];
+        const prefix = dynamicPrefixes[Math.floor(Math.random() * dynamicPrefixes.length)];
+        const suffix = dynamicSuffxes[Math.floor(Math.random() * dynamicSuffxes.length)];
+        logText = `${prefix}: ${suffix}`;
       }
-    }, 900);
+
+      setLogs((prev) => [
+        ...prev,
+        `[${new Date().toISOString().split("T")[1].substring(0, 8)}] TARGET: ${targetUrl.replace(/^https?:\/\//, "")}`,
+        `[${new Date().toISOString().split("T")[1].substring(0, 8)}] ${logText}`,
+      ].slice(-12)); // Keep last 12 logs for a full terminal feel
+      
+      currentLog++;
+    }, 1100);
 
     const startTime = Date.now();
     try {
@@ -108,6 +157,7 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
   return (
     <AnimatePresence>
       <motion.div
+        key="scanner-backdrop"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -134,7 +184,7 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 24px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 8, height: 8, background: "#00F2FF", animation: scanState === "scanning" ? "pulse-glow 1s infinite" : "none" }} />
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.2em", color: "#E5E5E5", textTransform: "uppercase" }}>
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(8px, 3vw, 11px)", fontWeight: 600, letterSpacing: "clamp(0.1em, 1vw, 0.2em)", color: "#E5E5E5", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 Nexa Diagnostic System
               </span>
             </div>
@@ -144,19 +194,26 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
           </div>
 
           {/* Body */}
-          <div style={{ padding: "40px 32px" }}>
+          <div style={{ padding: "clamp(24px, 5vw, 40px) clamp(16px, 4vw, 32px)" }}>
             {scanState === "idle" && (
-              <ScannerIdle url={url} onUrlChange={setUrl} onSubmit={handleSubmit} />
+              <ScannerIdle key="idle" url={url} onUrlChange={setUrl} onSubmit={handleSubmit} />
             )}
             {scanState === "scanning" && (
-              <ScannerTerminal logs={logs} />
+              <ScannerTerminal key="scanning" logs={logs} />
             )}
             {scanState === "result" && score !== null && (
-              <ScannerResult score={score} url={url} currency={currency} />
+              <ScannerResult key="result" score={score} url={url} currency={currency} />
             )}
           </div>
         </motion.div>
       </motion.div>
+      
+      <QuantumAllocator 
+        key="quantum-allocator"
+        isOpen={isAllocatorOpen} 
+        onClose={() => setIsAllocatorOpen(false)} 
+        currency={currency} 
+      />
     </AnimatePresence>
   );
 }

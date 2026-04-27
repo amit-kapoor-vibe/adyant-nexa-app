@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Globe } from "lucide-react";
 import { FadeSection } from "./FadeSection";
+import { Heading } from "./ui/Heading";
 
 const TIERS = [
   { 
@@ -49,9 +50,9 @@ export const PricingSection = ({ currency, setCurrency, onAudit }: { currency: "
         <FadeSection>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>INVESTMENT TIERS_</span>
-            <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", color: "#E5E5E5", lineHeight: 1.1 }}>
+            <Heading level="h2" style={{ color: "#E5E5E5", lineHeight: 1.1 }}>
               Zero Risk. <span style={{ color: "#00F2FF" }}>Global Performance.</span>
-            </h2>
+            </Heading>
             
             {/* Currency Toggle */}
             <div style={{ display: "flex", justifyContent: "center", marginTop: 32 }}>
@@ -159,9 +160,15 @@ export const PricingSection = ({ currency, setCurrency, onAudit }: { currency: "
 
               <button
                 onClick={(e) => {
-                  window.location.hash = "#contact";
+                  e.preventDefault();
+                  const target = document.getElementById("contact");
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.location.hash = "#contact";
+                  }
                 }}
-                className={tier.highlight ? "btn-primary" : ""}
+                className={tier.highlight ? "btn-primary" : "btn-primary"}
                 style={{
                   display: "flex", 
                   justifyContent: "center", 
@@ -174,7 +181,7 @@ export const PricingSection = ({ currency, setCurrency, onAudit }: { currency: "
                   fontSize: 12,
                   letterSpacing: "0.2em", 
                   textTransform: "uppercase", 
-                  cursor: "pointer",
+                  cursor: "none",
                   transition: "all 0.3s ease"
                 }}
               >

@@ -6,23 +6,55 @@ import Lenis from "lenis";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FadeSection } from "@/components/FadeSection";
-import { ArrowRight, Clock, Calendar } from "lucide-react";
+import { ArrowRight, ArrowLeft, Clock, Calendar } from "lucide-react";
 
 const POSTS = [
   {
-    slug: "attribution-gap-capi-ios14",
-    title: "The Attribution Gap: Why Browser Pixels are Dying",
-    excerpt: "How server-side architecture (CAPI) is becoming the only way to scale ads in a privacy-first world.",
-    date: "April 24, 2026",
+    slug: "post-search-era-ai-discovery",
+    title: "The Post-Search Era: Brand Discovery in the Age of LLMs",
+    excerpt: "Google is no longer the only gateway. Discover why 'Semantic Authority' is the new SEO for the 2026 AI ecosystem.",
+    date: "April 27, 2026",
     readTime: "6 min read",
-    category: "AD-TECH"
+    category: "FUTURE-TECH"
+  },
+  {
+    slug: "minimalist-architecture-lean-agency",
+    title: "Minimalist Architecture: Why the Leanest Agencies Win",
+    excerpt: "Filtering the noise in your code and operations. Why a modular, lightweight tech stack is the ultimate competitive advantage.",
+    date: "April 27, 2026",
+    readTime: "4 min read",
+    category: "OPERATIONS"
+  },
+  {
+    slug: "creative-is-the-new-targeting",
+    title: "Creative is the New Targeting: Scaling in the AI Era",
+    excerpt: "Why the visual is now more important than the interest-stack. How to build 'Performance Creative' that feeds the algorithm.",
+    date: "April 26, 2026",
+    readTime: "5 min read",
+    category: "PERFORMANCE"
+  },
+  {
+    slug: "signal-recovery-sst-2026",
+    title: "The 2026 Signal Recovery Playbook: Server-Side GTM",
+    excerpt: "Browser-based tracking is dead. Discover how SST recovers 30% of lost signal and drops CAC by 22% instantly.",
+    date: "April 24, 2026",
+    readTime: "7 min read",
+    category: "DATA-INFRA"
+  },
+  {
+    slug: "attribution-gap-capi-ios14",
+    title: "Beyond Attribution: The Rise of Revenue Mix Modeling",
+    excerpt: "Moving from simple click-tracking to holistic AI-driven incrementality. Proof that your ads are actually driving profit.",
+    date: "April 22, 2026",
+    readTime: "8 min read",
+    category: "STRATEGY"
   },
   {
     slug: "ai-agent-economy-revenue",
-    title: "The AI-Agent Economy: Replacing Support with LLMs",
-    excerpt: "Why the next billion-dollar agencies will be run by multi-agent AI ecosystems, not human teams.",
-    date: "April 22, 2026",
-    readTime: "8 min read",
+    title: "The AI-Agent Economy: Autonomous Lead Conversion",
+    excerpt: "Replacing standard chatbots with autonomous LLM agents that book, follow-up, and close deals without human input.",
+    date: "April 20, 2026",
+    readTime: "10 min read",
     category: "AI-AUTOMATION"
   }
 ];
@@ -46,16 +78,6 @@ export default function BlogListing() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
-      {/* ─── NAVIGATION ─── */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 50, background: "rgba(2,2,2,0.9)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "20px 0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px" }}>
-          <Link href="/" onClick={(e) => handleNavigate(e, "/")} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <img src="/Favicon transparent.png" alt="Adyant Nexa" width={28} height={28} />
-            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 14, color: "#fff" }}>ADYANT NEXA</span>
-          </Link>
-          <Link href="/#contact" onClick={(e) => handleNavigate(e, "/#contact")} className="btn-primary" style={{ fontSize: 10, padding: "8px 24px" }}>Engage Protocol</Link>
-        </div>
-      </nav>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1, y: isNavigating ? 20 : 0 }}
@@ -97,6 +119,46 @@ export default function BlogListing() {
             </FadeSection>
           ))}
         </div>
+
+        {/* ─── NEWSLETTER & RETURN ─── */}
+        <FadeSection delay={0.4}>
+          <div style={{ marginTop: 100, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 100, textAlign: "center" }}>
+            <div className="glass-panel" style={{ padding: "60px 28px", maxWidth: 800, margin: "0 auto 60px", background: "rgba(0,242,255,0.01)" }}>
+              <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 20, display: "block" }}>Subscribe to Intelligence_</span>
+              <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 4vw, 2.5rem)", color: "#fff", marginBottom: 32 }}>
+                Get the <span style={{ color: "#00F2FF" }}>Neural Scaling</span> Playbook.
+              </h3>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, maxWidth: 500, margin: "0 auto" }}>
+                <input 
+                  type="email" 
+                  placeholder="Business Email" 
+                  style={{ flex: 1, minWidth: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", padding: "16px 24px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13 }} 
+                />
+                <button className="btn-primary" style={{ padding: "0 32px", fontSize: 11, height: 50 }}>JOIN ELITE</button>
+              </div>
+            </div>
+
+            <Link 
+              href="/" 
+              onClick={(e) => handleNavigate(e, "/")}
+              style={{ 
+                fontFamily: "var(--font-geist-mono)", 
+                fontSize: 10, 
+                color: "rgba(255,255,255,0.3)", 
+                textDecoration: "none",
+                letterSpacing: "0.4em",
+                textTransform: "uppercase",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 12
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = "#00F2FF"}
+              onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.3)"}
+            >
+              <ArrowLeft size={12} /> BACK TO GENESIS
+            </Link>
+          </div>
+        </FadeSection>
       </motion.main>
     </div>
   );

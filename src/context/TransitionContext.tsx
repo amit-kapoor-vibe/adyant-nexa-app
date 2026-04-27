@@ -7,13 +7,32 @@ import { useRouter } from "next/navigation";
 interface TransitionContextType {
   isNavigating: boolean;
   triggerTransition: (target: string, lenis: any) => void;
+  currency: "USD" | "INR";
+  setCurrency: (currency: "USD" | "INR") => void;
+  isScannerOpen: boolean;
+  setScannerOpen: (open: boolean) => void;
 }
 
 const TransitionContext = createContext<TransitionContextType | undefined>(undefined);
 
 export const TransitionProvider = ({ children }: { children: React.ReactNode }) => {
   const [isNavigating, setIsNavigating] = useState(false);
+  const [currency, setCurrency] = useState<"USD" | "INR">("USD");
+  const [isScannerOpen, setScannerOpen] = useState(false);
   const router = useRouter();
+
+  React.useEffect(() => {
+    const detectLocation = async () => {
+      if (window.location.hostname === "localhost") return;
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.country_code === "IN") setCurrency("INR");
+      } catch (err) {}
+    };
+    detectLocation();
+  }, []);
 
   const triggerTransition = useCallback((target: string, lenis: any) => {
     setIsNavigating(true);
@@ -44,7 +63,7 @@ export const TransitionProvider = ({ children }: { children: React.ReactNode }) 
   }, [router]);
 
   return (
-    <TransitionContext.Provider value={{ isNavigating, triggerTransition }}>
+    <TransitionContext.Provider value={{ isNavigating, triggerTransition, currency, setCurrency, isScannerOpen, setScannerOpen }}>
       {children}
       
       <AnimatePresence>

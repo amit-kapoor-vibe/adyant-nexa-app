@@ -36,7 +36,7 @@ export function ScannerTerminal({ logs }: ScannerTerminalProps) {
         <div style={{ display: "flex", flexDirection: "column", gap: 8, justifyContent: "flex-end", height: "100%" }}>
           {logs.map((log, i) => (
             <motion.div
-              key={i}
+              key={`${i}-${log.substring(0, 20)}`}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               style={{
