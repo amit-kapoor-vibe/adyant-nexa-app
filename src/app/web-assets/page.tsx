@@ -31,14 +31,7 @@ export default function WebAssetsPage() {
         {/* ─── THE ROI ENGINE ─── */}
         <section id="roi-engine" style={{ padding: "clamp(4rem, 8vw, 7rem) 20px", background: "#080808", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-            <div style={{ textAlign: "center", marginBottom: 64 }}>
-              <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 20, display: "block", fontSize: 9 }}>REVENUE PROJECTION ENGINE_</span>
-              <Heading level="h2">Calculate Your <span style={{ color: "#00F2FF" }}>Neural Impact.</span></Heading>
-              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(255,255,255,0.4)", maxWidth: 600, margin: "24px auto 0" }}>
-                See exactly how much revenue you are leaving on the table with your current infrastructure.
-              </p>
-            </div>
-            <ROICalculator />
+            <ROICalculator currency={currency} />
           </div>
         </section>
 

@@ -54,8 +54,8 @@ const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
       >
         <div style={{ marginBottom: 40 }}>
           <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em", display: "block", marginBottom: 12 }}>ESTIMATED NEURAL IMPACT</span>
-          <div style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2rem, 6vw, 4.5rem)", color: "#00F2FF", lineHeight: 1 }}>
-            {isINR ? "₹" : "$"}{Math.round(stats.totalImpact).toLocaleString()}
+          <div style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 5vw, 3.5rem)", color: "#00F2FF", lineHeight: 1 }}>
+            {new Intl.NumberFormat(isINR ? 'en-IN' : 'en-US', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(Math.round(stats.totalImpact))}
           </div>
         </div>
 
@@ -63,13 +63,13 @@ const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
           <div>
             <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", display: "block", marginBottom: 8 }}>COST REDUCTION</span>
             <span style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "#E5E5E5" }}>
-              {isINR ? "₹" : "$"}{Math.round(stats.netSavings).toLocaleString()}
+              {new Intl.NumberFormat(isINR ? 'en-IN' : 'en-US', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(Math.round(stats.netSavings))}
             </span>
           </div>
           <div>
             <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", display: "block", marginBottom: 8 }}>REVENUE RECOVERY</span>
             <span style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "#00FF66" }}>
-              +{isINR ? "₹" : "$"}{Math.round(stats.revenueBoost).toLocaleString()}
+              +{new Intl.NumberFormat(isINR ? 'en-IN' : 'en-US', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(Math.round(stats.revenueBoost))}
             </span>
           </div>
         </div>
@@ -144,7 +144,7 @@ export const ROICalculator = ({ currency = "USD" }: { currency?: Currency }) => 
 
         <div style={{ 
           display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", 
           gap: 32,
           background: "rgba(255,255,255,0.01)",
           border: "1px solid rgba(255,255,255,0.04)",
@@ -181,8 +181,8 @@ export const ROICalculator = ({ currency = "USD" }: { currency?: Currency }) => 
                 onChange={(e) => setLaborCost(parseInt(e.target.value))}
                 style={{ width: "100%", accentColor: "#00F2FF", cursor: "pointer" }}
               />
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, fontFamily: "var(--font-geist-mono)", fontSize: 18, color: "#E5E5E5", fontWeight: 700 }}>
-                <span>{isINR ? "₹" : "$"}{laborCost.toLocaleString()}</span>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, fontFamily: "var(--font-geist-mono)", fontSize: "clamp(14px, 2vw, 18px)", color: "#E5E5E5", fontWeight: 700 }}>
+                <span>{new Intl.NumberFormat(isINR ? 'en-IN' : 'en-US', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(laborCost)}</span>
                 <span style={{ fontSize: 10, opacity: 0.4 }}>OPEX/MO</span>
               </div>
             </div>
@@ -190,7 +190,7 @@ export const ROICalculator = ({ currency = "USD" }: { currency?: Currency }) => 
             <div style={{ padding: 24, border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.02)" }}>
               <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.4, display: "block", marginBottom: 12 }}>{selectedIndustry.name} Industry Baseline_</span>
               <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}>
-                Avg Ticket Size: <span style={{ color: "#E5E5E5" }}>{isINR ? "₹" : "$"}{selectedIndustry.avgTicketSize.toLocaleString()}</span><br />
+                Avg Ticket Size: <span style={{ color: "#E5E5E5" }}>{new Intl.NumberFormat(isINR ? 'en-IN' : 'en-IN', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(selectedIndustry.avgTicketSize)}</span><br />
                 Response Fragility: <span style={{ color: "#FF4444" }}>{(selectedIndustry.responseLoss * 100).toFixed(0)}% Revenue Leakage</span>
               </p>
             </div>

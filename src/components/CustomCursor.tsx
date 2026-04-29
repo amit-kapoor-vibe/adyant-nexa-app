@@ -18,6 +18,7 @@ export const CustomCursor = () => {
   const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
     setMounted(true);
     
     const updatePos = (e: MouseEvent) => {
