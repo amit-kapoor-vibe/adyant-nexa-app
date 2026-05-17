@@ -9,6 +9,12 @@ import { SectionSkeleton } from "@/components/SkeletonLoader";
 import { MarketingHero } from "@/components/marketing/MarketingHero";
 import { AdvantagesSection } from "@/components/marketing/AdvantagesSection";
 import { PricingSection } from "@/components/marketing/PricingSection";
+import { PhilosophySection } from "@/components/marketing/PhilosophySection";
+import { TestimonialsSection } from "@/components/marketing/TestimonialsSection";
+import { ROIVisualizer } from "@/components/marketing/ROIVisualizer";
+import { MarketingFAQ } from "@/components/marketing/MarketingFAQ";
+import { FadeSection } from "@/components/FadeSection";
+import { Heading } from "@/components/ui/Heading";
 
 // ─── Lazy Loaded Components ───
 const ComparisonTable = dynamic(() => import("@/components/marketing/ComparisonTable").then(m => ({ default: m.ComparisonTable })), { loading: () => <SectionSkeleton /> });
@@ -46,10 +52,32 @@ export default function MarketingPage() {
         <PersonaShowcase />
         <ComparisonTable />
 
+        <PhilosophySection />
+        
+        <ROIVisualizer />
+        <TestimonialsSection />
+
         <PricingSection 
           onAudit={() => setIsScannerOpen(true)} 
           currency={currency}
         />
+
+        <MarketingFAQ />
+
+        {/* Final CTA Section */}
+        <section style={{ padding: "8rem 1.75rem", textAlign: "center", background: "#080808", borderTop: "1px solid rgba(255,255,255,0.03)" }}>
+          <FadeSection>
+            <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 24, display: "block" }}>The Final Protocol_</span>
+            <Heading level="h2" style={{ color: "#fff", marginBottom: 40 }}>Ready to Build Your <br /> Revenue Empire?</Heading>
+            <button 
+              onClick={() => setIsScannerOpen(true)}
+              className="btn-primary"
+              style={{ padding: "20px 48px", fontSize: 14 }}
+            >
+              ENGAGE NEURAL AUDIT
+            </button>
+          </FadeSection>
+        </section>
 
         <MarketingContact />
       </motion.main>

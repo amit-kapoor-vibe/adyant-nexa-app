@@ -11,7 +11,7 @@ const CLIENTS = [
   { name: "INDO UVR", sub: "D2C DOMINANCE", status: "SCALING", url: "https://indouvr.com" }, 
   { name: "SUPERWHEELS", sub: "LUXURY AUTOMOTIVE", status: "BUILDING", url: "#" },
   { name: "ADYANT REALTY", sub: "REAL ESTATE", status: "BUILDING", url: "#" }, 
-  { name: "TEMPTATION THREAD", sub: "FASHION D2C", status: "BUILDING", url: "#" },
+  { name: "TEMPTATION THREAD", sub: "FASHION D2C", status: "LIVE", url: "https://temptationthread.com" },
 ];
 
 const TESTIMONIALS = [

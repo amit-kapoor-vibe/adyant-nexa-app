@@ -59,7 +59,14 @@ const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 32, marginBottom: 32 }}>
+        <div style={{ 
+          display: "grid", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", 
+          gap: 24, 
+          borderTop: "1px solid rgba(255,255,255,0.05)", 
+          paddingTop: 32, 
+          marginBottom: 32 
+        }}>
           <div>
             <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", display: "block", marginBottom: 8 }}>COST REDUCTION</span>
             <span style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "#E5E5E5" }}>
@@ -144,11 +151,11 @@ export const ROICalculator = ({ currency = "USD" }: { currency?: Currency }) => 
 
         <div style={{ 
           display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", 
-          gap: 32,
+          gridTemplateColumns: "1fr", 
+          gap: "clamp(2rem, 5vw, 4rem)",
           background: "rgba(255,255,255,0.01)",
           border: "1px solid rgba(255,255,255,0.04)",
-          padding: "clamp(1.5rem, 4vw, 3rem)"
+          padding: "clamp(1.25rem, 4vw, 3rem)"
         }}>
           {/* Inputs */}
           <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>

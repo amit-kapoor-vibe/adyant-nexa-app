@@ -7,15 +7,160 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { FadeSection } from "@/components/FadeSection";
 import { ArrowRight, ArrowLeft, Clock, Calendar } from "lucide-react";
+import { JOURNAL_POSTS } from "@/data/journalData";
 
 const POSTS = [
   {
-    slug: "us-ecommerce-recession-hack",
-    title: "J-011: THE US E-COMMERCE RECESSION HACK",
-    excerpt: "Discover why conversion velocity is the only metric that matters in a high-interest US market. How to cut CAC by 40%.",
-    date: "April 29, 2026",
+    slug: "copilot-founder-paradigm",
+    title: "J-031: THE CO-PILOT FOUNDER PARADIGM",
+    excerpt: "How modern solo founders partner with advanced agentic AI architectures to bypass the hiring grind.",
+    date: "May 28, 2026",
+    readTime: "5 min read",
+    category: "OPERATIONS"
+  },
+  {
+    slug: "infrastructure-latency-cost",
+    title: "J-030: THE COST OF INFRASTRUCTURE LATENCY",
+    excerpt: "How every 100ms of loading lag directly decreases your conversion rate by 7%. Engineering speed.",
+    date: "May 27, 2026",
+    readTime: "4 min read",
+    category: "ENGINEERING"
+  },
+  {
+    slug: "vernacular-ai-agents-bharat",
+    title: "J-029: VERNACULAR AI AGENTS FOR BHARAT",
+    excerpt: "Why English-only sites fail in Tier-2/3 India. Implementing native voice and chat bots in Hindi.",
+    date: "May 26, 2026",
+    readTime: "5 min read",
+    category: "INDIA_GROWTH"
+  },
+  {
+    slug: "cashflow-velocity-metric",
+    title: "J-028: METRIC THAT MATTERS: CASHFLOW VELOCITY",
+    excerpt: "Moving away from standard ROAS metrics to understand blended unit economics and contribution margins.",
+    date: "May 25, 2026",
+    readTime: "6 min read",
+    category: "STRATEGY"
+  },
+  {
+    slug: "ai-concierge-hydrating-cold-traffic",
+    title: "J-027: AI CONCIERGE: HYDRATING COLD D2C TRAFFIC",
+    excerpt: "Converting passive website visitors into buyers using contextual AI concierge nodes that answer objections.",
+    date: "May 24, 2026",
+    readTime: "5 min read",
+    category: "AI-AUTOMATION"
+  },
+  {
+    slug: "death-of-meta-pixel-india",
+    title: "J-026: THE DEATH OF THE Meta PIXEL IN INDIA",
+    excerpt: "Standard browser pixels are obsolete. Transitioning Indian storefronts to server-side Conversions API.",
+    date: "May 23, 2026",
+    readTime: "6 min read",
+    category: "DATA-INFRA"
+  },
+  {
+    slug: "bant-qualification-high-ticket-d2c",
+    title: "J-025: BANT QUALIFICATION SECRETS FOR HIGH-TICKET D2C",
+    excerpt: "How to qualify prospects on autopilot using autonomous voice and chat agents before booking sales calls.",
+    date: "May 22, 2026",
+    readTime: "5 min read",
+    category: "PERFORMANCE"
+  },
+  {
+    slug: "ten-million-one-man-brand",
+    title: "J-024: THE $10M ONE-MAN D2C BRAND",
+    excerpt: "How elite founders use autonomous AI agent fleets to run multi-million dollar brands without employees.",
+    date: "May 21, 2026",
     readTime: "6 min read",
     category: "GLOBAL_STRATEGY"
+  },
+  {
+    slug: "threejs-webgl-conversion-multiplier",
+    title: "J-023: THREE.JS & WEBGL: THE LATEST CONVERSION MULTIPLIER",
+    excerpt: "Why static website templates convert poorly. How interactive 3D WebGL experiences boost time-on-site by 300%.",
+    date: "May 20, 2026",
+    readTime: "6 min read",
+    category: "ENGINEERING"
+  },
+  {
+    slug: "indian-d2c-attribution-trap",
+    title: "J-022: THE INDIAN D2C ATTRIBUTION TRAP",
+    excerpt: "Why standard Meta ad reporting lies to Indian founders, and how a custom Server-Side CAPI setup saves lakhs.",
+    date: "May 19, 2026",
+    readTime: "5 min read",
+    category: "INDIA_GROWTH"
+  },
+  {
+    slug: "reddit-economy-community-sentiment",
+    title: "J-021: THE REDDIT ECONOMY & SENTIMENT",
+    excerpt: "Why community trust is the new backlink. How to build 'Social Capital' that the AI engines love.",
+    date: "May 03, 2026",
+    readTime: "5 min read",
+    category: "MARKET_INTEL"
+  },
+  {
+    slug: "voice-search-2026-agents",
+    title: "J-020: VOICE SEARCH 2026: AGENT OPTIMIZATION",
+    excerpt: "Optimizing for Siri, Alexa, and GPT-Voice. Why your brand needs to sound as good as it looks.",
+    date: "May 03, 2026",
+    readTime: "4 min read",
+    category: "MARKET_INTEL"
+  },
+  {
+    slug: "predictive-ltv-ai-customers",
+    title: "J-019: PREDICTIVE LTV VIA AI",
+    excerpt: "Finding your top 1% customers before they even make their first purchase. High-velocity scaling for elite brands.",
+    date: "May 02, 2026",
+    readTime: "6 min read",
+    category: "PERFORMANCE"
+  },
+  {
+    slug: "capi-mastery-event-tracking",
+    title: "J-018: CAPI MASTERY & SIGNAL RECOVERY",
+    excerpt: "Beyond the Meta Pixel. Discover how Advanced CAPI implementations recover lost signals and boost attribution accuracy.",
+    date: "May 02, 2026",
+    readTime: "5 min read",
+    category: "PERFORMANCE"
+  },
+  {
+    slug: "llm-training-sales-machine",
+    title: "J-017: TURNING PDFS INTO SALES MACHINES",
+    excerpt: "How to train LLMs on your proprietary brand data to create a 'Digital Twin' of your best salesperson.",
+    date: "May 01, 2026",
+    readTime: "6 min read",
+    category: "ENGINEERING"
+  },
+  {
+    slug: "self-healing-code-architecture",
+    title: "J-016: SELF-HEALING CODE ARCHITECTURE",
+    excerpt: "Moving beyond maintenance. How our neural-linked codebases fix their own bugs and adapt to API shifts autonomously.",
+    date: "May 01, 2026",
+    readTime: "8 min read",
+    category: "ENGINEERING"
+  },
+  {
+    slug: "whatsapp-commerce-frontier",
+    title: "J-015: WHATSAPP COMMERCE: THE FINAL FRONTIER",
+    excerpt: "Why email is secondary in India. Building an autonomous WhatsApp ecosystem that closes sales in under 120 seconds.",
+    date: "April 30, 2026",
+    readTime: "4 min read",
+    category: "INDIA_GROWTH"
+  },
+  {
+    slug: "tier-2-india-revolution",
+    title: "J-014: THE TIER-2 INDIA REVOLUTION",
+    excerpt: "The next 400M buyers are in Tier-2 and Tier-3 India. How Adyant Nexa infrastructure optimizes for low-bandwidth dominance.",
+    date: "April 30, 2026",
+    readTime: "5 min read",
+    category: "INDIA_GROWTH"
+  },
+  {
+    slug: "pocketos-ai-agent-disaster",
+    title: "J-013: THE POCKETOS AI DISASTER",
+    excerpt: "9 seconds was all it took. Discover how an autonomous agent wiped a company's production database and backups.",
+    date: "April 29, 2026",
+    readTime: "12 min read",
+    category: "AI-SAFETY"
   },
   {
     slug: "cross-border-dominance-ai",
@@ -26,68 +171,12 @@ const POSTS = [
     category: "GLOBAL_STRATEGY"
   },
   {
-    slug: "tier-2-india-revolution",
-    title: "J-013: THE TIER-2 INDIA REVOLUTION",
-    excerpt: "The next 400M buyers are in Tier-2 and Tier-3 India. How Adyant Nexa infrastructure optimizes for low-bandwidth dominance.",
-    date: "April 30, 2026",
-    readTime: "5 min read",
-    category: "INDIA_GROWTH"
-  },
-  {
-    slug: "whatsapp-commerce-frontier",
-    title: "J-014: WHATSAPP COMMERCE: THE FINAL FRONTIER",
-    excerpt: "Why email is secondary in India. Building an autonomous WhatsApp ecosystem that closes sales in under 120 seconds.",
-    date: "April 30, 2026",
-    readTime: "4 min read",
-    category: "INDIA_GROWTH"
-  },
-  {
-    slug: "self-healing-code-architecture",
-    title: "J-015: SELF-HEALING CODE ARCHITECTURE",
-    excerpt: "Moving beyond maintenance. How our neural-linked codebases fix their own bugs and adapt to API shifts autonomously.",
-    date: "May 01, 2026",
-    readTime: "8 min read",
-    category: "ENGINEERING"
-  },
-  {
-    slug: "llm-training-sales-machine",
-    title: "J-016: TURNING PDFS INTO SALES MACHINES",
-    excerpt: "How to train LLMs on your proprietary brand data to create a 'Digital Twin' of your best salesperson.",
-    date: "May 01, 2026",
+    slug: "us-ecommerce-recession-hack",
+    title: "J-011: THE US E-COMMERCE RECESSION HACK",
+    excerpt: "Discover why conversion velocity is the only metric that matters in a high-interest US market. How to cut CAC by 40%.",
+    date: "April 29, 2026",
     readTime: "6 min read",
-    category: "ENGINEERING"
-  },
-  {
-    slug: "capi-mastery-event-tracking",
-    title: "J-017: CAPI MASTERY & SIGNAL RECOVERY",
-    excerpt: "Beyond the Meta Pixel. Discover how Advanced CAPI implementations recover lost signals and boost attribution accuracy.",
-    date: "May 02, 2026",
-    readTime: "5 min read",
-    category: "PERFORMANCE"
-  },
-  {
-    slug: "predictive-ltv-ai-customers",
-    title: "J-018: PREDICTIVE LTV VIA AI",
-    excerpt: "Finding your top 1% customers before they even make their first purchase. High-velocity scaling for elite brands.",
-    date: "May 02, 2026",
-    readTime: "6 min read",
-    category: "PERFORMANCE"
-  },
-  {
-    slug: "voice-search-2026-agents",
-    title: "J-019: VOICE SEARCH 2026: AGENT OPTIMIZATION",
-    excerpt: "Optimizing for Siri, Alexa, and GPT-Voice. Why your brand needs to sound as good as it looks.",
-    date: "May 03, 2026",
-    readTime: "4 min read",
-    category: "MARKET_INTEL"
-  },
-  {
-    slug: "reddit-economy-community-sentiment",
-    title: "J-020: THE REDDIT ECONOMY & SENTIMENT",
-    excerpt: "Why community trust is the new backlink. How to build 'Social Capital' that the AI engines love.",
-    date: "May 03, 2026",
-    readTime: "5 min read",
-    category: "MARKET_INTEL"
+    category: "GLOBAL_STRATEGY"
   },
   {
     slug: "us-market-blueprint-ai-agents",
@@ -194,8 +283,9 @@ export default function BlogListing() {
 
   const filteredAndSortedPosts = [...POSTS]
     .filter(post => {
+      const hasContent = !!JOURNAL_POSTS[post.slug as keyof typeof JOURNAL_POSTS];
       const isVisible = new Date(post.date) <= new Date();
-      return isVisible && (activeCategory === "ALL" || post.category === activeCategory);
+      return hasContent && isVisible && (activeCategory === "ALL" || post.category === activeCategory);
     })
     .sort((a, b) => {
       const numA = parseInt(a.title.match(/J-(\d+)/)?.[1] || "0");
@@ -220,23 +310,40 @@ export default function BlogListing() {
 
         {/* ─── FILTERS & CONTROLS ─── */}
         <div style={{ marginBottom: 60, display: "flex", flexWrap: "wrap", gap: 32, alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "24px 0" }}>
-          
+
           {/* Categories */}
-          <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+          <div style={{
+            display: "flex",
+            gap: 28,
+            overflowX: "auto",
+            whiteSpace: "nowrap",
+            paddingBottom: 8,
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+            flex: 1,
+            marginRight: 20,
+            WebkitMaskImage: "linear-gradient(to right, black 85%, transparent 100%)",
+            maskImage: "linear-gradient(to right, black 85%, transparent 100%)"
+          }}>
+            <style dangerouslySetInnerHTML={{
+              __html: `
+              div::-webkit-scrollbar { display: none; }
+            `}} />
             {categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                style={{ 
-                  background: "none", 
-                  border: "none", 
-                  color: activeCategory === cat ? "#00F2FF" : "rgba(255,255,255,0.3)", 
-                  fontFamily: "var(--font-geist-mono)", 
-                  fontSize: 10, 
-                  letterSpacing: "0.2em", 
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: activeCategory === cat ? "#00F2FF" : "rgba(255,255,255,0.3)",
+                  fontFamily: "var(--font-geist-mono)",
+                  fontSize: 10,
+                  letterSpacing: "0.2em",
                   cursor: "pointer",
                   padding: "8px 0",
-                  transition: "all 0.3s"
+                  transition: "all 0.3s",
+                  flexShrink: 0
                 }}
               >
                 {cat}
@@ -245,15 +352,15 @@ export default function BlogListing() {
           </div>
 
           {/* Sort Order */}
-          <button 
+          <button
             onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
-            style={{ 
-              background: "rgba(255,255,255,0.03)", 
-              border: "1px solid rgba(255,255,255,0.1)", 
-              color: "#fff", 
-              padding: "10px 20px", 
-              fontFamily: "var(--font-geist-mono)", 
-              fontSize: 9, 
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "#fff",
+              padding: "10px 20px",
+              fontFamily: "var(--font-geist-mono)",
+              fontSize: 9,
               letterSpacing: "0.1em",
               cursor: "pointer",
               display: "flex",
@@ -268,8 +375,8 @@ export default function BlogListing() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: 40 }}>
           {filteredAndSortedPosts.map((post, i) => (
             <FadeSection key={post.slug} delay={i * 0.05}>
-              <Link 
-                href={`/journal/${post.slug}`} 
+              <Link
+                href={`/journal/${post.slug}`}
                 onClick={(e) => handleNavigate(e, `/journal/${post.slug}`)}
                 style={{ textDecoration: "none", color: "inherit", display: "block" }}
               >
@@ -285,7 +392,7 @@ export default function BlogListing() {
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span className="editorial-tag" style={{ fontSize: 9, color: "#00F2FF" }}>{post.category}</span>
                     <div style={{ display: "flex", gap: 16, opacity: 0.3 }}>
-                      <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, fontFamily: "var(--font-geist-mono)" }}><Calendar size={12}/> {post.date}</span>
+                      <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, fontFamily: "var(--font-geist-mono)" }}><Calendar size={12} /> {post.date}</span>
                     </div>
                   </div>
                   <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 24, lineHeight: 1.2, color: "#fff" }}>{post.title}</h2>
@@ -308,22 +415,22 @@ export default function BlogListing() {
                 Get the <span style={{ color: "#00F2FF" }}>Neural Scaling</span> Playbook.
               </h3>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, maxWidth: 500, margin: "0 auto" }}>
-                <input 
-                  type="email" 
-                  placeholder="Business Email" 
-                  style={{ flex: 1, minWidth: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", padding: "16px 24px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13 }} 
+                <input
+                  type="email"
+                  placeholder="Business Email"
+                  style={{ flex: 1, minWidth: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", padding: "16px 24px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13 }}
                 />
                 <button className="btn-primary" style={{ padding: "0 32px", fontSize: 11, height: 50 }}>JOIN ELITE</button>
               </div>
             </div>
 
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               onClick={(e) => handleNavigate(e, "/")}
-              style={{ 
-                fontFamily: "var(--font-geist-mono)", 
-                fontSize: 10, 
-                color: "rgba(255,255,255,0.3)", 
+              style={{
+                fontFamily: "var(--font-geist-mono)",
+                fontSize: 10,
+                color: "rgba(255,255,255,0.3)",
                 textDecoration: "none",
                 letterSpacing: "0.4em",
                 textTransform: "uppercase",

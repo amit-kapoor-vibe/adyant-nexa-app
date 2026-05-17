@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Syne, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/CustomCursor";
@@ -73,6 +74,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ClientWrapper } from "@/components/ClientWrapper";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -87,12 +90,11 @@ export default function RootLayout({
         <ErrorBoundary>
           <TransitionProvider>
             <GlobalUI />
-            <Navbar />
-            {children}
-            <ChatWidget />
+            <ClientWrapper>{children}</ClientWrapper>
             <ExitIntentAllocator />
           </TransitionProvider>
         </ErrorBoundary>
+        <GoogleAnalytics gaId="G-TKCBJ0Z6QL" />
       </body>
     </html>
   );

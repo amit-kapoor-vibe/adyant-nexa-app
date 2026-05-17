@@ -92,6 +92,9 @@ export const PricingSection = ({ onAudit, currency }: PricingSectionProps) => {
                     <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 4vw, 3rem)", color: "#E5E5E5", lineHeight: 1 }}>
                       {currency === "USD" ? tier.basePrice.usd : tier.basePrice.inr}
                     </span>
+                    <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(0,242,255,0.4)", marginTop: 4 }}>
+                      Billed via 12-month EMI
+                    </span>
                   </div>
                   <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "rgba(229,229,229,0.3)", marginBottom: 4 }}>/mo base</span>
                 </div>

@@ -13,8 +13,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       
+      const AUTHORIZED_EMAIL = "mit.kapur@gmail.com";
+
       if (!session) {
         router.push("/login");
+      } else if (session.user.email !== AUTHORIZED_EMAIL) {
+        // Redirect unauthorized users to the client portal
+        router.push("/portal");
       } else {
         setIsAuthorized(true);
       }

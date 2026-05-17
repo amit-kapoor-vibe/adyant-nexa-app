@@ -47,24 +47,19 @@ export function HeroContent({ onScan }: HeroContentProps) {
       style={{
         position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
         alignItems: "center", textAlign: "center",
-        padding: "clamp(120px, 15vh, 180px) 28px 40px",
+        padding: "140px 28px 60px",
         maxWidth: 1100, margin: "0 auto", width: "100%",
       }}
     >
-      {/* Status Pill */}
-      <motion.div variants={itemVars} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 48, padding: "10px 24px", border: "1px solid rgba(0,242,255,0.15)", background: "rgba(0,242,255,0.02)" }}>
-        <div className="pulse-dot" />
-        <span className="editorial-tag" style={{ fontSize: 9 }}>Neural Link Active — Elite Architecture</span>
-      </motion.div>
 
       {/* Headlines */}
-      <Heading level="h1" style={{ marginBottom: 40, userSelect: "none" }}>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer" data-text="ADYANT" style={{ display: "block" }}>ADYANT</motion.span>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer" data-text="NEXA" style={{ display: "block", animationDelay: "0.2s" }}>NEXA</motion.span>
+      <Heading level="h1" style={{ marginBottom: 40, userSelect: "none", textAlign: "center" }}>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer" data-text="ADYANT" style={{ display: "block", fontSize: "clamp(2.8rem, 12vw, 7.5rem)" }}>ADYANT</motion.span>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer" data-text="NEXA" style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.8rem, 12vw, 7.5rem)" }}>NEXA</motion.span>
       </Heading>
 
       {/* Descriptor */}
-      <motion.p variants={itemVars} style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.5)", lineHeight: 1.8, marginBottom: 40, maxWidth: 540 }}>
+      <motion.p variants={itemVars} style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.5)", lineHeight: 1.8, marginBottom: 40, maxWidth: 600, margin: "0 auto 40px" }}>
         High-Performance Infrastructure for the Conversion-Obsessed.<br />
         Revenue Systems Engineering · Multi-Agent AI · Absolute Speed.
       </motion.p>
@@ -96,7 +91,6 @@ export function HeroContent({ onScan }: HeroContentProps) {
         </form>
       </motion.div>
 
-      <StatStrip />
     </motion.div>
   );
 }

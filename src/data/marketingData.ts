@@ -43,36 +43,37 @@ export const setupFees = {
 
 export const pricingTiers: PricingTier[] = [
   {
-    name: "THE NEURAL BLUEPRINT",
-    basePrice: { usd: "$60", inr: "₹4,999" },
-    performanceFee: "100% Fully Redeemable",
-    description: "Our entry-level protocol. A deep-scan audit and scaling roadmap. Fully redeemable against any full-scale plan.",
+    name: "SPARK_",
+    basePrice: { usd: "$125", inr: "₹10,500" },
+    performanceFee: "Redeemable Audit Included",
+    description: "A high-end cinematic landing page designed to outshine your competition and capture elite leads.",
     features: [
-      "48-Hour Neural Audit",
-      "Revenue Leak Identification",
-      "Strategic Scaling Roadmap",
-      "Modular Growth Blueprint",
-      "Fully Redeemable Token"
+      "Single-Page Architecture",
+      "Sub-0.5s Load Time",
+      "Mobile-First Design",
+      "Neural Motion Graphics",
+      "Basic SEO Optimization"
     ]
   },
   {
-    name: "THE CATALYST",
-    basePrice: { usd: "$1,499", inr: "₹1,24,000" },
+    name: "VOLT_",
+    basePrice: { usd: "$416", inr: "₹34,500" },
     performanceFee: "10% of Revenue Share",
-    description: "Ideal for brands scaling from $10k to $50k monthly spend. Precision Meta/Google management.",
+    description: "Ideal for brands scaling from $10k to $50k monthly spend. Includes AI Persona Mapping.",
     features: [
       "Meta or Google Management",
       "Basic CAPI Integration",
       "Weekly Strategic Syncs",
       "AI Ad Copy Generation",
       "Standard Creative Audit"
-    ]
+    ],
+    highlight: true
   },
   {
-    name: "THE ACCELERATOR",
-    basePrice: { usd: "$2,999", inr: "₹2,49,000" },
+    name: "PULSE_",
+    basePrice: { usd: "$1,000", inr: "₹83,500" },
     performanceFee: "15% of Ad-Generated Revenue",
-    description: "Aggressive multi-channel dominance for high-growth brands aiming for market leadership.",
+    description: "Aggressive multi-channel dominance. Full Server-Side CAPI Infrastructure.",
     features: [
       "Omni-channel (Meta + Google)",
       "Full Server-Side CAPI Setup",
@@ -80,20 +81,7 @@ export const pricingTiers: PricingTier[] = [
       "24/7 Real-time Dashboard",
       "Priority Scaling Support"
     ],
-    highlight: true
-  },
-  {
-    name: "THE DOMINATOR",
-    basePrice: { usd: "Custom", inr: "Custom" },
-    performanceFee: "Negotiable %",
-    description: "Complete Revenue Operations and digital ecosystem for global market leaders.",
-    features: [
-      "Global Scale Execution",
-      "Multi-Agent AI Ecosystem",
-      "CRM & Sales Integration",
-      "Bespoke Creative Studio",
-      "Daily Optimization Sprints"
-    ]
+    highlight: false
   }
 ];
 

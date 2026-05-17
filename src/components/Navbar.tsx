@@ -23,16 +23,16 @@ export const Navbar = () => {
     { label: "Genesis", href: "/" },
     { label: "Marketing", href: "/marketing" },
     { label: "Web Assets", href: "/web-assets" },
-    { label: "Pricing", href: "/#investment" },
-    { label: "Journal", href: "/blog" }
+    { label: "Pricing", href: "/login" },
+    { label: "Journal", href: "/journal" }
   ];
 
   const mobileLinks = [
     { label: "Genesis", href: "/" },
     { label: "Marketing", href: "/marketing" },
     { label: "Web Assets", href: "/web-assets" },
-    { label: "Pricing", href: "/#investment" },
-    { label: "Journal", href: "/blog" }
+    { label: "Pricing", href: "/login" },
+    { label: "Journal", href: "/journal" }
   ];
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
@@ -47,7 +47,7 @@ export const Navbar = () => {
 
   return (
     <nav style={{ 
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, 
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000, 
       background: scrolled ? "rgba(2,2,2,0.9)" : "transparent", 
       backdropFilter: scrolled ? "blur(20px)" : "none", 
       borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent", 
@@ -117,16 +117,17 @@ export const Navbar = () => {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               style={{ 
                 position: "fixed", top: 0, right: 0, bottom: 0, width: "100%", maxWidth: 320, 
-                background: "#080808", 
-                borderLeft: "1px solid rgba(255,242,255,0.1)",
+                background: "#020202", 
+                borderLeft: "1px solid rgba(0,242,255,0.1)",
                 padding: "40px", 
                 display: "flex", flexDirection: "column", gap: 32,
                 zIndex: 1001,
-                boxShadow: "-20px 0 60px rgba(0,0,0,0.5)"
+                boxShadow: "-20px 0 60px rgba(0,0,0,0.8)",
+                overflowY: "auto"
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4 }}>Navigation Systems_</span>
+                <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, color: "#00F2FF" }}>Navigation Systems_</span>
                 <button onClick={() => setIsOpen(false)} style={{ background: "rgba(255,255,255,0.05)", border: "none", color: "#fff", padding: 12, borderRadius: "50%", cursor: "pointer" }}>
                   <X size={20} />
                 </button>

@@ -19,18 +19,24 @@ export function ScannerIdle({ url, onUrlChange, onSubmit }: ScannerIdleProps) {
         Enter your URL to initiate a deep-level performance scan. We will analyze your mobile load speeds, Core Web Vitals, and potential ad-spend bleed.
       </p>
       <form onSubmit={onSubmit} style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <div style={{ flex: "1 1 100%", minWidth: "250px", position: "relative" }}>
-          <Search size={16} color="rgba(255,255,255,0.3)" style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)" }} />
+        <div style={{ flex: "1 1 100%", minWidth: "250px", position: "relative", display: "flex", alignItems: "center" }}>
+          <Search size={16} color="rgba(0,242,255,0.4)" style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", zIndex: 1 }} />
+          <div style={{ 
+            position: "absolute", left: 44, color: "rgba(255,255,255,0.2)", 
+            fontFamily: "var(--font-geist-mono)", fontSize: 13, pointerEvents: "none" 
+          }}>
+            https://
+          </div>
           <input
             type="text"
-            placeholder="e.g. yourwebsite.com"
+            placeholder="yourwebsite.com"
             value={url}
-            onChange={(e) => onUrlChange(e.target.value)}
+            onChange={(e) => onUrlChange(e.target.value.replace(/^https?:\/\//, ""))}
             required
             aria-label="Website URL to audit"
             style={{
               width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
-              padding: "16px 16px 16px 44px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13,
+              padding: "16px 16px 16px 105px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13,
               outline: "none"
             }}
             onFocus={(e) => e.target.style.borderColor = "#00F2FF"}

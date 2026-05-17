@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { FadeSection } from "@/components/FadeSection";
 import { ArrowLeft, Share2, Mail } from "lucide-react";
-import { BLOG_POSTS } from "@/data/blogData";
+import { JOURNAL_POSTS } from "@/data/journalData";
 
 export default function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params);
@@ -15,7 +15,7 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
   
   const [lenisRef, setLenisRef] = useState<Lenis | null>(null);
   const { isNavigating, triggerTransition } = useNeuralTransition();
-  const post = BLOG_POSTS[slug as keyof typeof BLOG_POSTS];
+  const post = JOURNAL_POSTS[slug as keyof typeof JOURNAL_POSTS];
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 0.95 });

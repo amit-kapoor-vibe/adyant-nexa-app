@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle, CheckCircle } from "lucide-react";
 import type { Currency } from "@/types";
@@ -48,13 +48,25 @@ export function ScannerResult({ score, url, currency }: ScannerResultProps) {
     }
   };
 
-  const scoreColor = isCritical ? "#FF3333" : isMediacre ? "#C4A35A" : "#00FF66";
-  const scoreLabel = isCritical ? "Critical Performance Leak" : isMediacre ? "Mediocre Score Detected" : "Excellent Performance";
-  const scoreDesc = isCritical
-    ? "Based on mobile simulation, this site is actively losing traffic due to severe rendering delays. You are currently paying for ad clicks that bounce before the page loads."
-    : isMediacre
-      ? "Based on mobile simulation, this site exhibits moderate load delays. While functional, it is leaking potential conversions that an optimized Nexa architecture would capture."
-      : "Based on mobile simulation, this site is highly optimized for speed. However, an elite architecture audit can still reveal hidden pixel tracking leaks or conversion friction.";
+  const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const stored = sessionStorage.getItem("latest_neural_audit");
+      if (stored) setAiAnalysis(JSON.parse(stored));
+    }
+  }, []);
+
+  const isOurSite = url.toLowerCase().includes("adyantnexa");
+  const scoreColor = isOurSite ? "#00F2FF" : (isCritical ? "#FF3333" : isMediacre ? "#C4A35A" : "#00FF66");
+  const scoreLabel = isOurSite ? "Elite Neural Architecture" : (aiAnalysis?.status || (isCritical ? "Critical Performance Leak" : isMediacre ? "Mediocre Score Detected" : "Excellent Performance"));
+  const scoreDesc = isOurSite 
+    ? "This system is running on Adyant Nexa's proprietary 2026 infrastructure. Zero-friction hydration, multi-agent AI nodes, and edge-level optimization are active. Status: MAXIMUM OPTIMIZATION."
+    : (aiAnalysis?.analysis || (isCritical
+      ? "Based on mobile simulation, this site is actively losing traffic due to severe rendering delays. You are currently paying for ad clicks that bounce before the page loads."
+      : isMediacre
+        ? "Based on mobile simulation, this site exhibits moderate load delays. While functional, it is leaking potential conversions that an optimized Nexa architecture would capture."
+        : "Based on mobile simulation, this site is highly optimized for speed. However, an elite architecture audit can still reveal hidden pixel tracking leaks or conversion friction."));
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -79,15 +91,21 @@ export function ScannerResult({ score, url, currency }: ScannerResultProps) {
 
         {/* Info */}
         <div style={{ flex: "1 1 250px" }}>
-          <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 22, color: isCritical ? "#FF3333" : "#fff", marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
-            {isCritical ? <AlertTriangle size={20} /> : <CheckCircle size={20} />}
+          <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 22, color: isOurSite ? "#00F2FF" : (isCritical ? "#FF3333" : "#fff"), marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
+            {isCritical ? <AlertTriangle size={20} /> : <CheckCircle size={20} color={isOurSite ? "#00F2FF" : "#00FF66"} />}
             {scoreLabel}
           </h3>
-          <p style={{ fontFamily: "var(--font-inter)", fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: 20 }}>
+          <p style={{ fontFamily: "var(--font-inter)", fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: 8 }}>
             {scoreDesc}
           </p>
+          
+          {aiAnalysis?.recommendation && !isOurSite && (
+            <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#00F2FF", borderLeft: "2px solid #00F2FF", paddingLeft: 12, marginBottom: 20, fontStyle: "italic" }}>
+              NEURAL RECOMMENDATION: {aiAnalysis.recommendation}
+            </div>
+          )}
 
-          {!leadCaptured ? (
+          {!leadCaptured && !isOurSite ? (
             <div style={{ background: "rgba(0,242,255,0.05)", border: "1px solid rgba(0,242,255,0.2)", padding: 20 }}>
               <span style={{ display: "block", fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "#00F2FF", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>
                 Lock in your {currency === "USD" ? "$59" : "₹4,999"} Audit
@@ -115,13 +133,15 @@ export function ScannerResult({ score, url, currency }: ScannerResultProps) {
               </form>
             </div>
           ) : (
-            <div style={{ background: "rgba(0, 255, 102, 0.05)", border: "1px solid rgba(0, 255, 102, 0.2)", padding: 20, display: "flex", alignItems: "center", gap: 12 }}>
-              <CheckCircle color="#00FF66" size={24} />
-              <div>
-                <span style={{ display: "block", color: "#00FF66", fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 14 }}>Transmission Received</span>
-                <span style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-inter)", fontSize: 12 }}>Our engineers will contact you securely.</span>
+            !isOurSite && (
+              <div style={{ background: "rgba(0, 255, 102, 0.05)", border: "1px solid rgba(0, 255, 102, 0.2)", padding: 20, display: "flex", alignItems: "center", gap: 12 }}>
+                <CheckCircle color="#00FF66" size={24} />
+                <div>
+                  <span style={{ display: "block", color: "#00FF66", fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 14 }}>Transmission Received</span>
+                  <span style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-inter)", fontSize: 12 }}>Our engineers will contact you securely.</span>
+                </div>
               </div>
-            </div>
+            )
           )}
         </div>
       </div>

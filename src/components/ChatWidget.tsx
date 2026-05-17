@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, Cpu, Zap, ArrowRight, Bot } from "lucide-react";
+import { MessageSquare, X, Send, Cpu, Zap, ArrowRight } from "lucide-react";
 import { useNeuralTransition } from "@/context/TransitionContext";
 
 type Message = {
@@ -221,7 +221,7 @@ export function ChatWidget() {
                   <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 16, letterSpacing: "0.1em" }}>
                     DAILY_NEURAL_QUOTA_EXCEEDED
                   </p>
-                  <a href="https://wa.me/YOUR_NUMBER" target="_blank" rel="noopener noreferrer"
+                  <a href="https://wa.me/918700720477" target="_blank" rel="noopener noreferrer"
                     style={{
                       display: "flex", alignItems: "center", justifyContent: "center", gap: 12,
                       background: "#00FF66", color: "#000", padding: "16px", borderRadius: "12px",

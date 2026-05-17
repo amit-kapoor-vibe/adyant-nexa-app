@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
-import { Shield, Fingerprint, MailCheck } from "lucide-react";
+import { Shield, Fingerprint, MailCheck, Phone, Mail } from "lucide-react";
 import { useNeuralTransition } from "@/context/TransitionContext";
 
-const AUTHORIZED_EMAIL = "mit.kapur@gmail.com";
+const ADMIN_EMAIL = "mit.kapur@gmail.com";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -17,26 +18,55 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
-    if (email.toLowerCase() !== AUTHORIZED_EMAIL) {
-      setError("UNAUTHORIZED ENTITY DETECTED. Access restricted to core administrators only.");
-      return;
-    }
-
     setLoading(true);
     
     try {
-      const { error } = await supabase.auth.signInWithOtp({
+      // 1. LEAD CAPTURE: Save to Supabase 'leads' table if it's a new entry
+      // We check if this is an admin login first to avoid overwriting admin info as a lead
+      if (email.toLowerCase() !== ADMIN_EMAIL) {
+        const { error: leadError } = await supabase.from("leads").insert([
+          { 
+            email: email.toLowerCase(), 
+            phone: phone, 
+            name: email.split('@')[0], // Placeholder name from email
+            status: "NEW",
+            message: "User initiated pricing request/login"
+          }
+        ]);
+        // Note: We don't block if lead insert fails (might be duplicate email), just log it
+        if (leadError) console.warn("Lead capture warning:", leadError.message);
+      }
+
+      // 2. AUTHENTICATION: Send Magic Link
+      const { error: authError } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/admin`,
+          emailRedirectTo: `${window.location.origin}/portal`, // Default to portal
         },
       });
 
-      if (error) throw error;
+      if (authError) throw authError;
       setSuccess(true);
     } catch (err: any) {
       setError(err.message || "Authentication failed. Neural link disrupted.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setError("");
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/portal`,
+        },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      setError(err.message || "Google authentication failed.");
     } finally {
       setLoading(false);
     }
@@ -50,9 +80,9 @@ export default function LoginPage() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        style={{ width: "100%", maxWidth: 400, position: "relative", zIndex: 10 }}
+        style={{ width: "100%", maxWidth: 450, position: "relative", zIndex: 10 }}
       >
-        <div className="glass-panel" style={{ padding: "40px", borderTop: "2px solid #00F2FF", textAlign: "center" }}>
+        <div className="glass-panel" style={{ padding: "48px", borderTop: "2px solid #00F2FF", textAlign: "center" }}>
           
           {!success ? (
             <>
@@ -60,44 +90,76 @@ export default function LoginPage() {
                 <Fingerprint size={32} color="#00F2FF" />
               </div>
               
-              <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "#fff", marginBottom: 8 }}>
-                Restricted Access
+              <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 28, color: "#fff", marginBottom: 12 }}>
+                Neural Authorization
               </h1>
-              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 32 }}>
-                Initiate biometric or neural authorization to enter Central Command.
+              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 40, letterSpacing: "0.1em" }}>
+                ESTABLISHING SECURE HANDSHAKE FOR PRICING ACCESS.
               </p>
 
-              <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <input 
-                  type="email"
-                  placeholder="Enter administrator email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  style={{
-                    width: "100%", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)",
-                    padding: "16px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13,
-                    outline: "none", textAlign: "center"
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = "#00F2FF"}
-                  onBlur={(e) => e.target.style.borderColor = "rgba(255,255,255,0.1)"}
-                />
-                
-                {error && (
-                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ color: "#FF3333", fontSize: 11, fontFamily: "var(--font-geist-mono)" }}>
-                    {error}
-                  </motion.div>
-                )}
+              <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
+                <div style={{ position: "relative" }}>
+                  <Mail style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", opacity: 0.3 }} size={16} />
+                  <input 
+                    required 
+                    type="email" 
+                    placeholder="Business Email" 
+                    value={email} 
+                    onChange={e => setEmail(e.target.value)}
+                    style={inputStyle}
+                  />
+                </div>
+                <div style={{ position: "relative" }}>
+                  <Phone style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", opacity: 0.3 }} size={16} />
+                  <input 
+                    required 
+                    type="tel" 
+                    placeholder="Phone Number (WhatsApp Preferred)" 
+                    value={phone} 
+                    onChange={e => setPhone(e.target.value)}
+                    style={inputStyle}
+                  />
+                </div>
 
                 <button 
-                  type="submit"
+                  type="submit" 
                   disabled={loading}
                   className="btn-primary"
-                  style={{ width: "100%", padding: "16px", fontSize: 12, cursor: loading ? "not-allowed" : "pointer" }}
+                  style={{ 
+                    padding: "18px", fontSize: 12, width: "100%", 
+                    background: "#00F2FF", color: "#000", fontWeight: 800,
+                    letterSpacing: "0.2em"
+                  }}
                 >
-                  {loading ? "Authenticating..." : "Request Magic Link"}
+                  {loading ? "PROCESSING..." : "REQUEST NEURAL ACCESS"}
                 </button>
               </form>
+
+              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24, opacity: 0.2 }}>
+                <div style={{ flex: 1, height: 1, background: "#fff" }} />
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)" }}>OR</span>
+                <div style={{ flex: 1, height: 1, background: "#fff" }} />
+              </div>
+
+              <button 
+                onClick={handleGoogleLogin}
+                disabled={loading}
+                style={{ 
+                  width: "100%", padding: "18px", background: "rgba(255,255,255,0.03)", color: "#fff", 
+                  fontFamily: "var(--font-inter)", fontWeight: 600, fontSize: 13, 
+                  border: "1px solid rgba(255,255,255,0.1)", cursor: loading ? "not-allowed" : "pointer",
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 12,
+                  borderRadius: "4px"
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="https://www.google.com/favicon.ico" alt="Google" width={18} height={18} />
+                {loading ? "Establishing Neural Link..." : "Continue with Google"}
+              </button>
+
+              {error && (
+                <p style={{ color: "#ff3333", fontSize: 12, marginTop: 24, fontFamily: "var(--font-geist-mono)" }}>{error}</p>
+              )}
             </>
           ) : (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -107,9 +169,13 @@ export default function LoginPage() {
               <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "#fff", marginBottom: 12 }}>
                 Transmission Sent
               </h2>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>
-                A secure neural link has been dispatched to <strong>{email}</strong>. Click the link to bypass the firewall and enter the dashboard.
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, marginBottom: 32 }}>
+                A secure neural link has been dispatched to <strong>{email}</strong>. <br /><br />
+                Check your inbox to bypass the gate and access proprietary pricing.
               </p>
+              <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(0,242,255,0.4)" }}>
+                PROTOCOL_STATUS: WAITING_FOR_USER_VERIFICATION
+              </div>
             </motion.div>
           )}
 
@@ -118,3 +184,16 @@ export default function LoginPage() {
     </div>
   );
 }
+
+const inputStyle = {
+  width: "100%",
+  background: "rgba(255,255,255,0.03)",
+  border: "1px solid rgba(255,255,255,0.08)",
+  padding: "16px 48px",
+  color: "#fff",
+  fontFamily: "var(--font-inter)",
+  fontSize: 14,
+  outline: "none",
+  borderRadius: "4px",
+  transition: "all 0.3s ease"
+};
