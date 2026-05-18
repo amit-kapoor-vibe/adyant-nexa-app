@@ -1,7 +1,7 @@
 export const JOURNAL_POSTS = {
   "creative-is-the-new-targeting": {
     category: "PERFORMANCE",
-    date: "APRIL 26, 2026",
+    date: "APRIL 25, 2026",
     readTime: "5 MIN READ",
     title: "Creative is the New Targeting: Scaling in the AI Era",
     content: `
@@ -19,7 +19,7 @@ export const JOURNAL_POSTS = {
   },
   "signal-recovery-sst-2026": {
     category: "DATA-INFRA",
-    date: "APRIL 24, 2026",
+    date: "APRIL 23, 2026",
     readTime: "7 MIN READ",
     title: "The 2026 Signal Recovery Playbook: Server-Side GTM",
     content: `
@@ -37,7 +37,7 @@ export const JOURNAL_POSTS = {
   },
   "attribution-gap-capi-ios14": {
     category: "STRATEGY",
-    date: "APRIL 22, 2026",
+    date: "APRIL 21, 2026",
     readTime: "8 MIN READ",
     title: "Beyond Attribution: The Rise of Revenue Mix Modeling",
     content: `
@@ -55,7 +55,7 @@ export const JOURNAL_POSTS = {
   },
   "ai-agent-economy-revenue": {
     category: "AI-AUTOMATION",
-    date: "APRIL 20, 2026",
+    date: "APRIL 19, 2026",
     readTime: "10 MIN READ",
     title: "The AI-Agent Economy: Autonomous Lead Conversion",
     content: `
@@ -73,7 +73,7 @@ export const JOURNAL_POSTS = {
   },
   "post-search-era-ai-discovery": {
     category: "FUTURE-TECH",
-    date: "APRIL 27, 2026",
+    date: "APRIL 26, 2026",
     readTime: "6 MIN READ",
     title: "The Post-Search Era: Brand Discovery in the Age of LLMs",
     content: `
@@ -91,7 +91,7 @@ export const JOURNAL_POSTS = {
   },
   "minimalist-architecture-lean-agency": {
     category: "OPERATIONS",
-    date: "APRIL 27, 2026",
+    date: "APRIL 26, 2026",
     readTime: "4 MIN READ",
     title: "Minimalist Architecture: Why the Leanest Agencies Win",
     content: `
@@ -109,7 +109,7 @@ export const JOURNAL_POSTS = {
   },
   "pocketos-ai-agent-disaster": {
     category: "AI-SAFETY",
-    date: "APRIL 29, 2026",
+    date: "APRIL 28, 2026",
     readTime: "12 MIN READ",
     title: "The PocketOS Disaster: How an AI Agent Wiped a Company in 9 Seconds",
     content: `
@@ -135,7 +135,7 @@ export const JOURNAL_POSTS = {
   },
   "death-of-chatbots-rise-of-agents": {
     category: "ENGINEERING",
-    date: "April 28, 2026",
+    date: "April 27, 2026",
     readTime: "4 MIN READ",
     title: "The Death of Chatbots, The Rise of Agents",
     content: `
@@ -156,7 +156,7 @@ export const JOURNAL_POSTS = {
   },
   "us-ecommerce-recession-hack": {
     category: "GLOBAL_STRATEGY",
-    date: "April 29, 2026",
+    date: "April 28, 2026",
     readTime: "6 MIN READ",
     title: "The US E-Commerce Recession Hack: Conversion Velocity",
     content: `
@@ -177,7 +177,7 @@ export const JOURNAL_POSTS = {
   },
   "tier-2-india-revolution": {
     category: "INDIA_GROWTH",
-    date: "April 30, 2026",
+    date: "April 29, 2026",
     readTime: "5 MIN READ",
     title: "The Tier-2 India Revolution: Dominating the Next 400M",
     content: `
@@ -198,7 +198,7 @@ export const JOURNAL_POSTS = {
   },
   "self-healing-code-architecture": {
     category: "ENGINEERING",
-    date: "May 01, 2026",
+    date: "April 30, 2026",
     readTime: "8 MIN READ",
     title: "Self-Healing Code Architecture: The End of Maintenance",
     content: `
@@ -219,7 +219,7 @@ export const JOURNAL_POSTS = {
   },
   "capi-mastery-event-tracking": {
     category: "PERFORMANCE",
-    date: "May 02, 2026",
+    date: "May 01, 2026",
     readTime: "5 MIN READ",
     title: "CAPI Mastery & Signal Recovery: The First-Party Data War",
     content: `
@@ -237,7 +237,7 @@ export const JOURNAL_POSTS = {
   },
   "predictive-ltv-ai-customers": {
     category: "PERFORMANCE",
-    date: "May 02, 2026",
+    date: "May 01, 2026",
     readTime: "6 MIN READ",
     title: "Predictive LTV: Identifying Your Top 1% Customers",
     content: `
@@ -255,7 +255,7 @@ export const JOURNAL_POSTS = {
   },
   "voice-search-2026-agents": {
     category: "MARKET_INTEL",
-    date: "May 03, 2026",
+    date: "May 02, 2026",
     readTime: "4 MIN READ",
     title: "Voice Search 2026: The Rise of Agent Optimization (VSEO)",
     content: `
@@ -273,7 +273,7 @@ export const JOURNAL_POSTS = {
   },
   "cross-border-dominance-ai": {
     category: "GLOBAL_STRATEGY",
-    date: "April 29, 2026",
+    date: "April 28, 2026",
     readTime: "7 MIN READ",
     title: "Cross-Border Dominance: Scaling US Brands Globally via AI",
     content: `
@@ -291,7 +291,7 @@ export const JOURNAL_POSTS = {
   },
   "whatsapp-commerce-frontier": {
     category: "INDIA_GROWTH",
-    date: "April 30, 2026",
+    date: "April 29, 2026",
     readTime: "4 MIN READ",
     title: "WhatsApp Commerce: The Final Frontier of Indian D2C",
     content: `
@@ -309,7 +309,7 @@ export const JOURNAL_POSTS = {
   },
   "reddit-economy-community-sentiment": {
     category: "MARKET_INTEL",
-    date: "May 03, 2026",
+    date: "May 02, 2026",
     readTime: "5 MIN READ",
     title: "The Reddit Economy: Why Community Trust is the New Backlink",
     content: `
@@ -327,7 +327,7 @@ export const JOURNAL_POSTS = {
   },
   "zero-click-marketing-ai-overviews": {
     category: "MARKET_INTEL",
-    date: "April 28, 2026",
+    date: "April 27, 2026",
     readTime: "5 MIN READ",
     title: "Zero-Click Marketing: Winning in the Age of AI Overviews",
     content: `
@@ -345,7 +345,7 @@ export const JOURNAL_POSTS = {
   },
   "llm-training-sales-machine": {
     category: "ENGINEERING",
-    date: "May 01, 2026",
+    date: "April 30, 2026",
     readTime: "6 MIN READ",
     title: "Turning PDFs into Sales Machines: The Digital Twin Strategy",
     content: `
@@ -363,7 +363,7 @@ export const JOURNAL_POSTS = {
   },
   "us-market-blueprint-ai-agents": {
     category: "GLOBAL_STRATEGY",
-    date: "April 28, 2026",
+    date: "April 27, 2026",
     readTime: "6 MIN READ",
     title: "The US Market Blueprint: AI Agents Over Staffing",
     content: `
@@ -381,7 +381,7 @@ export const JOURNAL_POSTS = {
   },
   "india-scaling-playbook-roi-ads": {
     category: "INDIA_GROWTH",
-    date: "April 28, 2026",
+    date: "April 27, 2026",
     readTime: "5 MIN READ",
     title: "The India Scaling Playbook: ROI Beyond Ads",
     content: `
@@ -399,7 +399,7 @@ export const JOURNAL_POSTS = {
   },
   "indian-d2c-attribution-trap": {
     category: "INDIA_GROWTH",
-    date: "May 19, 2026",
+    date: "May 18, 2026",
     readTime: "5 MIN READ",
     title: "The Indian D2C Attribution Trap: Why Meta Reporting Lies",
     content: `
@@ -417,7 +417,7 @@ export const JOURNAL_POSTS = {
   },
   "threejs-webgl-conversion-multiplier": {
     category: "ENGINEERING",
-    date: "May 20, 2026",
+    date: "May 19, 2026",
     readTime: "6 MIN READ",
     title: "WebGL & Three.js: The New Frontier of E-Commerce CRO",
     content: `
@@ -435,7 +435,7 @@ export const JOURNAL_POSTS = {
   },
   "ten-million-one-man-brand": {
     category: "GLOBAL_STRATEGY",
-    date: "May 21, 2026",
+    date: "May 20, 2026",
     readTime: "6 MIN READ",
     title: "The $10M One-Man Brand: Autonomous Operations",
     content: `
@@ -453,7 +453,7 @@ export const JOURNAL_POSTS = {
   },
   "bant-qualification-high-ticket-d2c": {
     category: "PERFORMANCE",
-    date: "May 22, 2026",
+    date: "May 21, 2026",
     readTime: "5 MIN READ",
     title: "BANT Qualification Secrets: Closing on Autopilot",
     content: `
@@ -471,7 +471,7 @@ export const JOURNAL_POSTS = {
   },
   "death-of-meta-pixel-india": {
     category: "DATA-INFRA",
-    date: "May 23, 2026",
+    date: "May 22, 2026",
     readTime: "6 MIN READ",
     title: "The Death of the Meta Pixel: Server-Side Signal Era",
     content: `
@@ -489,7 +489,7 @@ export const JOURNAL_POSTS = {
   },
   "ai-concierge-hydrating-cold-traffic": {
     category: "AI-AUTOMATION",
-    date: "May 24, 2026",
+    date: "May 23, 2026",
     readTime: "5 MIN READ",
     title: "Contextual AI Concierge: Hydrating Cold Traffic",
     content: `
@@ -507,7 +507,7 @@ export const JOURNAL_POSTS = {
   },
   "cashflow-velocity-metric": {
     category: "STRATEGY",
-    date: "May 25, 2026",
+    date: "May 24, 2026",
     readTime: "6 MIN READ",
     title: "Beyond ROAS: The Cashflow Velocity Framework",
     content: `
@@ -525,7 +525,7 @@ export const JOURNAL_POSTS = {
   },
   "vernacular-ai-agents-bharat": {
     category: "INDIA_GROWTH",
-    date: "May 26, 2026",
+    date: "May 25, 2026",
     readTime: "5 MIN READ",
     title: "Vernacular AI: Dominating the Bharat Opportunity",
     content: `
@@ -543,7 +543,7 @@ export const JOURNAL_POSTS = {
   },
   "infrastructure-latency-cost": {
     category: "ENGINEERING",
-    date: "May 27, 2026",
+    date: "May 26, 2026",
     readTime: "4 MIN READ",
     title: "The Cost of Milliseconds: How Latency Kills Profit",
     content: `
@@ -561,7 +561,7 @@ export const JOURNAL_POSTS = {
   },
   "copilot-founder-paradigm": {
     category: "OPERATIONS",
-    date: "May 28, 2026",
+    date: "May 27, 2026",
     readTime: "5 MIN READ",
     title: "The Co-Pilot Founder: Scaling via Agentic Collaboration",
     content: `

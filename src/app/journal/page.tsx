@@ -14,7 +14,7 @@ const POSTS = [
     slug: "copilot-founder-paradigm",
     title: "J-031: THE CO-PILOT FOUNDER PARADIGM",
     excerpt: "How modern solo founders partner with advanced agentic AI architectures to bypass the hiring grind.",
-    date: "May 28, 2026",
+    date: "May 27, 2026",
     readTime: "5 min read",
     category: "OPERATIONS"
   },
@@ -22,7 +22,7 @@ const POSTS = [
     slug: "infrastructure-latency-cost",
     title: "J-030: THE COST OF INFRASTRUCTURE LATENCY",
     excerpt: "How every 100ms of loading lag directly decreases your conversion rate by 7%. Engineering speed.",
-    date: "May 27, 2026",
+    date: "May 26, 2026",
     readTime: "4 min read",
     category: "ENGINEERING"
   },
@@ -30,7 +30,7 @@ const POSTS = [
     slug: "vernacular-ai-agents-bharat",
     title: "J-029: VERNACULAR AI AGENTS FOR BHARAT",
     excerpt: "Why English-only sites fail in Tier-2/3 India. Implementing native voice and chat bots in Hindi.",
-    date: "May 26, 2026",
+    date: "May 25, 2026",
     readTime: "5 min read",
     category: "INDIA_GROWTH"
   },
@@ -38,7 +38,7 @@ const POSTS = [
     slug: "cashflow-velocity-metric",
     title: "J-028: METRIC THAT MATTERS: CASHFLOW VELOCITY",
     excerpt: "Moving away from standard ROAS metrics to understand blended unit economics and contribution margins.",
-    date: "May 25, 2026",
+    date: "May 24, 2026",
     readTime: "6 min read",
     category: "STRATEGY"
   },
@@ -46,7 +46,7 @@ const POSTS = [
     slug: "ai-concierge-hydrating-cold-traffic",
     title: "J-027: AI CONCIERGE: HYDRATING COLD D2C TRAFFIC",
     excerpt: "Converting passive website visitors into buyers using contextual AI concierge nodes that answer objections.",
-    date: "May 24, 2026",
+    date: "May 23, 2026",
     readTime: "5 min read",
     category: "AI-AUTOMATION"
   },
@@ -54,7 +54,7 @@ const POSTS = [
     slug: "death-of-meta-pixel-india",
     title: "J-026: THE DEATH OF THE Meta PIXEL IN INDIA",
     excerpt: "Standard browser pixels are obsolete. Transitioning Indian storefronts to server-side Conversions API.",
-    date: "May 23, 2026",
+    date: "May 22, 2026",
     readTime: "6 min read",
     category: "DATA-INFRA"
   },
@@ -62,7 +62,7 @@ const POSTS = [
     slug: "bant-qualification-high-ticket-d2c",
     title: "J-025: BANT QUALIFICATION SECRETS FOR HIGH-TICKET D2C",
     excerpt: "How to qualify prospects on autopilot using autonomous voice and chat agents before booking sales calls.",
-    date: "May 22, 2026",
+    date: "May 21, 2026",
     readTime: "5 min read",
     category: "PERFORMANCE"
   },
@@ -70,7 +70,7 @@ const POSTS = [
     slug: "ten-million-one-man-brand",
     title: "J-024: THE $10M ONE-MAN D2C BRAND",
     excerpt: "How elite founders use autonomous AI agent fleets to run multi-million dollar brands without employees.",
-    date: "May 21, 2026",
+    date: "May 20, 2026",
     readTime: "6 min read",
     category: "GLOBAL_STRATEGY"
   },
@@ -78,7 +78,7 @@ const POSTS = [
     slug: "threejs-webgl-conversion-multiplier",
     title: "J-023: THREE.JS & WEBGL: THE LATEST CONVERSION MULTIPLIER",
     excerpt: "Why static website templates convert poorly. How interactive 3D WebGL experiences boost time-on-site by 300%.",
-    date: "May 20, 2026",
+    date: "May 19, 2026",
     readTime: "6 min read",
     category: "ENGINEERING"
   },
@@ -86,7 +86,7 @@ const POSTS = [
     slug: "indian-d2c-attribution-trap",
     title: "J-022: THE INDIAN D2C ATTRIBUTION TRAP",
     excerpt: "Why standard Meta ad reporting lies to Indian founders, and how a custom Server-Side CAPI setup saves lakhs.",
-    date: "May 19, 2026",
+    date: "May 18, 2026",
     readTime: "5 min read",
     category: "INDIA_GROWTH"
   },
@@ -94,7 +94,7 @@ const POSTS = [
     slug: "reddit-economy-community-sentiment",
     title: "J-021: THE REDDIT ECONOMY & SENTIMENT",
     excerpt: "Why community trust is the new backlink. How to build 'Social Capital' that the AI engines love.",
-    date: "May 03, 2026",
+    date: "May 02, 2026",
     readTime: "5 min read",
     category: "MARKET_INTEL"
   },
@@ -102,7 +102,7 @@ const POSTS = [
     slug: "voice-search-2026-agents",
     title: "J-020: VOICE SEARCH 2026: AGENT OPTIMIZATION",
     excerpt: "Optimizing for Siri, Alexa, and GPT-Voice. Why your brand needs to sound as good as it looks.",
-    date: "May 03, 2026",
+    date: "May 02, 2026",
     readTime: "4 min read",
     category: "MARKET_INTEL"
   },
@@ -110,7 +110,7 @@ const POSTS = [
     slug: "predictive-ltv-ai-customers",
     title: "J-019: PREDICTIVE LTV VIA AI",
     excerpt: "Finding your top 1% customers before they even make their first purchase. High-velocity scaling for elite brands.",
-    date: "May 02, 2026",
+    date: "May 01, 2026",
     readTime: "6 min read",
     category: "PERFORMANCE"
   },
@@ -118,7 +118,7 @@ const POSTS = [
     slug: "capi-mastery-event-tracking",
     title: "J-018: CAPI MASTERY & SIGNAL RECOVERY",
     excerpt: "Beyond the Meta Pixel. Discover how Advanced CAPI implementations recover lost signals and boost attribution accuracy.",
-    date: "May 02, 2026",
+    date: "May 01, 2026",
     readTime: "5 min read",
     category: "PERFORMANCE"
   },
@@ -126,7 +126,7 @@ const POSTS = [
     slug: "llm-training-sales-machine",
     title: "J-017: TURNING PDFS INTO SALES MACHINES",
     excerpt: "How to train LLMs on your proprietary brand data to create a 'Digital Twin' of your best salesperson.",
-    date: "May 01, 2026",
+    date: "April 30, 2026",
     readTime: "6 min read",
     category: "ENGINEERING"
   },
@@ -134,7 +134,7 @@ const POSTS = [
     slug: "self-healing-code-architecture",
     title: "J-016: SELF-HEALING CODE ARCHITECTURE",
     excerpt: "Moving beyond maintenance. How our neural-linked codebases fix their own bugs and adapt to API shifts autonomously.",
-    date: "May 01, 2026",
+    date: "April 30, 2026",
     readTime: "8 min read",
     category: "ENGINEERING"
   },
@@ -142,7 +142,7 @@ const POSTS = [
     slug: "whatsapp-commerce-frontier",
     title: "J-015: WHATSAPP COMMERCE: THE FINAL FRONTIER",
     excerpt: "Why email is secondary in India. Building an autonomous WhatsApp ecosystem that closes sales in under 120 seconds.",
-    date: "April 30, 2026",
+    date: "April 29, 2026",
     readTime: "4 min read",
     category: "INDIA_GROWTH"
   },
@@ -150,7 +150,7 @@ const POSTS = [
     slug: "tier-2-india-revolution",
     title: "J-014: THE TIER-2 INDIA REVOLUTION",
     excerpt: "The next 400M buyers are in Tier-2 and Tier-3 India. How Adyant Nexa infrastructure optimizes for low-bandwidth dominance.",
-    date: "April 30, 2026",
+    date: "April 29, 2026",
     readTime: "5 min read",
     category: "INDIA_GROWTH"
   },
@@ -158,7 +158,7 @@ const POSTS = [
     slug: "pocketos-ai-agent-disaster",
     title: "J-013: THE POCKETOS AI DISASTER",
     excerpt: "9 seconds was all it took. Discover how an autonomous agent wiped a company's production database and backups.",
-    date: "April 29, 2026",
+    date: "April 28, 2026",
     readTime: "12 min read",
     category: "AI-SAFETY"
   },
@@ -166,7 +166,7 @@ const POSTS = [
     slug: "cross-border-dominance-ai",
     title: "J-012: CROSS-BORDER DOMINANCE VIA AI",
     excerpt: "Scaling US brands to EU and APAC markets without local teams. Using AI agents for 24/7 localized commerce.",
-    date: "April 29, 2026",
+    date: "April 28, 2026",
     readTime: "7 min read",
     category: "GLOBAL_STRATEGY"
   },
@@ -174,7 +174,7 @@ const POSTS = [
     slug: "us-ecommerce-recession-hack",
     title: "J-011: THE US E-COMMERCE RECESSION HACK",
     excerpt: "Discover why conversion velocity is the only metric that matters in a high-interest US market. How to cut CAC by 40%.",
-    date: "April 29, 2026",
+    date: "April 28, 2026",
     readTime: "6 min read",
     category: "GLOBAL_STRATEGY"
   },
@@ -182,7 +182,7 @@ const POSTS = [
     slug: "us-market-blueprint-ai-agents",
     title: "J-009: THE US MARKET BLUEPRINT: AI AGENTS OVER STAFFING",
     excerpt: "Why US-based D2C founders are firing support staff and hiring Autonomous Agents. The unit economics of the AI-first era.",
-    date: "April 28, 2026",
+    date: "April 27, 2026",
     readTime: "6 min read",
     category: "GLOBAL_STRATEGY"
   },
@@ -190,7 +190,7 @@ const POSTS = [
     slug: "india-scaling-playbook-roi-ads",
     title: "J-010: THE INDIA SCALING PLAYBOOK: ROI BEYOND ADS",
     excerpt: "Scaling to ₹10Cr/mo in the Indian market requires more than just Meta Ads. Discover the Adyant Nexa ROI Multiplier.",
-    date: "April 28, 2026",
+    date: "April 27, 2026",
     readTime: "5 min read",
     category: "INDIA_GROWTH"
   },
@@ -198,7 +198,7 @@ const POSTS = [
     slug: "death-of-chatbots-rise-of-agents",
     title: "J-001: THE DEATH OF CHATBOTS, THE RISE OF AGENTS",
     excerpt: "Market ab boring 'How can I help you?' wale chatbots se pak gaya hai. Discover why autonomous AI Agents are the only way to scale in 2026.",
-    date: "April 28, 2026",
+    date: "April 27, 2026",
     readTime: "4 min read",
     category: "ENGINEERING"
   },
@@ -206,7 +206,7 @@ const POSTS = [
     slug: "zero-click-marketing-ai-overviews",
     title: "J-002: ZERO-CLICK MARKETING & AI OVERVIEWS",
     excerpt: "Google's SGE is changing the gateway to brand discovery. Why 'Semantic Authority' and high-end vibe is now your primary SEO strategy.",
-    date: "April 28, 2026",
+    date: "April 27, 2026",
     readTime: "5 min read",
     category: "MARKET_INTEL"
   },
@@ -214,7 +214,7 @@ const POSTS = [
     slug: "post-search-era-ai-discovery",
     title: "J-003: THE POST-SEARCH ERA & AI DISCOVERY",
     excerpt: "Google is no longer the only gateway. Discover why 'Semantic Authority' is the new SEO for the 2026 AI ecosystem.",
-    date: "April 27, 2026",
+    date: "April 26, 2026",
     readTime: "6 min read",
     category: "FUTURE-TECH"
   },
@@ -222,7 +222,7 @@ const POSTS = [
     slug: "minimalist-architecture-lean-agency",
     title: "J-004: MINIMALIST ARCHITECTURE & LEAN OPERATIONS",
     excerpt: "Filtering the noise in your code and operations. Why a modular, lightweight tech stack is the ultimate competitive advantage.",
-    date: "April 27, 2026",
+    date: "April 26, 2026",
     readTime: "4 min read",
     category: "OPERATIONS"
   },
@@ -230,7 +230,7 @@ const POSTS = [
     slug: "creative-is-the-new-targeting",
     title: "J-005: CREATIVE IS THE NEW TARGETING",
     excerpt: "Why the visual is now more important than the interest-stack. How to build 'Performance Creative' that feeds the algorithm.",
-    date: "April 26, 2026",
+    date: "April 25, 2026",
     readTime: "5 min read",
     category: "PERFORMANCE"
   },
@@ -238,7 +238,7 @@ const POSTS = [
     slug: "signal-recovery-sst-2026",
     title: "J-006: THE 2026 SIGNAL RECOVERY PLAYBOOK",
     excerpt: "Browser-based tracking is dead. Discover how SST recovers 30% of lost signal and drops CAC by 22% instantly.",
-    date: "April 24, 2026",
+    date: "April 23, 2026",
     readTime: "7 min read",
     category: "DATA-INFRA"
   },
@@ -246,7 +246,7 @@ const POSTS = [
     slug: "attribution-gap-capi-ios14",
     title: "J-007: BEYOND ATTRIBUTION & REVENUE MIXING",
     excerpt: "Moving from simple click-tracking to holistic AI-driven incrementality. Proof that your ads are actually driving profit.",
-    date: "April 22, 2026",
+    date: "April 21, 2026",
     readTime: "8 min read",
     category: "STRATEGY"
   },
@@ -254,7 +254,7 @@ const POSTS = [
     slug: "ai-agent-economy-revenue",
     title: "J-008: THE AI-AGENT ECONOMY & CONVERSION",
     excerpt: "Replacing standard chatbots with autonomous LLM agents that book, follow-up, and close deals without human input.",
-    date: "April 20, 2026",
+    date: "April 19, 2026",
     readTime: "10 min read",
     category: "AI-AUTOMATION"
   }
