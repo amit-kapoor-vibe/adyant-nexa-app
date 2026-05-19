@@ -8,7 +8,6 @@ import { ScannerIdle } from "./scanner/ScannerIdle";
 import { ScannerTerminal } from "./scanner/ScannerTerminal";
 import { ScannerResult } from "./scanner/ScannerResult";
 import { trackLatency, trackEvent } from "@/utils/analytics";
-import { QuantumAllocator } from "./gamification/QuantumAllocator";
 
 const INITIAL_LOGS = [
   "INIT: Establishing handshake with global edge nodes...",
@@ -46,7 +45,6 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
   const [scanState, setScanState] = useState<ScanState>("idle");
   const [logs, setLogs] = useState<string[]>([]);
   const [score, setScore] = useState<number | null>(null);
-  const [isAllocatorOpen, setIsAllocatorOpen] = useState(false);
 
   // Sync URL and auto-scan when modal opens with a URL
   useEffect(() => {
@@ -62,24 +60,9 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
       setScanState("idle");
       setLogs([]);
       setScore(null);
-      setIsAllocatorOpen(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, initialUrl]);
-
-  // Trigger Quantum Allocator 5 seconds after result
-  useEffect(() => {
-    if (scanState === "result") {
-      const timer = setTimeout(() => {
-        setIsAllocatorOpen(true);
-        if (typeof window !== "undefined") {
-          window.dispatchEvent(new Event("quantum_allocator_shown"));
-          sessionStorage.setItem("quantum_allocator_triggered", "true");
-        }
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [scanState]);
 
   const runScan = async (targetRaw: string) => {
     let targetUrl = targetRaw;
@@ -229,13 +212,6 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
           </div>
         </motion.div>
       </motion.div>
-      
-      <QuantumAllocator 
-        key="quantum-allocator"
-        isOpen={isAllocatorOpen} 
-        onClose={() => setIsAllocatorOpen(false)} 
-        currency={currency} 
-      />
     </AnimatePresence>
   );
 }

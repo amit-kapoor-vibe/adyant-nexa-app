@@ -8,7 +8,6 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navbar } from "@/components/Navbar";
 import { GlobalUI } from "@/components/GlobalUI";
 import { TransitionProvider } from "@/context/TransitionContext";
-import { ExitIntentAllocator } from "@/components/gamification/ExitIntentAllocator";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -91,7 +90,6 @@ export default function RootLayout({
           <TransitionProvider>
             <GlobalUI />
             <ClientWrapper>{children}</ClientWrapper>
-            <ExitIntentAllocator />
           </TransitionProvider>
         </ErrorBoundary>
         <GoogleAnalytics gaId="G-TKCBJ0Z6QL" />

@@ -19,11 +19,13 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const pricingHref = pathname === "/marketing" ? "/marketing#pricing" : "/#investment";
+
   const desktopLinks = [
     { label: "Genesis", href: "/" },
     { label: "Marketing", href: "/marketing" },
     { label: "Web Assets", href: "/web-assets" },
-    { label: "Pricing", href: "/login" },
+    { label: "Pricing", href: pricingHref },
     { label: "Journal", href: "/journal" }
   ];
 
@@ -31,7 +33,7 @@ export const Navbar = () => {
     { label: "Genesis", href: "/" },
     { label: "Marketing", href: "/marketing" },
     { label: "Web Assets", href: "/web-assets" },
-    { label: "Pricing", href: "/login" },
+    { label: "Pricing", href: pricingHref },
     { label: "Journal", href: "/journal" }
   ];
 
@@ -46,58 +48,78 @@ export const Navbar = () => {
   }
 
   return (
-    <nav style={{ 
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000, 
-      background: scrolled ? "rgba(2,2,2,0.9)" : "transparent", 
-      backdropFilter: scrolled ? "blur(20px)" : "none", 
-      borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent", 
-      padding: scrolled ? "12px 0" : "24px 0",
-      transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)"
-    }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px" }}>
-        {/* Logo */}
-        <Link href="/" onClick={(e) => handleLinkClick(e, "/")} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-          <img src="/Favicon transparent.png" alt="Adyant Nexa" width={28} height={28} />
-          <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 14, color: "#fff", letterSpacing: "-0.01em" }}>ADYANT NEXA</span>
-        </Link>
-
-        {/* Desktop Links */}
-        <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ display: "flex", background: "rgba(255,255,255,0.03)", padding: "4px", borderRadius: "100px", border: "1px solid rgba(255,255,255,0.05)" }}>
-            {desktopLinks.map(link => {
-              const isActive = pathname === link.href;
-              return (
-                <Link key={link.label} href={link.href} onClick={(e) => handleLinkClick(e, link.href)} 
-                  style={{ 
-                    fontFamily: "var(--font-inter)", 
-                    fontSize: 12, 
-                    fontWeight: 600, 
-                    padding: "8px 20px", 
-                    borderRadius: "100px", 
-                    color: isActive ? "#00F2FF" : "rgba(255,255,255,0.5)", 
-                    background: isActive ? "rgba(0,242,255,0.05)" : "transparent",
-                    textDecoration: "none", 
-                    transition: "0.3s" 
-                  }}>
-                  {link.label}
-                </Link>
-              );
-            })}
-          </div>
-          
-          <div style={{ display: "flex", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", padding: "2px", borderRadius: "100px", marginLeft: 16 }}>
-            <button onClick={() => setCurrency("USD")} style={{ padding: "6px 12px", borderRadius: "100px", background: currency === "USD" ? "#00F2FF" : "transparent", color: currency === "USD" ? "#000" : "#fff", border: "none", fontSize: 10, fontWeight: 800, cursor: "pointer", transition: "0.3s" }}>USD</button>
-            <button onClick={() => setCurrency("INR")} style={{ padding: "6px 12px", borderRadius: "100px", background: currency === "INR" ? "#00F2FF" : "transparent", color: currency === "INR" ? "#000" : "#fff", border: "none", fontSize: 10, fontWeight: 800, cursor: "pointer", transition: "0.3s" }}>INR</button>
+    <>
+      <nav style={{ 
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000, 
+        background: scrolled ? "rgba(2,2,2,0.9)" : "transparent", 
+        backdropFilter: scrolled ? "blur(20px)" : "none", 
+        WebkitBackdropFilter: scrolled ? "blur(20px)" : "none", 
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent", 
+        padding: scrolled ? "12px 0" : "24px 0",
+        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+        transform: "translate3d(0, 0, 0)",
+        WebkitTransform: "translate3d(0, 0, 0)"
+      }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px" }}>
+          {/* 1. Left container (Logo) - Flex 1 */}
+          <div style={{ flex: 1, display: "flex", justifyContent: "flex-start" }}>
+            <Link href="/" onClick={(e) => handleLinkClick(e, "/")} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
+              <img src="/Favicon transparent.png" alt="Adyant Nexa" width={28} height={28} />
+              <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 14, color: "#fff", letterSpacing: "-0.01em" }}>ADYANT NEXA</span>
+            </Link>
           </div>
 
-          <a href="/#contact" onClick={(e) => handleLinkClick(e, "/#contact")} className="btn-primary" style={{ fontSize: 11, padding: "12px 32px", borderRadius: "100px", marginLeft: 16 }}>Engage Protocol</a>
+          {/* 2. Center container (Navigation Links) - Centered */}
+          <div className="desktop-only" style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: "flex", background: "rgba(255,255,255,0.03)", padding: "4px", borderRadius: "100px", border: "1px solid rgba(255,255,255,0.05)" }}>
+              {desktopLinks.map(link => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link key={link.label} href={link.href} onClick={(e) => handleLinkClick(e, link.href)} 
+                    style={{ 
+                      fontFamily: "var(--font-inter)", 
+                      fontSize: 12, 
+                      fontWeight: 600, 
+                      padding: "8px 20px", 
+                      borderRadius: "100px", 
+                      color: isActive ? "#00F2FF" : "rgba(255,255,255,0.5)", 
+                      background: isActive ? "rgba(0,242,255,0.05)" : "transparent",
+                      textDecoration: "none", 
+                      transition: "0.3s" 
+                    }}>
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 3. Right container (Action Buttons) - Flex 1 */}
+          <div className="desktop-only" style={{ flex: 1, display: "flex", justifyContent: "flex-end", gap: 16 }}>
+            <div style={{ display: "flex", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", padding: "2px", borderRadius: "100px" }}>
+              <button onClick={() => setCurrency("USD")} style={{ padding: "6px 12px", borderRadius: "100px", background: currency === "USD" ? "#00F2FF" : "transparent", color: currency === "USD" ? "#000" : "#fff", border: "none", fontSize: 10, fontWeight: 800, cursor: "pointer", transition: "0.3s" }}>USD</button>
+              <button onClick={() => setCurrency("INR")} style={{ padding: "6px 12px", borderRadius: "100px", background: currency === "INR" ? "#00F2FF" : "transparent", color: currency === "INR" ? "#000" : "#fff", border: "none", fontSize: 10, fontWeight: 800, cursor: "pointer", transition: "0.3s" }}>INR</button>
+            </div>
+
+            <a href="/#contact" onClick={(e) => handleLinkClick(e, "/#contact")} className="btn-primary" style={{ fontSize: 11, padding: "12px 32px", borderRadius: "100px" }}>Engage Protocol</a>
+          </div>
+
+          {/* Mobile Toggle */}
+          <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", alignItems: "center", padding: 10, borderRadius: "50%", position: "relative", zIndex: 2010 }}>
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
 
-        {/* Mobile Toggle */}
-        <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", display: "flex", alignItems: "center", padding: 10, borderRadius: "50%" }}>
-          {isOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </div>
+        <style jsx>{`
+          .desktop-only { display: flex; }
+          .mobile-toggle { display: none; }
+          
+          @media (max-width: 992px) {
+            .desktop-only { display: none !important; }
+            .mobile-toggle { display: flex !important; }
+          }
+        `}</style>
+      </nav>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
@@ -107,7 +129,7 @@ export const Navbar = () => {
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 998, backdropFilter: "blur(5px)" }}
+              style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 2090, backdropFilter: "blur(5px)" }}
             />
             
             <motion.div 
@@ -121,7 +143,7 @@ export const Navbar = () => {
                 borderLeft: "1px solid rgba(0,242,255,0.1)",
                 padding: "40px", 
                 display: "flex", flexDirection: "column", gap: 32,
-                zIndex: 1001,
+                zIndex: 2100,
                 boxShadow: "-20px 0 60px rgba(0,0,0,0.8)",
                 overflowY: "auto"
               }}
@@ -161,16 +183,6 @@ export const Navbar = () => {
           </>
         )}
       </AnimatePresence>
-
-      <style jsx>{`
-        .desktop-only { display: flex; }
-        .mobile-toggle { display: none; }
-        
-        @media (max-width: 992px) {
-          .desktop-only { display: none !important; }
-          .mobile-toggle { display: flex !important; }
-        }
-      `}</style>
-    </nav>
+    </>
   );
 };

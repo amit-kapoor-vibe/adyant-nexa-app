@@ -93,7 +93,7 @@ export const PricingSection = ({ onAudit, currency }: PricingSectionProps) => {
                       {currency === "USD" ? tier.basePrice.usd : tier.basePrice.inr}
                     </span>
                     <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(0,242,255,0.4)", marginTop: 4 }}>
-                      Billed via 12-month EMI
+                      {currency === "INR" ? "Includes 18% GST (ITC Claimable)" : "Billed Monthly Retainer"}
                     </span>
                   </div>
                   <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "rgba(229,229,229,0.3)", marginBottom: 4 }}>/mo base</span>

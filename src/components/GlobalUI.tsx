@@ -2,7 +2,9 @@
 
 import { useNeuralTransition } from "@/context/TransitionContext";
 import { CustomCursor } from "@/components/CustomCursor";
-import { ScannerModal } from "@/components/ScannerModal";
+import dynamic from "next/dynamic";
+
+const ScannerModal = dynamic(() => import("@/components/ScannerModal").then(mod => mod.ScannerModal), { ssr: false });
 
 export function GlobalUI() {
   const { isScannerOpen, setScannerOpen, currency } = useNeuralTransition();

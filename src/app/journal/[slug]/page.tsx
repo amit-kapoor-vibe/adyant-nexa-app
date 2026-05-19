@@ -17,6 +17,46 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
   const { isNavigating, triggerTransition } = useNeuralTransition();
   const post = JOURNAL_POSTS[slug as keyof typeof JOURNAL_POSTS];
 
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid business email.");
+      return;
+    }
+    setIsSubmitting(true);
+    setError("");
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "Blog Subscriber",
+          email: email,
+          phone: "N/A",
+          business: "Blog Newsletter",
+          message: `SUBSCRIBED TO NEURAL PLAYBOOK via Blog: ${post?.title || slug}`,
+          budget: "0"
+        })
+      });
+      if (res.ok) {
+        setSubscribed(true);
+        setEmail("");
+      } else {
+        setError("Transmission failed. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Connection failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   useEffect(() => {
     const lenis = new Lenis({ duration: 0.95 });
     setLenisRef(lenis);
@@ -65,10 +105,28 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 40, maxWidth: 450, margin: "0 auto 40px" }}>
                Get our proprietary "Neural Scaling Playbook" and weekly insights on AI dominance directly in your inbox.
              </p>
-             <div style={{ display: "flex", maxWidth: 400, margin: "0 auto", gap: 12 }}>
-                <input type="email" placeholder="Enter your business email" style={{ flex: 1, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", padding: "16px 20px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13 }} />
-                <button className="btn-primary" style={{ padding: "0 24px", fontSize: 10 }}>JOIN</button>
-             </div>
+             {subscribed ? (
+               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 14 }}>
+                 Transmission Complete. You have joined the elite.
+               </motion.div>
+             ) : (
+               <form onSubmit={handleSubscribe} style={{ display: "flex", flexDirection: "column", maxWidth: 400, margin: "0 auto", gap: 12, width: "100%" }}>
+                 <div style={{ display: "flex", gap: 12, width: "100%" }}>
+                   <input
+                     type="email"
+                     required
+                     placeholder="Enter your business email"
+                     value={email}
+                     onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                     style={{ flex: 1, background: "rgba(255,255,255,0.03)", border: `1px solid ${error ? "#FF4444" : "rgba(255,255,255,0.1)"}`, padding: "16px 20px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none" }}
+                   />
+                   <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "0 24px", fontSize: 10, opacity: isSubmitting ? 0.6 : 1, cursor: "pointer" }}>
+                     {isSubmitting ? "SYNC..." : "JOIN"}
+                   </button>
+                 </div>
+                 {error && <span style={{ color: "#FF4444", fontSize: 10, fontFamily: "var(--font-geist-mono)", marginTop: 4, textAlign: "left", alignSelf: "flex-start" }}>{error}</span>}
+               </form>
+             )}
           </div>
         </FadeSection>
       </motion.main>

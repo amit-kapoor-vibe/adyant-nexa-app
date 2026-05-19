@@ -1,8 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import NeuralGalaxyPro from "./NeuralGalaxyPro";
+import dynamic from "next/dynamic";
 import { HeroContent } from "./hero/HeroContent";
+
+const NeuralGalaxyPro = dynamic(() => import("./NeuralGalaxyPro"), {
+  ssr: false,
+  loading: () => <div style={{ position: "absolute", inset: 0, backgroundColor: "#020202" }} />
+});
 
 export const HeroSection = ({ onScan }: { onScan?: (url: string) => void }) => {
   return (

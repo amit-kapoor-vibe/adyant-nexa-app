@@ -43,43 +43,43 @@ export const setupFees = {
 
 export const pricingTiers: PricingTier[] = [
   {
-    name: "SPARK_",
-    basePrice: { usd: "$125", inr: "₹10,500" },
-    performanceFee: "Redeemable Audit Included",
-    description: "A high-end cinematic landing page designed to outshine your competition and capture elite leads.",
+    name: "VOLT_",
+    basePrice: { usd: "$400", inr: "₹35,000" },
+    performanceFee: "Flat Retainer (Zero Revenue Share)",
+    description: "Ideal for early-stage brands looking to outsource expert media buying and kickstart growth.",
     features: [
-      "Single-Page Architecture",
-      "Sub-0.5s Load Time",
-      "Mobile-First Design",
-      "Neural Motion Graphics",
-      "Basic SEO Optimization"
+      "Single Channel (Meta or Google)",
+      "Standard Creative Strategy",
+      "Basic Conversion Tracking Setup",
+      "Looker Studio Analytics Sheet",
+      "Monthly Performance Sync Call"
     ]
   },
   {
-    name: "VOLT_",
-    basePrice: { usd: "$416", inr: "₹34,500" },
-    performanceFee: "10% of Revenue Share",
-    description: "Ideal for brands scaling from $10k to $50k monthly spend. Includes AI Persona Mapping.",
+    name: "PULSE_",
+    basePrice: { usd: "$900", inr: "₹75,000" },
+    performanceFee: "+ 3% of Ad-Generated Revenue",
+    description: "Multi-channel scaling engine. Full Server-Side Conversion API (CAPI) infrastructure.",
     features: [
-      "Meta or Google Management",
-      "Basic CAPI Integration",
-      "Weekly Strategic Syncs",
-      "AI Ad Copy Generation",
-      "Standard Creative Audit"
+      "Omni-channel (Meta + Google)",
+      "Weekly Creative Strategy (5 scripts)",
+      "Dedicated Server-Side CAPI Setup",
+      "Real-Time Looker Studio Dashboard",
+      "Bi-Weekly Strategy Sync Calls"
     ],
     highlight: true
   },
   {
-    name: "PULSE_",
-    basePrice: { usd: "$1,000", inr: "₹83,500" },
-    performanceFee: "15% of Ad-Generated Revenue",
-    description: "Aggressive multi-channel dominance. Full Server-Side CAPI Infrastructure.",
+    name: "NEXA_",
+    basePrice: { usd: "$2,000", inr: "₹1,50,000" },
+    performanceFee: "+ 5% of Ad-Generated Revenue",
+    description: "Aggressive market dominance with a dedicated growth team and custom backend AI routers.",
     features: [
-      "Omni-channel (Meta + Google)",
-      "Full Server-Side CAPI Setup",
-      "Custom AI Sales Funnels",
-      "24/7 Real-time Dashboard",
-      "Priority Scaling Support"
+      "Full Omni-Channel Scale (Meta + Google + YouTube)",
+      "Dedicated Account Growth Team",
+      "Custom CRM & AI Leads Router Setup",
+      "Weekly Strategy Deep Dives",
+      "Priority Slack Scaling Support"
     ],
     highlight: false
   }
@@ -101,3 +101,47 @@ export const comparisonData = {
     "Incentivized Performance Fees"
   ]
 };
+
+export const architectureTiers: PricingTier[] = [
+  {
+    name: "SPARK_",
+    basePrice: { usd: "$1,500", inr: "₹1,20,000" },
+    performanceFee: "Milestone Billed (50/50)",
+    description: "Cinematic, single-page Next.js landing page built for ultra-high conversion and elite authority positioning.",
+    features: [
+      "Custom Cinematic Landing Page",
+      "Sub-1.0s Guaranteed Load Speed",
+      "Meta/Google Pixel CAPI Linkage",
+      "High-Converting Sales Copywriting",
+      "Full Mobile-First Optimization"
+    ]
+  },
+  {
+    name: "MATRIX_",
+    basePrice: { usd: "$4,200", inr: "₹3,50,000" },
+    performanceFee: "Milestone Billed (40/40/20)",
+    description: "Complete headless Next.js e-commerce storefront with a Shopify or WooCommerce backend integration.",
+    features: [
+      "Headless E-commerce Storefront",
+      "Up to 100 Products Catalog",
+      "Custom Animated Cart Drawer",
+      "Dedicated Server CAPI Attribution",
+      "Dynamic Product Lookbooks & Filters"
+    ],
+    highlight: true
+  },
+  {
+    name: "NEXUS_",
+    basePrice: { usd: "$9,000+", inr: "₹7,50,000+" },
+    performanceFee: "Custom Enterprise Roadmap",
+    description: "Bespoke web applications, custom CRM integrations, automated lead routers, and full serverless microservices.",
+    features: [
+      "Bespoke SaaS & Web Applications",
+      "Unlimited Scale & Custom Database",
+      "Custom CRM & Automation Pipelines",
+      "Bespoke WhatsApp/Email Lead Router",
+      "Dedicated Dev & Priority Maintenance"
+    ],
+    highlight: false
+  }
+];

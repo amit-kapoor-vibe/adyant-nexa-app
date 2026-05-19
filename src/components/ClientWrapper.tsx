@@ -2,7 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
-import { ChatWidget } from "@/components/ChatWidget";
+import dynamic from "next/dynamic";
+
+const ChatWidget = dynamic(() => import("@/components/ChatWidget").then(mod => mod.ChatWidget), { ssr: false });
 
 export function ClientWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

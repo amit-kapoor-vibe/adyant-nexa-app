@@ -266,6 +266,46 @@ export default function BlogListing() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [activeCategory, setActiveCategory] = useState("ALL");
 
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid business email.");
+      return;
+    }
+    setIsSubmitting(true);
+    setError("");
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "Journal Subscriber",
+          email: email,
+          phone: "N/A",
+          business: "Journal Newsletter",
+          message: "SUBSCRIBED TO NEURAL PLAYBOOK via Journal Listing page",
+          budget: "0"
+        })
+      });
+      if (res.ok) {
+        setSubscribed(true);
+        setEmail("");
+      } else {
+        setError("Transmission failed. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Connection failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   useEffect(() => {
     const lenis = new Lenis({ duration: 0.95 });
     setLenisRef(lenis);
@@ -414,14 +454,28 @@ export default function BlogListing() {
               <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 4vw, 2.5rem)", color: "#fff", marginBottom: 32 }}>
                 Get the <span style={{ color: "#00F2FF" }}>Neural Scaling</span> Playbook.
               </h3>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, maxWidth: 500, margin: "0 auto" }}>
-                <input
-                  type="email"
-                  placeholder="Business Email"
-                  style={{ flex: 1, minWidth: 200, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", padding: "16px 24px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13 }}
-                />
-                <button className="btn-primary" style={{ padding: "0 32px", fontSize: 11, height: 50 }}>JOIN ELITE</button>
-              </div>
+              {subscribed ? (
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 14 }}>
+                  Transmission Complete. You have joined the elite.
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubscribe} style={{ display: "flex", flexWrap: "wrap", gap: 12, maxWidth: 500, margin: "0 auto", width: "100%", flexDirection: "column" }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 12, width: "100%" }}>
+                    <input
+                      type="email"
+                      required
+                      placeholder="Business Email"
+                      value={email}
+                      onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                      style={{ flex: 1, minWidth: 200, background: "rgba(255,255,255,0.03)", border: `1px solid ${error ? "#FF4444" : "rgba(255,255,255,0.1)"}`, padding: "16px 24px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none" }}
+                    />
+                    <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "0 32px", fontSize: 11, height: 50, opacity: isSubmitting ? 0.6 : 1, cursor: "pointer" }}>
+                      {isSubmitting ? "SYNCING..." : "JOIN ELITE"}
+                    </button>
+                  </div>
+                  {error && <span style={{ color: "#FF4444", fontSize: 10, fontFamily: "var(--font-geist-mono)", marginTop: 4, textAlign: "left", alignSelf: "flex-start" }}>{error}</span>}
+                </form>
+              )}
             </div>
 
             <Link
