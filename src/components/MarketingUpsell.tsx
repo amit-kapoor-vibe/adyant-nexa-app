@@ -28,8 +28,8 @@ export const MarketingUpsell = ({ onNavigate, currency }: { onNavigate: (e: Reac
                   { text: `Standard Setup Fee: ${currency === "USD" ? setupFees.standard.usd : setupFees.standard.inr}`, value: "WAIVED", color: "#00F2FF" },
                   { text: `Tracking Architecture: ${currency === "USD" ? setupFees.tracking.usd : setupFees.tracking.inr}`, value: "INCLUDED", color: "#00F2FF" },
                   { text: "Total Partner Savings", value: currency === "USD" ? setupFees.total.usd : setupFees.total.inr, color: "#fff", bold: true }
-                ].map((item, i) => (
-                  <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+                ].map((item) => (
+                  <div key={item.text} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                     <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>{item.text}</span>
                     <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 14, color: item.color }}>{item.value}</span>
                   </div>
@@ -47,8 +47,8 @@ export const MarketingUpsell = ({ onNavigate, currency }: { onNavigate: (e: Reac
                 { icon: <ShieldCheck size={24} />, title: "CAPI Ready", desc: "Bypass iOS 14 with server tracking." },
                 { icon: <Globe size={24} />, title: "Global Scale", desc: "Meta & Google AI integration." },
                 { icon: <Target size={24} />, title: "Pure ROI", desc: "Pay only for performance." }
-              ].map((card, i) => (
-                <div key={i} style={{ padding: 24, border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.01)" }}>
+              ].map((card) => (
+                <div key={card.title} style={{ padding: 24, border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.01)" }}>
                   <div style={{ color: "#00F2FF", marginBottom: 16 }}>{card.icon}</div>
                   <h4 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 16, color: "#fff", marginBottom: 8 }}>{card.title}</h4>
                   <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "rgba(255,255,255,0.3)", lineHeight: 1.5 }}>{card.desc}</p>

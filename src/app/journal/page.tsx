@@ -1,7 +1,7 @@
 "use client";
 
 import { useNeuralTransition } from "@/context/TransitionContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Lenis from "lenis";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -261,7 +261,7 @@ const POSTS = [
 ];
 
 export default function BlogListing() {
-  const [lenisRef, setLenisRef] = useState<Lenis | null>(null);
+  const lenisRef = useRef<Lenis | null>(null);
   const { isNavigating, triggerTransition } = useNeuralTransition();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [activeCategory, setActiveCategory] = useState("ALL");
@@ -308,7 +308,7 @@ export default function BlogListing() {
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 0.95 });
-    setLenisRef(lenis);
+    lenisRef.current = lenis;
     const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
     return () => lenis.destroy();
@@ -316,7 +316,7 @@ export default function BlogListing() {
 
   const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
-    triggerTransition(target, lenisRef);
+    triggerTransition(target, lenisRef.current);
   };
 
   const categories = ["ALL", ...new Set(POSTS.map(p => p.category))];
@@ -371,6 +371,7 @@ export default function BlogListing() {
             `}} />
             {categories.map(cat => (
               <button
+                type="button"
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 style={{
@@ -382,7 +383,7 @@ export default function BlogListing() {
                   letterSpacing: "0.2em",
                   cursor: "pointer",
                   padding: "8px 0",
-                  transition: "all 0.3s",
+                  transition: "color 0.3s ease",
                   flexShrink: 0
                 }}
               >
@@ -393,6 +394,7 @@ export default function BlogListing() {
 
           {/* Sort Order */}
           <button
+            type="button"
             onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
             style={{
               background: "rgba(255,255,255,0.03)",
@@ -420,7 +422,7 @@ export default function BlogListing() {
                 onClick={(e) => handleNavigate(e, `/journal/${post.slug}`)}
                 style={{ textDecoration: "none", color: "inherit", display: "block" }}
               >
-                <div className="glass-panel" style={{ padding: 40, height: "100%", display: "flex", flexDirection: "column", gap: 24, transition: "all 0.3s", border: "1px solid rgba(255,255,255,0.05)" }}
+                <div className="glass-panel" style={{ padding: 40, height: "100%", display: "flex", flexDirection: "column", gap: 24, transition: "border-color 0.3s ease, background 0.3s ease", border: "1px solid rgba(255,255,255,0.05)" }}
                   onMouseEnter={e => {
                     e.currentTarget.style.borderColor = "rgba(0,242,255,0.3)";
                     e.currentTarget.style.background = "rgba(255,255,255,0.02)";

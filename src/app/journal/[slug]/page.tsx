@@ -1,7 +1,7 @@
 "use client";
 
 import { useNeuralTransition } from "@/context/TransitionContext";
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, useRef } from "react";
 import Lenis from "lenis";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -13,7 +13,7 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
   const resolvedParams = use(params);
   const slug = resolvedParams.slug;
   
-  const [lenisRef, setLenisRef] = useState<Lenis | null>(null);
+  const lenisRef = useRef<Lenis | null>(null);
   const { isNavigating, triggerTransition } = useNeuralTransition();
   const post = JOURNAL_POSTS[slug as keyof typeof JOURNAL_POSTS];
 
@@ -59,7 +59,7 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 0.95 });
-    setLenisRef(lenis);
+    lenisRef.current = lenis;
     const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
     return () => lenis.destroy();
@@ -67,7 +67,7 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
 
   const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
-    triggerTransition(target, lenisRef);
+    triggerTransition(target, lenisRef.current);
   };
 
   if (!post) return <div style={{ color: "#fff", padding: 100 }}>Post not found.</div>;

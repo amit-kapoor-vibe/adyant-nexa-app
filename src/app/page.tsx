@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, memo, useRef } from "react";
 import Lenis from "lenis";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,7 +33,7 @@ const MemoizedInfo = memo(InfoSection);
 export default function AdyantNexa() {
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [heroUrl, setHeroUrl] = useState("");
-  const [lenisRef, setLenisRef] = useState<Lenis | null>(null);
+  const lenisRef = useRef<Lenis | null>(null);
   
   const { isNavigating, triggerTransition, currency, setCurrency } = useNeuralTransition();
 
@@ -45,7 +45,7 @@ export default function AdyantNexa() {
       smoothWheel: true 
     });
     
-    setLenisRef(lenis);
+    lenisRef.current = lenis;
     (window as any).lenis = lenis;
 
     const raf = (t: number) => { 
@@ -54,25 +54,25 @@ export default function AdyantNexa() {
     };
     requestAnimationFrame(raf);
     
-    return () => lenis.destroy();
+    // Cross-page Hash Scroll Protocol
+    let timer: NodeJS.Timeout | null = null;
+    if (typeof window !== "undefined" && window.location.hash) {
+      const hash = window.location.hash;
+      timer = setTimeout(() => {
+        lenis.scrollTo(hash, { offset: -60, duration: 1.5 });
+      }, 800);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+      lenis.destroy();
+    };
   }, []);
 
   const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
-    triggerTransition(target, lenisRef);
+    triggerTransition(target, lenisRef.current);
   };
-
-  // Cross-page Hash Scroll Protocol
-  useEffect(() => {
-    if (lenisRef && typeof window !== "undefined" && window.location.hash) {
-      const hash = window.location.hash;
-      // 800ms delay: allows Transition Overlay to fade + Lazy components to mount
-      const timer = setTimeout(() => {
-        lenisRef.scrollTo(hash, { offset: -60, duration: 1.5 });
-      }, 800);
-      return () => clearTimeout(timer);
-    }
-  }, [lenisRef]);
 
   const handleScanRequest = (url: string) => {
     setHeroUrl(url);

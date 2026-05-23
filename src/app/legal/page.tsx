@@ -8,12 +8,10 @@ import Link from "next/link";
 import { FadeSection } from "@/components/FadeSection";
 
 export default function LegalPage() {
-  const [lenisRef, setLenisRef] = useState<Lenis | null>(null);
   const { isNavigating } = useNeuralTransition();
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 0.95 });
-    setLenisRef(lenis);
     const raf = (t: number) => { lenis.raf(t); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
     return () => lenis.destroy();

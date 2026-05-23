@@ -38,7 +38,7 @@ export default function ClientPortal() {
     router.push("/");
   };
 
-  if (loading) return <div style={{ minHeight: "100vh", background: "#020202", display: "flex", alignItems: "center", justifyContent: "center", color: "#00F2FF", fontFamily: "var(--font-geist-mono)" }}>INITIALIZING_PORTAL...</div>;
+  if (loading) return <div style={{ minHeight: "100vh", background: "#020202", display: "flex", alignItems: "center", justifyContent: "center", color: "#00F2FF", fontFamily: "var(--font-geist-mono)" }}>INITIALIZING_PORTAL…</div>;
 
   return (
     <div style={{ minHeight: "100vh", background: "#020202", color: "#E5E5E5", fontFamily: "var(--font-inter)", overflowX: "hidden" }}>
@@ -52,7 +52,7 @@ export default function ClientPortal() {
         justifyContent: "space-between", 
         alignItems: "center",
         background: "rgba(2,2,2,0.8)",
-        backdropFilter: "blur(20px)",
+        backdropFilter: "blur(10px)",
         position: "sticky",
         top: 0,
         zIndex: 100
@@ -82,7 +82,7 @@ export default function ClientPortal() {
             <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{user?.email}</div>
             <div style={{ fontSize: 9, fontFamily: "var(--font-geist-mono)", color: "rgba(0,242,255,0.5)" }}>AUTHORIZED_ENTITY</div>
           </div>
-          <button onClick={handleLogout} style={{ background: "none", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.4)", padding: "8px 16px", borderRadius: "4px", cursor: "pointer", display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontFamily: "var(--font-geist-mono)" }}>
+          <button type="button" onClick={handleLogout} style={{ background: "none", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.4)", padding: "8px 16px", borderRadius: "4px", cursor: "pointer", display: "flex", alignItems: "center", gap: 8, fontSize: 11, fontFamily: "var(--font-geist-mono)" }}>
             <LogOut size={14} /> EXIT
           </button>
         </div>
@@ -104,8 +104,8 @@ export default function ClientPortal() {
         {/* CURRENCY TOGGLE */}
         <div style={{ marginBottom: 40, display: "flex", justifyContent: "flex-end" }}>
           <div style={{ background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 8, border: "1px solid rgba(255,255,255,0.05)", display: "flex" }}>
-            <button onClick={() => setCurrency("USD")} style={{ padding: "8px 20px", border: "none", borderRadius: 6, background: currency === "USD" ? "#00F2FF" : "transparent", color: currency === "USD" ? "#000" : "#fff", fontSize: 10, fontWeight: 800, cursor: "pointer" }}>USD</button>
-            <button onClick={() => setCurrency("INR")} style={{ padding: "8px 20px", border: "none", borderRadius: 6, background: currency === "INR" ? "#00F2FF" : "transparent", color: currency === "INR" ? "#000" : "#fff", fontSize: 10, fontWeight: 800, cursor: "pointer" }}>INR</button>
+            <button type="button" onClick={() => setCurrency("USD")} style={{ padding: "8px 20px", border: "none", borderRadius: 6, background: currency === "USD" ? "#00F2FF" : "transparent", color: currency === "USD" ? "#000" : "#fff", fontSize: 10, fontWeight: 800, cursor: "pointer" }}>USD</button>
+            <button type="button" onClick={() => setCurrency("INR")} style={{ padding: "8px 20px", border: "none", borderRadius: 6, background: currency === "INR" ? "#00F2FF" : "transparent", color: currency === "INR" ? "#000" : "#fff", fontSize: 10, fontWeight: 800, cursor: "pointer" }}>INR</button>
           </div>
         </div>
 
@@ -120,7 +120,7 @@ export default function ClientPortal() {
                   cursor: "pointer", 
                   border: `1px solid ${selectedPlan === tier.id ? "#00F2FF" : "rgba(255,255,255,0.05)"}`,
                   background: selectedPlan === tier.id ? "rgba(0,242,255,0.02)" : "rgba(255,255,255,0.01)",
-                  transition: "all 0.3s ease",
+                  transition: "border 0.3s ease, background 0.3s ease",
                   position: "relative"
                 }}
               >
@@ -175,8 +175,8 @@ export default function ClientPortal() {
                   </div>
                   
                   <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                    {[1, 2, 3, 4, "... 12"].map((month, i) => (
-                      <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                    {[1, 2, 3, 4, "… 12"].map((month) => (
+                      <div key={month} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 12, borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
                          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>Month {month}</span>
                          <span style={{ fontSize: 14, fontWeight: 700, color: "#fff" }}>
                             {currency === "INR" ? PRICING_TIERS.find(p => p.id === selectedPlan)?.priceINR : PRICING_TIERS.find(p => p.id === selectedPlan)?.priceUSD}
@@ -200,13 +200,13 @@ export default function ClientPortal() {
                   </div>
                   <div style={{ height: 300, overflowY: "auto", padding: 24, background: "#050505", border: "1px solid rgba(255,255,255,0.05)", fontSize: 11, color: "rgba(255,255,255,0.3)", lineHeight: 1.8, fontFamily: "var(--font-geist-mono)" }}>
                     <p style={{ color: "#00F2FF", marginBottom: 20 }}>NEURAL_SERVICE_AGREEMENT_v2026.04</p>
-                    <p>1. SCOPE OF WORK: Adyant Nexa (The Provider) agrees to deploy the {selectedPlan?.toUpperCase()} infrastructure as defined in the selected tier specifications...</p>
-                    <p style={{ marginTop: 12 }}>2. PAYMENT TERMS: The Client agrees to the 12-month EMI schedule. Failure to complete payment will result in neural grid disconnect...</p>
-                    <p style={{ marginTop: 12 }}>3. PERFORMANCE GUARANTEE: Adyant Nexa guarantees a sub-0.5s load time and 99.9% uptime for all deployed neural assets...</p>
-                    <p style={{ marginTop: 12 }}>4. DATA PRIVACY: All client data is protected under the 'Locks on Locks' encryption protocol as per internal security standards...</p>
-                    <p style={{ marginTop: 12 }}>... [Full legal text placeholder] ...</p>
+                    <p>1. SCOPE OF WORK: Adyant Nexa (The Provider) agrees to deploy the {selectedPlan?.toUpperCase()} infrastructure as defined in the selected tier specifications…</p>
+                    <p style={{ marginTop: 12 }}>2. PAYMENT TERMS: The Client agrees to the 12-month EMI schedule. Failure to complete payment will result in neural grid disconnect…</p>
+                    <p style={{ marginTop: 12 }}>3. PERFORMANCE GUARANTEE: Adyant Nexa guarantees a sub-0.5s load time and 99.9% uptime for all deployed neural assets…</p>
+                    <p style={{ marginTop: 12 }}>4. DATA PRIVACY: All client data is protected under the 'Locks on Locks' encryption protocol as per internal security standards…</p>
+                    <p style={{ marginTop: 12 }}>… [Full legal text placeholder] …</p>
                   </div>
-                  <button className="btn-primary" style={{ width: "100%", marginTop: 32, padding: 20, fontSize: 12, background: "#fff", color: "#000" }}>
+                  <button type="button" className="btn-primary" style={{ width: "100%", marginTop: 32, padding: 20, fontSize: 12, background: "#fff", color: "#000" }}>
                     ACCEPT & PROCEED TO PAYMENT
                   </button>
                 </div>
