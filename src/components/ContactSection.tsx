@@ -11,15 +11,15 @@ type FormData = { name: string; email: string; phone: string; business: string; 
 type FormErrors = Partial<Record<keyof FormData, string>>;
 
 const inputStyle: React.CSSProperties = {
-  background: "#020202",
-  border: "1px solid rgba(255,255,255,0.08)",
-  color: "#E5E5E5",
+  background: "var(--surface-color)",
+  border: "1px solid var(--border-color)",
+  color: "var(--text-color)",
   padding: "14px 16px",
   fontSize: 13,
   outline: "none",
   width: "100%",
   fontFamily: "var(--font-geist-mono)",
-  transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+  transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
 };
 
 const errorStyle: React.CSSProperties = {
@@ -94,18 +94,18 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
 
   const fieldStyle = (field: keyof FormData): React.CSSProperties => ({
     ...inputStyle,
-    borderColor: errors[field] ? "#FF4444" : "rgba(255,255,255,0.08)",
+    borderColor: errors[field] ? "#FF4444" : "var(--border-color)",
   });
 
 
   return (
-    <section id="contact" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", background: "#020202" }}>
+    <section id="contact" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", background: "var(--bg-color)", transition: "background 0.4s ease" }}>
       <div style={{ maxWidth: 800, margin: "0 auto" }}>
         <FadeSection>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>Get In Touch_</span>
-            <Heading level="h2" style={{ color: "#E5E5E5", lineHeight: 1.1 }}>
-              Ready to Build Something<br /><span style={{ color: "#00F2FF" }}>That Actually Works?</span>
+            <Heading level="h2" style={{ color: "var(--text-color)", lineHeight: 1.1, transition: "color 0.4s ease" }}>
+              Ready to Build Something<br /><span style={{ color: "var(--accent-color)", transition: "color 0.4s ease" }}>That Actually Works?</span>
             </Heading>
           </div>
         </FadeSection>
@@ -114,14 +114,14 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
           <div className="glass-panel" style={{ padding: "clamp(28px, 5vw, 56px)" }}>
             {submitted ? (
               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: "center", padding: "40px 0" }}>
-                <div style={{ display: "inline-flex", padding: 20, background: "rgba(0,242,255,0.05)", border: "1px solid rgba(0,242,255,0.2)", color: "#00F2FF", marginBottom: 24 }}>
+                <div style={{ display: "inline-flex", padding: 20, background: "var(--shadow-color)", border: "1px solid var(--accent-color)", color: "var(--accent-color)", marginBottom: 24, transition: "all 0.4s ease" }}>
                   <CheckCircle size={40} />
                 </div>
-                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "#fff", marginBottom: 12 }}>Transmission Complete.</h3>
-                <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.4)", maxWidth: 300, margin: "0 auto 32px" }}>
+                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "var(--text-color)", marginBottom: 12, transition: "color 0.4s ease" }}>Transmission Complete.</h3>
+                <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", maxWidth: 300, margin: "0 auto 32px", transition: "color 0.4s ease" }}>
                   Your data has been securely injected into our 2026 growth pipeline. Our growth team will reach out within 4-6 business hours.
                 </p>
-                <button onClick={() => setSubmitted(false)} className="editorial-tag" style={{ background: "none", border: "none", color: "#00F2FF", cursor: "pointer", opacity: 0.6 }}>
+                <button onClick={() => setSubmitted(false)} className="editorial-tag" style={{ background: "none", border: "none", color: "var(--accent-color)", cursor: "pointer", opacity: 0.6 }}>
                   Submit another request_
                 </button>
               </motion.div>
@@ -141,8 +141,8 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
                     <input id="contact-name" type="text" placeholder="e.g. Adyant" value={form.name}
                       onChange={e => { setForm({ ...form, name: e.target.value }); setErrors(prev => ({ ...prev, name: undefined })); }}
                       style={fieldStyle("name")}
-                      onFocus={e => !errors.name && (e.currentTarget.style.borderColor = "#00F2FF")}
-                      onBlur={e => !errors.name && (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                      onFocus={e => !errors.name && (e.currentTarget.style.borderColor = "var(--accent-color)")}
+                      onBlur={e => !errors.name && (e.currentTarget.style.borderColor = "var(--border-color)")}
                       aria-invalid={!!errors.name} aria-describedby="error-name" />
                     {errors.name && !errors.name.includes("Too many") && <span id="error-name" role="alert" style={errorStyle}><AlertCircle size={10} />{errors.name}</span>}
                   </div>
@@ -153,8 +153,8 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
                     <input id="contact-email" type="email" placeholder="name@company.com" value={form.email}
                       onChange={e => { setForm({ ...form, email: e.target.value }); setErrors(prev => ({ ...prev, email: undefined })); }}
                       style={fieldStyle("email")}
-                      onFocus={e => !errors.email && (e.currentTarget.style.borderColor = "#00F2FF")}
-                      onBlur={e => !errors.email && (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                      onFocus={e => !errors.email && (e.currentTarget.style.borderColor = "var(--accent-color)")}
+                      onBlur={e => !errors.email && (e.currentTarget.style.borderColor = "var(--border-color)")}
                       aria-invalid={!!errors.email} aria-describedby="error-email" />
                     {errors.email && <span id="error-email" role="alert" style={errorStyle}><AlertCircle size={10} />{errors.email}</span>}
                   </div>
@@ -165,8 +165,8 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
                     <input id="contact-phone" type="tel" placeholder="+91 ..." value={form.phone}
                       onChange={e => { setForm({ ...form, phone: e.target.value }); setErrors(prev => ({ ...prev, phone: undefined })); }}
                       style={fieldStyle("phone")}
-                      onFocus={e => !errors.phone && (e.currentTarget.style.borderColor = "#00F2FF")}
-                      onBlur={e => !errors.phone && (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                      onFocus={e => !errors.phone && (e.currentTarget.style.borderColor = "var(--accent-color)")}
+                      onBlur={e => !errors.phone && (e.currentTarget.style.borderColor = "var(--border-color)")}
                       aria-invalid={!!errors.phone} aria-describedby="error-phone" />
                     {errors.phone && <span id="error-phone" role="alert" style={errorStyle}><AlertCircle size={10} />{errors.phone}</span>}
                   </div>
@@ -177,13 +177,15 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
                     <select id="contact-business" value={form.business}
                       onChange={e => { setForm({ ...form, business: e.target.value }); setErrors(prev => ({ ...prev, business: undefined })); }}
                       style={{ ...fieldStyle("business"), appearance: "none" }}
-                      onFocus={e => !errors.business && (e.currentTarget.style.borderColor = "#00F2FF")}
-                      onBlur={e => !errors.business && (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                      onFocus={e => !errors.business && (e.currentTarget.style.borderColor = "var(--accent-color)")}
+                      onBlur={e => !errors.business && (e.currentTarget.style.borderColor = "var(--border-color)")}
                       aria-invalid={!!errors.business} aria-describedby="error-business">
-                      <option value="">Select industry</option>
-                      <option>D2C / E-Commerce</option><option>Real Estate</option>
-                      <option>Education / EdTech</option><option>Luxury / Premium Retail</option>
-                      <option>Other Services</option>
+                      <option value="" style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>Select industry</option>
+                      <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>D2C / E-Commerce</option>
+                      <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>Real Estate</option>
+                      <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>Education / EdTech</option>
+                      <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>Luxury / Premium Retail</option>
+                      <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>Other Services</option>
                     </select>
                     {errors.business && <span id="error-business" role="alert" style={errorStyle}><AlertCircle size={10} />{errors.business}</span>}
                   </div>
@@ -195,23 +197,23 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
                   <select id="contact-budget" value={form.budget}
                     onChange={e => { setForm({ ...form, budget: e.target.value }); setErrors(prev => ({ ...prev, budget: undefined })); }}
                     style={{ ...fieldStyle("budget"), appearance: "none" }}
-                    onFocus={e => !errors.budget && (e.currentTarget.style.borderColor = "#00F2FF")}
-                    onBlur={e => !errors.budget && (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                    onFocus={e => !errors.budget && (e.currentTarget.style.borderColor = "var(--accent-color)")}
+                    onBlur={e => !errors.budget && (e.currentTarget.style.borderColor = "var(--border-color)")}
                     aria-invalid={!!errors.budget} aria-describedby="error-budget">
-                    <option value="">Select monthly ad budget</option>
+                    <option value="" style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>Select monthly ad budget</option>
                     {currency === "INR" ? (
                       <>
-                        <option>₹1,00,000 – ₹5,00,000</option>
-                        <option>₹5,00,000 – ₹25,00,000</option>
-                        <option>₹25,00,000 – ₹1,00,00,000</option>
-                        <option>₹1,00,00,000+ (Enterprise Scale)</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>₹1,00,000 – ₹5,00,000</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>₹5,00,000 – ₹25,00,000</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>₹25,00,000 – ₹1,00,00,000</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>₹1,00,00,000+ (Enterprise Scale)</option>
                       </>
                     ) : (
                       <>
-                        <option>$1,500 – $5,000</option>
-                        <option>$5,000 – $25,000</option>
-                        <option>$25,000 – $100,000</option>
-                        <option>$100,000+ (Global Scale)</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$1,500 – $5,000</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$5,000 – $25,000</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$25,000 – $100,000</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$100,000+ (Global Scale)</option>
                       </>
                     )}
                   </select>
@@ -224,8 +226,8 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
                   <textarea id="contact-message" rows={5} placeholder="Briefly describe the vision..." value={form.message}
                     onChange={e => setForm({ ...form, message: e.target.value })}
                     style={{ ...inputStyle, resize: "none", lineHeight: 1.6 }}
-                    onFocus={e => (e.currentTarget.style.borderColor = "#00F2FF")}
-                    onBlur={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")} />
+                    onFocus={e => (e.currentTarget.style.borderColor = "var(--accent-color)")}
+                    onBlur={e => (e.currentTarget.style.borderColor = "var(--border-color)")} />
                 </div>
 
                 <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
@@ -237,7 +239,7 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
                     target="_blank" 
                     rel="noreferrer" 
                     className="btn-secondary" 
-                    style={{ flex: 1, justifyContent: "center", minWidth: 160, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)", cursor: "pointer" }}
+                    style={{ flex: 1, justifyContent: "center", minWidth: 160, border: "1px solid var(--border-color)", background: "var(--glass-bg)", cursor: "pointer" }}
                     onClick={() => trackEvent('whatsapp_clicked', { source: 'contact_section' })}
                   >
                     <MessageCircle size={15} style={{ marginRight: 8, opacity: 0.6 }} /> WhatsApp Us

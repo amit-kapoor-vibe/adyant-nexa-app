@@ -30,7 +30,7 @@ export const PROTOCOL: ProtocolItem[] = [
 
 // ─── Competitive Matrix ───────────────────────────────────────────────────────
 export const MATRIX: MatrixRow[] = [
-  { feature: "Tech Stack", nexa: "NEXT.JS 16 (OS-LEVEL)", others: "FRAGILE WORDPRESS" },
+  { feature: "Tech Stack", nexa: "NEXT.JS 16 (OS-LEVEL)", others: "WORDPRESS / BLOATED THEMES" },
   { feature: "Speed to Market", nexa: "7-DAY DEPLOYMENT", others: "1-3 MONTH DRAG" },
   { feature: "Lead Capture", nexa: "AUTONOMOUS AI AGENT", others: "BASIC STATIC FORMS" },
   { feature: "Data Integrity", nexa: "SERVER-SIDE SYNC", others: "BROWSER-BASED (LOSSY)" },

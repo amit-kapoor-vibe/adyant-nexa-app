@@ -80,7 +80,7 @@ export default function AdyantNexa() {
   };
 
   return (
-    <div style={{ background: "#020202", minHeight: "100vh", overflowX: "hidden" }}>
+    <div style={{ background: "var(--bg-color)", minHeight: "100vh", overflowX: "hidden", transition: "background-color 0.4s ease" }}>
       <motion.main
         animate={{ 
           opacity: isNavigating ? 0 : 1,
@@ -103,12 +103,12 @@ export default function AdyantNexa() {
 
 
       {/* ─── FOOTER ─── */}
-      <footer style={{ borderTop: "1px solid rgba(255,255,255,0.04)", padding: "60px 28px", background: "#020202" }}>
+      <footer style={{ borderTop: "1px solid var(--border-color)", padding: "60px 28px", background: "var(--bg-color)", transition: "all 0.4s ease" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/Favicon transparent.png" alt="Adyant Nexa" width={28} height={28} />
-            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 15, color: "#fff" }}>ADYANT NEXA</span>
+            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 15, color: "var(--text-color)", transition: "color 0.4s ease" }}>ADYANT NEXA</span>
           </div>
           <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.3 }}>© 2026 Adyant Nexa. Built for Dominance.</span>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>

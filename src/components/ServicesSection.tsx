@@ -35,7 +35,7 @@ const SERVICES = [
 
 export const ServicesSection = () => {
   return (
-    <section id="services" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", position: "relative", overflow: "hidden", background: "#020202" }}>
+    <section id="services" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", position: "relative", overflow: "hidden", background: "var(--bg-color)", transition: "background 0.4s ease" }}>
       {/* Ghost Typography BG */}
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
         <span className="ghost-text">INTELLIGENCE</span>
@@ -46,11 +46,11 @@ export const ServicesSection = () => {
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: 32, marginBottom: 72 }}>
             <div>
               <span className="editorial-tag" style={{ display: "block", marginBottom: 20 }}>Revenue Frameworks_</span>
-              <Heading level="h2" style={{ color: "#E5E5E5" }}>
-                Growth <span style={{ color: "#00F2FF" }}>Architecture</span>
+              <Heading level="h2" style={{ color: "var(--text-color)", transition: "color 0.4s ease" }}>
+                Growth <span style={{ color: "var(--accent-color)", transition: "color 0.4s ease" }}>Architecture</span>
               </Heading>
             </div>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.38)", lineHeight: 1.8, maxWidth: 280 }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", opacity: 0.8, lineHeight: 1.8, maxWidth: 280, transition: "color 0.4s ease" }}>
               Three heavily focused verticals. One singular mission — dominate your market.
             </p>
           </div>
@@ -79,7 +79,7 @@ export const ServicesSection = () => {
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 60 }}>
-                <div style={{ padding: 14, border: "1px solid rgba(0,242,255,0.15)", background: "rgba(0,242,255,0.04)", color: "#00F2FF" }}>
+                <div style={{ padding: 14, border: "1px solid var(--accent-color)", background: "var(--shadow-color)", color: "var(--accent-color)", transition: "all 0.4s ease" }}>
                   <svc.Icon size={20} />
                 </div>
                 <span className="editorial-tag" style={{ fontSize: 10, opacity: 0.2 }}>{svc.id}</span>
@@ -87,7 +87,7 @@ export const ServicesSection = () => {
 
               <div style={{ marginTop: "auto" }}>
                 <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, display: "block", marginBottom: 16 }}>{svc.tag}</span>
-                <Heading level="h3" style={{ color: "#E5E5E5", marginBottom: 20 }}>{svc.title}</Heading>
+                <Heading level="h3" style={{ color: "var(--text-color)", marginBottom: 20, transition: "color 0.4s ease" }}>{svc.title}</Heading>
                 <div style={{ marginBottom: 32 }}>
                   {svc.desc.split(/(Feature:|Advantage:|Benefit:)/).map((part, idx) => {
                     const isLabel = ["Feature:", "Advantage:", "Benefit:"].includes(part);
@@ -96,12 +96,13 @@ export const ServicesSection = () => {
                         display: isLabel ? "block" : "inline",
                         fontFamily: "var(--font-geist-mono)",
                         fontSize: isLabel ? 10 : 13,
-                        color: isLabel ? "#00F2FF" : "rgba(229,229,229,0.45)",
+                        color: isLabel ? "var(--accent-color)" : "var(--muted-text)",
                         fontWeight: isLabel ? 800 : 400,
                         letterSpacing: isLabel ? "0.1em" : "normal",
                         textTransform: isLabel ? "uppercase" : "none",
                         marginTop: isLabel && idx > 0 ? 12 : 0,
-                        marginBottom: isLabel ? 4 : 0
+                        marginBottom: isLabel ? 4 : 0,
+                        transition: "color 0.4s ease"
                       }}>
                         {part}
                       </span>
@@ -111,17 +112,17 @@ export const ServicesSection = () => {
                 
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 36 }}>
                   {svc.tags.map(t => (
-                    <span key={t} className="editorial-tag" style={{ fontSize: 9, padding: "6px 12px", border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)", color: "rgba(229,229,229,0.3)" }}>{t}</span>
+                    <span key={t} className="editorial-tag" style={{ fontSize: 9, padding: "6px 12px", border: "1px solid var(--border-color)", background: "var(--glass-bg)", color: "var(--muted-text)", transition: "all 0.4s ease" }}>{t}</span>
                   ))}
                 </div>
 
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 24, alignItems: "center" }}>
-                  <a href="#contact" style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#00F2FF", textDecoration: "none" }}>
+                  <a href="#contact" style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--accent-color)", textDecoration: "none", transition: "color 0.4s ease" }}>
                     <span>Engage Protocol</span>
                     <ArrowRight size={14} />
                   </a>
                   {svc.id === "03" && (
-                    <Link href="/marketing" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(229,229,229,0.3)", textDecoration: "none", borderBottom: "1px solid rgba(229,229,229,0.1)", paddingBottom: 2 }}>
+                    <Link href="/marketing" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted-text)", opacity: 0.8, textDecoration: "none", borderBottom: "1px solid var(--border-color)", paddingBottom: 2, transition: "all 0.4s ease" }}>
                       View Marketing Dept_
                     </Link>
                   )}

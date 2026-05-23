@@ -41,7 +41,7 @@ export default function LoginPage() {
       const { error: authError } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/portal`, // Default to portal
+          emailRedirectTo: `${window.location.origin}/`, // Default to home
         },
       });
 
@@ -61,7 +61,7 @@ export default function LoginPage() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/portal`,
+          redirectTo: `${window.location.origin}/`,
         },
       });
       if (error) throw error;

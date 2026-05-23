@@ -14,7 +14,7 @@ interface PricingSectionProps {
 
 export const PricingSection = ({ currency = "INR", setCurrency, onAudit }: PricingSectionProps) => {
   return (
-    <section id="investment" style={{ padding: "clamp(6rem, 12vw, 10rem) clamp(1.25rem, 3vw, 1.75rem)", background: "#020202", position: "relative", overflow: "hidden" }}>
+    <section id="investment" style={{ padding: "clamp(6rem, 12vw, 10rem) clamp(1.25rem, 3vw, 1.75rem)", background: "var(--bg-color)", position: "relative", overflow: "hidden", transition: "background 0.4s ease" }}>
       
       {/* Background Decorative Elements */}
       <div className="ambient-orb" style={{ top: "20%", left: "50%", width: "600px", height: "600px", opacity: 0.05 }} />
@@ -25,20 +25,21 @@ export const PricingSection = ({ currency = "INR", setCurrency, onAudit }: Prici
         {/* Header Section */}
         <FadeSection>
           <div style={{ textAlign: "center", marginBottom: 80 }}>
-            <span className="editorial-tag" style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24, color: "#00F2FF", letterSpacing: "0.4em" }}>
+            <span className="editorial-tag" style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 24, color: "var(--accent-color)", letterSpacing: "0.4em", transition: "color 0.4s ease" }}>
               <Zap size={12} /> ARCHITECTURE_INVESTMENTS_
             </span>
-            <Heading level="h2" style={{ color: "#E5E5E5", lineHeight: 1.1, marginBottom: 32, fontSize: "clamp(2.2rem, 6vw, 4.5rem)" }}>
-              Transparent Pricing. <br /> <span style={{ color: "#00F2FF" }}>Zero Scope Traps.</span>
+            <Heading level="h2" style={{ color: "var(--text-color)", lineHeight: 1.1, marginBottom: 32, fontSize: "clamp(2.2rem, 6vw, 4.5rem)", transition: "color 0.4s ease" }}>
+              Transparent Pricing. <br /> <span style={{ color: "var(--accent-color)", transition: "color 0.4s ease" }}>Zero Scope Traps.</span>
             </Heading>
             
             <p style={{ 
               fontFamily: "var(--font-inter)", 
               fontSize: "clamp(15px, 1.8vw, 18px)", 
-              color: "rgba(229,229,229,0.5)", 
+              color: "var(--muted-text)", 
               lineHeight: 1.75, 
               maxWidth: 750, 
-              margin: "0 auto 60px" 
+              margin: "0 auto 60px",
+              transition: "color 0.4s ease"
             }}>
               No hidden monthly retainers. No bloated agency markups. High-performance Next.js custom websites and e-commerce storefronts built with 100% code ownership and transparent milestone-based payments.
             </p>

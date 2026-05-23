@@ -5,6 +5,18 @@
    DESIGN TOKENS
 ───────────────────────────────────────── */
 :root {
+  /* Core Theme Variables (Dark Mode Default) */
+  --bg-color: #020202;
+  --text-color: #E5E5E5;
+  --accent-color: #00F2FF;
+  --surface-color: #080808;
+  --border-color: rgba(255, 255, 255, 0.04);
+  --muted-text: rgba(229, 229, 229, 0.5);
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --shadow-color: rgba(0, 242, 255, 0.05);
+  --scroll-track: #020202;
+
   --void-black: #020202;
   --platinum-white: #E5E5E5;
   --electric-cyan: #00F2FF;
@@ -16,6 +28,8 @@
   --font-geist-mono: var(--font-geist-mono);
 }
 
+
+
 /* ─────────────────────────────────────────
    RESET
 ───────────────────────────────────────── */
@@ -26,18 +40,20 @@
 }
 
 html {
-  background-color: #020202;
+  background-color: var(--bg-color);
   cursor: none;
   scroll-behavior: smooth;
+  transition: background-color 0.4s ease;
 }
 
 body {
-  background: #020202;
-  color: #E5E5E5;
+  background: var(--bg-color);
+  color: var(--text-color);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 ::selection {
@@ -49,9 +65,9 @@ body {
    SCROLLBAR
 ───────────────────────────────────────── */
 ::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #020202; }
-::-webkit-scrollbar-thumb { background: rgba(0,242,255,0.25); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,242,255,0.5); }
+::-webkit-scrollbar-track { background: var(--scroll-track); }
+::-webkit-scrollbar-thumb { background: var(--accent-color); opacity: 0.25; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
 
 /* ─────────────────────────────────────────
    EDITORIAL TAG
@@ -61,8 +77,9 @@ body {
   font-weight: 700;
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: #00F2FF;
+  color: var(--accent-color);
   font-family: var(--font-geist-mono), monospace;
+  transition: color 0.4s ease;
 }
 
 /* ─────────────────────────────────────────
@@ -134,22 +151,23 @@ body {
    GLASS PANEL
 ───────────────────────────────────────── */
 .glass-panel {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(20px);
 }
 .glass-panel::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0,242,255,0.3), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
-.glass-panel:hover { border-color: rgba(0,242,255,0.18); box-shadow: 0 0 40px rgba(0,242,255,0.05); }
+.glass-panel:hover { border-color: var(--accent-color); box-shadow: 0 0 40px var(--shadow-color); }
 .glass-panel:hover::before { opacity: 1; }
 
 /* ─────────────────────────────────────────

@@ -1,25 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import { HeroContent } from "./hero/HeroContent";
-
-const NeuralGalaxyPro = dynamic(() => import("./NeuralGalaxyPro"), {
-  ssr: false,
-  loading: () => <div style={{ position: "absolute", inset: 0, backgroundColor: "#020202" }} />
-});
 
 export const HeroSection = ({ onScan }: { onScan?: (url: string) => void }) => {
   return (
-    <section style={{ position: "relative", height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "#020202" }}>
-      {/* 3D Visual Layer */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-        <NeuralGalaxyPro />
-      </div>
+    <section style={{ position: "relative", height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "var(--bg-color)", transition: "background-color 0.4s ease" }}>
+
 
       {/* Cinematic Vignettes */}
-      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, transparent 0%, #020202 100%)", pointerEvents: "none", zIndex: 2 }} />
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, #020202 0%, transparent 20%, transparent 80%, #020202 100%)", pointerEvents: "none", zIndex: 2 }} />
+      <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, transparent 0%, var(--bg-color) 100%)", pointerEvents: "none", zIndex: 2, transition: "background 0.4s ease" }} />
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, var(--bg-color) 0%, transparent 20%, transparent 80%, var(--bg-color) 100%)", pointerEvents: "none", zIndex: 2, transition: "background 0.4s ease" }} />
 
       {/* Main content */}
       <div style={{ position: "relative", zIndex: 10, width: "100%" }}>
@@ -38,7 +29,7 @@ export const HeroSection = ({ onScan }: { onScan?: (url: string) => void }) => {
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          style={{ width: 1, height: 40, background: "linear-gradient(to bottom, #00F2FF, transparent)" }}
+          style={{ width: 1, height: 40, background: "linear-gradient(to bottom, var(--accent-color), transparent)", transition: "all 0.4s ease" }}
         />
       </motion.div>
     </section>

@@ -36,13 +36,13 @@ export const SocialProof = () => {
   return (
     <>
       {/* KEYWORD MARQUEE */}
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "18px 0", overflow: "hidden", position: "relative", zIndex: 5, background: "#020202" }}>
+      <div style={{ borderTop: "1px solid var(--border-color)", borderBottom: "1px solid var(--border-color)", padding: "18px 0", overflow: "hidden", position: "relative", zIndex: 5, background: "var(--bg-color)", transition: "all 0.4s ease" }}>
         <motion.div animate={{ x: ["0%", "-50%"] }} transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           style={{ display: "flex", gap: "3rem", whiteSpace: "nowrap" }}>
           {[...Array(2)].map((_, di) => (
             <div key={di} style={{ display: "flex", gap: "3rem", alignItems: "center" }}>
               {KEYWORDS.map((kw, i) => kw === "·" ? (
-                <span key={`${di}-${i}`} style={{ color: "#00F2FF", opacity: 0.2, fontFamily: "var(--font-geist-mono)", fontSize: 12 }}>·</span>
+                <span key={`${di}-${i}`} style={{ color: "var(--accent-color)", opacity: 0.3, fontFamily: "var(--font-geist-mono)", fontSize: 12, transition: "color 0.4s ease" }}>·</span>
               ) : (
                 <span key={`${di}-${i}`} className="editorial-tag" style={{ fontSize: 9, opacity: 0.4 }}>{kw}</span>
               ))}
@@ -52,7 +52,7 @@ export const SocialProof = () => {
       </div>
 
       {/* CLIENT MARQUEE */}
-      <section style={{ borderBottom: "1px solid rgba(255,255,255,0.04)", padding: "80px 0", overflow: "hidden", background: "#020202" }}>
+      <section style={{ borderBottom: "1px solid var(--border-color)", padding: "80px 0", overflow: "hidden", background: "var(--bg-color)", transition: "all 0.4s ease" }}>
         <p className="editorial-tag" style={{ textAlign: "center", fontSize: 9, opacity: 0.2, marginBottom: 48, letterSpacing: "0.4em" }}>PARTNER PORTFOLIO_</p>
         <div style={{ position: "relative" }}>
           <motion.div animate={{ x: ["0%", "-50%"] }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
@@ -71,8 +71,8 @@ export const SocialProof = () => {
                   >
                     <div style={{ textAlign: "left" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
-                        <p style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "#fff" }}>{c.name}</p>
-                        <span style={{ fontSize: 8, padding: "2px 8px", border: `1px solid ${c.status === "LIVE" ? "#00FF66" : c.status === "SCALING" ? "#00F2FF" : "rgba(255,255,255,0.15)"}`, color: c.status === "LIVE" ? "#00FF66" : c.status === "SCALING" ? "#00F2FF" : "rgba(255,255,255,0.3)", fontFamily: "var(--font-geist-mono)" }}>
+                        <p style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "var(--text-color)", transition: "color 0.4s ease" }}>{c.name}</p>
+                        <span style={{ fontSize: 8, padding: "2px 8px", border: `1px solid ${c.status === "LIVE" ? "#00FF66" : c.status === "SCALING" ? "var(--accent-color)" : "var(--border-color)"}`, color: c.status === "LIVE" ? "#00FF66" : c.status === "SCALING" ? "var(--accent-color)" : "var(--muted-text)", fontFamily: "var(--font-geist-mono)", transition: "all 0.4s ease" }}>
                           {c.status}
                         </span>
                       </div>
@@ -87,14 +87,14 @@ export const SocialProof = () => {
       </section>
 
       {/* FOUNDER'S MANIFESTO */}
-      <section style={{ padding: "100px 28px", background: "#020202" }}>
+      <section style={{ padding: "100px 28px", background: "var(--bg-color)", transition: "all 0.4s ease" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <FadeSection>
-            <span className="editorial-tag" style={{ color: "#00F2FF", display: "block", marginBottom: 32 }}>Founders Manifesto_</span>
-            <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 3vw, 2.5rem)", color: "#fff", lineHeight: 1.4, marginBottom: 40 }}>
+            <span className="editorial-tag" style={{ color: "var(--accent-color)", display: "block", marginBottom: 32, transition: "color 0.4s ease" }}>Founders Manifesto_</span>
+            <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 3vw, 2.5rem)", color: "var(--text-color)", lineHeight: 1.4, marginBottom: 40, transition: "color 0.4s ease" }}>
               &quot;Scaling is a systems problem, not a budget problem. We build the infrastructure that makes growth inevitable.&quot;
             </h3>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", transition: "color 0.4s ease" }}>
               — Amit Kapoor, Strategic Growth Partner
             </p>
           </FadeSection>
@@ -102,12 +102,12 @@ export const SocialProof = () => {
       </section>
 
       {/* TESTIMONIALS */}
-      <section style={{ padding: "clamp(4rem, 8vw, 7rem) 28px", background: "#080808", borderTop: "1px solid rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+      <section style={{ padding: "clamp(4rem, 8vw, 7rem) 28px", background: "var(--surface-color)", borderTop: "1px solid var(--border-color)", borderBottom: "1px solid var(--border-color)", transition: "all 0.4s ease" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <FadeSection>
             <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>The Neural Impact_</span>
-            <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", color: "#E5E5E5", marginBottom: 64 }}>
-              Voices of <span style={{ color: "rgba(229,229,229,0.2)" }}>Dominance.</span>
+            <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", color: "var(--text-color)", marginBottom: 64, transition: "color 0.4s ease" }}>
+              Voices of <span style={{ color: "var(--muted-text)", opacity: 0.4, transition: "color 0.4s ease" }}>Dominance.</span>
             </h2>
           </FadeSection>
 
@@ -123,11 +123,11 @@ export const SocialProof = () => {
                 style={{ padding: "40px 32px", display: "flex", flexDirection: "column", gap: 24 }}
               >
                 <div style={{ display: "flex", gap: 5 }}>
-                  {[...Array(5)].map((_, j) => <Star key={j} size={14} style={{ fill: "#00F2FF", color: "#00F2FF" }} />)}
+                  {[...Array(5)].map((_, j) => <Star key={j} size={14} style={{ fill: "var(--accent-color)", color: "var(--accent-color)" }} />)}
                 </div>
-                <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.48)", lineHeight: 1.85, flex: 1, fontStyle: "italic" }}>&quot;{t.quote}&quot;</p>
-                <div style={{ paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                  <p style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 15, color: "#E5E5E5", marginBottom: 5 }}>{t.name}</p>
+                <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", lineHeight: 1.85, flex: 1, fontStyle: "italic", transition: "color 0.4s ease" }}>&quot;{t.quote}&quot;</p>
+                <div style={{ paddingTop: 20, borderTop: "1px solid var(--border-color)", transition: "border-color 0.4s ease" }}>
+                  <p style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 15, color: "var(--text-color)", marginBottom: 5, transition: "color 0.4s ease" }}>{t.name}</p>
                   <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.3 }}>{t.role}</span>
                 </div>
               </motion.div>

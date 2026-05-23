@@ -18,8 +18,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       if (!session) {
         router.push("/login");
       } else if (session.user.email !== AUTHORIZED_EMAIL) {
-        // Redirect unauthorized users to the client portal
-        router.push("/portal");
+        // Redirect unauthorized users to home page since portal is disabled
+        router.push("/");
       } else {
         setIsAuthorized(true);
       }

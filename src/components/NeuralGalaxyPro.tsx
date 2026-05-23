@@ -216,7 +216,6 @@ export default function NeuralGalaxyPro() {
         
         <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.2}>
           <NeuralParticles />
-          <EventHorizon />
         </Float>
         
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />

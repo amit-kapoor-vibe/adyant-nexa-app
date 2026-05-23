@@ -22,9 +22,9 @@ const IndustryTabs = ({ selectedId, onChange }: { selectedId: string, onChange: 
           fontSize: 10,
           letterSpacing: "0.1em",
           textTransform: "uppercase",
-          background: selectedId === ind.id ? "rgba(0,242,255,0.1)" : "transparent",
-          border: `1px solid ${selectedId === ind.id ? "#00F2FF" : "rgba(255,255,255,0.1)"}`,
-          color: selectedId === ind.id ? "#00F2FF" : "rgba(255,255,255,0.4)",
+          background: selectedId === ind.id ? "var(--shadow-color)" : "transparent",
+          border: `1px solid ${selectedId === ind.id ? "var(--accent-color)" : "var(--border-color)"}`,
+          color: selectedId === ind.id ? "var(--accent-color)" : "var(--muted-text)",
           cursor: "pointer",
           transition: "all 0.3s ease"
         }}
@@ -37,12 +37,13 @@ const IndustryTabs = ({ selectedId, onChange }: { selectedId: string, onChange: 
 
 const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
   <div style={{ 
-    background: "rgba(0,242,255,0.02)", 
-    border: "1px solid rgba(0,242,255,0.1)", 
+    background: "var(--surface-color)", 
+    border: "1px solid var(--border-color)", 
     padding: "clamp(24px, 4vw, 48px)",
     display: "flex",
     flexDirection: "column",
-    gap: 40
+    gap: 40,
+    transition: "all 0.4s ease"
   }}>
     <AnimatePresence mode="wait">
       <motion.div
@@ -53,8 +54,8 @@ const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <div style={{ marginBottom: 40 }}>
-          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em", display: "block", marginBottom: 12 }}>ESTIMATED NEURAL IMPACT</span>
-          <div style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 5vw, 3.5rem)", color: "#00F2FF", lineHeight: 1 }}>
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--muted-text)", letterSpacing: "0.2em", display: "block", marginBottom: 12, transition: "color 0.4s ease" }}>ESTIMATED NEURAL IMPACT</span>
+          <div style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 5vw, 3.5rem)", color: "var(--accent-color)", lineHeight: 1, transition: "color 0.4s ease" }}>
             {new Intl.NumberFormat(isINR ? 'en-IN' : 'en-US', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(Math.round(stats.totalImpact))}
           </div>
         </div>
@@ -63,18 +64,19 @@ const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
           display: "grid", 
           gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", 
           gap: 24, 
-          borderTop: "1px solid rgba(255,255,255,0.05)", 
+          borderTop: "1px solid var(--border-color)", 
           paddingTop: 32, 
-          marginBottom: 32 
+          marginBottom: 32,
+          transition: "border-color 0.4s ease"
         }}>
           <div>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", display: "block", marginBottom: 8 }}>COST REDUCTION</span>
-            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "#E5E5E5" }}>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "var(--muted-text)", letterSpacing: "0.1em", display: "block", marginBottom: 8, transition: "color 0.4s ease" }}>COST REDUCTION</span>
+            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "var(--text-color)", transition: "color 0.4s ease" }}>
               {new Intl.NumberFormat(isINR ? 'en-IN' : 'en-US', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(Math.round(stats.netSavings))}
             </span>
           </div>
           <div>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", display: "block", marginBottom: 8 }}>REVENUE RECOVERY</span>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "var(--muted-text)", letterSpacing: "0.1em", display: "block", marginBottom: 8, transition: "color 0.4s ease" }}>REVENUE RECOVERY</span>
             <span style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, color: "#00FF66" }}>
               +{new Intl.NumberFormat(isINR ? 'en-IN' : 'en-US', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(Math.round(stats.revenueBoost))}
             </span>
@@ -86,7 +88,7 @@ const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
             <TrendingUp size={16} color="#00FF66" />
             <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#00FF66", fontWeight: 600 }}>STRATEGIC ROI</span>
           </div>
-          <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "#fff" }}>
+          <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "var(--text-color)", transition: "color 0.4s ease" }}>
             {Math.round(stats.roi)}%
           </span>
         </div>
@@ -133,15 +135,15 @@ export const ROICalculator = ({ currency = "USD" }: { currency?: Currency }) => 
   };
 
   return (
-    <section id="roi-calculator" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", background: "#080808" }}>
+    <section id="roi-calculator" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", background: "var(--surface-color)", transition: "background 0.4s ease" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <FadeSection>
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>REVENUE INFRASTRUCTURE AUDIT_</span>
-            <Heading level="h2" style={{ color: "#E5E5E5", marginBottom: 24 }}>
-              Calculate Your <span style={{ color: "#00F2FF" }}>Neural Impact.</span>
+            <Heading level="h2" style={{ color: "var(--text-color)", marginBottom: 24, transition: "color 0.4s ease" }}>
+              Calculate Your <span style={{ color: "var(--accent-color)", transition: "color 0.4s ease" }}>Neural Impact.</span>
             </Heading>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.35)", lineHeight: 1.85, maxWidth: 600, margin: "0 auto" }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", lineHeight: 1.85, maxWidth: 600, margin: "0 auto", transition: "color 0.4s ease" }}>
               Standard calculators only show cost savings. We show **Revenue Recovery**.
             </p>
           </div>
@@ -153,30 +155,31 @@ export const ROICalculator = ({ currency = "USD" }: { currency?: Currency }) => 
           display: "grid", 
           gridTemplateColumns: "1fr", 
           gap: "clamp(2rem, 5vw, 4rem)",
-          background: "rgba(255,255,255,0.01)",
-          border: "1px solid rgba(255,255,255,0.04)",
-          padding: "clamp(1.25rem, 4vw, 3rem)"
+          background: "var(--glass-bg)",
+          border: "1px solid var(--border-color)",
+          padding: "clamp(1.25rem, 4vw, 3rem)",
+          transition: "all 0.4s ease"
         }}>
           {/* Inputs */}
           <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>
             <div>
-              <label style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#00F2FF", letterSpacing: "0.2em", marginBottom: 20 }}>
+              <label style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--accent-color)", letterSpacing: "0.2em", marginBottom: 20, transition: "color 0.4s ease" }}>
                 <Target size={14} /> MONTHLY LEAD VOLUME
               </label>
               <input 
                 type="range" min="10" max="5000" step="10" 
                 value={leads} 
                 onChange={(e) => setLeads(parseInt(e.target.value))}
-                style={{ width: "100%", accentColor: "#00F2FF", cursor: "pointer" }}
+                style={{ width: "100%", accentColor: "var(--accent-color)", cursor: "pointer" }}
               />
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, fontFamily: "var(--font-geist-mono)", fontSize: 18, color: "#E5E5E5", fontWeight: 700 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, fontFamily: "var(--font-geist-mono)", fontSize: 18, color: "var(--text-color)", fontWeight: 700, transition: "color 0.4s ease" }}>
                 <span>{leads.toLocaleString()}</span>
                 <span style={{ fontSize: 10, opacity: 0.4 }}>INQUIRIES/MO</span>
               </div>
             </div>
 
             <div>
-              <label style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#00F2FF", letterSpacing: "0.2em", marginBottom: 20 }}>
+              <label style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--accent-color)", letterSpacing: "0.2em", marginBottom: 20, transition: "color 0.4s ease" }}>
                 {isINR ? <IndianRupee size={14} /> : <DollarSign size={14} />} HUMAN OVERHEAD (MONTHLY)
               </label>
               <input 
@@ -186,18 +189,18 @@ export const ROICalculator = ({ currency = "USD" }: { currency?: Currency }) => 
                 step={isINR ? 5000 : 500} 
                 value={laborCost} 
                 onChange={(e) => setLaborCost(parseInt(e.target.value))}
-                style={{ width: "100%", accentColor: "#00F2FF", cursor: "pointer" }}
+                style={{ width: "100%", accentColor: "var(--accent-color)", cursor: "pointer" }}
               />
-              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, fontFamily: "var(--font-geist-mono)", fontSize: "clamp(14px, 2vw, 18px)", color: "#E5E5E5", fontWeight: 700 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, fontFamily: "var(--font-geist-mono)", fontSize: "clamp(14px, 2vw, 18px)", color: "var(--text-color)", fontWeight: 700, transition: "color 0.4s ease" }}>
                 <span>{new Intl.NumberFormat(isINR ? 'en-IN' : 'en-US', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(laborCost)}</span>
                 <span style={{ fontSize: 10, opacity: 0.4 }}>OPEX/MO</span>
               </div>
             </div>
 
-            <div style={{ padding: 24, border: "1px solid rgba(255,255,255,0.05)", background: "rgba(255,255,255,0.02)" }}>
+            <div style={{ padding: 24, border: "1px solid var(--border-color)", background: "var(--glass-bg)", transition: "all 0.4s ease" }}>
               <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.4, display: "block", marginBottom: 12 }}>{selectedIndustry.name} Industry Baseline_</span>
-              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}>
-                Avg Ticket Size: <span style={{ color: "#E5E5E5" }}>{new Intl.NumberFormat(isINR ? 'en-IN' : 'en-IN', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(selectedIndustry.avgTicketSize)}</span><br />
+              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--muted-text)", lineHeight: 1.6, transition: "color 0.4s ease" }}>
+                Avg Ticket Size: <span style={{ color: "var(--text-color)", transition: "color 0.4s ease" }}>{new Intl.NumberFormat(isINR ? 'en-IN' : 'en-IN', { style: 'currency', currency: isINR ? 'INR' : 'USD', maximumFractionDigits: 0 }).format(selectedIndustry.avgTicketSize)}</span><br />
                 Response Fragility: <span style={{ color: "#FF4444" }}>{(selectedIndustry.responseLoss * 100).toFixed(0)}% Revenue Leakage</span>
               </p>
             </div>

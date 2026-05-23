@@ -1,0 +1,35 @@
+name: NexaDoctor Weekly Site Audit
+
+on:
+  schedule:
+    # Trigger every Monday at 03:30 UTC (9:00 AM IST)
+    - cron: '30 3 * * 1'
+  workflow_dispatch: # Allows manual trigger from the GitHub Actions tab
+
+jobs:
+  audit:
+    name: Run Autonomous Technical Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js (v22)
+        uses: actions/setup-node@v4
+        with:
+          node-size: '22'
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Project Dependencies
+        run: npm ci
+
+      - name: Run NexaDoctor Audit Script
+        run: node scripts/nexa_doctor_agent.js
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AUDIT_WEBHOOK_URL: ${{ secrets.AUDIT_WEBHOOK_URL }}
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}
+          SITE_URL: https://adyant-nexa-5f907.web.app

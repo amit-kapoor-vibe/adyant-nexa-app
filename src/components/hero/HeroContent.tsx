@@ -17,7 +17,7 @@ const StatStrip = () => (
   <motion.div variants={itemVars} style={{ display: "flex", gap: "clamp(32px, 6vw, 80px)", flexWrap: "wrap", justifyContent: "center" }}>
     {HERO_STATS.map(([v, l]) => (
       <div key={l} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-        <span className="text-glow-cyan" style={{ fontFamily: "var(--font-syne)", fontWeight: 900, fontSize: "clamp(20px, 3.5vw, 36px)", color: "#00F2FF" }}>{v}</span>
+        <span className="text-glow-cyan" style={{ fontFamily: "var(--font-syne)", fontWeight: 900, fontSize: "clamp(20px, 3.5vw, 36px)", color: "var(--accent-color)", transition: "color 0.4s ease" }}>{v}</span>
         <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.35 }}>{l}</span>
       </div>
     ))}
@@ -59,7 +59,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
       </Heading>
 
       {/* Descriptor */}
-      <motion.p variants={itemVars} style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(229,229,229,0.5)", lineHeight: 1.8, marginBottom: 40, maxWidth: 600, margin: "0 auto 40px" }}>
+      <motion.p variants={itemVars} style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", lineHeight: 1.8, marginBottom: 40, maxWidth: 600, margin: "0 auto 40px", transition: "color 0.4s ease" }}>
         High-Performance Infrastructure for the Conversion-Obsessed.<br />
         Revenue Systems Engineering · Multi-Agent AI · Absolute Speed.
       </motion.p>
@@ -70,12 +70,12 @@ export function HeroContent({ onScan }: HeroContentProps) {
           onSubmit={handleSubmit}
           role="search"
           aria-label="Website performance audit"
-          style={{ display: "flex", alignItems: "center", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.1)", padding: "6px", transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
-          onFocusCapture={e => { (e.currentTarget as HTMLFormElement).style.borderColor = "#00F2FF"; (e.currentTarget as HTMLFormElement).style.background = "rgba(0,242,255,0.03)"; }}
-          onBlurCapture={e => { (e.currentTarget as HTMLFormElement).style.borderColor = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLFormElement).style.background = "rgba(255,255,255,0.02)"; }}
+          style={{ display: "flex", alignItems: "center", background: "var(--glass-bg)", border: "1px solid var(--border-color)", padding: "6px", transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
+          onFocusCapture={e => { (e.currentTarget as HTMLFormElement).style.borderColor = "var(--accent-color)"; (e.currentTarget as HTMLFormElement).style.background = "var(--shadow-color)"; }}
+          onBlurCapture={e => { (e.currentTarget as HTMLFormElement).style.borderColor = "var(--border-color)"; (e.currentTarget as HTMLFormElement).style.background = "var(--glass-bg)"; }}
         >
-          <div style={{ paddingLeft: 18, pointerEvents: "none" }}>
-            <Search size={18} color="rgba(255,255,255,0.3)" aria-hidden="true" />
+          <div style={{ paddingLeft: 18, pointerEvents: "none", display: "flex", alignItems: "center" }}>
+            <Search size={18} color="var(--muted-text)" style={{ opacity: 0.6, transition: "color 0.4s ease" }} aria-hidden="true" />
           </div>
           <input
             type="text"
@@ -83,13 +83,16 @@ export function HeroContent({ onScan }: HeroContentProps) {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             aria-label="Enter website URL for performance audit"
-            style={{ flex: 1, background: "none", border: "none", color: "#fff", padding: "14px", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none" }}
+            style={{ flex: 1, background: "none", border: "none", color: "var(--text-color)", padding: "14px", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none", transition: "color 0.4s ease" }}
           />
           <button type="submit" className="btn-primary" style={{ border: "none", padding: "12px 28px", minWidth: "120px", display: "flex", justifyContent: "center" }}>
             Scan
           </button>
         </form>
       </motion.div>
+
+      {/* Trust Metrics Strip */}
+      <StatStrip />
 
     </motion.div>
   );

@@ -126,7 +126,7 @@ export const architectureTiers: PricingTier[] = [
       "Up to 100 Products Catalog",
       "Custom Animated Cart Drawer",
       "Dedicated Server CAPI Attribution",
-      "Dynamic Product Lookbooks & Filters"
+      "Interactive Product Catalog & Filters"
     ],
     highlight: true
   },

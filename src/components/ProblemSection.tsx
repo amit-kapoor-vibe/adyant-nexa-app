@@ -6,21 +6,22 @@ import { Heading } from "./ui/Heading";
 export const ProblemSection = () => {
   const painPoints = [
     {
-      title: "The WordPress Bloat",
-      desc: "Slow, fragile, and vulnerable. A liability that kills your conversion rate before the page even loads."
+      title: "Shopify & App Bloat",
+      desc: "Bloated third-party scripts, unoptimized assets, and slow theme rendering. A massive technical liability that kills D2C conversion rates."
     },
     {
-      title: "Human Resource Drain",
-      desc: "Answering basic FAQs manually is a waste of talent. Our AI agents replace $40k/year in human labor costs."
+      title: "iOS 14+ Signal Loss",
+      desc: "Browser-based pixels lose up to 40% of purchase signals to ad-blockers and iOS restrictions. Your ad budget is wasted on blind attribution."
     },
     {
-      title: "Static Overhead",
-      desc: "Most websites are digital brochures. We build high-performance infrastructure that hunts for leads 24/7."
+      title: "The Static Overhead",
+      desc: "Standard websites are passive digital brochures. We build high-performance, self-auditing AI infrastructure that actively hunts for leads 24/7."
     }
   ];
 
+
   return (
-    <section id="problem" style={{ padding: "120px 28px", background: "#020202", position: "relative", overflow: "hidden" }}>
+    <section id="problem" style={{ padding: "120px 28px", background: "var(--bg-color)", position: "relative", overflow: "hidden", transition: "background 0.4s ease" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 10 }}>
         
         <motion.div
@@ -30,12 +31,12 @@ export const ProblemSection = () => {
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: 80 }}
         >
-          <span className="editorial-tag" style={{ color: "#00F2FF", display: "block", marginBottom: 20 }}>The Digital Liability</span>
-          <Heading level="h2" style={{ color: "#fff", marginBottom: 32 }}>
+          <span className="editorial-tag" style={{ color: "var(--accent-color)", display: "block", marginBottom: 20 }}>The Digital Liability</span>
+          <Heading level="h2" style={{ color: "var(--text-color)", marginBottom: 32, transition: "color 0.4s ease" }}>
             MOST WEBSITES ARE <br />
-            <span style={{ color: "rgba(255,255,255,0.15)" }}>REVENUE BLACK HOLES.</span>
+            <span style={{ color: "var(--muted-text)", opacity: 0.7 }}>REVENUE BLACK HOLES.</span>
           </Heading>
-          <p style={{ maxWidth: 600, margin: "0 auto", color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
+          <p style={{ maxWidth: 600, margin: "0 auto", color: "var(--muted-text)", lineHeight: 1.8, transition: "color 0.4s ease" }}>
             Standard websites are overhead. Adyant Nexa assets are high-performance revenue engines that replace manual processes with elite AI automation.
           </p>
         </motion.div>
@@ -50,14 +51,15 @@ export const ProblemSection = () => {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               style={{
                 padding: "40px",
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.05)",
-                position: "relative"
+                background: "var(--glass-bg)",
+                border: "1px solid var(--glass-border)",
+                position: "relative",
+                transition: "all 0.4s ease"
               }}
             >
-              <div style={{ position: "absolute", top: 0, left: 0, width: "2px", height: "0%", background: "#00F2FF", transition: "height 0.4s" }} className="hover-line" />
-              <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 24, color: "#fff", marginBottom: 16 }}>{point.title}</h3>
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 14, lineHeight: 1.6 }}>{point.desc}</p>
+              <div style={{ position: "absolute", top: 0, left: 0, width: "2px", height: "0%", background: "var(--accent-color)", transition: "all 0.4s ease" }} className="hover-line" />
+              <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 24, color: "var(--text-color)", marginBottom: 16, transition: "color 0.4s ease" }}>{point.title}</h3>
+              <p style={{ color: "var(--muted-text)", fontSize: 14, lineHeight: 1.6, transition: "color 0.4s ease" }}>{point.desc}</p>
             </motion.div>
           ))}
         </div>
