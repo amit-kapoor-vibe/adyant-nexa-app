@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef, useMemo, useEffect } from "react";
+import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Float, Stars } from "@react-three/drei";
+import { OrbitControls, Float } from "@react-three/drei";
 import * as THREE from "three";
 
 const GALAXY_CONFIG = {
@@ -16,48 +16,63 @@ const GALAXY_CONFIG = {
   outsideColor: "#0a0022", // Deep Space
 };
 
-const GalaxyParticles = () => {
-  const pointsRef = useRef<THREE.Points>(null);
-  
-  const [positions, randomness, colors, scales] = useMemo(() => {
-    const pos = new Float32Array(GALAXY_CONFIG.particlesCount * 3);
-    const rand = new Float32Array(GALAXY_CONFIG.particlesCount * 3);
-    const cols = new Float32Array(GALAXY_CONFIG.particlesCount * 3);
-    const scs = new Float32Array(GALAXY_CONFIG.particlesCount);
+// Pure helper: runs outside React render — all Math.random() calls live here
+function generateGalaxyData() {
+  const pos = new Float32Array(GALAXY_CONFIG.particlesCount * 3);
+  const rand = new Float32Array(GALAXY_CONFIG.particlesCount * 3);
+  const cols = new Float32Array(GALAXY_CONFIG.particlesCount * 3);
+  const scs = new Float32Array(GALAXY_CONFIG.particlesCount);
 
-    const insideColor = new THREE.Color(GALAXY_CONFIG.insideColor);
-    const outsideColor = new THREE.Color(GALAXY_CONFIG.outsideColor);
+  const cCore = new THREE.Color("#00F2FF"); // Electric Cyan
+  const cBlue = new THREE.Color("#0055FF"); // Cosmic Blue
+  const cPurple = new THREE.Color("#7000FF"); // Nebula Purple
+  const cPink = new THREE.Color("#FF007A"); // Stellar Pink
 
-    for (let i = 0; i < GALAXY_CONFIG.particlesCount; i++) {
-      const radius = Math.random() * GALAXY_CONFIG.radius;
-      const spinAngle = radius * GALAXY_CONFIG.spin;
-      const armAngle = ((i % GALAXY_CONFIG.arms) / GALAXY_CONFIG.arms) * Math.PI * 2;
+  for (let i = 0; i < GALAXY_CONFIG.particlesCount; i++) {
+    const radius = Math.random() * GALAXY_CONFIG.radius;
+    const spinAngle = radius * GALAXY_CONFIG.spin;
+    const armAngle = ((i % GALAXY_CONFIG.arms) / GALAXY_CONFIG.arms) * Math.PI * 2;
 
-      const randomX = Math.pow(Math.random(), GALAXY_CONFIG.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * GALAXY_CONFIG.randomness * radius;
-      const randomY = Math.pow(Math.random(), GALAXY_CONFIG.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * GALAXY_CONFIG.randomness * radius;
-      const randomZ = Math.pow(Math.random(), GALAXY_CONFIG.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * GALAXY_CONFIG.randomness * radius;
+    const rp = GALAXY_CONFIG.randomnessPower;
+    const rs = GALAXY_CONFIG.randomness;
+    const randomX = Math.pow(Math.random(), rp) * (Math.random() < 0.5 ? 1 : -1) * rs * radius;
+    const randomY = Math.pow(Math.random(), rp) * (Math.random() < 0.5 ? 1 : -1) * rs * radius;
+    const randomZ = Math.pow(Math.random(), rp) * (Math.random() < 0.5 ? 1 : -1) * rs * radius;
 
-      pos[i * 3] = Math.cos(armAngle + spinAngle) * radius;
-      pos[i * 3 + 1] = 0; // Will be animated or offset
-      pos[i * 3 + 2] = Math.sin(armAngle + spinAngle) * radius;
+    pos[i * 3] = Math.cos(armAngle + spinAngle) * radius;
+    pos[i * 3 + 1] = (Math.random() - 0.5) * 0.2; // Add a small thickness to swirl
+    pos[i * 3 + 2] = Math.sin(armAngle + spinAngle) * radius;
 
-      rand[i * 3] = randomX;
-      rand[i * 3 + 1] = randomY;
-      rand[i * 3 + 2] = randomZ;
+    rand[i * 3] = randomX;
+    rand[i * 3 + 1] = randomY;
+    rand[i * 3 + 2] = randomZ;
 
-      // Colors
-      const mixedColor = insideColor.clone();
-      mixedColor.lerp(outsideColor, radius / GALAXY_CONFIG.radius);
-      
-      cols[i * 3] = mixedColor.r;
-      cols[i * 3 + 1] = mixedColor.g;
-      cols[i * 3 + 2] = mixedColor.b;
-
-      scs[i] = Math.random();
+    // Nebula mix interpolation
+    const t = radius / GALAXY_CONFIG.radius;
+    let mixedColor = cCore.clone();
+    
+    if (t < 0.22) {
+      mixedColor.lerp(cBlue, t * 4.54);
+    } else if (t < 0.55) {
+      mixedColor = cBlue.clone().lerp(cPurple, (t - 0.22) * 3.03);
+    } else {
+      mixedColor = cPurple.clone().lerp(cPink, (t - 0.55) * 2.22);
     }
 
-    return [pos, rand, cols, scs];
-  }, []);
+    cols[i * 3] = mixedColor.r;
+    cols[i * 3 + 1] = mixedColor.g;
+    cols[i * 3 + 2] = mixedColor.b;
+
+    scs[i] = Math.random();
+  }
+
+  return [pos, rand, cols, scs] as const;
+}
+
+const GalaxyParticles = () => {
+  const pointsRef = useRef<THREE.Points>(null);
+
+  const [positions, randomness, colors, scales] = useMemo(() => generateGalaxyData(), []);
 
   const particleShader = useMemo(() => ({
     uniforms: {
@@ -150,7 +165,6 @@ const GalaxyParticles = () => {
 
 const NeuralShankh = () => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const shaderRef = useRef<any>(null);
 
   const shankhShader = useMemo(() => ({
     uniforms: {

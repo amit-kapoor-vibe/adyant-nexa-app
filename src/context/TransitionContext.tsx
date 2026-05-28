@@ -4,9 +4,13 @@ import React, { createContext, useContext, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 
+interface LenisInstance {
+  scrollTo: (top: number, opts: { immediate: boolean }) => void;
+}
+
 interface TransitionContextType {
   isNavigating: boolean;
-  triggerTransition: (target: string, lenis: any) => void;
+  triggerTransition: (target: string, lenis: LenisInstance | null) => void;
   currency: "USD" | "INR";
   setCurrency: (currency: "USD" | "INR") => void;
   isScannerOpen: boolean;
@@ -29,12 +33,12 @@ export const TransitionProvider = ({ children }: { children: React.ReactNode }) 
         if (!res.ok) return;
         const data = await res.json();
         if (data.country_code === "IN") setCurrency("INR");
-      } catch (err) {}
+      } catch { /* network or JSON errors are intentionally ignored */ }
     };
     detectLocation();
   }, []);
 
-  const triggerTransition = useCallback((target: string, lenis: any) => {
+  const triggerTransition = useCallback((target: string, lenis: LenisInstance | null) => {
     setIsNavigating(true);
     
     // Jump happens after the screen is fully black (400ms)

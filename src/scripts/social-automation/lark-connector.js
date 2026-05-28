@@ -76,12 +76,23 @@ async function syncPostsToLark(posts) {
   const url = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records`;
 
   for (const post of posts) {
+    let visualPromptStr = "";
+    if (typeof post.visualPrompt === 'object' && post.visualPrompt !== null) {
+      const vp = post.visualPrompt;
+      const elementsStr = Array.isArray(vp.elements) 
+        ? vp.elements.map(e => `- ${e}`).join('\n') 
+        : JSON.stringify(vp.elements);
+      visualPromptStr = `Style: ${vp.designstyle || vp.designStyle || ""}\nBG Color: ${vp.backgroundColor || ""}\nElements:\n${elementsStr}`;
+    } else {
+      visualPromptStr = String(post.visualPrompt || "");
+    }
+
     const recordPayload = {
       fields: {
         "Topic": post.topic,
         "Platform": post.platforms, // Multi-select array
         "Caption": post.caption,
-        "Visual Design Prompt": post.visualPrompt,
+        "Visual Design Prompt": visualPromptStr,
         "Status": "Draft"
       }
     };

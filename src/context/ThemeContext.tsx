@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 
 type Theme = "dark" | "light";
 
@@ -12,23 +12,23 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState<Theme>(() => {
+    // Lazy initializer: runs once on mount, avoids setState-in-effect lint error
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("nexa-theme") as Theme;
+      if (saved === "light" || saved === "dark") return saved;
+    }
+    return "dark";
+  });
+  // Use a ref instead of state to track mount status — avoids setState-in-effect lint error
+  const mountedRef = useRef(false);
 
   useEffect(() => {
-    // 1. Check persistent user choice from localStorage
-    const savedTheme = localStorage.getItem("nexa-theme") as Theme;
-    if (savedTheme === "light" || savedTheme === "dark") {
-      setTheme(savedTheme);
-    } else {
-      // Default to dark mode as approved
-      setTheme("dark");
-    }
-    setMounted(true);
+    mountedRef.current = true;
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mountedRef.current) return;
 
     const root = document.documentElement;
     
@@ -44,7 +44,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
     
     localStorage.setItem("nexa-theme", theme);
-  }, [theme, mounted]);
+  }, [theme]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));

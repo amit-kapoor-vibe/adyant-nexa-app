@@ -56,7 +56,7 @@ export default function PrivacyPolicy() {
                 <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, margin: 0 }}>03. TRACKING TECHNOLOGIES</h3>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.8 }}>
-                We use cookies and high-performance tracking pixels to analyze traffic patterns and improve ad delivery. By using our "Revenue Engine" services, you acknowledge the use of these technologies for performance optimization.
+                We use cookies and high-performance tracking pixels to analyze traffic patterns and improve ad delivery. By using our {'"Revenue Engine"'} services, you acknowledge the use of these technologies for performance optimization.
               </p>
             </section>
 

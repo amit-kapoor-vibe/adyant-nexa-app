@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+
 import { Zap, ArrowRight, ShieldCheck, Globe, Target } from "lucide-react";
 import Link from "next/link";
 import { setupFees } from "@/data/marketingData";

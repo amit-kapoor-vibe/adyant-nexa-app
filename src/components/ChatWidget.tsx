@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, Cpu, Zap, ArrowRight } from "lucide-react";
+import { X, Cpu, Zap, ArrowRight } from "lucide-react";
 import { useNeuralTransition } from "@/context/TransitionContext";
 
 type Message = {
@@ -61,7 +61,7 @@ export function ChatWidget() {
       } else {
         throw new Error();
       }
-    } catch (err) {
+    } catch {
       setMessages(prev => [...prev, { role: "assistant", content: "Audit failed. Connect on WhatsApp for manual sync." }]);
     } finally {
       setIsLoading(false);
@@ -102,7 +102,7 @@ export function ChatWidget() {
       });
       const data = await response.json();
       setMessages(prev => [...prev, { role: "assistant", content: data.reply || "Connection lag. Reach out on WhatsApp." }]);
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, { role: "assistant", content: "Neural lag. Use WhatsApp for priority sync." }]);
     } finally {
       setIsLoading(false);

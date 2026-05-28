@@ -7,6 +7,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useNeuralTransition } from "@/context/TransitionContext";
 
+// Extend Window for Lenis global
+declare global {
+  interface Window {
+    lenis?: { scrollTo: (target: number | string | HTMLElement, opts?: Record<string, unknown>) => void };
+  }
+}
+
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -40,7 +47,7 @@ export const Navbar = () => {
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
     setIsOpen(false);
-    triggerTransition(href, (window as any).lenis);
+    triggerTransition(href, window.lenis ?? null);
   };
 
   if (pathname === "/admin") {
@@ -103,7 +110,7 @@ export const Navbar = () => {
               <button onClick={() => setCurrency("INR")} style={{ padding: "6px 12px", borderRadius: "100px", background: currency === "INR" ? "var(--accent-color)" : "transparent", color: currency === "INR" ? "#000" : "var(--text-color)", border: "none", fontSize: 10, fontWeight: 800, cursor: "pointer", transition: "all 0.3s ease" }}>INR</button>
             </div>
 
-            <a href="/#contact" onClick={(e) => handleLinkClick(e, "/#contact")} className="btn-primary" style={{ fontSize: 11, padding: "12px 32px", borderRadius: "100px" }}>Engage Protocol</a>
+            <Link href="/#contact" onClick={(e) => handleLinkClick(e, "/#contact")} className="btn-primary" style={{ fontSize: 11, padding: "12px 32px", borderRadius: "100px" }}>Engage Protocol</Link>
           </div>
 
           {/* Mobile Toggle */}
@@ -182,7 +189,7 @@ export const Navbar = () => {
                   <button onClick={() => setCurrency("INR")} style={{ flex: 1, padding: "12px", background: currency === "INR" ? "var(--accent-color)" : "transparent", color: currency === "INR" ? "#000" : "var(--text-color)", border: "none", fontSize: 11, fontWeight: 800, borderRadius: 6, transition: "all 0.3s ease", cursor: "pointer" }}>INR</button>
                 </div>
 
-                <a href="/#contact" onClick={(e) => handleLinkClick(e, "/#contact")} className="btn-primary" style={{ textAlign: "center", padding: 20, display: "block", textDecoration: "none", borderRadius: 8, marginBottom: 16 }}>Engage Protocol</a>
+                <Link href="/#contact" onClick={(e) => handleLinkClick(e, "/#contact")} className="btn-primary" style={{ textAlign: "center", padding: 20, display: "block", textDecoration: "none", borderRadius: 8, marginBottom: 16 }}>Engage Protocol</Link>
               </div>
             </motion.div>
           </>

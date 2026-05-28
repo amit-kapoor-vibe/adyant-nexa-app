@@ -13,8 +13,15 @@ export async function GET(request: Request) {
     const response = await fetch(psiUrl);
     const data = await response.json();
 
+    if (!response.ok || data.error) {
+      return NextResponse.json({ 
+        error: data.error?.message || "Google PageSpeed API Error",
+        details: data.error
+      }, { status: response.status || 400 });
+    }
+
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch audit data" }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error?.message || "Failed to fetch audit data" }, { status: 500 });
   }
 }

@@ -45,9 +45,8 @@ export const NeuralMarquee = () => {
                 <span
                   key={`${dupIdx}-${i}`}
                   className="text-[var(--electric-cyan)] opacity-30 font-[var(--font-geist-mono)] text-xs"
-                >
-                  //
-                </span>
+                  aria-hidden="true"
+                >{"//"}</span>
               ) : (
                 <span
                   key={`${dupIdx}-${i}`}

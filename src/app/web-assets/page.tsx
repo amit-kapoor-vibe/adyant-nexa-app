@@ -5,12 +5,11 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { SectionSkeleton } from "@/components/SkeletonLoader";
 import { WebAssetsHero } from "@/components/web-assets/WebAssetsHero";
 import { ROICalculator } from "@/components/ROICalculator";
 import { FadeSection } from "@/components/FadeSection";
 import { Heading } from "@/components/ui/Heading";
-import { Zap, Shield, Cpu, BarChart3 } from "lucide-react";
+import { Shield, Cpu, BarChart3 } from "lucide-react";
 
 // ─── Lazy Loaded Components ───
 const ScannerModal = dynamic(() => import("@/components/ScannerModal").then(m => ({ default: m.ScannerModal })), { ssr: false });

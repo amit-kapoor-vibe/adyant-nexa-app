@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Target, Search, Users, Cpu } from "lucide-react";
+import { Search, Users, Cpu } from "lucide-react";
 
 export const PersonaShowcase = () => {
   return (

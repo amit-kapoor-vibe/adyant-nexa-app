@@ -49,15 +49,29 @@ export const ProblemSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="glass-panel"
               style={{
                 padding: "40px",
-                background: "var(--glass-bg)",
-                border: "1px solid var(--glass-border)",
                 position: "relative",
-                transition: "all 0.4s ease"
+                border: "1px solid var(--border-color)",
+                background: "var(--glass-bg)"
               }}
             >
-              <div style={{ position: "absolute", top: 0, left: 0, width: "2px", height: "0%", background: "var(--accent-color)", transition: "all 0.4s ease" }} className="hover-line" />
+              {/* Futuristic Cyber Laser Scanline Sweep */}
+              <div className="cyber-scanline" />
+
+              {/* Tactical Sci-Fi Corner Brackets */}
+              <div className="cyber-bracket cb-tl" />
+              <div className="cyber-bracket cb-tr" />
+              <div className="cyber-bracket cb-bl" />
+              <div className="cyber-bracket cb-br" />
+
+              {/* Diagnostic Meta Ticker */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.25 }}>[ ANOMALY_SYS_0{i+1} ]</span>
+                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.25, color: "var(--accent-color)" }}>CRITICAL_</span>
+              </div>
+
               <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 24, color: "var(--text-color)", marginBottom: 16, transition: "color 0.4s ease" }}>{point.title}</h3>
               <p style={{ color: "var(--muted-text)", fontSize: 14, lineHeight: 1.6, transition: "color 0.4s ease" }}>{point.desc}</p>
             </motion.div>

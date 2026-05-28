@@ -10,8 +10,16 @@ type EventName =
   | 'error_occurred' 
   | 'api_latency';
 
+// Extend Window for third-party analytics globals
+declare global {
+  interface Window {
+    fbq?: (type: string, event: string, params?: EventParams) => void;
+    gtag?: (command: string, event: string, params?: EventParams) => void;
+  }
+}
+
 interface EventParams {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export const trackEvent = (name: EventName, params: EventParams = {}) => {
@@ -23,13 +31,13 @@ export const trackEvent = (name: EventName, params: EventParams = {}) => {
   }
 
   // 2. Meta Pixel (if available)
-  if (typeof window !== 'undefined' && (window as any).fbq) {
-    (window as any).fbq('trackCustom', name, params);
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('trackCustom', name, params);
   }
 
   // 3. Google Analytics (if available)
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', name, params);
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', name, params);
   }
 
   // 4. Custom Server-side Logging (Placeholder)

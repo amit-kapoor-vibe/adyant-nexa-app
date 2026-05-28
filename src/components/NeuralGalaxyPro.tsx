@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, Float, Stars, Text } from "@react-three/drei";
+import { Float, Stars } from "@react-three/drei";
 import * as THREE from "three";
+import { useScroll } from "framer-motion";
 
 const PRO_CONFIG = {
   particlesCount: 12000,
@@ -69,49 +70,65 @@ const EventHorizon = () => {
   );
 };
 
+// Pure helper: all Math.random() calls live outside React render lifecycle
+function generateNeuralParticleData() {
+  const pos = new Float32Array(PRO_CONFIG.particlesCount * 3);
+  const rand = new Float32Array(PRO_CONFIG.particlesCount * 3);
+  const cols = new Float32Array(PRO_CONFIG.particlesCount * 3);
+  const scs = new Float32Array(PRO_CONFIG.particlesCount);
+
+  const cCore = new THREE.Color("#00F2FF"); // Electric Cyan (Inside Core)
+  const cBlue = new THREE.Color("#0055FF"); // Cosmic Blue (Arm Inner)
+  const cPurple = new THREE.Color("#7000FF"); // Nebula Purple (Arm Outer)
+  const cPink = new THREE.Color("#FF007A"); // Stellar Pink (Outer Space Dust)
+
+  for (let i = 0; i < PRO_CONFIG.particlesCount; i++) {
+    const radius = Math.random() * PRO_CONFIG.radius;
+    const spinAngle = radius * PRO_CONFIG.spin;
+    const armAngle = ((i % PRO_CONFIG.arms) / PRO_CONFIG.arms) * Math.PI * 2;
+
+    const rp = PRO_CONFIG.randomnessPower;
+    const rs = PRO_CONFIG.randomness;
+    const randomX = Math.pow(Math.random(), rp) * (Math.random() < 0.5 ? 1 : -1) * rs * radius;
+    const randomY = Math.pow(Math.random(), rp) * (Math.random() < 0.5 ? 1 : -1) * rs * radius;
+    const randomZ = Math.pow(Math.random(), rp) * (Math.random() < 0.5 ? 1 : -1) * rs * radius;
+
+    pos[i * 3] = Math.cos(armAngle + spinAngle) * radius;
+    pos[i * 3 + 1] = (Math.random() - 0.5) * 0.55; // Slightly deeper particle spread
+    pos[i * 3 + 2] = Math.sin(armAngle + spinAngle) * radius;
+
+    rand[i * 3] = randomX;
+    rand[i * 3 + 1] = randomY;
+    rand[i * 3 + 2] = randomZ;
+
+    // Advanced 4-Color Gradient Nebula Interpolation
+    const t = radius / PRO_CONFIG.radius;
+    let mixedColor = cCore.clone();
+    
+    if (t < 0.22) {
+      mixedColor.lerp(cBlue, t * 4.54);
+    } else if (t < 0.55) {
+      mixedColor = cBlue.clone().lerp(cPurple, (t - 0.22) * 3.03);
+    } else {
+      mixedColor = cPurple.clone().lerp(cPink, (t - 0.55) * 2.22);
+    }
+
+    cols[i * 3] = mixedColor.r;
+    cols[i * 3 + 1] = mixedColor.g;
+    cols[i * 3 + 2] = mixedColor.b;
+
+    scs[i] = Math.random();
+  }
+
+  return [pos, rand, cols, scs] as const;
+}
+
 // --- Particles with Cursor Gravity ---
 const NeuralParticles = () => {
   const pointsRef = useRef<THREE.Points>(null);
   const { mouse, viewport } = useThree();
-  
-  const [positions, randomness, colors, scales] = useMemo(() => {
-    const pos = new Float32Array(PRO_CONFIG.particlesCount * 3);
-    const rand = new Float32Array(PRO_CONFIG.particlesCount * 3);
-    const cols = new Float32Array(PRO_CONFIG.particlesCount * 3);
-    const scs = new Float32Array(PRO_CONFIG.particlesCount);
 
-    const insideColor = new THREE.Color(PRO_CONFIG.insideColor);
-    const outsideColor = new THREE.Color(PRO_CONFIG.outsideColor);
-
-    for (let i = 0; i < PRO_CONFIG.particlesCount; i++) {
-      const radius = Math.random() * PRO_CONFIG.radius;
-      const spinAngle = radius * PRO_CONFIG.spin;
-      const armAngle = ((i % PRO_CONFIG.arms) / PRO_CONFIG.arms) * Math.PI * 2;
-
-      const randomX = Math.pow(Math.random(), PRO_CONFIG.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * PRO_CONFIG.randomness * radius;
-      const randomY = Math.pow(Math.random(), PRO_CONFIG.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * PRO_CONFIG.randomness * radius;
-      const randomZ = Math.pow(Math.random(), PRO_CONFIG.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * PRO_CONFIG.randomness * radius;
-
-      pos[i * 3] = Math.cos(armAngle + spinAngle) * radius;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 0.5;
-      pos[i * 3 + 2] = Math.sin(armAngle + spinAngle) * radius;
-
-      rand[i * 3] = randomX;
-      rand[i * 3 + 1] = randomY;
-      rand[i * 3 + 2] = randomZ;
-
-      const mixedColor = insideColor.clone();
-      mixedColor.lerp(outsideColor, radius / PRO_CONFIG.radius);
-      
-      cols[i * 3] = mixedColor.r;
-      cols[i * 3 + 1] = mixedColor.g;
-      cols[i * 3 + 2] = mixedColor.b;
-
-      scs[i] = Math.random();
-    }
-
-    return [pos, rand, cols, scs];
-  }, []);
+  const [positions, randomness, colors, scales] = useMemo(() => generateNeuralParticleData(), []);
 
   const shader = useMemo(() => ({
     uniforms: {
@@ -207,19 +224,75 @@ const NeuralParticles = () => {
   );
 };
 
+const CameraController = () => {
+  const { scrollYProgress } = useScroll();
+  const scrollRef = useRef(0);
+  
+  useEffect(() => {
+    return scrollYProgress.on("change", (latest) => {
+      scrollRef.current = latest;
+    });
+  }, [scrollYProgress]);
+  
+  useFrame((state) => {
+    const scroll = scrollRef.current;
+    
+    // Flight path configuration
+    let targetX = 0;
+    let targetY = 6;
+    let targetZ = 12;
+    
+    if (scroll < 0.25) {
+      // Transition from Hero to Problem: Zoom deep into the core event horizon
+      const t = scroll / 0.25;
+      targetX = THREE.MathUtils.lerp(0, 0, t);
+      targetY = THREE.MathUtils.lerp(6, 1.5, t);
+      targetZ = THREE.MathUtils.lerp(12, 4.5, t);
+    } else if (scroll < 0.5) {
+      // Transition from Problem to Services: Tilt and dynamic pan
+      const t = (scroll - 0.25) / 0.25;
+      targetX = THREE.MathUtils.lerp(0, 8, t);
+      targetY = THREE.MathUtils.lerp(1.5, 2, t);
+      targetZ = THREE.MathUtils.lerp(4.5, 7.5, t);
+    } else if (scroll < 0.75) {
+      // Transition from Services to Architecture/ROI: Low-angle galactic flight path
+      const t = (scroll - 0.5) / 0.25;
+      targetX = THREE.MathUtils.lerp(8, -7, t);
+      targetY = THREE.MathUtils.lerp(2, -3, t);
+      targetZ = THREE.MathUtils.lerp(7.5, 8, t);
+    } else {
+      // Transition from Architecture/ROI to Contact/About: Wider HUD view
+      const t = (scroll - 0.75) / 0.25;
+      targetX = THREE.MathUtils.lerp(-7, 0, t);
+      targetY = THREE.MathUtils.lerp(-3, 8, t);
+      targetZ = THREE.MathUtils.lerp(8, 14, t);
+    }
+    
+    // Smooth interpolation with high performance lerp
+    state.camera.position.x = THREE.MathUtils.lerp(state.camera.position.x, targetX, 0.05);
+    state.camera.position.y = THREE.MathUtils.lerp(state.camera.position.y, targetY, 0.05);
+    state.camera.position.z = THREE.MathUtils.lerp(state.camera.position.z, targetZ, 0.05);
+    
+    // Keep camera focused on the Event Horizon center core
+    state.camera.lookAt(0, 0, 0);
+  });
+  
+  return null;
+};
+
 export default function NeuralGalaxyPro() {
   return (
-    <div style={{ width: "100%", height: "100vh", background: "#020202", overflow: "hidden", position: "relative" }}>
+    <div style={{ width: "100%", height: "100vh", background: "transparent", overflow: "hidden", position: "relative" }}>
       <Canvas camera={{ position: [0, 6, 12], fov: 40 }} dpr={[1, 2]}>
-        <color attach="background" args={["#020202"]} />
         <ambientLight intensity={0.2} />
         
         <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.2}>
           <NeuralParticles />
+          <EventHorizon />
         </Float>
         
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.3} />
+        <CameraController />
       </Canvas>
       
       {/* Cinematic Overlays */}

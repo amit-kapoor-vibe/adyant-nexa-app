@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+
 import { FadeSection } from "@/components/FadeSection";
 import { Heading } from "@/components/ui/Heading";
 

@@ -35,7 +35,14 @@ const IndustryTabs = ({ selectedId, onChange }: { selectedId: string, onChange: 
   </div>
 );
 
-const ImpactResults = ({ stats, isINR }: { stats: any, isINR: boolean }) => (
+interface ImpactStats {
+  totalImpact: number;
+  netSavings: number;
+  revenueBoost: number;
+  roi: number;
+}
+
+const ImpactResults = ({ stats, isINR }: { stats: ImpactStats, isINR: boolean }) => (
   <div style={{ 
     background: "var(--surface-color)", 
     border: "1px solid var(--border-color)", 

@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  // useRef instead of useState to avoid setState-in-effect lint error
+  const mountedRef = useRef(false);
 
   // Ultra-precise MotionValues
   const mouseX = useMotionValue(-100);
@@ -19,7 +20,7 @@ export const CustomCursor = () => {
 
   useEffect(() => {
     if (window.innerWidth < 768) return;
-    setMounted(true);
+    mountedRef.current = true;
     
     const updatePos = (e: MouseEvent) => {
       // Show cursor as soon as it moves
@@ -49,7 +50,7 @@ export const CustomCursor = () => {
     };
   }, [mouseX, mouseY, isVisible]);
 
-  if (!mounted) return null;
+  if (!mountedRef.current) return null;
 
   return (
     <>

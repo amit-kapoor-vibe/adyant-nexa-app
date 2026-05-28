@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { X, Zap, MessageCircle } from "lucide-react";
+
 import { FadeSection } from "./FadeSection";
 import { Heading } from "./ui/Heading";
 

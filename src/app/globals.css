@@ -6,13 +6,13 @@
 ───────────────────────────────────────── */
 :root {
   /* Core Theme Variables (Dark Mode Default) */
-  --bg-color: #020202;
+  --bg-color: transparent;
   --text-color: #E5E5E5;
   --accent-color: #00F2FF;
-  --surface-color: #080808;
+  --surface-color: rgba(8, 8, 8, 0.4);
   --border-color: rgba(255, 255, 255, 0.04);
   --muted-text: rgba(229, 229, 229, 0.5);
-  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-bg: rgba(255, 255, 255, 0.025);
   --glass-border: rgba(255, 255, 255, 0.06);
   --shadow-color: rgba(0, 242, 255, 0.05);
   --scroll-track: #020202;
@@ -20,8 +20,13 @@
   --void-black: #020202;
   --platinum-white: #E5E5E5;
   --electric-cyan: #00F2FF;
-  --background: #020202;
+  --background: transparent;
   --foreground: #E5E5E5;
+
+  /* Space Upgrade Color Palette (Adyant Nexa 2.0) */
+  --nebula-purple: #7000FF;
+  --stellar-pink: #FF007A;
+  --cosmic-blue: #0055FF;
 
   --font-syne: var(--font-syne);
   --font-inter: var(--font-inter);
@@ -40,14 +45,14 @@
 }
 
 html {
-  background-color: var(--bg-color);
+  background-color: #020202;
   cursor: none;
   scroll-behavior: smooth;
   transition: background-color 0.4s ease;
 }
 
 body {
-  background: var(--bg-color);
+  background: transparent;
   color: var(--text-color);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -324,3 +329,112 @@ body {
 .skeleton-shimmer {
   animation: skeleton-shimmer-anim 2s linear infinite;
 }
+
+/* ─────────────────────────────────────────
+   SPACE UPGRADE & CYBER HUD ELEMENTS (Nexa 2.0)
+   ───────────────────────────────────────── */
+
+/* Holographic Cyber Scanline Sweep */
+.cyber-scanline {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    var(--accent-color) 30%, 
+    var(--nebula-purple) 50%, 
+    var(--stellar-pink) 70%, 
+    transparent
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.glass-panel:hover .cyber-scanline {
+  animation: laser-sweep 2.5s infinite linear;
+}
+
+@keyframes laser-sweep {
+  0% { top: -10px; opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { top: 110%; opacity: 0; }
+}
+
+/* Interactive Futuristic Corner Brackets */
+.cyber-bracket {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: rgba(0, 242, 255, 0.2);
+  border-style: solid;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover .cyber-bracket {
+  border-color: var(--accent-color);
+  transform: scale(1.15);
+}
+
+.cb-tl { top: 14px; left: 14px; border-width: 1.5px 0 0 1.5px; }
+.cb-tr { top: 14px; right: 14px; border-width: 1.5px 1.5px 0 0; }
+.cb-bl { bottom: 14px; left: 14px; border-width: 0 0 1.5px 1.5px; }
+.cb-br { bottom: 14px; right: 14px; border-width: 0 1.5px 1.5px 0; }
+
+/* 3D Cyber Grid Overlay */
+.hud-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.015) 1.5px, transparent 0),
+    linear-gradient(rgba(255, 255, 255, 0.003) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.003) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.hud-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(2, 2, 2, 0.8) 100%);
+  pointer-events: none;
+}
+
+/* Coordinate display */
+.hud-coordinate {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 8px;
+  color: var(--muted-text);
+  letter-spacing: 0.2em;
+  opacity: 0.25;
+  text-transform: uppercase;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Glass panel hover space-glow updates */
+.glass-panel {
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+  border-color: rgba(0, 242, 255, 0.45);
+  box-shadow: 
+    0 0 40px rgba(0, 242, 255, 0.08), 
+    0 0 80px rgba(112, 0, 255, 0.04),
+    inset 0 0 12px rgba(0, 242, 255, 0.02);
+}
+
+/* Cosmic Neon Shimmer Text */
+.text-nebula-glow {
+  text-shadow: 0 0 30px rgba(112, 0, 255, 0.6), 0 0 60px rgba(255, 0, 122, 0.3);
+}
+

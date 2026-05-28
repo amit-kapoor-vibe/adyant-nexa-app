@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, ShieldCheck, Timer, ArrowRight, Lock, X } from "lucide-react";
+import { Zap, ShieldCheck, Timer, Lock, X } from "lucide-react";
 import { Heading } from "@/components/ui/Heading";
 
 interface QuantumAllocatorProps {
@@ -13,7 +13,7 @@ interface QuantumAllocatorProps {
 
 export const QuantumAllocator = ({ isOpen, onClose, currency }: QuantumAllocatorProps) => {
   const [phase, setPhase] = useState<"scanning" | "unlocked">("scanning");
-  const [slotsLeft, setSlotsLeft] = useState(6); // Simulated current slots
+  const slotsLeft = 6; // Simulated current slots
   const [discountAmount, setDiscountAmount] = useState("");
   const [percentage, setPercentage] = useState(0);
 

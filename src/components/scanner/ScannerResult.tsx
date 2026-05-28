@@ -48,12 +48,18 @@ export function ScannerResult({ score, url, currency }: ScannerResultProps) {
     }
   };
 
-  const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+  interface NeuralAudit {
+    status?: string;
+    analysis?: string;
+    recommendation?: string;
+  }
+
+  const [aiAnalysis, setAiAnalysis] = useState<NeuralAudit | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const stored = sessionStorage.getItem("latest_neural_audit");
-      if (stored) setAiAnalysis(JSON.parse(stored));
+      if (stored) setAiAnalysis(JSON.parse(stored) as NeuralAudit);
     }
   }, []);
 

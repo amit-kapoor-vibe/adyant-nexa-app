@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShieldCheck, X } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 export function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);

@@ -36,7 +36,7 @@ export default function TermsOfService() {
                 <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, margin: 0 }}>01. OVERVIEW</h3>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.8 }}>
-                Welcome to Adyant Nexa. By accessing our "System" (website) or engaging our services, you agree to these Terms. As a solopreneur brand, we prioritize technical excellence and mutual respect. These terms protect the "Revenue Engine" architecture we build for you.
+                Welcome to Adyant Nexa. By accessing our {"System"} (website) or engaging our services, you agree to these Terms. As a solopreneur brand, we prioritize technical excellence and mutual respect. These terms protect the {"Revenue Engine"} architecture we build for you.
               </p>
             </section>
 
@@ -68,7 +68,7 @@ export default function TermsOfService() {
                 <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, margin: 0 }}>04. SERVICE SCOPE</h3>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.8 }}>
-                Each project follows a strict Statement of Work (SOW). Any "Scope Creep" or additional feature requests outside the SOW will be billed separately at our standard hourly rates. We build on Next.js/React and do not provide maintenance for third-party platforms.
+                Each project follows a strict Statement of Work (SOW). Any {"Scope Creep"} or additional feature requests outside the SOW will be billed separately at our standard hourly rates. We build on Next.js/React and do not provide maintenance for third-party platforms.
               </p>
             </section>
 

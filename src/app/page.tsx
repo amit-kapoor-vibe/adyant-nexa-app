@@ -2,8 +2,7 @@
 
 import { useEffect, useState, memo, useRef } from "react";
 import Lenis from "lenis";
-import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
@@ -23,6 +22,7 @@ const ContactSection = dynamic(() => import("@/components/ContactSection").then(
 const InfoSection = dynamic(() => import("@/components/InfoSection").then(m => ({ default: m.InfoSection })), { loading: () => <SectionSkeleton />, ssr: false });
 const MarketingUpsell = dynamic(() => import("@/components/MarketingUpsell").then(m => ({ default: m.MarketingUpsell })), { loading: () => <SectionSkeleton />, ssr: false });
 const ScannerModal = dynamic(() => import("@/components/ScannerModal").then(m => ({ default: m.ScannerModal })), { ssr: false });
+const NeuralGalaxyPro = dynamic(() => import("@/components/NeuralGalaxyPro"), { ssr: false });
 
 // Memoize static layout parts for zero-overhead re-renders
 const MemoizedSocialProof = memo(SocialProof);
@@ -37,6 +37,12 @@ export default function AdyantNexa() {
   
   const { isNavigating, triggerTransition, currency, setCurrency } = useNeuralTransition();
 
+  // Scroll Parallax Engine (Adyant Nexa 2.0)
+  const { scrollYProgress } = useScroll();
+  const gridScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.04, 0.98]);
+  const gridSkewY = useTransform(scrollYProgress, [0, 1], [0, -1]);
+  const pageTranslateZ = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 10, 10, 0]);
+
   // Snappy Scroll Protocol (Lenis)
   useEffect(() => {
     const lenis = new Lenis({ 
@@ -46,7 +52,7 @@ export default function AdyantNexa() {
     });
     
     lenisRef.current = lenis;
-    (window as any).lenis = lenis;
+    window.lenis = lenis;
 
     const raf = (t: number) => { 
       lenis.raf(t); 
@@ -80,7 +86,26 @@ export default function AdyantNexa() {
   };
 
   return (
-    <div style={{ background: "var(--bg-color)", minHeight: "100vh", overflowX: "hidden", transition: "background-color 0.4s ease" }}>
+    <div style={{ background: "var(--bg-color)", minHeight: "100vh", overflowX: "hidden", position: "relative", transition: "background-color 0.4s ease" }}>
+      
+      {/* 3D Global Space Event-Horizon Backdrop (Adyant Nexa 3D Scroll Universe) */}
+      <div style={{ position: "fixed", inset: 0, zIndex: -1, pointerEvents: "none", opacity: 0.9 }}>
+        <NeuralGalaxyPro />
+      </div>
+
+      {/* 3D Cosmic HUD Grid Backdrop (Adyant Nexa 2.0 Parallax Engine) */}
+      <motion.div 
+        className="hud-grid" 
+        style={{ 
+          scale: gridScale,
+          skewY: gridSkewY,
+          position: "fixed",
+          inset: 0,
+          pointerEvents: "none",
+          zIndex: 0
+        }} 
+      />
+
       <motion.main
         animate={{ 
           opacity: isNavigating ? 0 : 1,

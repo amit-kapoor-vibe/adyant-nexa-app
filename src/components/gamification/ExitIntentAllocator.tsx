@@ -5,17 +5,15 @@ import { QuantumAllocator } from "./QuantumAllocator";
 
 export function ExitIntentAllocator() {
   const [isOpen, setIsOpen] = useState(false);
-  const [hasTriggered, setHasTriggered] = useState(false);
+  const [hasTriggered, setHasTriggered] = useState<boolean>(() => {
+    // Lazy initializer: avoids setState-in-effect lint error
+    if (typeof window !== "undefined") {
+      return !!sessionStorage.getItem("quantum_allocator_triggered");
+    }
+    return false;
+  });
 
   useEffect(() => {
-    // Check if it already triggered in this session
-    if (typeof window !== "undefined") {
-      const alreadyTriggered = sessionStorage.getItem("quantum_allocator_triggered");
-      if (alreadyTriggered) {
-        setHasTriggered(true);
-      }
-    }
-
     const handleMouseOut = (e: MouseEvent) => {
       // If the mouse leaves the viewport at the top (usually towards tabs/url bar)
       if (e.clientY <= 0 && !hasTriggered) {

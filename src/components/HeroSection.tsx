@@ -7,7 +7,6 @@ export const HeroSection = ({ onScan }: { onScan?: (url: string) => void }) => {
   return (
     <section style={{ position: "relative", height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "var(--bg-color)", transition: "background-color 0.4s ease" }}>
 
-
       {/* Cinematic Vignettes */}
       <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, transparent 0%, var(--bg-color) 100%)", pointerEvents: "none", zIndex: 2, transition: "background 0.4s ease" }} />
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, var(--bg-color) 0%, transparent 20%, transparent 80%, var(--bg-color) 100%)", pointerEvents: "none", zIndex: 2, transition: "background 0.4s ease" }} />

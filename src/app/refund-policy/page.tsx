@@ -56,7 +56,7 @@ export default function RefundPolicy() {
                 <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 18, margin: 0 }}>03. APPROVAL & HANDOVER</h3>
               </div>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 14, lineHeight: 1.8 }}>
-                Once a project has been approved and the code has been handed over or deployed to the client's production environment, no refunds will be issued. We provide a 14-day "Bug Fix" window post-launch to ensure the system is operating as intended.
+                Once a project has been approved and the code has been handed over or deployed to the client&apos;s production environment, no refunds will be issued. We provide a 14-day {'"Bug Fix"'} window post-launch to ensure the system is operating as intended.
               </p>
             </section>
 

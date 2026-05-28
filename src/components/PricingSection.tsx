@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle, Zap, Shield } from "lucide-react";
+import { CheckCircle, Zap } from "lucide-react";
 import { FadeSection } from "./FadeSection";
 import { Heading } from "./ui/Heading";
 import { architectureTiers } from "@/data/marketingData";
@@ -12,7 +12,7 @@ interface PricingSectionProps {
   onAudit?: () => void;
 }
 
-export const PricingSection = ({ currency = "INR", setCurrency, onAudit }: PricingSectionProps) => {
+export const PricingSection = ({ currency = "INR", onAudit }: PricingSectionProps) => {
   return (
     <section id="investment" style={{ padding: "clamp(6rem, 12vw, 10rem) clamp(1.25rem, 3vw, 1.75rem)", background: "var(--bg-color)", position: "relative", overflow: "hidden", transition: "background 0.4s ease" }}>
       

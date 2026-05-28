@@ -75,14 +75,24 @@ export const ServicesSection = () => {
                 padding: "40px",
                 display: "flex",
                 flexDirection: "column",
-                minHeight: "480px"
+                minHeight: "480px",
+                position: "relative"
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 60 }}>
+              {/* Active Cyber Laser Sweep */}
+              <div className="cyber-scanline" />
+
+              {/* Tactical Sci-Fi Corner Brackets */}
+              <div className="cyber-bracket cb-tl" />
+              <div className="cyber-bracket cb-tr" />
+              <div className="cyber-bracket cb-bl" />
+              <div className="cyber-bracket cb-br" />
+
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 60, position: "relative", zIndex: 6 }}>
                 <div style={{ padding: 14, border: "1px solid var(--accent-color)", background: "var(--shadow-color)", color: "var(--accent-color)", transition: "all 0.4s ease" }}>
                   <svc.Icon size={20} />
                 </div>
-                <span className="editorial-tag" style={{ fontSize: 10, opacity: 0.2 }}>{svc.id}</span>
+                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.35 }}>[ SYS_VERTICAL: 0{svc.id} ]</span>
               </div>
 
               <div style={{ marginTop: "auto" }}>
