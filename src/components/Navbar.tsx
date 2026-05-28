@@ -10,7 +10,7 @@ import { useNeuralTransition } from "@/context/TransitionContext";
 // Extend Window for Lenis global
 declare global {
   interface Window {
-    lenis?: { scrollTo: (target: number | string | HTMLElement, opts?: Record<string, unknown>) => void };
+    lenis: any;
   }
 }
 
