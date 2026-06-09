@@ -49,10 +49,10 @@ const CORE_THEMES = [
   "Predictive LTV via AI: Knowing your customer value before they purchase"
 ];
 
-async function generateSocialPosts() {
+async function generateSocialPosts(customTopic = null) {
   console.log("🤖 Generating elite social media drafts using Gemini...");
 
-  const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
+  const themesToUse = customTopic ? [customTopic] : CORE_THEMES;
 
   const prompt = `
   You are the Lead Creative Director, Elite Copywriter, and CTO at "Adyant Nexa", a premium, high-ticket, India-focused AI integration and web engineering agency.
@@ -73,18 +73,17 @@ async function generateSocialPosts() {
      - Absolute BAN on: "delve", "testament", "tapestry", "revolutionizing", "thrilled", "look no further", "in a world where...", "unlock the potential", "beacon", "game-changer", "elevate", "powerhouse", "dynamic".
      - No throat-clearing introductions, meta-commentary, or rhetorical announcements.
      - Avoid dramatic fragmentation, false agency, or passive voice.
-  2. Sentence & Rhythmical Constraints:
-     - Vary sentence lengths dynamically to create a highly natural, human rhythm.
+  2. Vary sentence lengths dynamically to create a highly natural, human rhythm.
      - Respect reader intelligence: Write for sophisticated buyers. Never over-explain or state the obvious.
      - Active voice ONLY. Use strong, decisive verbs.
-     - No Wh- sentence starters (e.g. do NOT start sentences with "What if...", "Why...").
+     - No Wh- sentence starters.
   3. B2B Copywriting Frameworks:
      - Use the PAS (Problem, Agitate, Solve) framework for LinkedIn posts: identify a critical operational leak or cost, agitate it with raw metrics, and position Adyant Nexa's high-performance engineering as the definitive solution.
   
   ---
   
   Generate exactly 5 distinct, high-impact social media posts based on these themes:
-  ${JSON.stringify(CORE_THEMES, null, 2)}
+  ${JSON.stringify(themesToUse, null, 2)}
   
   For each post, output a JSON object containing:
   1. "topic": A short 3-5 word high-impact headline.
@@ -99,31 +98,42 @@ async function generateSocialPosts() {
   Return the output ONLY as a valid JSON array of objects. Do not include markdown code block syntax (like \`\`\`json) or any extra conversational text.
   `;
 
-  try {
-    const result = await model.generateContent(prompt);
-    let text = result.response.text();
-    
-    // Clean up any markdown blocks if returned
-    if (text.startsWith("```json")) {
-      text = text.substring(7);
-    }
-    if (text.endsWith("```")) {
-      text = text.substring(0, text.length - 3);
-    }
-    text = text.trim();
+  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash"];
+  let lastError;
 
-    const posts = JSON.parse(text);
-    console.log(`✅ Successfully generated ${posts.length} premium social posts!`);
-    return posts;
-  } catch (error) {
-    console.error("❌ Error generating content via Gemini:", error);
-    throw error;
+  for (const modelName of modelsToTry) {
+    try {
+      console.log(`🤖 Attempting content generation with model: ${modelName}...`);
+      const model = ai.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt, { timeout: 60000 });
+      let text = result.response.text();
+      
+      // Clean up any markdown blocks if returned
+      if (text.startsWith("```json")) {
+        text = text.substring(7);
+      }
+      if (text.endsWith("```")) {
+        text = text.substring(0, text.length - 3);
+      }
+      text = text.trim();
+
+      const posts = JSON.parse(text);
+      console.log(`✅ Successfully generated ${posts.length} premium social posts using ${modelName}!`);
+      return posts;
+    } catch (error) {
+      console.warn(`⚠️ Model ${modelName} failed:`, error.message);
+      lastError = error;
+    }
   }
+
+  console.error("❌ All Gemini models failed during content generation.");
+  throw lastError;
 }
 
 // Export for integration or run directly
 if (require.main === module) {
-  generateSocialPosts().then((posts) => {
+  const customTopic = process.argv[2] || null;
+  generateSocialPosts(customTopic).then((posts) => {
     console.log(JSON.stringify(posts, null, 2));
   }).catch((err) => {
     process.exit(1);

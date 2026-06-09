@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CheckCircle, MessageCircle, AlertCircle } from "lucide-react";
 import { FadeSection } from "./FadeSection";
 import { trackEvent } from "@/utils/analytics";
 import { Heading } from "./ui/Heading";
+import { HeroVideo } from "./hero/HeroVideo";
 
 type FormData = { name: string; email: string; phone: string; business: string; budget: string; message: string };
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -59,6 +60,20 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    // Dynamic import to prevent SSR errors
+    import("gsap").then(({ gsap }) => {
+      gsap.to(".marquee-inner", {
+        x: "-50%",
+        ease: "none",
+        duration: 35,
+        repeat: -1
+      });
+    }).catch((err) => {
+      console.warn("GSAP load failed, using CSS marquee fallback:", err);
+    });
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validateForm(form);
@@ -97,10 +112,13 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
     borderColor: errors[field] ? "#FF4444" : "var(--border-color)",
   });
 
-
   return (
-    <section id="contact" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", background: "var(--bg-color)", transition: "background 0.4s ease" }}>
-      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+    <section id="contact" style={{ padding: "clamp(6rem, 10vw, 9rem) clamp(1.25rem, 3vw, 1.75rem) clamp(4rem, 6vw, 5rem)", background: "transparent", position: "relative", overflow: "hidden", transition: "background 0.4s ease" }}>
+      
+      {/* Vertically Flipped Video Background */}
+      <HeroVideo flipped={true} />
+
+      <div style={{ maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 10 }}>
         <FadeSection>
           <div style={{ textAlign: "center", marginBottom: 60 }}>
             <span className="editorial-tag" style={{ display: "block", marginBottom: 20, opacity: 0.6, fontSize: 9 }}>Get In Touch_</span>
@@ -127,7 +145,7 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} noValidate aria-label="Contact form">
-                {/* Global error (e.g., 429 rate limit) */}
+                {/* Global error */}
                 {errors.name && errors.name.includes("Too many") && (
                   <div style={{ ...errorStyle, marginBottom: 16, padding: "10px 14px", border: "1px solid rgba(255,68,68,0.3)", background: "rgba(255,68,68,0.05)" }}>
                     <AlertCircle size={12} /> {errors.name}
@@ -211,7 +229,7 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
                     ) : (
                       <>
                         <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$1,500 – $5,000</option>
-                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$5,000 – $25,000</option>
+                        <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$5,00,000 – $25,000</option>
                         <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$25,000 – $100,000</option>
                         <option style={{ background: "var(--surface-color)", color: "var(--text-color)" }}>$100,000+ (Global Scale)</option>
                       </>
@@ -250,6 +268,78 @@ export const ContactSection = ({ currency = "INR" }: { currency?: "USD" | "INR" 
           </div>
         </FadeSection>
       </div>
+
+
+
+
+      {/* Footer Availability Bar */}
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "24px", width: "100%", maxWidth: "800px", margin: "60px auto 0", padding: "28px 0", borderTop: "1px solid var(--border-color)", position: "relative", zIndex: 10 }}>
+        
+        {/* Availability Status */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div className="pulse-dot" />
+          <span className="editorial-tag" style={{ fontSize: "10px", color: "var(--accent-color)", opacity: 0.8 }}>Available for projects</span>
+        </div>
+
+        {/* Email Direct CTA */}
+        <div>
+          <a
+            href="mailto:contact@adyantnexa.com"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "10px 24px",
+              borderRadius: "9999px",
+              border: "1px solid var(--border-color)",
+              color: "var(--text-color)",
+              fontFamily: "var(--font-inter)",
+              fontSize: "12px",
+              fontWeight: 600,
+              textDecoration: "none",
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--accent-color)";
+              e.currentTarget.style.color = "var(--accent-color)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--border-color)";
+              e.currentTarget.style.color = "var(--text-color)";
+            }}
+          >
+            contact@adyantnexa.com
+          </a>
+        </div>
+
+        {/* Social Links — Real platforms only */}
+        <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+          {[
+            ["Instagram", "https://instagram.com/adyantnexa"],
+            ["Facebook", "https://facebook.com/adyantnexa"],
+            ["LinkedIn", "https://linkedin.com/company/adyantnexa"]
+          ].map(([name, url]) => (
+            <a
+              key={name}
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className="editorial-tag"
+              style={{
+                fontSize: "10px",
+                color: "var(--muted-text)",
+                textDecoration: "none",
+                transition: "color 0.3s ease"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.color = "var(--accent-color)"}
+              onMouseLeave={(e) => e.currentTarget.style.color = "var(--muted-text)"}
+            >
+              {name}
+            </a>
+          ))}
+        </div>
+      </div>
+
     </section>
   );
 };

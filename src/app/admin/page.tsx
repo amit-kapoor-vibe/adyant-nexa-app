@@ -8,9 +8,10 @@ import {
   Trophy, MessageCircle, Skull, Download, Upload, Plus, 
   Trash2, CheckSquare, Square, StickyNote, X,
   TrendingUp, FileText, BarChart3, CreditCard, Activity, Target,
-  Shield, FolderOpen, FileCheck, Briefcase, Copy
+  Shield, FolderOpen, FileCheck, Briefcase, Copy, Cpu
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import AgentOpsDashboard from "@/components/AgentOpsDashboard";
 
 // --- Types ---
 interface Lead {
@@ -57,7 +58,7 @@ interface ClientContract {
   status: "DRAFT" | "SIGNED" | "EXPIRED";
 }
 
-type TabState = "GRID" | "FINANCE" | "ANALYTICS" | "VAULT";
+type TabState = "GRID" | "FINANCE" | "ANALYTICS" | "VAULT" | "AGENT_OPS";
 
 const STATUS_OPTIONS = ["ALL", "NEW", "CONTACTED", "HOT", "COLD", "VICTORY", "DEAD"];
 
@@ -94,7 +95,7 @@ export default function AdminDashboard() {
   const [documents, setDocuments] = useState<VaultDocument[]>([]);
   const [contracts, setContracts] = useState<ClientContract[]>([]);
   const [uploadingDoc, setUploadingDoc] = useState(false);
-  const [docCategory, setDocCategory] = useState<"GST" | "NDA" | "TAX" | "TECHNICAL" | "OTHER">("GENERAL" as any);
+  const [docCategory, setDocCategory] = useState<"GST" | "NDA" | "TAX" | "TECHNICAL" | "OTHER">("OTHER");
   
   // Contract Builder State
   const [contractType, setContractType] = useState<"WEB_DEV" | "MARKETING">("WEB_DEV");
@@ -106,7 +107,6 @@ export default function AdminDashboard() {
   const [generatedContractText, setGeneratedContractText] = useState("");
   const [isSavingContract, setIsSavingContract] = useState(false);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const docFileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -470,7 +470,8 @@ For ${contractClientName} (Authorized Client Signature)`;
                 { id: "GRID", label: "Intelligence Grid", icon: Database },
                 { id: "FINANCE", label: "Financial Ops", icon: TrendingUp },
                 { id: "ANALYTICS", label: "Meta Analytics", icon: Activity },
-                { id: "VAULT", label: "Secure Vault & Legal", icon: Shield }
+                { id: "VAULT", label: "Secure Vault & Legal", icon: Shield },
+                { id: "AGENT_OPS", label: "Agent Ops", icon: Cpu }
               ].map(tab => (
                 <button 
                   key={tab.id} onClick={() => setActiveTab(tab.id as TabState)}
@@ -1138,6 +1139,11 @@ For ${contractClientName} (Authorized Client Signature)`;
             </div>
 
           </motion.div>
+        )}
+
+        {/* --- VIEW 5: AGENT OPS --- */}
+        {activeTab === "AGENT_OPS" && (
+          <AgentOpsDashboard />
         )}
 
       </main>

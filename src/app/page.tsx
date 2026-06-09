@@ -11,6 +11,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { ProblemSection } from "@/components/ProblemSection";
 import { useNeuralTransition } from "@/context/TransitionContext";
 import { SectionSkeleton } from "@/components/SkeletonLoader";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 // ─── Below the fold: lazy loaded for performance ──────────────────────────────
 const SocialProof = dynamic(() => import("@/components/SocialProof").then(m => ({ default: m.SocialProof })), { loading: () => <SectionSkeleton />, ssr: false });
@@ -29,19 +30,18 @@ const MemoizedSocialProof = memo(SocialProof);
 const MemoizedArchitecture = memo(ArchitectureSection);
 const MemoizedInfo = memo(InfoSection);
 
-
 export default function AdyantNexa() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [heroUrl, setHeroUrl] = useState("");
   const lenisRef = useRef<Lenis | null>(null);
   
   const { isNavigating, triggerTransition, currency, setCurrency } = useNeuralTransition();
 
-  // Scroll Parallax Engine (Adyant Nexa 2.0)
+  // Scroll Parallax Engine
   const { scrollYProgress } = useScroll();
   const gridScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.04, 0.98]);
   const gridSkewY = useTransform(scrollYProgress, [0, 1], [0, -1]);
-  const pageTranslateZ = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 10, 10, 0]);
 
   // Snappy Scroll Protocol (Lenis)
   useEffect(() => {
@@ -52,7 +52,8 @@ export default function AdyantNexa() {
     });
     
     lenisRef.current = lenis;
-    window.lenis = lenis;
+    (window as any).lenis = lenis;
+    if (isLoading) lenis.stop();
 
     const raf = (t: number) => { 
       lenis.raf(t); 
@@ -75,6 +76,17 @@ export default function AdyantNexa() {
     };
   }, []);
 
+  // Handle Loading & Reveal
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = "hidden";
+      lenisRef.current?.stop();
+    } else {
+      document.body.style.overflow = "";
+      lenisRef.current?.start();
+    }
+  }, [isLoading]);
+
   const handleNavigate = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     e.preventDefault();
     triggerTransition(target, lenisRef.current);
@@ -86,24 +98,27 @@ export default function AdyantNexa() {
   };
 
   return (
-    <div style={{ background: "var(--bg-color)", minHeight: "100vh", overflowX: "hidden", position: "relative", transition: "background-color 0.4s ease" }}>
-      
-      {/* 3D Global Space Event-Horizon Backdrop (Adyant Nexa 3D Scroll Universe) */}
-      <div style={{ position: "fixed", inset: 0, zIndex: -1, pointerEvents: "none", opacity: 0.9 }}>
+    <div style={{ background: "transparent", minHeight: "100vh", overflowX: "hidden", position: "relative", transition: "background-color 0.4s ease" }}>
+
+      {/* 3D Space Background */}
+      <div style={{ position: "fixed", inset: 0, zIndex: 0, background: "var(--bg-color)" }}>
         <NeuralGalaxyPro />
       </div>
 
-      {/* 3D Cosmic HUD Grid Backdrop (Adyant Nexa 2.0 Parallax Engine) */}
-      <motion.div 
-        className="hud-grid" 
-        style={{ 
+      {/* 2.7s Loading Screen */}
+      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+
+      {/* GSAP Parallax HUD Grid */}
+      <motion.div
+        className="hud-grid"
+        style={{
           scale: gridScale,
           skewY: gridSkewY,
           position: "fixed",
           inset: 0,
           pointerEvents: "none",
           zIndex: 0
-        }} 
+        }}
       />
 
       <motion.main
@@ -126,16 +141,12 @@ export default function AdyantNexa() {
         <div id="about"><MemoizedInfo /></div>
       </motion.main>
 
-
       {/* ─── FOOTER ─── */}
-      <footer style={{ borderTop: "1px solid var(--border-color)", padding: "60px 28px", background: "var(--bg-color)", transition: "all 0.4s ease" }}>
+      <footer style={{ borderTop: "1px solid var(--border-color)", padding: "60px 28px 100px 28px", background: "transparent", transition: "all 0.4s ease" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/Favicon transparent.png" alt="Adyant Nexa" width={28} height={28} />
-            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 15, color: "var(--text-color)", transition: "color 0.4s ease" }}>ADYANT NEXA</span>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.3 }}>© 2026 Adyant Nexa. Built for Dominance.</span>
           </div>
-          <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.3 }}>© 2026 Adyant Nexa. Built for Dominance.</span>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
             <Link href="/legal" className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, textDecoration: "none" }}>Privacy Policy</Link>
             <Link href="/legal" className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, textDecoration: "none" }}>Terms of Service</Link>

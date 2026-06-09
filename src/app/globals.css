@@ -5,32 +5,28 @@
    DESIGN TOKENS
 ───────────────────────────────────────── */
 :root {
-  /* Core Theme Variables (Dark Mode Default) */
-  --bg-color: transparent;
+  /* Core Design System — Locked */
+  --bg-color: #020202;
   --text-color: #E5E5E5;
   --accent-color: #00F2FF;
-  --surface-color: rgba(8, 8, 8, 0.4);
-  --border-color: rgba(255, 255, 255, 0.04);
-  --muted-text: rgba(229, 229, 229, 0.5);
+  --surface-color: #080808;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --muted-text: rgba(255, 255, 255, 0.4);
   --glass-bg: rgba(255, 255, 255, 0.025);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --shadow-color: rgba(0, 242, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --shadow-color: rgba(0, 242, 255, 0.1);
   --scroll-track: #020202;
 
   --void-black: #020202;
   --platinum-white: #E5E5E5;
   --electric-cyan: #00F2FF;
-  --background: transparent;
+  --background: #020202;
   --foreground: #E5E5E5;
-
-  /* Space Upgrade Color Palette (Adyant Nexa 2.0) */
-  --nebula-purple: #7000FF;
-  --stellar-pink: #FF007A;
-  --cosmic-blue: #0055FF;
 
   --font-syne: var(--font-syne);
   --font-inter: var(--font-inter);
   --font-geist-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
 }
 
 
@@ -345,8 +341,7 @@ body {
     90deg, 
     transparent, 
     var(--accent-color) 30%, 
-    var(--nebula-purple) 50%, 
-    var(--stellar-pink) 70%, 
+    var(--accent-color) 70%, 
     transparent
   );
   opacity: 0;
@@ -429,7 +424,7 @@ body {
   border-color: rgba(0, 242, 255, 0.45);
   box-shadow: 
     0 0 40px rgba(0, 242, 255, 0.08), 
-    0 0 80px rgba(112, 0, 255, 0.04),
+    0 0 80px rgba(0, 242, 255, 0.04),
     inset 0 0 12px rgba(0, 242, 255, 0.02);
 }
 
@@ -437,4 +432,58 @@ body {
 .text-nebula-glow {
   text-shadow: 0 0 30px rgba(112, 0, 255, 0.6), 0 0 60px rgba(255, 0, 122, 0.3);
 }
+
+/* ─────────────────────────────────────────
+   THEME 2.0 ADVANCED MOTION UTILITIES
+   ───────────────────────────────────────── */
+.accent-gradient {
+  background: linear-gradient(90deg, #00F2FF 0%, #00AACC 100%);
+}
+
+@keyframes scroll-down {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(200%); opacity: 0; }
+}
+
+.animate-scroll-down {
+  animation: scroll-down 1.5s ease-in-out infinite;
+}
+
+@keyframes role-fade-in {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-role-fade-in {
+  animation: role-fade-in 0.4s ease-out forwards;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+/* Green Pulsing Dot for footer availability status */
+.pulse-dot-green {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00FF66;
+  box-shadow: 0 0 8px #00FF66;
+  flex-shrink: 0;
+  animation: pulse-glow-green 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow-green {
+  0%, 100% { box-shadow: 0 0 8px #00FF66, 0 0 16px rgba(0, 255, 102, 0.4); }
+  50% { box-shadow: 0 0 4px #00FF66, 0 0 8px rgba(0, 255, 102, 0.15); }
+}
+
+
 

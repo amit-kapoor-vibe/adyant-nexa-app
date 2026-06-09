@@ -82,7 +82,7 @@ export const InfoSection = () => {
       </section>
 
       {/* LEGAL */}
-      <section id="legal" style={{ padding: "80px 28px", background: "var(--surface-color)", borderTop: "1px solid var(--border-color)", transition: "all 0.4s ease" }}>
+      <section id="legal" style={{ padding: "80px 28px", background: "transparent", borderTop: "1px solid var(--border-color)", transition: "all 0.4s ease" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <FadeSection>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 32 }}>

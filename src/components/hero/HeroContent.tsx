@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Search } from "lucide-react";
-import { trackEvent } from "@/utils/analytics";
 import { containerVars, itemVars } from "@/lib/animations";
 import { Heading } from "@/components/ui/Heading";
 
@@ -11,6 +9,13 @@ const HERO_STATS: [string, string][] = [
   ["0.5s", "LCP Speed"],
   ["400%", "Revenue Growth"],
   ["∞", "Market Dominance"],
+];
+
+const roles = [
+  "Systems Engineering",
+  "Multi-Agent AI",
+  "Absolute Speed",
+  "Conversion Optimization"
 ];
 
 const StatStrip = () => (
@@ -29,15 +34,14 @@ interface HeroContentProps {
 }
 
 export function HeroContent({ onScan }: HeroContentProps) {
-  const [url, setUrl] = useState("");
+  const [roleIndex, setRoleIndex] = useState(0);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (url && onScan) {
-      trackEvent('scan_initiated', { source: 'hero_section', url });
-      onScan(url);
-    }
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <motion.div
@@ -47,48 +51,157 @@ export function HeroContent({ onScan }: HeroContentProps) {
       style={{
         position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
         alignItems: "center", textAlign: "center",
-        padding: "140px 28px 60px",
+        padding: "140px 28px 100px",
         maxWidth: 1100, margin: "0 auto", width: "100%",
       }}
     >
+      {/* Eyebrow Label */}
+      <motion.span
+        variants={itemVars}
+        className="editorial-tag blur-in"
+        style={{
+          fontSize: "10px",
+          letterSpacing: "0.3em",
+          color: "hsl(var(--muted))",
+          marginBottom: "24px",
+          display: "block"
+        }}
+      >
+        ADYANT NEXA // DIGITAL OPERATIONS
+      </motion.span>
 
       {/* Headlines */}
-      <Heading level="h1" style={{ marginBottom: 40, userSelect: "none", textAlign: "center" }}>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer" data-text="ADYANT" style={{ display: "block", fontSize: "clamp(2.8rem, 12vw, 7.5rem)" }}>ADYANT</motion.span>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer" data-text="NEXA" style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.8rem, 12vw, 7.5rem)" }}>NEXA</motion.span>
+      <Heading level="h1" style={{ marginBottom: 28, userSelect: "none", textAlign: "center" }}>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="ADYANT" style={{ display: "block", fontSize: "clamp(2.8rem, 12vw, 7.5rem)" }}>ADYANT</motion.span>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="NEXA" style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.8rem, 12vw, 7.5rem)" }}>NEXA</motion.span>
       </Heading>
 
+      {/* Role Line */}
+      <motion.div
+        variants={itemVars}
+        style={{
+          fontFamily: "var(--font-geist-mono), monospace",
+          fontSize: "13px",
+          letterSpacing: "0.1em",
+          color: "hsl(var(--muted))",
+          marginBottom: "32px",
+          textTransform: "uppercase",
+        }}
+      >
+        We engineer{" "}
+        <span
+          key={roleIndex}
+          className="animate-role-fade-in"
+          style={{
+            fontFamily: "var(--font-display), serif",
+            fontStyle: "italic",
+            color: "hsl(var(--text))",
+            textTransform: "none",
+            letterSpacing: "normal",
+            display: "inline-block",
+            marginLeft: "4px"
+          }}
+        >
+          {roles[roleIndex]}
+        </span>
+      </motion.div>
+
       {/* Descriptor */}
-      <motion.p variants={itemVars} style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", lineHeight: 1.8, marginBottom: 40, maxWidth: 600, margin: "0 auto 40px", transition: "color 0.4s ease" }}>
+      <motion.p variants={itemVars} className="blur-in" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", lineHeight: 1.8, marginBottom: 40, maxWidth: 600, margin: "0 auto 40px", transition: "color 0.4s ease" }}>
         High-Performance Infrastructure for the Conversion-Obsessed.<br />
         Revenue Systems Engineering · Multi-Agent AI · Absolute Speed.
       </motion.p>
 
-      {/* Audit Search Bar */}
-      <motion.div variants={itemVars} style={{ marginBottom: 48, width: "100%", maxWidth: 640 }}>
-        <form
-          onSubmit={handleSubmit}
-          role="search"
-          aria-label="Website performance audit"
-          style={{ display: "flex", alignItems: "center", background: "var(--glass-bg)", border: "1px solid var(--border-color)", padding: "6px", transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)" }}
-          onFocusCapture={e => { (e.currentTarget as HTMLFormElement).style.borderColor = "var(--accent-color)"; (e.currentTarget as HTMLFormElement).style.background = "var(--shadow-color)"; }}
-          onBlurCapture={e => { (e.currentTarget as HTMLFormElement).style.borderColor = "var(--border-color)"; (e.currentTarget as HTMLFormElement).style.background = "var(--glass-bg)"; }}
+      {/* CTA Buttons */}
+      <motion.div
+        variants={itemVars}
+        style={{
+          display: "inline-flex",
+          gap: "16px",
+          marginBottom: "64px",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
+        {/* See Works */}
+        <a
+          href="#work"
+          style={{
+            backgroundColor: "hsl(var(--text))",
+            color: "hsl(var(--bg))",
+            fontFamily: "var(--font-inter)",
+            fontWeight: 600,
+            fontSize: "12px",
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            borderRadius: "9999px",
+            padding: "14px 28px",
+            display: "inline-flex",
+            alignItems: "center",
+            textDecoration: "none",
+            transition: "all 0.3s ease",
+            border: "1px solid transparent",
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            window.lenis?.scrollTo("#work", { offset: -60, duration: 1.5 });
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "transparent";
+            e.currentTarget.style.borderColor = "transparent";
+            e.currentTarget.className = "accent-gradient";
+            e.currentTarget.style.color = "#020202";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "hsl(var(--text))";
+            e.currentTarget.style.borderColor = "transparent";
+            e.currentTarget.className = "";
+            e.currentTarget.style.color = "hsl(var(--bg))";
+          }}
         >
-          <div style={{ paddingLeft: 18, pointerEvents: "none", display: "flex", alignItems: "center" }}>
-            <Search size={18} color="var(--muted-text)" style={{ opacity: 0.6, transition: "color 0.4s ease" }} aria-hidden="true" />
-          </div>
-          <input
-            type="text"
-            placeholder="Analyze Your Revenue Engine (URL)..."
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            aria-label="Enter website URL for performance audit"
-            style={{ flex: 1, background: "none", border: "none", color: "var(--text-color)", padding: "14px", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none", transition: "color 0.4s ease" }}
-          />
-          <button type="submit" className="btn-primary" style={{ border: "none", padding: "12px 28px", minWidth: "120px", display: "flex", justifyContent: "center" }}>
-            Scan
-          </button>
-        </form>
+          See Works
+        </a>
+
+        {/* Reach out / Audit */}
+        <a
+          href="#investment"
+          style={{
+            backgroundColor: "transparent",
+            color: "hsl(var(--text))",
+            fontFamily: "var(--font-inter)",
+            fontWeight: 600,
+            fontSize: "12px",
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            border: "1px solid hsl(var(--stroke))",
+            borderRadius: "9999px",
+            padding: "14px 28px",
+            display: "inline-flex",
+            alignItems: "center",
+            textDecoration: "none",
+            transition: "all 0.3s ease",
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            if (onScan) {
+              onScan("");
+            } else {
+              window.lenis?.scrollTo("#investment", { offset: -60, duration: 1.5 });
+            }
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "transparent";
+            e.currentTarget.className = "accent-gradient";
+            e.currentTarget.style.color = "#020202";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "hsl(var(--stroke))";
+            e.currentTarget.className = "";
+            e.currentTarget.style.color = "hsl(var(--text))";
+          }}
+        >
+          Audit System ↗
+        </a>
       </motion.div>
 
       {/* Trust Metrics Strip */}
@@ -97,4 +210,3 @@ export function HeroContent({ onScan }: HeroContentProps) {
     </motion.div>
   );
 }
-

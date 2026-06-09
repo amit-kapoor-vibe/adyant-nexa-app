@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { Syne, Inter, Geist_Mono } from "next/font/google";
+import { Syne, Inter, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/CustomCursor";
 import { ChatWidget } from "@/components/ChatWidget";
@@ -19,7 +19,7 @@ const syne = Syne({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -27,6 +27,14 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -83,7 +91,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${inter.variable} ${geistMono.variable}`}
+      className={`${syne.variable} ${inter.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
     >
       <body className="antialiased" suppressHydrationWarning>
         <ErrorBoundary>

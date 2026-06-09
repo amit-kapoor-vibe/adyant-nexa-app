@@ -87,7 +87,7 @@ export const SocialProof = () => {
       </section>
 
       {/* FOUNDER'S MANIFESTO */}
-      <section style={{ padding: "100px 28px", background: "var(--bg-color)", transition: "all 0.4s ease" }}>
+      <section style={{ padding: "100px 28px", background: "transparent", transition: "all 0.4s ease" }}>
         <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
           <FadeSection>
             <span className="editorial-tag" style={{ color: "var(--accent-color)", display: "block", marginBottom: 32, transition: "color 0.4s ease" }}>Founders Manifesto_</span>

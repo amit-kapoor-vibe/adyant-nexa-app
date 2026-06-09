@@ -228,7 +228,6 @@ async function startAudit() {
 
   console.log("🧠 Processing raw audit logs using Gemini...");
   const ai = new GoogleGenerativeAI(GEMINI_API_KEY);
-  const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const systemPrompt = `
 You are the elite "Future Buddy" Autonomous Senior Technical Auditor at "Adyant Nexa" (a premium, high-ticket, India-focused AI integration and web engineering agency).
@@ -273,10 +272,30 @@ ${rawReactDocData}
 Generate the Markdown report now. Provide ONLY the markdown report. Do not include extra wrappers or conversational text outside the markdown.
 `;
 
+  const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash"];
+  let lastError;
+  let report = "";
+
+  for (const modelName of modelsToTry) {
+    try {
+      console.log(`🤖 Attempting report generation with model: ${modelName}...`);
+      const model = ai.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(systemPrompt);
+      report = result.response.text().trim();
+      console.log(`✅ Successfully generated report using ${modelName}!`);
+      break;
+    } catch (error) {
+      console.warn(`⚠️ Model ${modelName} failed:`, error.message);
+      lastError = error;
+    }
+  }
+
+  if (!report) {
+    console.error("❌ All Gemini models failed to process the doctor agent report.");
+    throw lastError;
+  }
+
   try {
-    const result = await model.generateContent(systemPrompt);
-    let report = result.response.text().trim();
-    
     // Write report locally to historical archive
     const reportsDir = path.resolve(__dirname, '../weekly_reports');
     if (!fs.existsSync(reportsDir)) {
@@ -297,7 +316,7 @@ Generate the Markdown report now. Provide ONLY the markdown report. Do not inclu
 
     console.log("🎉 Weekly NexaDoctor Audit Completed Successfully!");
   } catch (error) {
-    console.error("❌ Failed to process report through Gemini:", error);
+    console.error("❌ Failed to complete doctor agent notification pipeline:", error);
     process.exit(1);
   }
 }

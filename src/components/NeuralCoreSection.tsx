@@ -35,9 +35,9 @@ export default function NeuralCoreSection() {
       }}
     >
       {/* ─── COSMIC NEBULA AMBIENT ACCENTS ─── */}
-      <div className="ambient-orb" style={{ top: "10%", right: "-10%", width: "50vw", height: "50vw", opacity: 0.12, background: "radial-gradient(circle, var(--nebula-purple) 0%, transparent 70%)" }} />
-      <div className="ambient-orb" style={{ bottom: "5%", left: "-5%", width: "40vw", height: "40vw", opacity: 0.08, background: "radial-gradient(circle, var(--stellar-pink) 0%, transparent 70%)" }} />
-      <div className="ambient-orb" style={{ top: "40%", left: "30%", width: "30vw", height: "30vw", opacity: 0.06, background: "radial-gradient(circle, var(--cosmic-blue) 0%, transparent 70%)" }} />
+      <div className="ambient-orb" style={{ top: "10%", right: "-10%", width: "50vw", height: "50vw", opacity: 0.08, background: "radial-gradient(circle, var(--accent-color) 0%, transparent 70%)" }} />
+      <div className="ambient-orb" style={{ bottom: "5%", left: "-5%", width: "40vw", height: "40vw", opacity: 0.06, background: "radial-gradient(circle, var(--accent-color) 0%, transparent 70%)" }} />
+      <div className="ambient-orb" style={{ top: "40%", left: "30%", width: "30vw", height: "30vw", opacity: 0.04, background: "radial-gradient(circle, var(--accent-color) 0%, transparent 70%)" }} />
 
       {/* 2050 Cyber HUD Coordinates */}
       <div style={{ position: "absolute", top: "40px", left: "40px", pointerEvents: "none" }} className="hud-coordinate">

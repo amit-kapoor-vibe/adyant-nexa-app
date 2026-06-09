@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Globe, Target, Cpu, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FadeSection } from "./FadeSection";
@@ -34,6 +35,8 @@ const SERVICES = [
 ];
 
 export const ServicesSection = () => {
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+
   return (
     <section id="services" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", position: "relative", overflow: "hidden", background: "var(--bg-color)", transition: "background 0.4s ease" }}>
       {/* Ghost Typography BG */}
@@ -69,6 +72,8 @@ export const ServicesSection = () => {
                 damping: 20, 
                 delay: i * 0.1 
               }}
+              onMouseEnter={() => setHoveredId(svc.id)}
+              onMouseLeave={() => setHoveredId(null)}
               className="glass-panel"
               style={{
                 marginTop: i === 1 ? 40 : 0, // Visual stagger only on desktop
@@ -76,9 +81,24 @@ export const ServicesSection = () => {
                 display: "flex",
                 flexDirection: "column",
                 minHeight: "480px",
-                position: "relative"
+                position: "relative",
+                cursor: "pointer"
               }}
             >
+              {/* Halftone Overlay */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  backgroundImage: "radial-gradient(circle, #000 1.2px, transparent 1.2px)",
+                  backgroundSize: "5px 5px",
+                  opacity: 0.15,
+                  mixBlendMode: "multiply",
+                  pointerEvents: "none",
+                  zIndex: 1
+                }}
+              />
+
               {/* Active Cyber Laser Sweep */}
               <div className="cyber-scanline" />
 
@@ -95,7 +115,7 @@ export const ServicesSection = () => {
                 <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.35 }}>[ SYS_VERTICAL: 0{svc.id} ]</span>
               </div>
 
-              <div style={{ marginTop: "auto" }}>
+              <div style={{ marginTop: "auto", position: "relative", zIndex: 2 }}>
                 <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, display: "block", marginBottom: 16 }}>{svc.tag}</span>
                 <Heading level="h3" style={{ color: "var(--text-color)", marginBottom: 20, transition: "color 0.4s ease" }}>{svc.title}</Heading>
                 <div style={{ marginBottom: 32 }}>
@@ -138,6 +158,54 @@ export const ServicesSection = () => {
                   )}
                 </div>
               </div>
+
+              {/* Hover Pill Overlay */}
+              <AnimatePresence>
+                {hoveredId === svc.id && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.85, y: -20, x: "-50%" }}
+                    animate={{ opacity: 1, scale: 1, y: -10, x: "-50%" }}
+                    exit={{ opacity: 0, scale: 0.85, y: -20, x: "-50%" }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "40%",
+                      zIndex: 15,
+                      pointerEvents: "none"
+                    }}
+                  >
+                    <div
+                      className="accent-gradient"
+                      style={{
+                        padding: "1.5px",
+                        borderRadius: "9999px",
+                        boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: "#ffffff",
+                          color: "#020202",
+                          borderRadius: "9999px",
+                          padding: "10px 24px",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                          fontSize: "12px",
+                          fontWeight: 700,
+                          fontFamily: "var(--font-inter)",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                          whiteSpace: "nowrap"
+                        }}
+                      >
+                        View — <span style={{ fontFamily: "var(--font-display)", fontStyle: "italic", textTransform: "none" }}>{svc.title}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>

@@ -17,11 +17,11 @@ const { publishToLinkedIn } = require('./publish-linkedin');
 // A placeholder premium neon graphic for social shares when no user-provided design URL is found
 const DEFAULT_NEON_GRAPHIC = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop";
 
-async function runGenerator() {
+async function runGenerator(customTopic = null) {
   console.log("\n🎬 === STAGE 1: CONTENT GENERATION & CRM SYNC ===");
   let posts;
   try {
-    posts = await generateSocialPosts();
+    posts = await generateSocialPosts(customTopic);
   } catch (genErr) {
     console.error("❌ Generator Stage Failed to run Gemini:", genErr);
     return;
@@ -114,7 +114,8 @@ async function runPublisher() {
 // 3. Command Line Interface Router
 const arg = process.argv[2];
 if (arg === "generate") {
-  runGenerator();
+  const customTopic = process.argv[3] || null;
+  runGenerator(customTopic);
 } else if (arg === "publish") {
   runPublisher();
 } else {

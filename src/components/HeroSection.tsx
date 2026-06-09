@@ -5,7 +5,7 @@ import { HeroContent } from "./hero/HeroContent";
 
 export const HeroSection = ({ onScan }: { onScan?: (url: string) => void }) => {
   return (
-    <section style={{ position: "relative", height: "100vh", width: "100%", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", background: "var(--bg-color)", transition: "background-color 0.4s ease" }}>
+    <section style={{ position: "relative", minHeight: "100vh", width: "100%", display: "flex", alignItems: "flex-start", justifyContent: "center", background: "transparent", transition: "background-color 0.4s ease" }}>
 
       {/* Cinematic Vignettes */}
       <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at center, transparent 0%, var(--bg-color) 100%)", pointerEvents: "none", zIndex: 2, transition: "background 0.4s ease" }} />
@@ -22,9 +22,9 @@ export const HeroSection = ({ onScan }: { onScan?: (url: string) => void }) => {
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
         aria-hidden="true"
-        style={{ position: "absolute", bottom: 40, left: "50%", transform: "translateX(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}
+        style={{ position: "absolute", bottom: 100, left: "50%", transform: "translateX(-50%)", zIndex: 10, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}
       >
-        <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.25 }}>Scroll Protocol</span>
+        <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.25, letterSpacing: "0.2em" }}>SCROLL</span>
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

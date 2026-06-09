@@ -69,32 +69,52 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.GOOGLE_API_KEY;
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [
-            { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
-            { role: "model", parts: [{ text: "I have initialized my neural weights. I am ready to convert clients as the Adyant Nexa AI Concierge." }] },
-            ...history.map((m: ChatMessage) => ({
-              role: m.role === "assistant" ? "model" : "user",
-              parts: [{ text: m.content }],
-            })),
-            { role: "user", parts: [{ text: message }] },
-          ],
-        }),
+    const modelsToTry = ["gemini-2.5-flash-lite", "gemini-1.5-flash"];
+    let response;
+    let data: any;
+    let success = false;
+
+    for (const modelName of modelsToTry) {
+      try {
+        console.log(`🤖 Attempting chat completion with model: ${modelName}...`);
+        response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [
+                { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
+                { role: "model", parts: [{ text: "I have initialized my neural weights. I am ready to convert clients as the Adyant Nexa AI Concierge." }] },
+                ...history.map((m: ChatMessage) => ({
+                  role: m.role === "assistant" ? "model" : "user",
+                  parts: [{ text: m.content }],
+                })),
+                { role: "user", parts: [{ text: message }] },
+              ],
+            }),
+          }
+        );
+
+        data = await response.json();
+        if (response.ok && !data.error) {
+          success = true;
+          console.log(`✅ Successfully completed chat using ${modelName}!`);
+          break;
+        } else {
+          console.warn(`⚠️ Model ${modelName} returned error:`, data.error || data);
+        }
+      } catch (err: any) {
+        console.warn(`⚠️ Failed to fetch with model ${modelName}:`, err.message);
       }
-    );
-
-    const data = await response.json();
-    if (data.error) {
-      console.error("Gemini API Error:", data.error);
-      return NextResponse.json({ reply: `Neural lag: ${data.error.message || "Shield active"}` });
     }
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Neural connection weak. Use WhatsApp for priority sync.";
 
+    if (!success) {
+      console.error("❌ Gemini API Error (All models failed):", data?.error);
+      return NextResponse.json({ reply: `Neural lag: ${data?.error?.message || "All models failed"}` });
+    }
+
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Neural connection weak. Use WhatsApp for priority sync.";
     return NextResponse.json({ reply });
   } catch (error) {
     return NextResponse.json({ error: "Neural Link Offline" }, { status: 500 });
