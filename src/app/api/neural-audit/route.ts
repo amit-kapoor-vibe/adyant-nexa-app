@@ -1,17 +1,29 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextResponse } from "next/server";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { NeuralAuditSchema, validateBodySize } from "@/lib/validation";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
 export async function POST(req: Request) {
   try {
-    const { url } = await req.json();
-
-    if (!url) {
-      return NextResponse.json({ error: "URL is required" }, { status: 400 });
+    if (!validateBodySize(req)) {
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
     }
 
-    // ELITE BYPASS for Adyant Nexa
+    const rl = await checkRateLimit(req, "audit");
+    if (!rl.success) {
+      return NextResponse.json({ error: "Rate limit exceeded. Try again later." }, { status: 429, headers: { "X-RateLimit-Remaining": String(rl.remaining), "X-RateLimit-Limit": String(rl.limit) } });
+    }
+
+    const body = await req.json();
+    const parsed = NeuralAuditSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid input", details: parsed.error.flatten().fieldErrors }, { status: 400 });
+    }
+
+    const { url } = parsed.data;
+
     if (url.toLowerCase().includes("adyantnexa")) {
       return NextResponse.json({
         score: 98,
@@ -21,7 +33,6 @@ export async function POST(req: Request) {
       });
     }
 
-    console.log("Neural Audit: Initiating for URL:", url);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `
@@ -44,9 +55,7 @@ export async function POST(req: Request) {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    console.log("Gemini Raw Response:", text);
-    
-    // Improved JSON extraction
+
     let analysisData;
     try {
       const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -65,11 +74,11 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json(analysisData);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Neural Audit Error:", error);
-    return NextResponse.json({ 
-      score: 62, 
-      status: "MEDIOCRE", 
+    return NextResponse.json({
+      score: 62,
+      status: "MEDIOCRE",
       analysis: "AI scan partially obstructed by target firewall. Superficial metrics indicate legacy design patterns.",
       recommendation: "Connect with Nexa engineers for a manual deep-dive audit."
     });

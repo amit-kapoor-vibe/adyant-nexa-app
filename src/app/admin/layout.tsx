@@ -12,22 +12,28 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      
-      const AUTHORIZED_EMAIL = "mit.kapur@gmail.com";
 
       if (!session) {
         router.push("/login");
-      } else if (session.user.email !== AUTHORIZED_EMAIL) {
-        // Redirect unauthorized users to home page since portal is disabled
-        router.push("/");
-      } else {
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/admin/verify", {
+          headers: { Authorization: `Bearer ${session.access_token}` }
+        });
+        if (!res.ok) {
+          router.push("/");
+          return;
+        }
         setIsAuthorized(true);
+      } catch {
+        router.push("/");
       }
     };
 
     checkAuth();
 
-    // Listen for auth changes (like logging out)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_OUT" || !session) {
         router.push("/login");

@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { ChatSchema, validateBodySize } from "@/lib/validation";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -39,44 +41,37 @@ Before offering a call with the founder, you MUST gently qualify the lead:
 3. Concise: Max 3-4 sentences per response. Use Geist Mono formatting for tech specs.
 `;
 
-// In-memory rate limiting map (Simple protection for serverless environments)
-const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
-const MAX_MESSAGES_PER_DAY = 30;
-
 export async function POST(req: Request) {
   try {
-    const { message, history } = await req.json();
-    
-    // ─── BACKEND RATE LIMITING (IP-BASED) ───
-    const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || "127.0.0.1";
-    const now = Date.now();
-    const userLimit = rateLimitMap.get(ip);
-
-    if (userLimit) {
-      // Reset count every 24 hours
-      if (now - userLimit.lastReset > 24 * 60 * 60 * 1000) {
-        rateLimitMap.set(ip, { count: 1, lastReset: now });
-      } else if (userLimit.count >= MAX_MESSAGES_PER_DAY) {
-        return NextResponse.json({ 
-          reply: "Your daily neural quota has been reached. Please connect on WhatsApp for priority consultation." 
-        }, { status: 429 });
-      } else {
-        userLimit.count += 1;
-      }
-    } else {
-      rateLimitMap.set(ip, { count: 1, lastReset: now });
+    if (!validateBodySize(req)) {
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
     }
+
+    const rl = await checkRateLimit(req, "chat");
+    if (!rl.success) {
+      return NextResponse.json({
+        reply: "Your daily neural quota has been reached. Please connect on WhatsApp for priority consultation."
+      }, { status: 429, headers: { "X-RateLimit-Remaining": String(rl.remaining), "X-RateLimit-Limit": String(rl.limit) } });
+    }
+
+    const body = await req.json();
+    const parsed = ChatSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid input", details: parsed.error.flatten().fieldErrors }, { status: 400 });
+    }
+
+    const { message, history } = parsed.data;
 
     const apiKey = process.env.GOOGLE_API_KEY;
 
     const modelsToTry = ["gemini-2.5-flash-lite", "gemini-1.5-flash"];
-    let response;
+    let response: Response | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let data: any;
     let success = false;
 
     for (const modelName of modelsToTry) {
       try {
-        console.log(`🤖 Attempting chat completion with model: ${modelName}...`);
         response = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`,
           {
@@ -99,24 +94,23 @@ export async function POST(req: Request) {
         data = await response.json();
         if (response.ok && !data.error) {
           success = true;
-          console.log(`✅ Successfully completed chat using ${modelName}!`);
           break;
         } else {
-          console.warn(`⚠️ Model ${modelName} returned error:`, data.error || data);
+          console.warn(`Model ${modelName} returned error:`, data.error || data);
         }
       } catch (err: any) {
-        console.warn(`⚠️ Failed to fetch with model ${modelName}:`, err.message);
+        console.warn(`Failed to fetch with model ${modelName}:`, err.message);
       }
     }
 
     if (!success) {
-      console.error("❌ Gemini API Error (All models failed):", data?.error);
+      console.error("Gemini API Error (All models failed):", data?.error);
       return NextResponse.json({ reply: `Neural lag: ${data?.error?.message || "All models failed"}` });
     }
 
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Neural connection weak. Use WhatsApp for priority sync.";
     return NextResponse.json({ reply });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Neural Link Offline" }, { status: 500 });
   }
 }

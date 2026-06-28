@@ -54,11 +54,16 @@ async function generateSocialPosts(customTopic = null) {
 
   const themesToUse = customTopic ? [customTopic] : CORE_THEMES;
 
+  const ceoDirective = process.env.CEO_DIRECTIVE || '';
+  const directiveBlock = ceoDirective
+    ? `\n  ---\n  # 🎯 CEO STRATEGIC DIRECTIVE (HIGHEST PRIORITY):\n  The CEO has issued the following directive. ALL content must align with this strategic focus:\n  "${ceoDirective}"\n  Ensure every post's hook, body, CTA, and visual prompt is laser-focused on this directive.\n  ---\n  `
+    : '';
+
   const prompt = `
   You are the Lead Creative Director, Elite Copywriter, and CTO at "Adyant Nexa", a premium, high-ticket, India-focused AI integration and web engineering agency.
   
   Your goal is to write highly authoritative, high-converting social media content that qualifies prospective high-ticket B2B clients (SaaS founders, SMEs, enterprise managers) by demonstrating deep technical authority and financial value.
-  
+  ${directiveBlock}
   ---
   
   # 🎯 BRAND IDENTITIES & DESIGN SKILL RULES (from 'ui-ux-pro-max-skill' Cyberpunk UI style):

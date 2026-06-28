@@ -11,8 +11,8 @@ export const MarketingUpsell = ({ onNavigate, currency }: { onNavigate: (e: Reac
       <div className="ambient-orb" style={{ top: "50%", right: "-10%", opacity: 0.1, background: "var(--accent-color)" }} />
       
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div className="glass-panel" style={{ padding: "60px 40px", border: "1px solid var(--border-color)", background: "var(--glass-bg)", position: "relative", zIndex: 2 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
+        <div className="glass-panel" style={{ padding: "clamp(30px, 5vw, 60px) clamp(20px, 4vw, 40px)", border: "1px solid var(--border-color)", background: "var(--glass-bg)", position: "relative", zIndex: 2 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap: "clamp(30px, 5vw, 60px)", alignItems: "center" }}>
             
             <div>
               <span className="editorial-tag" style={{ color: "var(--accent-color)", marginBottom: 24, display: "block", transition: "color 0.4s ease" }}>Phase 02: Revenue Injection_</span>
@@ -41,7 +41,7 @@ export const MarketingUpsell = ({ onNavigate, currency }: { onNavigate: (e: Reac
               </Link>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 140px), 1fr))", gap: 24 }}>
               {[
                 { icon: <Zap size={24} />, title: "Zero Lag", desc: "Sync ads with your ultra-fast site." },
                 { icon: <ShieldCheck size={24} />, title: "CAPI Ready", desc: "Bypass iOS 14 with server tracking." },

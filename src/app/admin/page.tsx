@@ -1143,7 +1143,7 @@ For ${contractClientName} (Authorized Client Signature)`;
 
         {/* --- VIEW 5: AGENT OPS --- */}
         {activeTab === "AGENT_OPS" && (
-          <AgentOpsDashboard />
+          <AgentOpsDashboard leads={leads} invoices={invoices} />
         )}
 
       </main>

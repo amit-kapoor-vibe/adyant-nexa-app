@@ -29,9 +29,43 @@ function loadEnv() {
 
 loadEnv();
 
+const { createClient } = require('@supabase/supabase-js');
+
 const AYRSHARE_API_KEY = process.env.AYRSHARE_API_KEY;
-const LINKEDIN_ACCESS_TOKEN = process.env.LINKEDIN_ACCESS_TOKEN;
-const LINKEDIN_PERSON_URN = process.env.LINKEDIN_PERSON_URN || process.env.LINKEDIN_URN;
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+async function getLinkedInTokens() {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.warn('Missing Supabase env vars — falling back to env-based LinkedIn tokens');
+    return {
+      accessToken: process.env.LINKEDIN_ACCESS_TOKEN,
+      personUrn: process.env.LINKEDIN_PERSON_URN || process.env.LINKEDIN_URN,
+    };
+  }
+  try {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+    const { data, error } = await supabase
+      .from('social_tokens')
+      .select('access_token, person_urn')
+      .eq('provider', 'linkedin')
+      .single();
+    if (error || !data) {
+      console.warn('No LinkedIn token in Supabase — falling back to env:', error?.message);
+      return {
+        accessToken: process.env.LINKEDIN_ACCESS_TOKEN,
+        personUrn: process.env.LINKEDIN_PERSON_URN || process.env.LINKEDIN_URN,
+      };
+    }
+    return { accessToken: data.access_token, personUrn: data.person_urn };
+  } catch (err) {
+    console.warn('Supabase token fetch failed — falling back to env:', err.message);
+    return {
+      accessToken: process.env.LINKEDIN_ACCESS_TOKEN,
+      personUrn: process.env.LINKEDIN_PERSON_URN || process.env.LINKEDIN_URN,
+    };
+  }
+}
 
 /**
  * Post to LinkedIn Company Page via Ayrshare API
@@ -75,10 +109,11 @@ async function postViaAyrshare(text, imageUrls = []) {
  * Fallback: Post to personal profile via LinkedIn API directly
  */
 async function postViaLinkedInDirect(text, imageUrl = '') {
-  console.log('💼 Fallback: Posting to personal profile (Amit Kapoor)...');
+  const tokens = await getLinkedInTokens();
+  console.log('💼 Posting to personal profile (Amit Kapoor)...');
 
   const payload = {
-    author: LINKEDIN_PERSON_URN,
+    author: tokens.personUrn,
     lifecycleState: 'PUBLISHED',
     specificContent: {
       'com.linkedin.ugc.ShareContent': {
@@ -100,7 +135,7 @@ async function postViaLinkedInDirect(text, imageUrl = '') {
   const response = await fetch('https://api.linkedin.com/v2/ugcPosts', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${LINKEDIN_ACCESS_TOKEN}`,
+      'Authorization': `Bearer ${tokens.accessToken}`,
       'Content-Type': 'application/json',
       'X-Restli-Protocol-Version': '2.0.0'
     },
@@ -138,8 +173,8 @@ async function publishToLinkedIn(text, imageUrl = '') {
     console.warn('⚠️ AYRSHARE_API_KEY not set — using personal profile fallback');
   }
 
-  // Fallback: LinkedIn direct (personal profile)
-  if (LINKEDIN_ACCESS_TOKEN && LINKEDIN_PERSON_URN) {
+  const tokens = await getLinkedInTokens();
+  if (tokens.accessToken && tokens.personUrn) {
     return await postViaLinkedInDirect(text, imageUrl);
   }
 

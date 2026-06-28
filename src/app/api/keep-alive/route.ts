@@ -1,27 +1,36 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { verifyAdmin } from '@/lib/auth';
+import { checkRateLimit } from '@/lib/rate-limit';
+import { createClient } from '@supabase/supabase-js';
 
-// This endpoint is used by cron jobs to keep the Supabase project active
-// Supabase pauses free projects after 7 days of inactivity.
-export async function GET() {
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const privilegedSupabase = createClient(supabaseUrl, supabaseServiceKey);
+
+export async function GET(req: Request) {
   try {
-    // A simple query to ensure the database is accessed.
-    // We limit to 1 and only fetch the ID to make it as lightweight as possible.
-    const { error } = await supabase.from('leads').select('id').limit(1);
-    
-    // Even if the table doesn't exist or we get an error, the API request 
-    // reaches Supabase and counts as activity, preventing it from pausing.
+    const authResult = await verifyAdmin(req);
+    if (!(authResult as { authorized: true }).authorized) return authResult as NextResponse;
+
+    const rl = await checkRateLimit(req, "default");
+    if (!rl.success) {
+      return NextResponse.json({ status: 'error', message: 'Rate limit exceeded' }, { status: 429 });
+    }
+
+    const { error } = await privilegedSupabase.from('leads').select('id').limit(1);
+
     if (error && error.code !== 'PGRST116') {
       console.log('Keep-alive ping resulted in error (but still kept DB awake):', error.message);
     }
-    
-    return NextResponse.json({ 
-      status: 'success', 
-      message: 'Supabase pinged successfully to stay awake.', 
-      time: new Date().toISOString() 
+
+    return NextResponse.json({
+      status: 'success',
+      message: 'Supabase pinged successfully to stay awake.',
+      time: new Date().toISOString()
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : "Unknown error";
     console.error('Keep-alive error:', error);
-    return NextResponse.json({ status: 'error', message: error.message }, { status: 500 });
+    return NextResponse.json({ status: 'error', message: msg }, { status: 500 });
   }
 }

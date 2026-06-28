@@ -6,8 +6,6 @@ import { supabase } from "@/lib/supabase";
 import { Shield, Fingerprint, MailCheck, Phone, Mail } from "lucide-react";
 import { useNeuralTransition } from "@/context/TransitionContext";
 
-const ADMIN_EMAIL = "mit.kapur@gmail.com";
-
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -21,23 +19,7 @@ export default function LoginPage() {
     setLoading(true);
     
     try {
-      // 1. LEAD CAPTURE: Save to Supabase 'leads' table if it's a new entry
-      // We check if this is an admin login first to avoid overwriting admin info as a lead
-      if (email.toLowerCase() !== ADMIN_EMAIL) {
-        const { error: leadError } = await supabase.from("leads").insert([
-          { 
-            email: email.toLowerCase(), 
-            phone: phone, 
-            name: email.split('@')[0], // Placeholder name from email
-            status: "NEW",
-            message: "User initiated pricing request/login"
-          }
-        ]);
-        // Note: We don't block if lead insert fails (might be duplicate email), just log it
-        if (leadError) console.warn("Lead capture warning:", leadError.message);
-      }
-
-      // 2. AUTHENTICATION: Send Magic Link
+      // AUTHENTICATION: Send Magic Link
       const { error: authError } = await supabase.auth.signInWithOtp({
         email,
         options: {
