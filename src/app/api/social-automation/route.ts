@@ -41,7 +41,7 @@ const CORE_THEMES = [
   "Predictive LTV via AI: Knowing your customer value before they purchase"
 ];
 
-async function generateSocialPosts(customTopic: string | null, directive: string | null): Promise<Record<string, unknown>[]> {
+async function generateSocialPosts(customTopic: string | null, directive: string | null, previousTopics: string[] = []): Promise<Record<string, unknown>[]> {
   if (!GOOGLE_API_KEY) {
     throw new Error("GOOGLE_API_KEY is not configured in environment variables.");
   }
@@ -53,11 +53,15 @@ async function generateSocialPosts(customTopic: string | null, directive: string
     ? `\n  ---\n  # 🎯 CEO STRATEGIC DIRECTIVE (HIGHEST PRIORITY):\n  The CEO has issued the following directive. ALL content must align with this strategic focus:\n  "${directive}"\n  Ensure every post's hook, body, CTA, and visual prompt is laser-focused on this directive.\n  ---\n  `
     : '';
 
+  const dedupBlock = previousTopics.length > 0
+    ? `\n  ---\n  # 🚫 CONTENT MEMORY — DO NOT REPEAT:\n  The following topics/headlines have ALREADY been posted. You MUST NOT reuse these topics, angles, or similar headlines. Create completely FRESH perspectives:\n  ${previousTopics.map((t, i) => `  ${i + 1}. "${t}"`).join('\n')}\n  \n  Generate content with NEW angles, different hooks, and fresh insights that haven't been covered above.\n  ---\n  `
+    : '';
+
   const prompt = `
   You are the Lead Creative Director, Elite Copywriter, and CTO at "Adyant Nexa", a premium, high-ticket, India-focused AI integration and web engineering agency.
   
   Your goal is to write highly authoritative, high-converting social media content that qualifies prospective high-ticket B2B clients (SaaS founders, SMEs, enterprise managers) by demonstrating deep technical authority and financial value.
-  ${directiveBlock}
+  ${directiveBlock}${dedupBlock}
   ---
   
   # 🎯 BRAND IDENTITIES & DESIGN SKILL RULES:
@@ -299,8 +303,31 @@ export async function POST(request: Request) {
         allLogs.push(`📋 CEO Directive Active: "${directive}"`);
       }
 
-      // Step 1: Generate posts via Gemini
-      const posts = await generateSocialPosts(customTopic || null, directive || null);
+      // Step 0: Fetch existing posts from Lark to prevent duplicate content
+      let previousTopics: string[] = [];
+      try {
+        if (LARK_APP_ID && LARK_APP_SECRET && LARK_BASE_ID && LARK_TABLE_ID) {
+          const token = await getTenantAccessToken();
+          const fetchUrl = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records?page_size=100`;
+          const existingRes = await fetch(fetchUrl, {
+            method: "GET",
+            headers: { "Authorization": `Bearer ${token}` }
+          });
+          const existingData = await existingRes.json();
+          if (existingData.code === 0 && existingData.data?.items) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            previousTopics = existingData.data.items
+              .map((item: any) => item.fields?.["Topic"] as string)
+              .filter(Boolean);
+            allLogs.push(`🧠 Content Memory loaded: ${previousTopics.length} previous posts found. Will avoid duplicates.`);
+          }
+        }
+      } catch (memErr) {
+        allLogs.push(`⚠️ Could not load content memory: ${memErr}. Generating without dedup.`);
+      }
+
+      // Step 1: Generate posts via Gemini (with content memory)
+      const posts = await generateSocialPosts(customTopic || null, directive || null, previousTopics);
       allLogs.push(`✅ Generated ${posts.length} premium social posts!`);
 
       // Step 2: Sync to Lark CRM
