@@ -5,8 +5,14 @@ const ADMIN_EMAIL = process.env.ADMIN_EMAIL || ''
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
-function extractAccessToken(cookies: NextRequest['cookies']): string | null {
-  const allCookies = cookies.getAll()
+function extractAccessToken(req: NextRequest): string | null {
+  // 1. Try Authorization header first
+  const authHeader = req.headers.get('authorization')
+  const bearer = authHeader?.replace('Bearer ', '')
+  if (bearer) return bearer
+
+  // 2. Fallback to cookies
+  const allCookies = req.cookies.getAll()
   const authCookie = allCookies.find(c => c.name.includes('-auth-token'))
   if (!authCookie) return null
 
@@ -22,7 +28,6 @@ export default async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname
   const isProtectedRoute = path.startsWith('/admin')
   const isProtectedApi =
-    path.startsWith('/api/leads') ||
     path.startsWith('/api/social-automation') ||
     path.startsWith('/api/keep-alive')
 
@@ -30,7 +35,7 @@ export default async function proxy(req: NextRequest) {
     return NextResponse.next()
   }
 
-  const token = extractAccessToken(req.cookies)
+  const token = extractAccessToken(req)
 
   if (!token) {
     if (isProtectedRoute) {
@@ -53,11 +58,17 @@ export default async function proxy(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid session' }, { status: 401 })
     }
 
-    if (ADMIN_EMAIL && user.email !== ADMIN_EMAIL) {
-      if (isProtectedRoute) {
-        return NextResponse.redirect(new URL('/', req.nextUrl))
+    const adminEmailsEnv = ADMIN_EMAIL || "mit.kapur@gmail.com,mit.kapoor@gmail.com,amit.kapoor@gmail.com,amit.kapur@gmail.com,amit.kapoor.vibe@gmail.com";
+    const adminEmails = adminEmailsEnv.split(",").map(e => e.trim().toLowerCase());
+
+    if (adminEmails.length > 0 && adminEmails[0] !== "") {
+      const userEmail = user.email?.toLowerCase() || "";
+      if (!adminEmails.includes(userEmail)) {
+        if (isProtectedRoute) {
+          return NextResponse.redirect(new URL('/', req.nextUrl))
+        }
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
       }
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
     const response = NextResponse.next()
@@ -74,7 +85,6 @@ export default async function proxy(req: NextRequest) {
 export const config = {
   matcher: [
     '/admin/:path*',
-    '/api/leads/:path*',
     '/api/social-automation/:path*',
     '/api/keep-alive/:path*',
   ],

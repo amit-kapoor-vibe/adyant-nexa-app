@@ -7,6 +7,7 @@ import {
   AlertTriangle, Play, Sparkles, Terminal, FileText, Globe, 
   ExternalLink, Layers, ShieldCheck, ChevronRight, MessageCircle
 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 interface SocialPost {
   id: string;
@@ -43,7 +44,12 @@ export default function AgentOpsDashboard({ leads = [], invoices = [] }: AgentOp
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/social-automation");
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+      
+      const res = await fetch("/api/social-automation", {
+        headers: token ? { "Authorization": `Bearer ${token}` } : {}
+      });
       const data = await res.json();
       if (data.success) {
         setPosts(data.records || []);
@@ -75,9 +81,15 @@ export default function AgentOpsDashboard({ leads = [], invoices = [] }: AgentOp
     }
     
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+
       const res = await fetch("/api/social-automation", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({ 
           action: "generate",
           customTopic: customTopicInput || undefined,
@@ -109,9 +121,15 @@ export default function AgentOpsDashboard({ leads = [], invoices = [] }: AgentOp
     logToTerminal("📥 Querying Lark Base for 'Approved' records...");
     
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+
       const res = await fetch("/api/social-automation", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({ action: "publish" })
       });
       const data = await res.json();
@@ -139,9 +157,15 @@ export default function AgentOpsDashboard({ leads = [], invoices = [] }: AgentOp
     logToTerminal(`📐 Custom prompt: "${customPrompt.substring(0, 50)}..."`);
     
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
+
       const res = await fetch("/api/social-automation", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({
           action: "regenerate-image",
           topic: selectedPost.topic,

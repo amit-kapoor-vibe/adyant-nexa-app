@@ -51,8 +51,14 @@ export async function verifyAdmin(
       return NextResponse.json({ error: "Invalid session" }, { status: 401 });
     }
 
-    if (ADMIN_EMAIL && user.email !== ADMIN_EMAIL) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    const adminEmailsEnv = ADMIN_EMAIL || "mit.kapur@gmail.com,mit.kapoor@gmail.com,amit.kapoor@gmail.com,amit.kapur@gmail.com,amit.kapoor.vibe@gmail.com";
+    const adminEmails = adminEmailsEnv.split(",").map(e => e.trim().toLowerCase());
+
+    if (adminEmails.length > 0 && adminEmails[0] !== "") {
+      const userEmail = user.email?.toLowerCase() || "";
+      if (!adminEmails.includes(userEmail)) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      }
     }
 
     return { authorized: true, email: user.email || "" };

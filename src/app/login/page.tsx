@@ -1,12 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
-import { Shield, Fingerprint, MailCheck, Phone, Mail } from "lucide-react";
-import { useNeuralTransition } from "@/context/TransitionContext";
+import { Fingerprint, MailCheck, Phone, Mail } from "lucide-react";
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        router.push("/admin");
+      }
+    };
+    checkSession();
+  }, [router]);
+
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
@@ -134,7 +146,6 @@ export default function LoginPage() {
                   borderRadius: "4px"
                 }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="https://www.google.com/favicon.ico" alt="Google" width={18} height={18} />
                 {loading ? "Establishing Neural Link..." : "Continue with Google"}
               </button>
