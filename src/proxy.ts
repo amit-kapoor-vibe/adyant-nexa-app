@@ -26,21 +26,17 @@ function extractAccessToken(req: NextRequest): string | null {
 
 export default async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname
-  const isProtectedRoute = path.startsWith('/admin')
   const isProtectedApi =
     path.startsWith('/api/social-automation') ||
     path.startsWith('/api/keep-alive')
 
-  if (!isProtectedRoute && !isProtectedApi) {
+  if (!isProtectedApi) {
     return NextResponse.next()
   }
 
   const token = extractAccessToken(req)
 
   if (!token) {
-    if (isProtectedRoute) {
-      return NextResponse.redirect(new URL('/login', req.nextUrl))
-    }
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -52,9 +48,6 @@ export default async function proxy(req: NextRequest) {
     const { data: { user }, error } = await supabase.auth.getUser(token)
 
     if (error || !user) {
-      if (isProtectedRoute) {
-        return NextResponse.redirect(new URL('/login', req.nextUrl))
-      }
       return NextResponse.json({ error: 'Invalid session' }, { status: 401 })
     }
 
@@ -64,9 +57,6 @@ export default async function proxy(req: NextRequest) {
     if (adminEmails.length > 0 && adminEmails[0] !== "") {
       const userEmail = user.email?.toLowerCase() || "";
       if (!adminEmails.includes(userEmail)) {
-        if (isProtectedRoute) {
-          return NextResponse.redirect(new URL('/', req.nextUrl))
-        }
         return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
       }
     }
@@ -75,16 +65,12 @@ export default async function proxy(req: NextRequest) {
     response.headers.set('x-user-email', user.email || '')
     return response
   } catch {
-    if (isProtectedRoute) {
-      return NextResponse.redirect(new URL('/login', req.nextUrl))
-    }
     return NextResponse.json({ error: 'Auth verification failed' }, { status: 401 })
   }
 }
 
 export const config = {
   matcher: [
-    '/admin/:path*',
     '/api/social-automation/:path*',
     '/api/keep-alive/:path*',
   ],
