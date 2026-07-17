@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Codebase Reference Map
+To help AI agents and developers navigate the project structure quickly:
+- `/src/app/` — Main frontend application routes, pages, and layouts (Next.js 16/React 19).
+- `/src/components/` — Interactive React UI components (Custom cursor, animations, services, hero sections).
+- `/src/data/` — Static data assets (ROI calculations, pricing, testimonials) to avoid hardcoding.
+- `/src/scripts/` — Utility scripts for database testing, performance audits, and automation.
+- `/.archive/` — Historical plan documents, guides, and strategy blueprints (archived to prevent AI context clutter).
+- `AGENTS.md` — Active development guidelines and UI/UX design locks.
+
 ## Getting Started
 
 First, run the development server:
