@@ -288,9 +288,9 @@ export default function AdminDashboard() {
                 </td>
                 <td class="invoice-details">
                   <div class="invoice-title">INVOICE</div>
-                  <b>Invoice #:</b> \${inv.invoice_number}<br/>
-                  <b>Date Issued:</b> \${formattedDate}<br/>
-                  <b>Status:</b> \${inv.status.toUpperCase()}
+                  <b>Invoice #:</b> ${inv.invoice_number}<br/>
+                  <b>Date Issued:</b> ${formattedDate}<br/>
+                  <b>Status:</b> ${inv.status.toUpperCase()}
                 </td>
               </tr>
             </table>
@@ -299,15 +299,15 @@ export default function AdminDashboard() {
               <tr>
                 <td>
                   <div class="details-title">Billed To:</div>
-                  <b>\${inv.client_name}</b><br/>
-                  Email: \${inv.client_email}<br/>
-                  \${inv.client_gstin ? \`GSTIN: \${inv.client_gstin}\` : ""}
+                  <b>${inv.client_name}</b><br/>
+                  Email: ${inv.client_email}<br/>
+                  ${inv.client_gstin ? `GSTIN: ${inv.client_gstin}` : ""}
                 </td>
                 <td>
                   <div class="details-title">Provider Details:</div>
                   <b>Adyant Nexa Ltd.</b><br/>
                   GSTIN: Haryana Registry Active<br/>
-                  Tax Treatment: \${taxDetailText}
+                  Tax Treatment: ${taxDetailText}
                 </td>
               </tr>
             </table>
@@ -323,9 +323,9 @@ export default function AdminDashboard() {
                 <tr>
                   <td>
                     <b>Growth & Performance Web Engineering Services</b>
-                    <div style="font-size: 12px; color: #666; margin-top: 4px;">\${inv.description || "Bespoke digital architecture build"}</div>
+                    <div style="font-size: 12px; color: #666; margin-top: 4px;">${inv.description || "Bespoke digital architecture build"}</div>
                   </td>
-                  <td style="text-align: right;">\${symbol}\${inv.base_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                  <td style="text-align: right;">${symbol}${inv.base_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 </tr>
               </tbody>
             </table>
@@ -334,17 +334,17 @@ export default function AdminDashboard() {
               <table class="total-table">
                 <tr>
                   <td>Subtotal (Base):</td>
-                  <td style="text-align: right;">\${symbol}\${inv.base_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                  <td style="text-align: right;">${symbol}${inv.base_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 </tr>
-                \${isINR ? \`
+                ${isINR ? `
                 <tr>
-                  <td>Tax (\${gstRateText}):</td>
-                  <td style="text-align: right;">\${symbol}\${inv.gst_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                  <td>Tax (${gstRateText}):</td>
+                  <td style="text-align: right;">${symbol}${inv.gst_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 </tr>
-                \` : ""}
+                ` : ""}
                 <tr class="grand-total">
                   <td>Total Due:</td>
-                  <td style="text-align: right;">\${symbol}\${inv.total_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                  <td style="text-align: right;">${symbol}${inv.total_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 </tr>
               </table>
             </div>
@@ -362,7 +362,7 @@ export default function AdminDashboard() {
           </script>
         </body>
       </html>
-    \`);
+    `);
     printWindow.document.close();
   };
 
