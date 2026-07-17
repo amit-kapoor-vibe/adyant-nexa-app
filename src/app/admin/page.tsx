@@ -79,6 +79,7 @@ export default function AdminDashboard() {
   // Invoice State
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [activePrintInvoice, setActivePrintInvoice] = useState<Invoice | null>(null);
   const [newInvoice, setNewInvoice] = useState({
     client_name: "",
     client_email: "",
@@ -585,6 +586,23 @@ For ${contractClientName} (Authorized Client Signature)`;
   }, [searchTerm, leads, activeStatus]);
 
   useEffect(() => { fetchLeads(); fetchInvoices(); fetchVaultData(); }, []);
+
+  useEffect(() => {
+    if (activePrintInvoice) {
+      const timer = setTimeout(() => {
+        window.print();
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [activePrintInvoice]);
+
+  useEffect(() => {
+    const handleAfterPrint = () => {
+      setActivePrintInvoice(null);
+    };
+    window.addEventListener("afterprint", handleAfterPrint);
+    return () => window.removeEventListener("afterprint", handleAfterPrint);
+  }, []);
 
   const toggleSelectAll = () => {
     if (selectedLeads.length === filteredLeads.length && filteredLeads.length > 0) setSelectedLeads([]);
@@ -1432,6 +1450,143 @@ For ${contractClientName} (Authorized Client Signature)`;
           </div>
         )}
       </AnimatePresence>
+
+      {/* Hidden Printable Invoice Area */}
+      {activePrintInvoice && (
+        <div className="printable-invoice-container" style={{
+          display: "none",
+          fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+          color: "#222",
+          background: "#fff",
+          padding: "40px",
+          width: "100%",
+          maxWidth: "800px",
+          margin: "0 auto"
+        }}>
+          <style>
+            {`
+              @media screen {
+                .printable-invoice-container {
+                  display: none !important;
+                }
+              }
+              @media print {
+                html, body {
+                  background: #fff !important;
+                  color: #000 !important;
+                }
+                body * {
+                  visibility: hidden !important;
+                }
+                .printable-invoice-container, .printable-invoice-container * {
+                  visibility: visible !important;
+                }
+                .printable-invoice-container {
+                  display: block !important;
+                  position: absolute !important;
+                  left: 0 !important;
+                  top: 0 !important;
+                  width: 100% !important;
+                  padding: 0 !important;
+                  margin: 0 !important;
+                }
+              }
+            `}
+          </style>
+          
+          <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "2px solid #eee", paddingBottom: "20px", marginBottom: "40px" }}>
+            <div>
+              <h1 style={{ fontSize: "28px", fontWeight: 800, margin: 0, color: "#000", fontFamily: "var(--font-syne)" }}>ADYANT NEXA</h1>
+              <div style={{ fontSize: "10px", color: "#777", letterSpacing: "2px", textTransform: "uppercase" }}>Digital Operating System</div>
+              <div style={{ fontSize: "12px", color: "#555", marginTop: "10px" }}>
+                Adyant Nexa India<br/>
+                Haryana, India<br/>
+                Email: contact@adyantnexa.com
+              </div>
+            </div>
+            <div style={{ textAlign: "right", color: "#222" }}>
+              <h2 style={{ fontSize: "24px", fontWeight: "bold", margin: "0 0 10px 0", color: "#111" }}>INVOICE</h2>
+              <div style={{ fontSize: "14px", color: "#555" }}>
+                <b>Invoice #:</b> {activePrintInvoice.invoice_number}<br/>
+                <b>Date:</b> {new Date(activePrintInvoice.created_at).toLocaleDateString()}<br/>
+                <b>Status:</b> {activePrintInvoice.status.toUpperCase()}
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", gap: "40px", marginBottom: "40px" }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: "bold", color: "#555", textTransform: "uppercase", fontSize: "11px", letterSpacing: "0.5px", marginBottom: "8px" }}>Billed To:</div>
+              <div style={{ fontSize: "14px", color: "#333" }}>
+                <b>{activePrintInvoice.client_name}</b><br/>
+                Email: {activePrintInvoice.client_email}<br/>
+                {activePrintInvoice.client_gstin ? `GSTIN: ${activePrintInvoice.client_gstin}` : ""}
+              </div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: "bold", color: "#555", textTransform: "uppercase", fontSize: "11px", letterSpacing: "0.5px", marginBottom: "8px" }}>Provider:</div>
+              <div style={{ fontSize: "14px", color: "#333" }}>
+                <b>Adyant Nexa Ltd.</b><br/>
+                GSTIN: Haryana Registry Active<br/>
+                Tax Treatment: {activePrintInvoice.currency === "INR" 
+                  ? `Haryana GST: ${activePrintInvoice.state_type === "INTRASTATE" ? "Haryana CGST (9%) + SGST (9%)" : "Out-State IGST (18%)"}` 
+                  : "Export Services (No GST)"}
+              </div>
+            </div>
+          </div>
+
+          <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "40px" }}>
+            <thead>
+              <tr style={{ background: "#f9f9f9", borderBottom: "2px solid #eee" }}>
+                <th style={{ padding: "12px", fontSize: "12px", fontWeight: "bold", textTransform: "uppercase", color: "#555", textAlign: "left" }}>Description</th>
+                <th style={{ padding: "12px", fontSize: "12px", fontWeight: "bold", textTransform: "uppercase", color: "#555", textAlign: "right", width: "120px" }}>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ borderBottom: "1px solid #eee" }}>
+                <td style={{ padding: "12px", fontSize: "14px" }}>
+                  <b>Growth & Performance Web Engineering Services</b>
+                  <div style={{ fontSize: "12px", color: "#666", marginTop: "4px" }}>{activePrintInvoice.description || "Bespoke digital architecture build"}</div>
+                </td>
+                <td style={{ padding: "12px", fontSize: "14px", textAlign: "right" }}>
+                  {activePrintInvoice.currency === "INR" ? "₹" : "$"}{activePrintInvoice.base_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "60px" }}>
+            <table style={{ width: "300px", borderCollapse: "collapse", fontSize: "14px" }}>
+              <tbody>
+                <tr>
+                  <td style={{ padding: "6px 12px" }}>Subtotal (Base):</td>
+                  <td style={{ padding: "6px 12px", textAlign: "right" }}>
+                    {activePrintInvoice.currency === "INR" ? "₹" : "$"}{activePrintInvoice.base_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </td>
+                </tr>
+                {activePrintInvoice.currency === "INR" && (
+                  <tr>
+                    <td style={{ padding: "6px 12px" }}>Tax ({activePrintInvoice.state_type === "INTRASTATE" ? "CGST (9%) + SGST (9%)" : "IGST (18%)"}):</td>
+                    <td style={{ padding: "6px 12px", textAlign: "right" }}>
+                      ₹{activePrintInvoice.gst_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </td>
+                  </tr>
+                )}
+                <tr style={{ fontWeight: "bold", fontSize: "16px", borderTop: "2px solid #333" }}>
+                  <td style={{ padding: "12px" }}>Total Due:</td>
+                  <td style={{ padding: "12px", textAlign: "right" }}>
+                    {activePrintInvoice.currency === "INR" ? "₹" : "$"}{activePrintInvoice.total_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style={{ borderTop: "1px solid #eee", paddingTop: "20px", fontSize: "11px", color: "#777", textAlign: "center" }}>
+            Thank you for partnering with Adyant Nexa. This is a computer-generated document and does not require a physical signature.
+          </div>
+        </div>
+      )}
 
       <style dangerouslySetInnerHTML={{__html: `
         .btn-util { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); padding: 10px 20px; border-radius: 4px; font-family: var(--font-geist-mono); font-size: 11px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; }
