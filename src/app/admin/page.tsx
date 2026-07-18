@@ -1582,6 +1582,30 @@ For ${contractClientName} (Authorized Client Signature)`;
             </table>
           </div>
 
+          <div style={{ marginTop: "40px", borderTop: "1px solid #eee", paddingTop: "20px", marginBottom: "40px" }}>
+            <div style={{ fontWeight: "bold", color: "#555", textTransform: "uppercase", fontSize: "11px", letterSpacing: "0.5px", marginBottom: "12px" }}>Payment Instructions (Direct Bank Transfer):</div>
+            <table style={{ width: "100%", fontSize: "13px", color: "#333", borderCollapse: "collapse" }}>
+              <tbody>
+                <tr>
+                  <td style={{ padding: "4px 0", width: "160px", color: "#666" }}>Account Holder Name:</td>
+                  <td style={{ padding: "4px 0", fontWeight: "bold", color: "#000" }}>Adyant Nexa</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: "4px 0", color: "#666" }}>Account Number:</td>
+                  <td style={{ padding: "4px 0", fontWeight: "bold", color: "#000" }}>033311501083109</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: "4px 0", color: "#666" }}>IFSC Code:</td>
+                  <td style={{ padding: "4px 0", fontWeight: "bold", color: "#000" }}>NESF0000333</td>
+                </tr>
+                <tr>
+                  <td style={{ padding: "4px 0", color: "#666" }}>Bank Name:</td>
+                  <td style={{ padding: "4px 0", color: "#000" }}>Slice Current Account (NESFB)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
           <div style={{ borderTop: "1px solid #eee", paddingTop: "20px", fontSize: "11px", color: "#777", textAlign: "center" }}>
             Thank you for partnering with Adyant Nexa. This is a computer-generated document and does not require a physical signature.
           </div>
