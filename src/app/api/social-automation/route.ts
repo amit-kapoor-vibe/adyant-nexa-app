@@ -3,6 +3,8 @@ import { verifyAdmin } from "@/lib/auth";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { SocialAutomationSchema, validateBodySize } from "@/lib/validation";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { generateAndSaveAllSizes } from "@/lib/agent-ops/imaging";
+import { publishToLinkedIn, publishToInstagram, publishToFacebook } from "@/lib/agent-ops/publishing";
 
 const LARK_APP_ID = process.env.LARK_APP_ID;
 const LARK_APP_SECRET = process.env.LARK_APP_SECRET;
@@ -26,9 +28,28 @@ async function getTenantAccessToken() {
   const data = await response.json();
   if (data.code === 0) {
     return data.tenant_access_token;
-  } else {
-    throw new Error(`Lark Token Auth Failed: ${data.msg}`);
   }
+  throw new Error(`Failed to obtain Lark access token: ${data.msg}`);
+}
+
+function parsePlatformCaptions(fullCaption: string) {
+  const result = {
+    linkedin: fullCaption,
+    instagram: fullCaption,
+    facebook: fullCaption
+  };
+  
+  if (fullCaption.includes("[LINKEDIN]") || fullCaption.includes("[INSTAGRAM]") || fullCaption.includes("[FACEBOOK]")) {
+    const linkedinMatch = fullCaption.match(/\[LINKEDIN\]([\s\S]*?)(?=\[INSTAGRAM\]|\[FACEBOOK\]|$)/i);
+    const instagramMatch = fullCaption.match(/\[INSTAGRAM\]([\s\S]*?)(?=\[LINKEDIN\]|\[FACEBOOK\]|$)/i);
+    const facebookMatch = fullCaption.match(/\[FACEBOOK\]([\s\S]*?)(?=\[LINKEDIN\]|\[INSTAGRAM\]|$)/i);
+    
+    if (linkedinMatch) result.linkedin = linkedinMatch[1].trim();
+    if (instagramMatch) result.instagram = instagramMatch[1].trim();
+    if (facebookMatch) result.facebook = facebookMatch[1].trim();
+  }
+  
+  return result;
 }
 
 // --- Inline Content Generator (replaces child process) ---
@@ -89,7 +110,15 @@ async function generateSocialPosts(customTopic: string | null, directive: string
   For each post, output a JSON object containing:
   1. "topic": A short 3-5 word high-impact headline.
   2. "platforms": An array containing target channels (choose from: ["LinkedIn", "Instagram", "Facebook"]).
-  3. "caption": Elite, high-conversion copy. Start with a direct, zero-slop hook. End with a CTA to visit "adyantnexa.com". Keep emojis strictly minimal (max 1 or 2).
+  3. "caption": Elite, high-conversion copy. You must generate platform-specific versions formatted inside this single string using the following exact headers:
+     [LINKEDIN]
+     (Detailed B2B copy using the PAS framework, high technical depth, professional tone, ending with a link to adyantnexa.com)
+     
+     [INSTAGRAM]
+     (Visual-first, punchy copy with line breaks and relevant hashtags, ending with link-in-bio call-to-action)
+     
+     [FACEBOOK]
+     (Short, direct, high-impact copy tailored for a Facebook Page update, ending with a link to adyantnexa.com)
   4. "visualPrompt": A specific instruction describing a social media graphic with #020202 black background, #00F2FF cyan accents, bold uppercase text overlay, and premium tech-aesthetic mockup.
   
   Return the output ONLY as a valid JSON array of objects. Do not include markdown code block syntax or any extra text.
@@ -193,17 +222,57 @@ async function runPublisher() {
       return { logs };
     }
 
-    // For each approved post, we mark it as "Published" in Lark
-    // Actual social media API calls (Meta, LinkedIn) require OAuth tokens
+    const defaultNeonGraphic = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop";
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    for (const record of approvedItems) {
+      for (const record of approvedItems) {
       const recordId = record.record_id;
       const topic = record.fields["Topic"] || "Untitled";
       const platforms = record.fields["Platform"] || [];
+      const caption = record.fields["Caption"] || "";
+      
+      let imageUrl = record.fields["Visual Asset URL"] || defaultNeonGraphic;
+      // Social API platforms (Meta, LinkedIn) reject localhost/internal URLs
+      if (imageUrl.includes("localhost") || imageUrl.startsWith("/") || !imageUrl.startsWith("http")) {
+        imageUrl = defaultNeonGraphic;
+      }
 
-      logs.push(`📬 Processing: "${topic}" → [${platforms.join(", ")}]`);
+      logs.push(`📬 Processing: "${topic}" → platforms: [${platforms.join(", ")}]`);
 
-      // Update status to Published in Lark
+      let successCount = 0;
+      let targetCount = platforms.length;
+      let lastPostLink = "";
+
+      const captions = parsePlatformCaptions(caption);
+
+      for (const platform of platforms) {
+        try {
+          if (platform === "Instagram") {
+            logs.push(`📸 Posting "${topic}" to Instagram Business Account...`);
+            const link = await publishToInstagram(imageUrl, captions.instagram);
+            successCount++;
+            lastPostLink = link;
+            logs.push(`✅ Instagram Post Live: ${link}`);
+          } else if (platform === "Facebook") {
+            logs.push(`👤 Posting "${topic}" to Facebook Page...`);
+            const link = await publishToFacebook(imageUrl, captions.facebook);
+            successCount++;
+            lastPostLink = link;
+            logs.push(`✅ Facebook Post Live: ${link}`);
+          } else if (platform === "LinkedIn") {
+            logs.push(`💼 Posting "${topic}" to LinkedIn...`);
+            const link = await publishToLinkedIn(captions.linkedin, imageUrl);
+            successCount++;
+            lastPostLink = link;
+            logs.push(`✅ LinkedIn Post Live: ${link}`);
+          }
+        } catch (pubErr: any) {
+          logs.push(`❌ Failed to publish to ${platform}: ${pubErr.message}`);
+        }
+      }
+
+      // Update status in Lark
+      const finalStatus = successCount === targetCount ? "Published" : (successCount > 0 ? "Published" : "Failed");
       try {
         const updateUrl = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records/${recordId}`;
         await fetch(updateUrl, {
@@ -212,11 +281,16 @@ async function runPublisher() {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ fields: { "Status": "Published" } })
+          body: JSON.stringify({ 
+            fields: { 
+              "Status": finalStatus,
+              ...(lastPostLink ? { "Post Link": lastPostLink } : {})
+            } 
+          })
         });
-        logs.push(`✅ "${topic}" marked as Published in CRM.`);
-      } catch (err) {
-        logs.push(`❌ Failed to update status for "${topic}": ${err}`);
+        logs.push(`✅ Lark base status updated to "${finalStatus}" for "${topic}".`);
+      } catch (err: any) {
+        logs.push(`❌ Failed to update status in Lark CRM: ${err.message}`);
       }
     }
   } else {
@@ -359,11 +433,21 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: "Invalid filename" }, { status: 400 });
       }
 
-      // Image generation via Gemini Imagen would go here
-      // For now, return placeholder URLs
-      const localVisualUrl = `/generated-images/${safeFilename}-square.png`;
-      const localVisualPortraitUrl = `/generated-images/${safeFilename}-portrait.png`;
-      const localVisualReelUrl = `/generated-images/${safeFilename}-reel.png`;
+      const logs: string[] = [];
+      logs.push(`🎨 Spawning Image Generation for: "${topic}"`);
+
+      let generatedUrls: Record<string, string>;
+      try {
+        generatedUrls = await generateAndSaveAllSizes(topic, safeFilename);
+        logs.push(`✅ Graphics generated successfully for square, portrait, and reel.`);
+      } catch (genErr: any) {
+        logs.push(`❌ Image Generation Failed: ${genErr.message}`);
+        return NextResponse.json({ error: `Image Generation Failed: ${genErr.message}`, logs: logs.join("\n") }, { status: 500 });
+      }
+
+      const localVisualUrl = generatedUrls.square;
+      const localVisualPortraitUrl = generatedUrls.portrait;
+      const localVisualReelUrl = generatedUrls.reel;
 
       if (recordId) {
         try {
@@ -385,14 +469,15 @@ export async function POST(request: Request) {
               }
             })
           });
-        } catch (larkErr) {
-          console.error("Failed to update Lark base with new visual link:", larkErr);
+          logs.push(`✅ Lark Base record updated with new Visual Asset URL: ${fullHostUrl}`);
+        } catch (larkErr: any) {
+          logs.push(`⚠️ Lark Base record update failed: ${larkErr.message}`);
         }
       }
 
       return NextResponse.json({
         success: true,
-        logs: "Image generation triggered.",
+        logs: logs.join("\n"),
         urls: {
           square: localVisualUrl,
           portrait: localVisualPortraitUrl,

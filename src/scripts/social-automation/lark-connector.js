@@ -188,5 +188,6 @@ async function updatePostStatus(recordId, newStatus, postLink = "") {
 module.exports = {
   syncPostsToLark,
   fetchApprovedPosts,
-  updatePostStatus
+  updatePostStatus,
+  getTenantAccessToken
 };
