@@ -54,24 +54,34 @@ export async function POST(request: Request) {
       const chatId = process.env.TELEGRAM_CHAT_ID;
 
       if (botToken && chatId) {
-        const telegramMsg = `\u{1F6D8} *NEW LEAD CAPTURED* \u{1F6D8}\n\n` +
-                            `\u{1F464} *Name:* ${name}\n` +
-                            `\u{1F4E7} *Email:* ${email}\n` +
-                            `\u{1F4DE} *Phone:* ${phone}\n` +
-                            `\u{1F4BC} *Business:* ${business || "Not Specified"}\n` +
-                            `\u{1F4B0} *Budget:* ${budget || "Not Specified"}\n\n` +
-                            `\u{1F4DD} *Message:* ${message || "No message"}\n\n` +
-                            `\u{1F517} *Command Center:* https://adyantnexa.com/admin`;
+        const escapeHtml = (str: string) =>
+          str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        const telegramMsg = `<b>NEW LEAD CAPTURED</b>\n\n` +
+                            `<b>Name:</b> ${escapeHtml(name || "")}\n` +
+                            `<b>Email:</b> ${escapeHtml(email || "")}\n` +
+                            `<b>Phone:</b> ${escapeHtml(phone || "")}\n` +
+                            `<b>Business:</b> ${escapeHtml(business || "Not Specified")}\n` +
+                            `<b>Budget:</b> ${escapeHtml(String(budget || "Not Specified"))}\n\n` +
+                            `<b>Message:</b> ${escapeHtml(message || "No message")}\n\n` +
+                            `<b>Command Center:</b> https://adyantnexa.com/admin`;
+
+        const tgRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             chat_id: chatId,
             text: telegramMsg,
-            parse_mode: "Markdown"
+            parse_mode: "HTML"
           })
         });
+
+        if (!tgRes.ok) {
+          const tgErr = await tgRes.text();
+          console.error("Telegram API Error response:", tgErr);
+        }
+      } else {
+        console.warn("Telegram alert skipped: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is missing in environment.");
       }
     } catch (tgError) {
       console.error("Telegram Notification Failed:", tgError);

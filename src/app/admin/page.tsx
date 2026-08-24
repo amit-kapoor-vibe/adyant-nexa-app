@@ -8,10 +8,9 @@ import {
   Trophy, MessageCircle, Skull, Download, Upload, Plus, 
   Trash2, CheckSquare, Square, StickyNote, X,
   TrendingUp, FileText, BarChart3, CreditCard, Activity, Target,
-  Shield, FolderOpen, FileCheck, Briefcase, Copy, Cpu
+  Shield, FolderOpen, FileCheck, Briefcase, Copy
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import AgentOpsDashboard from "@/components/AgentOpsDashboard";
 
 // --- Types ---
 interface Lead {
@@ -58,7 +57,7 @@ interface ClientContract {
   status: "DRAFT" | "SIGNED" | "EXPIRED";
 }
 
-type TabState = "GRID" | "FINANCE" | "ANALYTICS" | "VAULT" | "AGENT_OPS";
+type TabState = "GRID" | "FINANCE" | "ANALYTICS" | "VAULT";
 
 const STATUS_OPTIONS = ["ALL", "NEW", "CONTACTED", "HOT", "COLD", "VICTORY", "DEAD"];
 
@@ -627,8 +626,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                 { id: "GRID", label: "Intelligence Grid", icon: Database },
                 { id: "FINANCE", label: "Financial Ops", icon: TrendingUp },
                 { id: "ANALYTICS", label: "Meta Analytics", icon: Activity },
-                { id: "VAULT", label: "Secure Vault & Legal", icon: Shield },
-                { id: "AGENT_OPS", label: "Agent Ops", icon: Cpu }
+                { id: "VAULT", label: "Secure Vault & Legal", icon: Shield }
               ].map(tab => (
                 <button 
                   key={tab.id} onClick={() => setActiveTab(tab.id as TabState)}
@@ -1303,10 +1301,6 @@ For ${contractClientName} (Authorized Client Signature)`;
           </motion.div>
         )}
 
-        {/* --- VIEW 5: AGENT OPS --- */}
-        {activeTab === "AGENT_OPS" && (
-          <AgentOpsDashboard leads={leads} invoices={invoices} />
-        )}
 
       </main>
 

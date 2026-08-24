@@ -1,4 +1,4 @@
-# Nexa Speed Deploy Script
+# Nexa Speed Deploy Script for Vercel (via Git Push)
 # Usage: .\deploy.ps1 "your commit message"
 
 param (
@@ -6,30 +6,26 @@ param (
     [string]$msg
 )
 
-Write-Host "🚀 INITIALIZING NEXA SPEED DEPLOY..." -ForegroundColor Cyan
+Write-Host "INITIALIZING NEXA VERCEL DEPLOY..." -ForegroundColor Cyan
 
-# 1. GIT SYNC
-Write-Host "📦 Syncing with Git..." -ForegroundColor Yellow
+# 1. BUILD CHECK
+Write-Host "Validating Build locally..." -ForegroundColor Yellow
+npm run build
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Build failed. Check errors above before pushing." -ForegroundColor Red
+    exit
+}
+
+# 2. GIT SYNC & AUTO VERCEL DEPLOY
+Write-Host "Syncing with Git (Triggers Vercel Auto-Deploy)..." -ForegroundColor Yellow
 git add .
 git commit -m "$msg"
 git push
 
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Git sync failed. Aborting." -ForegroundColor Red
+    Write-Host "Git push failed. Check network or remote." -ForegroundColor Red
     exit
 }
 
-# 2. BUILD
-Write-Host "🏗️ Creating Production Build..." -ForegroundColor Yellow
-npm run build
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Build failed. Check errors above." -ForegroundColor Red
-    exit
-}
-
-# 3. FIREBASE DEPLOY
-Write-Host "🔥 Deploying to Firebase..." -ForegroundColor Yellow
-firebase deploy
-
-Write-Host "✅ MISSION ACCOMPLISHED. SITE IS LIVE!" -ForegroundColor Green
+Write-Host "SUCCESS: Pushed to GitHub. Vercel is now deploying live!" -ForegroundColor Green

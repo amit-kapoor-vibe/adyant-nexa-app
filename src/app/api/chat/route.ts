@@ -64,7 +64,7 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.GOOGLE_API_KEY;
 
-    const modelsToTry = ["gemini-2.5-flash-lite", "gemini-1.5-flash"];
+    const modelsToTry = ["gemini-2.5-flash", "gemini-1.5-flash"];
     let response: Response | undefined;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let data: any;
