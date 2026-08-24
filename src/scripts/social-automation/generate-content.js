@@ -49,6 +49,9 @@ const CORE_THEMES = [
   "Predictive LTV via AI: Knowing your customer value before they purchase"
 ];
 
+/**
+ * @param {string | null} [customTopic]
+ */
 async function generateSocialPosts(customTopic = null) {
   console.log("🤖 Generating elite social media drafts using Gemini...");
 

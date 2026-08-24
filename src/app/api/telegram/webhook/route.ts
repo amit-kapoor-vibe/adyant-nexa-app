@@ -265,7 +265,7 @@ async function handleGenerate(topic: string) {
 
   await sendTelegramMessage(`CMO Agent (Nova) generating posts for topic: "${topic}"...`);
   try {
-    const posts = await generateSocialPosts(topic);
+    const posts = await (generateSocialPosts as any)(topic);
     await sendTelegramMessage(`Generated ${posts.length} drafts! Syncing to Lark CRM...`);
     await syncPostsToLark(posts);
     await sendTelegramMessage(`All drafts created! Use /list to view or approve.`);
