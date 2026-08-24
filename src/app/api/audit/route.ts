@@ -21,17 +21,31 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Invalid URL", details: parsed.error.flatten().fieldErrors }, { status: 400 });
     }
 
-    const psiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(parsed.data.url)}&strategy=mobile&key=${process.env.PSI_API_KEY}`;
-    const response = await fetch(psiUrl);
-    const data = await response.json();
+    const psiKey = process.env.PSI_API_KEY || "AIzaSyB_sUcZiXO5hw4_OWUInJR0Lf5VewBFbRU";
+    const keyQuery = psiKey ? `&key=${psiKey}` : "";
+    const psiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(parsed.data.url)}&strategy=mobile${keyQuery}`;
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
 
-    if (!response.ok || data.error) {
-      return NextResponse.json({
-        error: data.error?.message || "Google PageSpeed API Error",
-      }, { status: response.status || 400 });
+    try {
+      const response = await fetch(psiUrl, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      const data = await response.json();
+
+      if (!response.ok || data.error) {
+        return NextResponse.json({
+          error: data.error?.message || "Google PageSpeed API Error",
+        }, { status: response.status || 400 });
+      }
+
+      return NextResponse.json(data);
+    } catch (fetchErr: any) {
+      clearTimeout(timeoutId);
+      return NextResponse.json({ 
+        error: fetchErr.name === "AbortError" ? "PageSpeed request timed out" : (fetchErr.message || "Failed to reach PageSpeed API")
+      }, { status: 504 });
     }
-
-    return NextResponse.json(data);
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : "Failed to fetch audit data";
     return NextResponse.json({ error: msg }, { status: 500 });
