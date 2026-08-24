@@ -1,0 +1,25 @@
+name: Supabase Keep Alive
+on:
+  schedule:
+    # Runs every 2 days at 00:00 UTC to prevent project pausing
+    - cron: '0 0 */2 * *'
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    name: Ping Supabase Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        run: |
+          echo "Pinging Supabase REST API to prevent auto-pause..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X GET "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/leads?select=id&limit=1" \
+            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}")
+          
+          echo "Supabase Response HTTP Status: $STATUS"
+          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 500 ]; then
+            echo "Supabase successfully pinged. Project is active."
+          else
+            echo "Warning: Received HTTP $STATUS from Supabase."
+          fi

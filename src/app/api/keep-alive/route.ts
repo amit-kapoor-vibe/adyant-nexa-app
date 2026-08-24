@@ -9,8 +9,18 @@ const privilegedSupabase = createClient(supabaseUrl, supabaseServiceKey);
 
 export async function GET(req: Request) {
   try {
-    const authResult = await verifyAdmin(req);
-    if (!(authResult as { authorized: true }).authorized) return authResult as NextResponse;
+    const urlObj = new URL(req.url);
+    const authHeader = req.headers.get("authorization");
+    const cronSecret = process.env.CRON_SECRET;
+    const isCronAuthorized = cronSecret && (
+      authHeader === `Bearer ${cronSecret}` || 
+      urlObj.searchParams.get("key") === cronSecret
+    );
+
+    if (!isCronAuthorized) {
+      const authResult = await verifyAdmin(req);
+      if (!(authResult as { authorized: true }).authorized) return authResult as NextResponse;
+    }
 
     const rl = await checkRateLimit(req, "default");
     if (!rl.success) {
