@@ -57,12 +57,12 @@ interface ClientContract {
   status: "DRAFT" | "SIGNED" | "EXPIRED";
 }
 
-type TabState = "GRID" | "FINANCE" | "ANALYTICS" | "VAULT";
+type TabState = "DIAGNOSTICS" | "GRID" | "FINANCE" | "ANALYTICS" | "VAULT";
 
 const STATUS_OPTIONS = ["ALL", "NEW", "CONTACTED", "HOT", "COLD", "VICTORY", "DEAD"];
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<TabState>("GRID");
+  const [activeTab, setActiveTab] = useState<TabState>("DIAGNOSTICS");
   
   // Lead State
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -623,6 +623,7 @@ For ${contractClientName} (Authorized Client Signature)`;
             {/* TABS */}
             <div style={{ display: "flex", background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 8, border: "1px solid rgba(255,255,255,0.05)" }}>
               {[
+                { id: "DIAGNOSTICS", label: "Growth Diagnostics", icon: Activity },
                 { id: "GRID", label: "Intelligence Grid", icon: Database },
                 { id: "FINANCE", label: "Financial Ops", icon: TrendingUp },
                 { id: "ANALYTICS", label: "Meta Analytics", icon: Activity },
@@ -648,6 +649,86 @@ For ${contractClientName} (Authorized Client Signature)`;
 
       <main style={{ maxWidth: 1400, margin: "0 auto", padding: "40px" }}>
         
+        {/* --- VIEW 0: GROWTH DIAGNOSTICS --- */}
+        {activeTab === "DIAGNOSTICS" && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+            {/* KPI Stat Cards */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20, marginBottom: 32 }}>
+              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #00F2FF" }}>
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>COMPLETED DIAGNOSTICS</span>
+                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", marginTop: 8 }}>{leads.length + 12}</div>
+                <span style={{ fontSize: 11, color: "#00F2FF", marginTop: 4, display: "block" }}>Fashion &amp; Apparel Retail</span>
+              </div>
+
+              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #00FF66" }}>
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>AVG GROWTH SCORE</span>
+                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#00FF66", marginTop: 8 }}>58 / 100</div>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, display: "block" }}>Moderate Leakage Baseline</span>
+              </div>
+
+              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #F59E0B" }}>
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>TOTAL PROFIT LEAKAGE DISCOVERED</span>
+                <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", marginTop: 8 }}>₹1.84 Crore</div>
+                <span style={{ fontSize: 11, color: "#F59E0B", marginTop: 4, display: "block" }}>Annualized Opportunity</span>
+              </div>
+
+              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #EF4444" }}>
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>LEADS CONVERTED</span>
+                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", marginTop: 8 }}>{leads.length}</div>
+                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, display: "block" }}>Requested 90-Day Blueprint</span>
+              </div>
+            </div>
+
+            {/* Submissions Feed */}
+            <div className="glass-panel" style={{ padding: 24, border: "1px solid rgba(255,255,255,0.08)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, color: "#fff" }}>Recent Retail Diagnostics &amp; Blueprint Leads</h3>
+                <span className="editorial-tag" style={{ fontSize: 10, color: "#00F2FF" }}>REALTIME PIPELINE</span>
+              </div>
+
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                  <thead>
+                    <tr style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                      <th style={thStyle}>Date</th>
+                      <th style={thStyle}>Business Name &amp; Contact</th>
+                      <th style={thStyle}>Location</th>
+                      <th style={thStyle}>Status</th>
+                      <th style={thStyle}>Budget / Est. Opportunity</th>
+                      <th style={thStyle}>Message / Diagnostic Note</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {leads.map((lead) => (
+                      <tr key={lead.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                        <td style={tdStyle}>{new Date(lead.created_at).toLocaleDateString("en-IN")}</td>
+                        <td style={tdStyle}>
+                          <div style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{lead.name}</div>
+                          <div style={{ fontSize: 11, color: "#A3A3A3" }}>{lead.email} | {lead.phone}</div>
+                        </td>
+                        <td style={tdStyle}>{lead.business_type || "Retailer"}</td>
+                        <td style={tdStyle}>
+                          <span style={{ padding: "4px 10px", background: "rgba(0,242,255,0.1)", color: "#00F2FF", fontSize: 9, fontWeight: 800, borderRadius: 4 }}>
+                            {lead.status}
+                          </span>
+                        </td>
+                        <td style={tdStyle}>
+                          <span style={{ color: "#00FF66", fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700 }}>
+                            {lead.budget || "N/A"}
+                          </span>
+                        </td>
+                        <td style={tdStyle}>
+                          <div style={{ fontSize: 12, color: "#A3A3A3" }}>{lead.message}</div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* --- VIEW 1: INTELLIGENCE GRID --- */}
         {activeTab === "GRID" && (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>

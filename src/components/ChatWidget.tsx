@@ -2,8 +2,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Cpu, Zap, ArrowRight } from "lucide-react";
-import { useNeuralTransition } from "@/context/TransitionContext";
+import { X, Cpu, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type Message = {
   role: "user" | "assistant";
@@ -11,19 +11,20 @@ type Message = {
 };
 
 export function ChatWidget() {
-  const { setScannerOpen } = useNeuralTransition();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Neural Link established. I am NEXA. How can I optimize your digital revenue today?" }
+    { 
+      role: "assistant", 
+      content: "Welcome to Adyant Nexa. I am your Retail Growth Advisor. Ask me anything about store profit leakages or start your Free Growth Assessment." 
+    }
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [auditMode, setAuditMode] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Load message count from persistent storage
   useEffect(() => {
     const savedCount = localStorage.getItem("nexa_chat_count");
     if (savedCount) setMessageCount(parseInt(savedCount));
@@ -34,125 +35,9 @@ export function ChatWidget() {
   }, [messages, isLoading]);
 
   useEffect(() => {
-    const timer = setTimeout(() => { if (!isOpen) setShowHint(true); }, 10000);
+    const timer = setTimeout(() => { if (!isOpen) setShowHint(true); }, 8000);
     return () => clearTimeout(timer);
   }, [isOpen]);
-
-  const runAudit = async (url: string) => {
-    setIsLoading(true);
-    const newCount = messageCount + 1;
-    setMessageCount(newCount);
-    localStorage.setItem("nexa_chat_count", newCount.toString());
-
-    // Clean URL
-    let targetUrl = url.trim().replace(/^['"<]+|['">]+$/g, "");
-    if (!targetUrl.startsWith("http://") && !targetUrl.startsWith("https://")) {
-      targetUrl = "https://" + targetUrl;
-    }
-    const domainName = targetUrl.replace(/^https?:\/\//, "").split("/")[0];
-
-    setMessages(prev => [
-      ...prev,
-      { role: "assistant", content: `INITIATING NEURAL SCAN: [${domainName}]\nBenchmarking Core Web Vitals, Mobile Latency & Psychological Conversion Friction...` }
-    ]);
-    
-    try {
-      // Parallel fetch: PageSpeed API + Gemini AI Neural Audit
-      const [auditRes, aiRes] = await Promise.allSettled([
-        fetch(`/api/audit?url=${encodeURIComponent(targetUrl)}`),
-        fetch(`/api/neural-audit`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url: targetUrl })
-        })
-      ]);
-
-      let perfScore: number | null = null;
-      let lcpStr: string | null = null;
-      let tbtStr: string | null = null;
-      let aiAnalysis = "";
-      let aiRecommendation = "";
-      let statusStr = "CRITICAL";
-
-      // 1. Process PageSpeed data if available
-      if (auditRes.status === "fulfilled" && auditRes.value.ok) {
-        try {
-          const data = await auditRes.value.json();
-          if (data?.lighthouseResult?.categories?.performance) {
-            perfScore = Math.round(data.lighthouseResult.categories.performance.score * 100);
-            const audits = data.lighthouseResult.audits;
-            if (audits?.["largest-contentful-paint"]?.displayValue) {
-              lcpStr = audits["largest-contentful-paint"].displayValue;
-            }
-            if (audits?.["total-blocking-time"]?.displayValue) {
-              tbtStr = audits["total-blocking-time"].displayValue;
-            }
-          }
-        } catch {
-          // ignore json parse error
-        }
-      }
-
-      // 2. Process AI Neural Audit data if available
-      if (aiRes.status === "fulfilled" && aiRes.value.ok) {
-        try {
-          const aiData = await aiRes.value.json();
-          if (aiData.score && perfScore === null) {
-            perfScore = aiData.score;
-          }
-          if (aiData.status) statusStr = aiData.status;
-          if (aiData.analysis) aiAnalysis = aiData.analysis;
-          if (aiData.recommendation) aiRecommendation = aiData.recommendation;
-        } catch {
-          // ignore json parse error
-        }
-      }
-
-      // 3. Fallback deterministic score if both APIs were throttled
-      if (perfScore === null) {
-        const hash = domainName.split("").reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
-        perfScore = Math.abs(hash) % 25 + 52; // Realistic benchmark between 52 - 76
-      }
-
-      if (perfScore >= 85) statusStr = "OPTIMIZED";
-      else if (perfScore >= 65) statusStr = "MODERATE_FRICTION";
-      else statusStr = "CRITICAL_LEAK";
-
-      if (!aiAnalysis) {
-        aiAnalysis = perfScore < 70 
-          ? `High mobile hydration latency and unoptimized script payloads detected on ${domainName}. The current architecture leaks prospective traffic during initial load.`
-          : `Moderate optimization on ${domainName}. Visual hierarchy and load timing can be streamlined to accelerate conversion velocity.`;
-      }
-
-      if (!aiRecommendation) {
-        aiRecommendation = `Migrate to Adyant Nexa's Next.js 16 SSR & Edge-native architecture to achieve 98+ Core Web Vitals and eliminate bounce drop-offs.`;
-      }
-
-      const report = `DIAGNOSTIC COMPLETE // [${domainName}]
-
-• PERFORMANCE HEALTH: ${perfScore}/100 [${statusStr}]
-${lcpStr ? `• LARGEST CONTENTFUL PAINT (LCP): ${lcpStr}\n` : ''}${tbtStr ? `• TOTAL BLOCKING TIME (TBT): ${tbtStr}\n` : ''}• CORE ARCHITECTURE FINDINGS:
-${aiAnalysis}
-
-• STRATEGIC FIX & UPGRADE:
-${aiRecommendation}
-
-Would you like to book a Strategy Call with our founder or receive a tailored 10-page Technical Architecture Blueprint?`;
-
-      setMessages(prev => [...prev, { role: "assistant", content: report }]);
-    } catch {
-      setMessages(prev => [
-        ...prev,
-        { 
-          role: "assistant", 
-          content: `DIAGNOSTIC COMPLETE // [${domainName}]\n\n• ESTIMATED BENCHMARK: 58/100 [CRITICAL_LEAK]\n• FINDINGS: High payload overhead and layout shift detected.\n• UPGRADE: Deploy Next.js SSR + AI Edge Concierge to recover 25-40% lost traffic.\n\nWould you like to book a Strategy Call with our founder?` 
-        }
-      ]);
-    } finally {
-      setIsLoading(false);
-      setAuditMode(false);
-    }
-  };
 
   const handleSend = async (customMsg?: string) => {
     const userMsg = customMsg || input.trim();
@@ -161,22 +46,11 @@ Would you like to book a Strategy Call with our founder or receive a tailored 10
     if (!customMsg) setInput("");
     setShowHint(false);
     
-    // Increment and save count
     const newCount = messageCount + 1;
     setMessageCount(newCount);
     localStorage.setItem("nexa_chat_count", newCount.toString());
 
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
-
-    // Detect URL for auto-audit
-    const urlPattern = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|([a-zA-Z0-9-]+\.[a-zA-Z]{2,})/gi;
-    if (auditMode || urlPattern.test(userMsg)) {
-      const match = userMsg.match(urlPattern);
-      if (match) {
-        runAudit(match[0]);
-        return;
-      }
-    }
 
     setIsLoading(true);
     try {
@@ -186,9 +60,9 @@ Would you like to book a Strategy Call with our founder or receive a tailored 10
         body: JSON.stringify({ message: userMsg, history: messages }),
       });
       const data = await response.json();
-      setMessages(prev => [...prev, { role: "assistant", content: data.reply || "Connection lag. Reach out on WhatsApp." }]);
+      setMessages(prev => [...prev, { role: "assistant", content: data.reply || "I can help you evaluate your store metrics. You can also start the assessment directly at /assessment." }]);
     } catch {
-      setMessages(prev => [...prev, { role: "assistant", content: "Neural lag. Use WhatsApp for priority sync." }]);
+      setMessages(prev => [...prev, { role: "assistant", content: "You can calculate your store's estimated profit opportunity in 4 minutes at /assessment." }]);
     } finally {
       setIsLoading(false);
     }
@@ -205,12 +79,12 @@ Would you like to book a Strategy Call with our founder or receive a tailored 10
             whileHover={{ scale: 1.01 }}
             style={{
               position: "fixed",
-              bottom: "32px",
+              bottom: "28px",
               left: "50%",
               transform: "translateX(-50%)",
               zIndex: 999999,
               width: "90%",
-              maxWidth: "600px",
+              maxWidth: "580px",
               cursor: "pointer",
             }}
             onClick={() => { setIsOpen(true); setShowHint(false); }}
@@ -219,44 +93,32 @@ Would you like to book a Strategy Call with our founder or receive a tailored 10
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 16,
-                background: "rgba(6, 6, 6, 0.7)",
-                backdropFilter: "blur(24px) saturate(180%)",
-                backgroundImage: `
-                  radial-gradient(circle at top left, rgba(0, 242, 255, 0.05), transparent 45%),
-                  url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E")
-                `,
-                border: "1px solid rgba(0, 242, 255, 0.15)",
-                padding: "10px 10px 10px 20px",
-                borderRadius: "30px",
-                boxShadow: "0 15px 40px rgba(0,0,0,0.5), 0 0 30px rgba(0,242,255,0.05)",
-                transition: "all 0.4s ease",
-              }}
-              onMouseEnter={(e) => { 
-                e.currentTarget.style.borderColor = "rgba(0, 242, 255, 0.4)"; 
-                e.currentTarget.style.boxShadow = "0 15px 40px rgba(0,0,0,0.6), 0 0 30px rgba(0,242,255,0.1)"; 
-              }}
-              onMouseLeave={(e) => { 
-                e.currentTarget.style.borderColor = "rgba(0, 242, 255, 0.15)"; 
-                e.currentTarget.style.boxShadow = "0 15px 40px rgba(0,0,0,0.5), 0 0 30px rgba(0,242,255,0.05)"; 
+                gap: 14,
+                background: "rgba(6, 6, 6, 0.85)",
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                border: "1px solid rgba(0, 242, 255, 0.25)",
+                padding: "8px 10px 8px 18px",
+                borderRadius: "9999px",
+                boxShadow: "0 12px 35px rgba(0,0,0,0.6), 0 0 25px rgba(0,242,255,0.08)",
+                transition: "all 0.3s ease",
               }}
             >
-              <Cpu size={18} color="#00F2FF" style={{ flexShrink: 0 }} />
-              <span style={{ flex: 1, fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(255,255,255,0.4)", letterSpacing: "0.03em" }}>
-                {showHint ? "WANT A NEURAL AUDIT? ASK NEXA OS..." : "Ask NEXA OS anything..."}
+              <Cpu size={16} color="#00F2FF" style={{ flexShrink: 0 }} />
+              <span style={{ flex: 1, fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "rgba(255,255,255,0.6)", letterSpacing: "0.02em" }}>
+                {showHint ? "Have questions about your growth assessment?" : "Ask Adyant Nexa Growth Advisor..."}
               </span>
-              <div style={{
-                background: "rgba(0,242,255,0.1)",
-                border: "1px solid rgba(0,242,255,0.2)",
-                color: "#00F2FF",
-                padding: "8px 16px",
-                borderRadius: "20px",
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: "0.1em"
-              }}>
-                INITIATE
+              <div 
+                className="btn-primary"
+                style={{
+                  padding: "8px 16px",
+                  borderRadius: "9999px",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                }}
+              >
+                ASK ADVISOR
               </div>
             </div>
           </motion.div>
@@ -269,56 +131,45 @@ Would you like to book a Strategy Call with our founder or receive a tailored 10
             initial={{ opacity: 0, y: 30, x: "-50%", scale: 0.98 }}
             animate={{ opacity: 1, y: 0, x: "-50%", scale: 1 }}
             exit={{ opacity: 0, y: 30, x: "-50%", scale: 0.98 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             style={{
               position: "fixed",
-              bottom: "32px",
+              bottom: "28px",
               left: "50%",
               transform: "translateX(-50%)",
               zIndex: 999998,
               width: "90%",
-              maxWidth: "640px",
-              height: "75vh",
-              maxHeight: "650px",
-              background: "rgba(6, 6, 6, 0.7)",
-              backdropFilter: "blur(24px) saturate(180%)",
-              backgroundImage: `
-                radial-gradient(circle at top left, rgba(0, 242, 255, 0.05), transparent 45%),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E")
-              `,
-              border: "1px solid rgba(0, 242, 255, 0.15)",
+              maxWidth: "600px",
+              height: "70vh",
+              maxHeight: "600px",
+              background: "#080808",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              border: "1px solid rgba(0, 242, 255, 0.2)",
               display: "flex",
               flexDirection: "column",
               overflow: "hidden",
-              boxShadow: "0 30px 100px rgba(0,0,0,0.8), 0 0 50px rgba(0,242,255,0.05)",
-              borderRadius: "24px",
+              boxShadow: "0 25px 80px rgba(0,0,0,0.9), 0 0 40px rgba(0,242,255,0.06)",
+              borderRadius: "20px",
             }}
           >
             {/* Header */}
-            <div style={{ padding: "20px 24px", borderBottom: "1px solid rgba(255,255,255,0.03)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <div style={{ width: 36, height: 36, borderRadius: "10px", border: "1px solid #00F2FF", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,242,255,0.05)" }}>
-                  <Cpu size={18} color="#00F2FF" />
+            <div style={{ padding: "18px 20px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#020202" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ width: 32, height: 32, borderRadius: "8px", border: "1px solid #00F2FF", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,242,255,0.08)" }}>
+                  <Cpu size={16} color="#00F2FF" />
                 </div>
                 <div>
-                  <h4 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 13, color: "#fff", margin: 0 }}>NEXA_OS</h4>
+                  <h4 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 13, color: "#fff", margin: 0 }}>GROWTH_ADVISOR</h4>
                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <div className="pulse-dot" style={{ width: 6, height: 6, background: "#00FF66", borderRadius: "50%" }} />
-                    <span style={{ fontSize: 9, color: "rgba(0,255,102,0.7)", fontWeight: 700, fontFamily: "var(--font-geist-mono)", letterSpacing: "0.05em" }}>COGNITIVE_READY</span>
+                    <div className="pulse-dot" style={{ width: 6, height: 6, background: "#00F2FF", borderRadius: "50%" }} />
+                    <span style={{ fontSize: 9, color: "#00F2FF", fontWeight: 700, fontFamily: "var(--font-geist-mono)", letterSpacing: "0.05em" }}>DIAGNOSTIC_READY</span>
                   </div>
                 </div>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
-                style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", padding: 8, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%", transition: "all 0.3s ease" }}
-                onMouseEnter={(e) => { 
-                  e.currentTarget.style.color = "#fff"; 
-                  e.currentTarget.style.background = "rgba(255,255,255,0.05)"; 
-                }}
-                onMouseLeave={(e) => { 
-                  e.currentTarget.style.color = "rgba(255,255,255,0.4)"; 
-                  e.currentTarget.style.background = "none"; 
-                }}
+                style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", padding: 6, display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "50%" }}
               >
                 <X size={18} />
               </button>
@@ -328,103 +179,78 @@ Would you like to book a Strategy Call with our founder or receive a tailored 10
             <div 
               ref={scrollRef} 
               data-lenis-prevent
-              style={{ flex: 1, padding: "24px", overflowY: "auto", display: "flex", flexDirection: "column", gap: 20 }}
+              style={{ flex: 1, padding: "20px", overflowY: "auto", display: "flex", flexDirection: "column", gap: 16 }}
             >
               {messages.map((m, i) => (
-                <div key={i} style={{ alignSelf: m.role === "user" ? "flex-end" : "flex-start", maxWidth: "85%" }}>
+                <div key={i} style={{ alignSelf: m.role === "user" ? "flex-end" : "flex-start", maxWidth: "88%" }}>
                   <div style={{ 
-                    padding: "14px 18px",
-                    background: m.role === "user" ? "#00F2FF" : "rgba(255,255,255,0.02)",
-                    color: m.role === "user" ? "#000" : "#E5E5E5",
-                    border: m.role === "user" ? "none" : "1px solid rgba(255,255,255,0.05)",
-                    borderRadius: m.role === "user" ? "16px 16px 2px 16px" : "16px 16px 16px 2px",
-                    fontSize: 13, whiteSpace: "pre-line", fontFamily: m.role === "user" ? "var(--font-inter)" : "var(--font-geist-mono)"
+                    padding: "12px 16px",
+                    background: m.role === "user" ? "#00F2FF" : "rgba(255,255,255,0.03)",
+                    color: m.role === "user" ? "#020202" : "#E5E5E5",
+                    border: m.role === "user" ? "none" : "1px solid rgba(255,255,255,0.06)",
+                    borderRadius: m.role === "user" ? "14px 14px 2px 14px" : "14px 14px 14px 2px",
+                    fontSize: 13, 
+                    whiteSpace: "pre-line", 
+                    fontFamily: m.role === "user" ? "var(--font-inter)" : "var(--font-geist-mono)",
+                    lineHeight: 1.5,
                   }}>{m.content}</div>
                 </div>
               ))}
               
               {messages.length === 1 && (
-                <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
-                  <button onClick={() => { setAuditMode(true); handleSend("I want a Neural Audit of my website."); }}
-                    style={{ background: "rgba(0,242,255,0.05)", border: "1px solid rgba(0,242,255,0.3)", color: "#00F2FF", padding: "8px 14px", borderRadius: "8px", fontSize: 10, cursor: "pointer", fontWeight: 700, fontFamily: "var(--font-geist-mono)", letterSpacing: "0.05em", transition: "all 0.3s ease" }}
-                    onMouseEnter={(e) => { 
-                      e.currentTarget.style.background = "rgba(0,242,255,0.15)"; 
-                      e.currentTarget.style.borderColor = "#00F2FF"; 
-                    }}
-                    onMouseLeave={(e) => { 
-                      e.currentTarget.style.background = "rgba(0,242,255,0.05)"; 
-                      e.currentTarget.style.borderColor = "rgba(0,242,255,0.3)"; 
-                    }}
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 8 }}>
+                  <button 
+                    onClick={() => { setIsOpen(false); router.push("/assessment"); }}
+                    style={{ background: "rgba(0,242,255,0.1)", border: "1px solid #00F2FF", color: "#00F2FF", padding: "10px 14px", borderRadius: "8px", fontSize: 11, cursor: "pointer", fontWeight: 700, fontFamily: "var(--font-geist-mono)", textAlign: "left", display: "flex", alignItems: "center", justifyContent: "space-between" }}
                   >
-                    ANALYZE_MY_WEBSITE
+                    <span>START_FREE_GROWTH_ASSESSMENT</span>
+                    <ArrowRight size={14} />
+                  </button>
+
+                  <button 
+                    onClick={() => handleSend("How is dead stock profit leakage calculated?")}
+                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)", padding: "10px 14px", borderRadius: "8px", fontSize: 11, cursor: "pointer", fontWeight: 600, fontFamily: "var(--font-geist-mono)", textAlign: "left" }}
+                  >
+                    HOW_DEAD_STOCK_LEAKAGE_WORKS
                   </button>
                 </div>
               )}
 
               {isLoading && (
-                <div style={{ alignSelf: "flex-start", padding: "14px 18px", background: "rgba(255,255,255,0.01)", border: "1px dashed rgba(0,242,255,0.2)", borderRadius: "12px" }}>
-                  <span style={{ fontSize: 10, color: "#00F2FF", letterSpacing: "0.15em", animation: "pulse 1.5s infinite" }}>SYNCING_NODES...</span>
+                <div style={{ alignSelf: "flex-start", padding: "12px 16px", background: "rgba(255,255,255,0.01)", border: "1px dashed rgba(0,242,255,0.3)", borderRadius: "10px" }}>
+                  <span style={{ fontSize: 10, color: "#00F2FF", letterSpacing: "0.15em" }}>ANALYZING...</span>
                 </div>
               )}
             </div>
 
             {/* Input Bar Section */}
-            <div style={{ padding: "20px 24px 24px", borderTop: "1px solid rgba(255,255,255,0.03)" }}>
-              {messageCount >= 30 ? (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                  <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 9, color: "rgba(255,255,255,0.4)", textAlign: "center", marginBottom: 16, letterSpacing: "0.1em" }}>
-                    DAILY_NEURAL_QUOTA_EXCEEDED
-                  </p>
-                  <a href="https://wa.me/918700720477" target="_blank" rel="noopener noreferrer"
-                    style={{
-                      display: "flex", alignItems: "center", justifyContent: "center", gap: 12,
-                      background: "#00FF66", color: "#000", padding: "16px", borderRadius: "12px",
-                      textDecoration: "none", fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 13,
-                      boxShadow: "0 10px 30px rgba(0,255,102,0.15)", transition: "all 0.3s ease"
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 15px 40px rgba(0,255,102,0.3)"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,255,102,0.15)"; }}
-                  >
-                    CONNECT_ON_WHATSAPP_PRIORITY
-                  </a>
-                </motion.div>
-              ) : (
-                <div style={{ display: "flex", gap: 12, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", padding: "6px", borderRadius: "30px", alignItems: "center" }}>
-                  <input 
-                    value={input} 
-                    onChange={(e) => setInput(e.target.value)} 
-                    onKeyPress={(e) => e.key === "Enter" && handleSend()} 
-                    placeholder={auditMode ? "Enter website URL for Audit..." : "Ask NEXA OS..."}
-                    style={{ flex: 1, background: "none", border: "none", color: "#fff", padding: "10px 16px", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none" }} 
-                  />
-                  <button 
-                    onClick={() => handleSend()} 
-                    style={{ 
-                      background: "#00F2FF", 
-                      border: "none", 
-                      color: "#000", 
-                      width: "40px", 
-                      height: "40px", 
-                      borderRadius: "50%", 
-                      cursor: "pointer", 
-                      display: "flex", 
-                      alignItems: "center", 
-                      justifyContent: "center", 
-                      transition: "all 0.3s ease" 
-                    }}
-                    onMouseEnter={(e) => { 
-                      e.currentTarget.style.transform = "scale(1.05)"; 
-                      e.currentTarget.style.boxShadow = "0 0 15px rgba(0,242,255,0.4)"; 
-                    }}
-                    onMouseLeave={(e) => { 
-                      e.currentTarget.style.transform = "scale(1)"; 
-                      e.currentTarget.style.boxShadow = "none"; 
-                    }}
-                  >
-                    <ArrowRight size={18} />
-                  </button>
-                </div>
-              )}
+            <div style={{ padding: "16px 20px 20px", borderTop: "1px solid rgba(255,255,255,0.04)", backgroundColor: "#020202" }}>
+              <div style={{ display: "flex", gap: 10, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", padding: "4px 4px 4px 14px", borderRadius: "9999px", alignItems: "center" }}>
+                <input 
+                  value={input} 
+                  onChange={(e) => setInput(e.target.value)} 
+                  onKeyPress={(e) => e.key === "Enter" && handleSend()} 
+                  placeholder="Ask about retail margins, dead stock, or repeat LTV..."
+                  style={{ flex: 1, background: "none", border: "none", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 12, outline: "none" }} 
+                />
+                <button 
+                  onClick={() => handleSend()} 
+                  style={{ 
+                    background: "#00F2FF", 
+                    border: "none", 
+                    color: "#020202", 
+                    width: "36px", 
+                    height: "36px", 
+                    borderRadius: "50%", 
+                    cursor: "pointer", 
+                    display: "flex", 
+                    alignItems: "center", 
+                    justifyContent: "center",
+                  }}
+                >
+                  <ArrowRight size={16} />
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

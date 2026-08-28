@@ -2,28 +2,30 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { containerVars, itemVars } from "@/lib/animations";
 import { Heading } from "@/components/ui/Heading";
+import { ArrowRight } from "lucide-react";
 
 const HERO_STATS: [string, string][] = [
-  ["0.5s", "LCP Speed"],
-  ["400%", "Revenue Growth"],
-  ["∞", "Market Dominance"],
+  ["₹1.84 Cr+", "Leakage Discovered"],
+  ["4 Mins", "Diagnostic Time"],
+  ["0–100", "Growth Score Scale"],
 ];
 
-const roles = [
-  "Systems Engineering",
-  "Multi-Agent AI",
-  "Absolute Speed",
-  "Conversion Optimization"
+const pillars = [
+  "Inventory Dead Stock",
+  "Discount Margin Erosion",
+  "Customer Repeat LTV",
+  "Marketing Acquisition Cost"
 ];
 
 const StatStrip = () => (
-  <motion.div variants={itemVars} style={{ display: "flex", gap: "clamp(32px, 6vw, 80px)", flexWrap: "wrap", justifyContent: "center" }}>
+  <motion.div variants={itemVars} style={{ display: "flex", gap: "clamp(24px, 5vw, 60px)", flexWrap: "wrap", justifyContent: "center" }}>
     {HERO_STATS.map(([v, l]) => (
-      <div key={l} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-        <span className="text-glow-cyan" style={{ fontFamily: "var(--font-syne)", fontWeight: 900, fontSize: "clamp(20px, 3.5vw, 36px)", color: "var(--accent-color)", transition: "color 0.4s ease" }}>{v}</span>
-        <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.35 }}>{l}</span>
+      <div key={l} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+        <span className="text-glow-cyan" style={{ fontFamily: "var(--font-syne)", fontWeight: 900, fontSize: "clamp(20px, 3.5vw, 32px)", color: "var(--accent-color)", transition: "color 0.4s ease" }}>{v}</span>
+        <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.5 }}>{l}</span>
       </div>
     ))}
   </motion.div>
@@ -34,12 +36,12 @@ interface HeroContentProps {
 }
 
 export function HeroContent({ onScan }: HeroContentProps) {
-  const [roleIndex, setRoleIndex] = useState(0);
+  const [pillarIndex, setPillarIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 2000);
+      setPillarIndex((prev) => (prev + 1) % pillars.length);
+    }, 2200);
     return () => clearInterval(interval);
   }, []);
 
@@ -51,7 +53,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
       style={{
         position: "relative", zIndex: 10, display: "flex", flexDirection: "column",
         alignItems: "center", textAlign: "center",
-        padding: "140px 28px 100px",
+        padding: "130px 28px 80px",
         maxWidth: 1100, margin: "0 auto", width: "100%",
       }}
     >
@@ -62,146 +64,107 @@ export function HeroContent({ onScan }: HeroContentProps) {
         style={{
           fontSize: "10px",
           letterSpacing: "0.3em",
-          color: "hsl(var(--muted))",
-          marginBottom: "24px",
+          color: "#00F2FF",
+          marginBottom: "20px",
           display: "block"
         }}
       >
-        ADYANT NEXA // DIGITAL OPERATIONS
+        ADYANT NEXA // BUSINESS GROWTH INTELLIGENCE PLATFORM
       </motion.span>
 
       {/* Headlines */}
-      <Heading level="h1" style={{ marginBottom: 28, userSelect: "none", textAlign: "center" }}>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="ADYANT" style={{ display: "block", fontSize: "clamp(2.8rem, 12vw, 7.5rem)" }}>ADYANT</motion.span>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="NEXA" style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.8rem, 12vw, 7.5rem)" }}>NEXA</motion.span>
+      <Heading level="h1" style={{ marginBottom: 20, userSelect: "none", textAlign: "center" }}>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="FIND WHERE YOUR BUSINESS" style={{ display: "block", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1 }}>
+          FIND WHERE YOUR FASHION BUSINESS
+        </motion.span>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="IS LOSING MONEY." style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1, color: "#00F2FF" }}>
+          IS LOSING MONEY.
+        </motion.span>
       </Heading>
 
-      {/* Role Line */}
+      {/* Dynamic Pillar Line */}
       <motion.div
         variants={itemVars}
         style={{
           fontFamily: "var(--font-geist-mono), monospace",
           fontSize: "13px",
-          letterSpacing: "0.1em",
-          color: "hsl(var(--muted))",
-          marginBottom: "32px",
+          letterSpacing: "0.08em",
+          color: "rgba(255,255,255,0.7)",
+          marginBottom: "24px",
           textTransform: "uppercase",
         }}
       >
-        We engineer{" "}
+        Analyzing Diagnostic Leakage In{" "}
         <span
-          key={roleIndex}
+          key={pillarIndex}
           className="animate-role-fade-in"
           style={{
-            fontFamily: "var(--font-display), serif",
-            fontStyle: "italic",
-            color: "hsl(var(--text))",
+            fontFamily: "var(--font-syne), sans-serif",
+            fontWeight: 700,
+            color: "#00F2FF",
             textTransform: "none",
-            letterSpacing: "normal",
             display: "inline-block",
-            marginLeft: "4px"
+            marginLeft: "6px"
           }}
         >
-          {roles[roleIndex]}
+          {pillars[pillarIndex]}
         </span>
       </motion.div>
 
       {/* Descriptor */}
-      <motion.p variants={itemVars} className="blur-in" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", lineHeight: 1.8, marginBottom: 40, maxWidth: 600, margin: "0 auto 40px", transition: "color 0.4s ease" }}>
-        High-Performance Infrastructure for the Conversion-Obsessed.<br />
-        Revenue Systems Engineering · Multi-Agent AI · Absolute Speed.
+      <motion.p variants={itemVars} className="blur-in" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.8, marginBottom: 36, maxWidth: 680, margin: "0 auto 36px", transition: "color 0.4s ease" }}>
+        We don't start by selling services. We start by finding where your business is losing money.<br />
+        Take our 4-minute diagnostic assessment to calculate your estimated Growth Score (0–100) and annual profit opportunity.
       </motion.p>
 
-      {/* CTA Buttons */}
+      {/* Primary & Secondary CTA Buttons */}
       <motion.div
         variants={itemVars}
         style={{
           display: "inline-flex",
           gap: "16px",
-          marginBottom: "64px",
+          marginBottom: "56px",
           flexWrap: "wrap",
           justifyContent: "center",
         }}
       >
-        {/* See Works */}
-        <a
-          href="#work"
+        {/* Primary CTA */}
+        <Link
+          href="/assessment"
+          className="btn-primary"
           style={{
-            backgroundColor: "hsl(var(--text))",
-            color: "hsl(var(--bg))",
-            fontFamily: "var(--font-inter)",
-            fontWeight: 600,
-            fontSize: "12px",
+            fontWeight: 700,
+            fontSize: "13px",
             letterSpacing: "0.05em",
-            textTransform: "uppercase",
             borderRadius: "9999px",
-            padding: "14px 28px",
+            padding: "14px 32px",
             display: "inline-flex",
             alignItems: "center",
+            gap: "8px",
             textDecoration: "none",
-            transition: "all 0.3s ease",
-            border: "1px solid transparent",
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            window.lenis?.scrollTo("#work", { offset: -60, duration: 1.5 });
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "transparent";
-            e.currentTarget.style.borderColor = "transparent";
-            e.currentTarget.className = "accent-gradient";
-            e.currentTarget.style.color = "#020202";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "hsl(var(--text))";
-            e.currentTarget.style.borderColor = "transparent";
-            e.currentTarget.className = "";
-            e.currentTarget.style.color = "hsl(var(--bg))";
+            boxShadow: "0 0 30px rgba(0,242,255,0.3)",
           }}
         >
-          See Works
-        </a>
+          Find My Profit Opportunity — Free <ArrowRight style={{ width: "16px", height: "16px" }} />
+        </Link>
 
-        {/* Reach out / Audit */}
-        <a
-          href="#investment"
+        {/* Secondary CTA */}
+        <Link
+          href="/how-it-works"
+          className="btn-secondary"
           style={{
-            backgroundColor: "transparent",
-            color: "hsl(var(--text))",
-            fontFamily: "var(--font-inter)",
             fontWeight: 600,
-            fontSize: "12px",
+            fontSize: "13px",
             letterSpacing: "0.05em",
-            textTransform: "uppercase",
-            border: "1px solid hsl(var(--stroke))",
             borderRadius: "9999px",
             padding: "14px 28px",
             display: "inline-flex",
             alignItems: "center",
             textDecoration: "none",
-            transition: "all 0.3s ease",
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            if (onScan) {
-              onScan("");
-            } else {
-              window.lenis?.scrollTo("#investment", { offset: -60, duration: 1.5 });
-            }
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = "transparent";
-            e.currentTarget.className = "accent-gradient";
-            e.currentTarget.style.color = "#020202";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = "hsl(var(--stroke))";
-            e.currentTarget.className = "";
-            e.currentTarget.style.color = "hsl(var(--text))";
           }}
         >
-          Audit System ↗
-        </a>
+          See How It Works
+        </Link>
       </motion.div>
 
       {/* Trust Metrics Strip */}

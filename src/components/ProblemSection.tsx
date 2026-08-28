@@ -6,19 +6,18 @@ import { Heading } from "./ui/Heading";
 export const ProblemSection = () => {
   const painPoints = [
     {
-      title: "Shopify & App Bloat",
-      desc: "Bloated third-party scripts, unoptimized assets, and slow theme rendering. A massive technical liability that kills D2C conversion rates."
+      title: "Dead Stock & Capital Locks",
+      desc: "Up to 25% of inventory remains unsold past 90–120 days. Locked working capital restricts fresh stock purchases and cash flow liquidity."
     },
     {
-      title: "iOS 14+ Signal Loss",
-      desc: "Browser-based pixels lose up to 40% of purchase signals to ad-blockers and iOS restrictions. Your ad budget is wasted on blind attribution."
+      title: "Discount Margin Erosion",
+      desc: "Unplanned end-of-season sales and blanket 20–40% discounts directly erode net margins, destroying store profitability."
     },
     {
-      title: "The Static Overhead",
-      desc: "Standard websites are passive digital brochures. We build high-performance, self-auditing AI infrastructure that actively hunts for leads 24/7."
+      title: "Low Customer Repeat Rates",
+      desc: "One-time buyers represent severe customer lifetime value (LTV) leakage. Acquiring new buyers without repeat systems drains marketing ROI."
     }
   ];
-
 
   return (
     <section id="problem" style={{ padding: "120px 28px", background: "var(--bg-color)", position: "relative", overflow: "hidden", transition: "background 0.4s ease" }}>
@@ -31,13 +30,13 @@ export const ProblemSection = () => {
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: 80 }}
         >
-          <span className="editorial-tag" style={{ color: "var(--accent-color)", display: "block", marginBottom: 20 }}>The Digital Liability</span>
+          <span className="editorial-tag" style={{ color: "var(--accent-color)", display: "block", marginBottom: 20 }}>THE RETAIL PROFIT LEAKAGE</span>
           <Heading level="h2" style={{ color: "var(--text-color)", marginBottom: 32, transition: "color 0.4s ease" }}>
-            MOST WEBSITES ARE <br />
-            <span style={{ color: "var(--muted-text)", opacity: 0.7 }}>REVENUE BLACK HOLES.</span>
+            WHERE IS YOUR BUSINESS <br />
+            <span style={{ color: "var(--accent-color)" }}>LOSING MONEY?</span>
           </Heading>
-          <p style={{ maxWidth: 600, margin: "0 auto", color: "var(--muted-text)", lineHeight: 1.8, transition: "color 0.4s ease" }}>
-            Standard websites are overhead. Adyant Nexa assets are high-performance revenue engines that replace manual processes with elite AI automation.
+          <p style={{ maxWidth: 650, margin: "0 auto", color: "var(--muted-text)", lineHeight: 1.8, transition: "color 0.4s ease" }}>
+            Most retail owners focus solely on top-line sales, while hidden operational leakages silently consume 15% to 30% of potential profit margins every single year.
           </p>
         </motion.div>
 
@@ -57,19 +56,19 @@ export const ProblemSection = () => {
                 background: "var(--glass-bg)"
               }}
             >
-              {/* Futuristic Cyber Laser Scanline Sweep */}
+              {/* Cyber Scanline */}
               <div className="cyber-scanline" />
 
-              {/* Tactical Sci-Fi Corner Brackets */}
+              {/* Sci-Fi Corner Brackets */}
               <div className="cyber-bracket cb-tl" />
               <div className="cyber-bracket cb-tr" />
               <div className="cyber-bracket cb-bl" />
               <div className="cyber-bracket cb-br" />
 
-              {/* Diagnostic Meta Ticker */}
+              {/* Meta Ticker */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.25 }}>[ ANOMALY_SYS_0{i+1} ]</span>
-                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.25, color: "var(--accent-color)" }}>CRITICAL_</span>
+                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.3 }}>[ LEAKAGE_AREA_0{i+1} ]</span>
+                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.5, color: "#00F2FF" }}>HIGH IMPACT</span>
               </div>
 
               <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 24, color: "var(--text-color)", marginBottom: 16, transition: "color 0.4s ease" }}>{point.title}</h3>

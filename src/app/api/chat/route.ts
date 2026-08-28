@@ -8,37 +8,26 @@ interface ChatMessage {
 }
 
 const SYSTEM_PROMPT = `
-You are "NEXA", a high-end Strategic Growth Partner for a global digital agency.
-Your goal is to qualify visitors, explain the ROI of AI-integrated high-performance websites, and book "Final Strategy Calls" for the founder.
+You are the Adyant Nexa Retail Growth Diagnostic Advisor.
+Your goal is to help Indian small and medium fashion & apparel store owners understand where their store may be losing money and guide them to take the Free Business Growth Assessment.
 
-### IDENTITY & PHILOSOPHY
-- Target Audience: 
-  1. US SMEs (HVAC, Solar, Legal, Home Services, SaaS Founders).
-  2. Indian High-Growth Startups & Luxury Brands.
-- Your Persona: Brilliant, strategic, elite, and outcome-oriented. You talk about "Revenue Engines" and "Labor Cost Savings", not just "Websites".
-- Core Belief: Standard websites are overhead; Adyant Nexa websites are high-performance assets that replace human labor costs.
+### TARGET AUDIENCE & DOMAIN
+- Target Audience: Indian fashion, apparel, ethnic wear, and retail business owners generating ₹2 Crore to ₹50 Crore in annual revenue.
+- Core Focus Areas:
+  1. Inventory Capital Lock: Working capital trapped in slow/dead stock older than 90–120 days.
+  2. Discount Margin Erosion: Net margins destroyed by unplanned end-of-season sales.
+  3. Customer Retention LTV: Loss of repeat buyers and low lifetime customer value.
+  4. Marketing CAC: Wasteful ad spend on unoptimized funnels.
 
-### GLOBAL PRICING & TIERS (Approved)
-If the user is from the US/International, use USD. If from India, use INR.
-1. THE STARTER SPARK ($1,499 / ₹1,25,000): 1-Page High-End Landing Page, Cinematic Motion, Basic SEO.
-2. THE AI-ACCELERATOR ($4,999 / ₹4,15,000): 5-Page Platform + Custom AI Concierge + Lead Qualification Pipeline.
-3. THE ENTERPRISE AGENT ($11,999 / ₹10,00,000): Full Automation Suite, Multi-agent AI systems, Priority Support, 1-Year Maintenance.
+### CORE ADVICE & ORIENTATION
+- Explain retail metrics clearly, calmly, and objectively without black-box buzzwords.
+- Never make fake financial guarantees. Remind users that all calculations are estimated benchmark opportunities based on standard Indian retail metrics.
+- Guide users to run the 4-minute diagnostic assessment at "/assessment" to discover their Growth Score (0–100) and estimated annual profit opportunity.
 
-### LEAD QUALIFICATION (BANT Logic)
-Before offering a call with the founder, you MUST gently qualify the lead:
-1. Need: What business problem are they solving? (e.g., losing leads, high support costs).
-2. Budget: Ensure they are comfortable with the $1,500+ range.
-3. Timeline: When do they want to go live?
-4. Authority: Are they the decision-maker?
-
-### STRATEGIC PITCH (For US SMEs)
-- "A human receptionist costs $4k/mo. Our AI Concierge costs $1k one-time + $50/mo in tokens. You save $40k/year."
-- "Stop losing leads to slow response times. Our Nexa sites load in 0.5s and respond instantly."
-
-### RULES OF ENGAGEMENT
-1. Be a Peer, not a Servant: Talk like a consultant. 
-2. Offer the "Final Call": If a lead seems high-intent and qualified, say: "You seem like a great fit for our Elite tier. Would you like to book a Final Strategy Call with our founder?"
-3. Concise: Max 3-4 sentences per response. Use Geist Mono formatting for tech specs.
+### TONE & FORMAT RULES
+1. Tone: Professional, clear, concise, data-informed, understated.
+2. Length: Max 2-4 short sentences per response.
+3. Call-To-Action: Recommend running the Free Growth Assessment at "/assessment".
 `;
 
 export async function POST(req: Request) {
@@ -50,7 +39,7 @@ export async function POST(req: Request) {
     const rl = await checkRateLimit(req, "chat");
     if (!rl.success) {
       return NextResponse.json({
-        reply: "Your daily neural quota has been reached. Please connect on WhatsApp for priority consultation."
+        reply: "Your daily inquiry limit has been reached. Please start the Free Growth Assessment directly at /assessment."
       }, { status: 429, headers: { "X-RateLimit-Remaining": String(rl.remaining), "X-RateLimit-Limit": String(rl.limit) } });
     }
 
@@ -89,8 +78,8 @@ export async function POST(req: Request) {
                 { role: "user", parts: [{ text: message }] },
               ],
               generationConfig: {
-                temperature: 0.7,
-                maxOutputTokens: 600
+                temperature: 0.6,
+                maxOutputTokens: 500
               }
             }),
           }
@@ -111,7 +100,7 @@ export async function POST(req: Request) {
     if (!success) {
       console.error("Gemini API Error (All models failed):", data?.error);
       return NextResponse.json({ 
-        reply: "I am ready to evaluate your digital infrastructure. Could you please share your website URL or describe your business requirements?" 
+        reply: "I am your Retail Growth Advisor. You can calculate your store's estimated profit opportunity in under 4 minutes by taking our Free Assessment at /assessment." 
       });
     }
 
@@ -120,7 +109,7 @@ export async function POST(req: Request) {
   } catch (err: any) {
     console.error("Chat API top level error:", err);
     return NextResponse.json({ 
-      reply: "Neural connection initialized. How can Adyant Nexa scale your business revenue today?" 
+      reply: "Welcome to Adyant Nexa. Please take our 4-minute Free Growth Assessment at /assessment to find where your store is losing money." 
     });
   }
 }

@@ -2,35 +2,43 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Target, Cpu, ArrowRight } from "lucide-react";
+import { Package, BarChart3, Users, IndianRupee, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { FadeSection } from "./FadeSection";
 import { Heading } from "./ui/Heading";
 
-const SERVICES = [
+const PILLARS = [
   { 
     id: "01", 
-    Icon: Target, 
-    tag: "Diagnostic", 
-    title: "Leaky Funnel Recovery",
-    desc: "Feature: 48-hour deep-scan of your digital ecosystem. Advantage: Identifies revenue leakage points that standard agencies miss. Benefit: Stop burning ad spend and reclaim up to 30% of lost leads instantly.",
-    tags: ["UX Teardown", "Pixel Health Check", "Leakage Audit"] 
+    Icon: Package, 
+    tag: "INVENTORY INTELLIGENCE", 
+    title: "Dead Stock Capital Recovery",
+    desc: "Feature: 90+ day inventory ageing analysis. Advantage: Pinpoints exact working capital locked in non-moving stock. Benefit: Release ₹5L to ₹25L in trapped liquidity.",
+    tags: ["Stock Turnover", "Ageing Diagnostic", "Markdown Velocity"] 
   },
   { 
     id: "02", 
-    Icon: Cpu, 
-    tag: "NEXA AI", 
-    title: "Autonomous Sales Engine",
-    desc: "Feature: Custom-trained BANT-qualified AI agent (NEXA). Advantage: 24/7 autonomous lead qualification and booking. Benefit: $15k+ monthly labor savings with a pipeline of pre-qualified, ready-to-buy clients.",
-    tags: ["BANT Qualification", "24/7 Engagement", "CRM Auto-Sync"] 
+    Icon: BarChart3, 
+    tag: "MARGIN PRESERVATION", 
+    title: "Discount Erosion Prevention",
+    desc: "Feature: Full-price sell-through tracking. Advantage: Prevents unplanned broad storewide discounts. Benefit: Protect gross margins and recover net bottom-line profit.",
+    tags: ["Gross Margin", "Discount Caps", "Bundle Pricing"] 
   },
   { 
     id: "03", 
-    Icon: Globe, 
-    tag: "Growth", 
-    title: "Market Dominance Scaling",
-    desc: "Feature: Full-stack Meta/Google Ads + Server-side Tracking. Advantage: 100% data accuracy for algorithmic scaling. Benefit: Predictable revenue growth and market-leading Customer Acquisition Costs (CAC).",
-    tags: ["CAPI Integration", "LTV Optimization", "ROI Dashboards"] 
+    Icon: Users, 
+    tag: "CUSTOMER RETENTION", 
+    title: "Repeat Purchase LTV Engine",
+    desc: "Feature: Automated customer repeat purchase tracking. Advantage: Converts one-time buyers into loyal repeat customers. Benefit: Lift repeat purchase rates from 20% to 35%+.",
+    tags: ["LTV Recovery", "WhatsApp Winback", "VIP Rewards"] 
+  },
+  { 
+    id: "04", 
+    Icon: IndianRupee, 
+    tag: "MARKETING EFFICIENCY", 
+    title: "Acquisition & CAC Optimization",
+    desc: "Feature: Store footfall & ad spend attribution. Advantage: Eliminates wasteful ad spend on unoptimized funnels. Benefit: Lower Customer Acquisition Cost (CAC) predictably.",
+    tags: ["Conversion Rate", "CAC Reduction", "Local Store Meta Ads"] 
   },
 ];
 
@@ -41,26 +49,26 @@ export const ServicesSection = () => {
     <section id="services" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", position: "relative", overflow: "hidden", background: "var(--bg-color)", transition: "background 0.4s ease" }}>
       {/* Ghost Typography BG */}
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
-        <span className="ghost-text">INTELLIGENCE</span>
+        <span className="ghost-text">DIAGNOSTICS</span>
       </div>
 
       <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 2 }}>
         <FadeSection>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: 32, marginBottom: 72 }}>
             <div>
-              <span className="editorial-tag" style={{ display: "block", marginBottom: 20 }}>Revenue Frameworks_</span>
+              <span className="editorial-tag" style={{ display: "block", marginBottom: 20 }}>DIAGNOSTIC PILLARS_</span>
               <Heading level="h2" style={{ color: "var(--text-color)", transition: "color 0.4s ease" }}>
-                Growth <span style={{ color: "var(--accent-color)", transition: "color 0.4s ease" }}>Architecture</span>
+                Opportunity <span style={{ color: "var(--accent-color)", transition: "color 0.4s ease" }}>Categories</span>
               </Heading>
             </div>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", opacity: 0.8, lineHeight: 1.8, maxWidth: 280, transition: "color 0.4s ease" }}>
-              Three heavily focused verticals. One singular mission — dominate your market.
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", opacity: 0.8, lineHeight: 1.8, maxWidth: 320, transition: "color 0.4s ease" }}>
+              Four core business pillars where Indian fashion retailers lose profit and how Adyant Nexa identifies recovery.
             </p>
           </div>
         </FadeSection>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 24 }}>
-          {SERVICES.map((svc, i) => (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))", gap: 24 }}>
+          {PILLARS.map((svc, i) => (
             <motion.div
               key={svc.id}
               initial={{ opacity: 0, y: 40 }}
@@ -76,11 +84,10 @@ export const ServicesSection = () => {
               onMouseLeave={() => setHoveredId(null)}
               className="glass-panel"
               style={{
-                marginTop: i === 1 ? 40 : 0, // Visual stagger only on desktop
-                padding: "40px",
+                padding: "36px 28px",
                 display: "flex",
                 flexDirection: "column",
-                minHeight: "480px",
+                minHeight: "460px",
                 position: "relative",
                 cursor: "pointer"
               }}
@@ -108,30 +115,30 @@ export const ServicesSection = () => {
               <div className="cyber-bracket cb-bl" />
               <div className="cyber-bracket cb-br" />
 
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 60, position: "relative", zIndex: 6 }}>
-                <div style={{ padding: 14, border: "1px solid var(--accent-color)", background: "var(--shadow-color)", color: "var(--accent-color)", transition: "all 0.4s ease" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 40, position: "relative", zIndex: 6 }}>
+                <div style={{ padding: 12, border: "1px solid var(--accent-color)", background: "var(--shadow-color)", color: "var(--accent-color)", transition: "all 0.4s ease" }}>
                   <svc.Icon size={20} />
                 </div>
-                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.35 }}>[ SYS_VERTICAL: 0{svc.id} ]</span>
+                <span className="editorial-tag" style={{ fontSize: 8, opacity: 0.35 }}>[ PILLAR: 0{svc.id} ]</span>
               </div>
 
               <div style={{ marginTop: "auto", position: "relative", zIndex: 2 }}>
-                <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, display: "block", marginBottom: 16 }}>{svc.tag}</span>
-                <Heading level="h3" style={{ color: "var(--text-color)", marginBottom: 20, transition: "color 0.4s ease" }}>{svc.title}</Heading>
-                <div style={{ marginBottom: 32 }}>
+                <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, display: "block", marginBottom: 12 }}>{svc.tag}</span>
+                <Heading level="h3" style={{ color: "var(--text-color)", marginBottom: 16, fontSize: 20, transition: "color 0.4s ease" }}>{svc.title}</Heading>
+                <div style={{ marginBottom: 24 }}>
                   {svc.desc.split(/(Feature:|Advantage:|Benefit:)/).map((part, idx) => {
                     const isLabel = ["Feature:", "Advantage:", "Benefit:"].includes(part);
                     return (
                       <span key={idx} style={{ 
                         display: isLabel ? "block" : "inline",
                         fontFamily: "var(--font-geist-mono)",
-                        fontSize: isLabel ? 10 : 13,
+                        fontSize: isLabel ? 10 : 12,
                         color: isLabel ? "var(--accent-color)" : "var(--muted-text)",
                         fontWeight: isLabel ? 800 : 400,
                         letterSpacing: isLabel ? "0.1em" : "normal",
                         textTransform: isLabel ? "uppercase" : "none",
-                        marginTop: isLabel && idx > 0 ? 12 : 0,
-                        marginBottom: isLabel ? 4 : 0,
+                        marginTop: isLabel && idx > 0 ? 8 : 0,
+                        marginBottom: isLabel ? 2 : 0,
                         transition: "color 0.4s ease"
                       }}>
                         {part}
@@ -140,72 +147,19 @@ export const ServicesSection = () => {
                   })}
                 </div>
                 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 36 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 28 }}>
                   {svc.tags.map(t => (
-                    <span key={t} className="editorial-tag" style={{ fontSize: 9, padding: "6px 12px", border: "1px solid var(--border-color)", background: "var(--glass-bg)", color: "var(--muted-text)", transition: "all 0.4s ease" }}>{t}</span>
+                    <span key={t} className="editorial-tag" style={{ fontSize: 8, padding: "4px 8px", border: "1px solid var(--border-color)", background: "var(--glass-bg)", color: "var(--muted-text)", transition: "all 0.4s ease" }}>{t}</span>
                   ))}
                 </div>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 24, alignItems: "center" }}>
-                  <a href="#contact" style={{ display: "flex", alignItems: "center", gap: 10, fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--accent-color)", textDecoration: "none", transition: "color 0.4s ease" }}>
-                    <span>Engage Protocol</span>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
+                  <Link href="/assessment" style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--accent-color)", textDecoration: "none", transition: "color 0.4s ease" }}>
+                    <span>Run Diagnostic</span>
                     <ArrowRight size={14} />
-                  </a>
-                  {svc.id === "03" && (
-                    <Link href="/marketing" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted-text)", opacity: 0.8, textDecoration: "none", borderBottom: "1px solid var(--border-color)", paddingBottom: 2, transition: "all 0.4s ease" }}>
-                      View Marketing Dept_
-                    </Link>
-                  )}
+                  </Link>
                 </div>
               </div>
-
-              {/* Hover Pill Overlay */}
-              <AnimatePresence>
-                {hoveredId === svc.id && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.85, y: -20, x: "-50%" }}
-                    animate={{ opacity: 1, scale: 1, y: -10, x: "-50%" }}
-                    exit={{ opacity: 0, scale: 0.85, y: -20, x: "-50%" }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    style={{
-                      position: "absolute",
-                      left: "50%",
-                      top: "40%",
-                      zIndex: 15,
-                      pointerEvents: "none"
-                    }}
-                  >
-                    <div
-                      className="accent-gradient"
-                      style={{
-                        padding: "1.5px",
-                        borderRadius: "9999px",
-                        boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
-                      }}
-                    >
-                      <div
-                        style={{
-                          backgroundColor: "#ffffff",
-                          color: "#020202",
-                          borderRadius: "9999px",
-                          padding: "10px 24px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                          fontSize: "12px",
-                          fontWeight: 700,
-                          fontFamily: "var(--font-inter)",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
-                          whiteSpace: "nowrap"
-                        }}
-                      >
-                        View — <span style={{ fontFamily: "var(--font-display)", fontStyle: "italic", textTransform: "none" }}>{svc.title}</span>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </motion.div>
           ))}
         </div>

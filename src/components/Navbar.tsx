@@ -7,7 +7,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useNeuralTransition } from "@/context/TransitionContext";
 
-// Extend Window for Lenis global
 declare global {
   interface Window {
     lenis: any;
@@ -18,7 +17,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const { triggerTransition, currency, setCurrency } = useNeuralTransition();
+  const { triggerTransition } = useNeuralTransition();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -26,22 +25,12 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const pricingHref = pathname === "/marketing" ? "/marketing#pricing" : "/#investment";
-
-  const desktopLinks = [
-    { label: "Genesis", href: "/" },
-    { label: "Marketing", href: "/marketing" },
-    { label: "Web Assets", href: "/web-assets" },
-    { label: "Pricing", href: pricingHref },
-    { label: "Journal", href: "/journal" }
-  ];
-
-  const mobileLinks = [
-    { label: "Genesis", href: "/" },
-    { label: "Marketing", href: "/marketing" },
-    { label: "Web Assets", href: "/web-assets" },
-    { label: "Pricing", href: pricingHref },
-    { label: "Journal", href: "/journal" }
+  const navLinks = [
+    { label: "Solutions", href: "/solutions/fashion-retail" },
+    { label: "Assessment", href: "/assessment" },
+    { label: "Tools", href: "/tools" },
+    { label: "How It Works", href: "/how-it-works" },
+    { label: "Contact", href: "/contact" }
   ];
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
@@ -58,63 +47,56 @@ export const Navbar = () => {
     <>
       <nav style={{ 
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000, 
-        background: scrolled ? "rgba(2,2,2,0.9)" : "transparent", 
-        backdropFilter: scrolled ? "blur(20px)" : "none", 
-        WebkitBackdropFilter: scrolled ? "blur(20px)" : "none", 
+        background: scrolled ? "rgba(2,2,2,0.92)" : "transparent", 
+        backdropFilter: scrolled ? "blur(16px)" : "none", 
+        WebkitBackdropFilter: scrolled ? "blur(16px)" : "none", 
         borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent", 
-        padding: scrolled ? "12px 0" : "24px 0",
-        transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-        transform: "translate3d(0, 0, 0)",
-        WebkitTransform: "translate3d(0, 0, 0)"
+        padding: scrolled ? "14px 0" : "24px 0",
+        transition: "all 0.3s ease",
       }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px" }}>
-          {/* 1. Left container (Logo) - Flex 1 */}
-          <div style={{ flex: 1, display: "flex", justifyContent: "flex-start" }}>
-            <Link href="/" onClick={(e) => handleLinkClick(e, "/")} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-              <img src="/Favicon transparent.png" alt="Adyant Nexa" width={28} height={28} />
-              <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 14, color: "var(--text-color)", letterSpacing: "-0.01em", transition: "color 0.4s ease" }}>ADYANT NEXA</span>
+        <div style={{ maxWidth: 1240, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px" }}>
+          {/* Logo */}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <Link href="/" onClick={(e) => handleLinkClick(e, "/")} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+              <img src="/Favicon transparent.png" alt="Adyant Nexa" width={26} height={26} />
+              <span style={{ fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, fontSize: 15, color: "#FFFFFF", letterSpacing: "0.02em" }}>
+                ADYANT NEXA
+              </span>
             </Link>
           </div>
 
-          {/* 2. Center container (Navigation Links) - Centered */}
-          <div className="desktop-only" style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ display: "flex", background: "var(--glass-bg)", padding: "4px", borderRadius: "100px", border: "1px solid var(--border-color)", transition: "all 0.4s ease" }}>
-              {desktopLinks.map(link => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link key={link.label} href={link.href} onClick={(e) => handleLinkClick(e, link.href)} 
-                    style={{ 
-                      fontFamily: "var(--font-inter)", 
-                      fontSize: 12, 
-                      fontWeight: 600, 
-                      padding: "8px 20px", 
-                      borderRadius: "100px", 
-                      color: isActive ? "var(--accent-color)" : "rgba(255,255,255,0.5)", 
-                      background: isActive ? "rgba(0,242,255,0.05)" : "transparent",
-                      textDecoration: "none", 
-                      transition: "all 0.4s ease" 
-                    }}>
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
+          {/* Desktop Navigation Links */}
+          <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            {navLinks.map(link => {
+              const isActive = pathname === link.href;
+              return (
+                <Link key={link.label} href={link.href} onClick={(e) => handleLinkClick(e, link.href)} 
+                  style={{ 
+                    fontFamily: "var(--font-inter), sans-serif", 
+                    fontSize: 13, 
+                    fontWeight: 500, 
+                    padding: "8px 16px", 
+                    borderRadius: "9999px", 
+                    color: isActive ? "#00F2FF" : "rgba(229,229,229,0.7)", 
+                    background: isActive ? "rgba(0,242,255,0.06)" : "transparent",
+                    textDecoration: "none", 
+                    transition: "all 0.2s ease" 
+                  }}>
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* 3. Right container (Action Buttons) - Flex 1 */}
-          <div className="desktop-only" style={{ flex: 1, display: "flex", justifyContent: "flex-end", gap: 16, alignItems: "center" }}>
-
-
-            <div style={{ display: "flex", background: "var(--glass-bg)", border: "1px solid var(--border-color)", padding: "2px", borderRadius: "100px", transition: "all 0.4s ease" }}>
-              <button onClick={() => setCurrency("USD")} style={{ padding: "6px 12px", borderRadius: "100px", background: currency === "USD" ? "var(--accent-color)" : "transparent", color: currency === "USD" ? "#000" : "var(--text-color)", border: "none", fontSize: 10, fontWeight: 800, cursor: "pointer", transition: "all 0.3s ease" }}>USD</button>
-              <button onClick={() => setCurrency("INR")} style={{ padding: "6px 12px", borderRadius: "100px", background: currency === "INR" ? "var(--accent-color)" : "transparent", color: currency === "INR" ? "#000" : "var(--text-color)", border: "none", fontSize: 10, fontWeight: 800, cursor: "pointer", transition: "all 0.3s ease" }}>INR</button>
-            </div>
-
-            <Link href="/#contact" onClick={(e) => handleLinkClick(e, "/#contact")} className="btn-primary" style={{ fontSize: 11, padding: "12px 32px", borderRadius: "100px" }}>Engage Protocol</Link>
+          {/* Right Action Button */}
+          <div className="desktop-only" style={{ display: "flex", alignItems: "center" }}>
+            <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ fontSize: 12, padding: "10px 22px", borderRadius: "9999px", fontWeight: 700 }}>
+              Start Free Assessment
+            </Link>
           </div>
 
           {/* Mobile Toggle */}
-          <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} style={{ background: "var(--glass-bg)", border: "1px solid var(--border-color)", color: "var(--text-color)", alignItems: "center", padding: 10, borderRadius: "50%", position: "relative", zIndex: 2010, cursor: "pointer", transition: "all 0.4s ease" }}>
+          <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFFFFF", alignItems: "center", padding: 8, borderRadius: "50%", zIndex: 2010, cursor: "pointer" }}>
             {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
@@ -123,7 +105,7 @@ export const Navbar = () => {
           .desktop-only { display: flex; }
           .mobile-toggle { display: none; }
           
-          @media (max-width: 992px) {
+          @media (max-width: 900px) {
             .desktop-only { display: none !important; }
             .mobile-toggle { display: flex !important; }
           }
@@ -134,62 +116,55 @@ export const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop for closing on click outside */}
             <motion.div 
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 2090, backdropFilter: "blur(5px)" }}
+              style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 2090, backdropFilter: "blur(6px)" }}
             />
             
             <motion.div 
               initial={{ opacity: 0, x: "100%" }} 
               animate={{ opacity: 1, x: 0 }} 
               exit={{ opacity: 0, x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              transition={{ type: "spring", damping: 25, stiffness: 220 }}
               style={{ 
-                position: "fixed", top: 0, right: 0, bottom: 0, width: "100%", maxWidth: 320, 
-                background: "var(--bg-color)", 
-                borderLeft: "1px solid var(--border-color)",
-                padding: "40px", 
-                display: "flex", flexDirection: "column", gap: 32,
+                position: "fixed", top: 0, right: 0, bottom: 0, width: "100%", maxWidth: 300, 
+                background: "#080808", 
+                borderLeft: "1px solid rgba(255,255,255,0.1)",
+                padding: "36px 28px", 
+                display: "flex", flexDirection: "column", gap: 24,
                 zIndex: 2100,
-                boxShadow: "-20px 0 60px rgba(0,0,0,0.8)",
+                boxShadow: "-10px 0 40px rgba(0,0,0,0.8)",
                 overflowY: "auto",
-                transition: "background-color 0.4s ease, border-color 0.4s ease"
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, color: "var(--accent-color)" }}>Navigation Systems_</span>
-                <button onClick={() => setIsOpen(false)} style={{ background: "var(--glass-bg)", border: "none", color: "var(--text-color)", padding: 12, borderRadius: "50%", cursor: "pointer", transition: "all 0.4s ease" }}>
-                  <X size={20} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                <span style={{ fontFamily: "Geist Mono, monospace", fontSize: 10, color: "#00F2FF", letterSpacing: "0.2em" }}>NAVIGATION</span>
+                <button onClick={() => setIsOpen(false)} style={{ background: "rgba(255,255,255,0.05)", border: "none", color: "#FFFFFF", padding: 8, borderRadius: "50%", cursor: "pointer" }}>
+                  <X size={18} />
                 </button>
               </div>
 
-              {mobileLinks.map((link, i) => (
-                <motion.div key={link.label} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}>
+              {navLinks.map((link, i) => (
+                <motion.div key={link.label} initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
                   <Link href={link.href} onClick={(e) => handleLinkClick(e, link.href)} 
                     style={{ 
-                      fontFamily: "var(--font-syne)", 
-                      fontSize: 28, 
-                      fontWeight: 800, 
-                      color: pathname === link.href ? "var(--accent-color)" : "var(--text-color)", 
+                      fontFamily: "var(--font-syne), sans-serif", 
+                      fontSize: 22, 
+                      fontWeight: 700, 
+                      color: pathname === link.href ? "#00F2FF" : "#E5E5E5", 
                       textDecoration: "none",
-                      display: "block",
-                      transition: "color 0.4s ease"
+                      display: "block"
                     }}>
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
               
-              <div style={{ marginTop: "auto" }}>
-                <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.3, display: "block", marginBottom: 16 }}>Region Configuration_</span>
-                <div style={{ display: "flex", gap: 8, marginBottom: 16, background: "var(--glass-bg)", padding: 4, borderRadius: 8, border: "1px solid var(--border-color)", transition: "all 0.4s ease" }}>
-                  <button onClick={() => setCurrency("USD")} style={{ flex: 1, padding: "12px", background: currency === "USD" ? "var(--accent-color)" : "transparent", color: currency === "USD" ? "#000" : "var(--text-color)", border: "none", fontSize: 11, fontWeight: 800, borderRadius: 6, transition: "all 0.3s ease", cursor: "pointer" }}>USD</button>
-                  <button onClick={() => setCurrency("INR")} style={{ flex: 1, padding: "12px", background: currency === "INR" ? "var(--accent-color)" : "transparent", color: currency === "INR" ? "#000" : "var(--text-color)", border: "none", fontSize: 11, fontWeight: 800, borderRadius: 6, transition: "all 0.3s ease", cursor: "pointer" }}>INR</button>
-                </div>
-
-                <Link href="/#contact" onClick={(e) => handleLinkClick(e, "/#contact")} className="btn-primary" style={{ textAlign: "center", padding: 20, display: "block", textDecoration: "none", borderRadius: 8, marginBottom: 16 }}>Engage Protocol</Link>
+              <div style={{ marginTop: "auto", paddingTop: 20 }}>
+                <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ textAlign: "center", padding: "14px", display: "block", textDecoration: "none", borderRadius: "9999px", fontWeight: 700, fontSize: 13 }}>
+                  Start Free Assessment
+                </Link>
               </div>
             </motion.div>
           </>
