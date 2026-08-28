@@ -8,6 +8,7 @@ let redis: Redis | null = null;
 let chatRateLimit: Ratelimit | null = null;
 let leadsRateLimit: Ratelimit | null = null;
 let auditRateLimit: Ratelimit | null = null;
+let assessmentRateLimit: Ratelimit | null = null;
 let defaultRateLimit: Ratelimit | null = null;
 
 if (UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN) {
@@ -34,6 +35,12 @@ if (UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN) {
     prefix: "adyant-nexa:audit",
   });
 
+  assessmentRateLimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(10, "1 h"),
+    prefix: "adyant-nexa:assessment",
+  });
+
   defaultRateLimit = new Ratelimit({
     redis,
     limiter: Ratelimit.slidingWindow(60, "1 h"),
@@ -51,7 +58,7 @@ export function getIpFromRequest(req: Request): string {
 
 export async function checkRateLimit(
   req: Request,
-  type: "chat" | "leads" | "audit" | "default"
+  type: "chat" | "leads" | "audit" | "assessment" | "default" = "default"
 ): Promise<{ success: boolean; remaining: number; limit: number }> {
   if (!redis) {
     return { success: true, remaining: 100, limit: 100 };
@@ -69,6 +76,9 @@ export async function checkRateLimit(
       break;
     case "audit":
       limiter = auditRateLimit;
+      break;
+    case "assessment":
+      limiter = assessmentRateLimit;
       break;
     default:
       limiter = defaultRateLimit;
