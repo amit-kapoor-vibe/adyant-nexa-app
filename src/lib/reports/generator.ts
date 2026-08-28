@@ -174,7 +174,7 @@ export function generateHtmlReport(result: AssessmentResult, customer: ReportCus
     <div class="card">
       <div class="card-title">COMPOSITE GROWTH SCORE</div>
       <div class="score">${result.growthScore} <span style="font-size: 20px; color: #A3A3A3;">/ 100</span></div>
-      <div style="font-size: 12px; color: #00F2FF; margin-top: 8px; font-weight: 600;">Status: ${result.scoreStatus.toUpperCase()}</div>
+      <div style="font-size: 12px; color: #00F2FF; margin-top: 8px; font-weight: 600;">Status: ${(result.overallScoreStatus || "").replace(/_/g, " ").toUpperCase()}</div>
     </div>
 
     <div class="card">

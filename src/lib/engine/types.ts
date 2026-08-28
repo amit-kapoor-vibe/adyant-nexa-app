@@ -90,3 +90,5 @@ export interface RetailBenchmark {
   healthyCacRevenuePct: number; // e.g. 10 (%)
   inventoryCarryingCostRate: number; // 0.20 (20% per year)
 }
+
+export type AssessmentResult = EngineResult;

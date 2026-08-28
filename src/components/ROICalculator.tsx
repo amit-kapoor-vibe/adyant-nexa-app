@@ -8,7 +8,11 @@ import { FadeSection } from "./FadeSection";
 import { Heading } from "@/components/ui/Heading";
 import { calculateInventoryOpportunity, calculateMarginOpportunity } from "@/lib/engine";
 
-export const ROICalculator = () => {
+interface ROICalculatorProps {
+  currency?: "USD" | "INR" | string;
+}
+
+export const ROICalculator = ({ currency = "INR" }: ROICalculatorProps = {}) => {
   const [monthlyRevenue, setMonthlyRevenue] = useState(500000);
   const [inventoryValue, setInventoryValue] = useState(1500000);
   const [deadStockPct, setDeadStockPct] = useState(25);
@@ -117,7 +121,7 @@ export const ROICalculator = () => {
             padding: "clamp(24px, 4vw, 40px)",
             display: "flex",
             flexDirection: "column",
-            justify: "space-between",
+            justifyContent: "space-between",
           }}>
             <div>
               <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--accent-color)", letterSpacing: "0.2em", display: "block", marginBottom: 12 }}>

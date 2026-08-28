@@ -73,7 +73,8 @@ const SingleLuminousHeroThread = () => {
   });
 
   return (
-    <line ref={lineRef} geometry={geometry}>
+    // @ts-expect-error React Three Fiber line JSX tag clashes with SVG line in React 19
+    <line ref={lineRef as any} geometry={geometry}>
       <lineBasicMaterial color={PALETTE.whiteGold} transparent opacity={0.85} linewidth={1.5} blending={THREE.AdditiveBlending} />
     </line>
   );

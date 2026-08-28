@@ -50,7 +50,7 @@ export default function ToolsHubPage() {
                   padding: "2rem",
                   display: "flex",
                   flexDirection: "column",
-                  justify: "space-between",
+                  justifyContent: "space-between",
                 }}
               >
                 <div>
