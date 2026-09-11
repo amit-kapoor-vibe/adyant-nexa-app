@@ -26,9 +26,7 @@ function extractAccessToken(req: NextRequest): string | null {
 
 export default async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname
-  const isProtectedApi =
-    path.startsWith('/api/social-automation') ||
-    path.startsWith('/api/keep-alive')
+  const isProtectedApi = path.startsWith('/api/keep-alive')
 
   if (!isProtectedApi) {
     return NextResponse.next()
@@ -71,7 +69,7 @@ export default async function proxy(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/api/social-automation/:path*',
     '/api/keep-alive/:path*',
   ],
 }
+
