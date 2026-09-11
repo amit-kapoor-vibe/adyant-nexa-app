@@ -48,14 +48,14 @@ html {
 }
 
 body {
-  background: #020202;
+  background: transparent;
   color: var(--text-color);
   font-family: var(--font-inter), sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-  transition: background 0.4s ease, color 0.4s ease;
+  transition: color 0.4s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -493,6 +493,15 @@ button, input, select, textarea, label {
 @keyframes pulse-glow-green {
   0%, 100% { box-shadow: 0 0 8px #00FF66, 0 0 16px rgba(0, 255, 102, 0.4); }
   50% { box-shadow: 0 0 4px #00FF66, 0 0 8px rgba(0, 255, 102, 0.15); }
+}
+
+@media print {
+  .no-print,
+  nav,
+  aside,
+  #chat-widget {
+    display: none !important;
+  }
 }
 
 

@@ -213,6 +213,20 @@ export function ChatWidget() {
                   >
                     HOW_DEAD_STOCK_LEAKAGE_WORKS
                   </button>
+
+                  <button 
+                    onClick={() => handleSend("How to protect retail margins from heavy discounting?")}
+                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)", padding: "10px 14px", borderRadius: "8px", fontSize: 11, cursor: "pointer", fontWeight: 600, fontFamily: "var(--font-geist-mono)", textAlign: "left" }}
+                  >
+                    HOW_TO_STOP_MARGIN_EROSION
+                  </button>
+
+                  <button 
+                    onClick={() => handleSend("How to increase customer repeat purchase rate to 35%?")}
+                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)", padding: "10px 14px", borderRadius: "8px", fontSize: 11, cursor: "pointer", fontWeight: 600, fontFamily: "var(--font-geist-mono)", textAlign: "left" }}
+                  >
+                    LIFT_CUSTOMER_RETENTION_LTV
+                  </button>
                 </div>
               )}
 

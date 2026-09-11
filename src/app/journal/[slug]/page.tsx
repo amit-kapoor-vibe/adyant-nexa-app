@@ -73,12 +73,12 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
   if (!post) return <div style={{ color: "#fff", padding: 100 }}>Post not found.</div>;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
+    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "transparent", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1 }}
         transition={{ duration: 0.4 }}
-        style={{ padding: "160px 28px 100px", maxWidth: 800, margin: "0 auto" }}
+        style={{ padding: "140px 24px 100px", maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 10 }}
       >
         <FadeSection>
           <div style={{ marginBottom: 40 }}>

@@ -26,10 +26,10 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { label: "Solutions", href: "/solutions/fashion-retail" },
-    { label: "Assessment", href: "/assessment" },
+    { label: "Growth System", href: "/#growth-system" },
+    { label: "What We Do", href: "/#what-we-do" },
     { label: "Tools", href: "/tools" },
-    { label: "How It Works", href: "/how-it-works" },
+    { label: "How We Work", href: "/how-it-works" },
     { label: "Contact", href: "/contact" }
   ];
 
@@ -91,7 +91,7 @@ export const Navbar = () => {
           {/* Right Action Button */}
           <div className="desktop-only" style={{ display: "flex", alignItems: "center" }}>
             <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ fontSize: 12, padding: "10px 22px", borderRadius: "9999px", fontWeight: 700 }}>
-              Start Free Assessment
+              Check D2C Readiness
             </Link>
           </div>
 
@@ -139,7 +139,7 @@ export const Navbar = () => {
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                <span style={{ fontFamily: "Geist Mono, monospace", fontSize: 10, color: "#00F2FF", letterSpacing: "0.2em" }}>NAVIGATION</span>
+                <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: 10, color: "#00F2FF", letterSpacing: "0.2em" }}>NAVIGATION</span>
                 <button onClick={() => setIsOpen(false)} style={{ background: "rgba(255,255,255,0.05)", border: "none", color: "#FFFFFF", padding: 8, borderRadius: "50%", cursor: "pointer" }}>
                   <X size={18} />
                 </button>
@@ -163,7 +163,7 @@ export const Navbar = () => {
               
               <div style={{ marginTop: "auto", paddingTop: 20 }}>
                 <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ textAlign: "center", padding: "14px", display: "block", textDecoration: "none", borderRadius: "9999px", fontWeight: 700, fontSize: 13 }}>
-                  Start Free Assessment
+                  Check D2C Readiness
                 </Link>
               </div>
             </motion.div>

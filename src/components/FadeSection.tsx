@@ -11,22 +11,18 @@ interface FadeSectionProps {
 }
 
 export const FadeSection = ({ children, className = "", delay = 0, style }: FadeSectionProps) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 32 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -20px 0px", amount: "some" }}
       transition={{
-        type: "spring",
-        stiffness: 120, // Increased for snappier feel
-        damping: 20,    // Balanced for premium smoothness
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1],
         delay: delay,
       }}
       className={className}
-      style={{ ...style }}
+      style={{ position: "relative", zIndex: 1, ...style }}
     >
       {children}
     </motion.div>

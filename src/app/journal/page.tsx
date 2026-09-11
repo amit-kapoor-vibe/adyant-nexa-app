@@ -334,12 +334,12 @@ export default function BlogListing() {
     });
 
   return (
-    <div style={{ minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
+    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "transparent", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1, y: isNavigating ? 20 : 0 }}
         transition={{ duration: 0.4 }}
-        style={{ padding: "160px 28px 100px", maxWidth: 1280, margin: "0 auto" }}
+        style={{ padding: "140px 24px 100px", maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 10 }}
       >
         <FadeSection>
           <span className="editorial-tag" style={{ display: "block", marginBottom: 24, color: "#00F2FF" }}>The Neural Journal_</span>

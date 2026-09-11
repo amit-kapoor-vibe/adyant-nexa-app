@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Heading } from "@/components/ui/Heading";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -12,6 +13,7 @@ import {
   Phone,
   Lock,
 } from "lucide-react";
+import { generateHtmlReport } from "@/lib/reports/generator";
 
 export default function AssessmentResultPage() {
   const [result, setResult] = useState<any>(null);
@@ -58,7 +60,7 @@ export default function AssessmentResultPage() {
     setIsSubmittingLead(true);
 
     try {
-      const res = await fetch("/api/leads", {
+      await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -66,29 +68,57 @@ export default function AssessmentResultPage() {
           email: leadForm.email,
           phone: leadForm.phone,
           business: leadForm.businessName || businessName,
-          message: `UNLOCKED REPORT: Growth Score ${result?.growthScore || 0}/100, Est Opp ₹${(result?.totalEstimatedAnnualOpportunity || 0).toLocaleString("en-IN")}`,
+          message: `UNLOCKED D2C BLUEPRINT: Readiness Score ${result?.growthScore || 0}/100, Est Opp ₹${(result?.totalEstimatedAnnualOpportunity || 0).toLocaleString("en-IN")}`,
           budget: `Est Opp ₹${(result?.totalEstimatedAnnualOpportunity || 0).toLocaleString("en-IN")}`,
         }),
       });
 
-      if (res.ok) {
-        setLeadSubmitted(true);
+      setLeadSubmitted(true);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("adyant_lead_name", leadForm.name);
+        localStorage.setItem("adyant_lead_phone", leadForm.phone);
+        localStorage.setItem("adyant_lead_email", leadForm.email);
+        localStorage.setItem("adyant_blueprint_unlocked", "true");
       }
     } catch (err) {
-      console.error("Lead error", err);
+      console.error("Lead submission error", err);
+      setLeadSubmitted(true);
     } finally {
       setIsSubmittingLead(false);
     }
   };
 
+  const handleDownloadPdf = () => {
+    if (!result) return;
+    const html = generateHtmlReport(result, {
+      businessName: leadForm.businessName || businessName || "Retail Business",
+      city: leadForm.city || city || "India",
+      name: leadForm.name,
+      email: leadForm.email,
+      phone: leadForm.phone,
+    });
+
+    const printWindow = window.open("", "_blank");
+    if (printWindow) {
+      printWindow.document.write(html);
+      printWindow.document.close();
+      printWindow.focus();
+      setTimeout(() => {
+        printWindow.print();
+      }, 500);
+    } else {
+      window.print();
+    }
+  };
+
   if (!result) {
     return (
-      <div style={{ minHeight: "100vh", backgroundColor: "#020202", color: "#E5E5E5", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ textAlign: "center" }}>
+      <div style={{ minHeight: "100vh", backgroundColor: "transparent", color: "#E5E5E5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ textAlign: "center", padding: "2rem" }}>
           <h2 style={{ fontSize: "1.5rem", color: "#FFFFFF", marginBottom: "1rem" }}>No Assessment Data Found</h2>
-          <p style={{ color: "#A3A3A3", marginBottom: "1.5rem" }}>Please complete the free growth assessment to view your report.</p>
+          <p style={{ color: "#A3A3A3", marginBottom: "1.5rem" }}>Please complete the D2C readiness diagnostic to view your report.</p>
           <Link href="/assessment" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
-            Start Free Assessment <ArrowRight style={{ width: "16px", height: "16px" }} />
+            Start Diagnostic <ArrowRight style={{ width: "16px", height: "16px" }} />
           </Link>
         </div>
       </div>
@@ -99,15 +129,17 @@ export default function AssessmentResultPage() {
     result.growthScore >= 80 ? "#10B981" : result.growthScore >= 60 ? "#00F2FF" : result.growthScore >= 40 ? "#F59E0B" : "#EF4444";
 
   return (
-    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "6rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
+    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "6.5rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 1.5rem" }}>
         
         {/* Title Header */}
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <span className="editorial-tag">ADYANT NEXA GROWTH REPORT &bull; DIAGNOSTIC V1</span>
-          <h1 style={{ fontFamily: "Syne, sans-serif", fontSize: "2.5rem", fontWeight: 800, marginTop: "0.5rem", color: "#FFFFFF" }}>
-            Growth Diagnostic for {businessName}
-          </h1>
+        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+          <span className="editorial-tag" style={{ display: "block", marginBottom: "10px" }}>
+            D2C READINESS REPORT &bull; DIAGNOSTIC V1
+          </span>
+          <Heading level="h1" style={{ textAlign: "center", marginBottom: "10px" }}>
+            D2C Readiness Report for <span style={{ color: "var(--accent-color)" }}>{businessName}</span>
+          </Heading>
           <p style={{ color: "#A3A3A3", fontSize: "0.95rem" }}>Location: {city} &bull; Generated: {new Date().toLocaleDateString('en-IN')}</p>
         </div>
 
@@ -128,8 +160,8 @@ export default function AssessmentResultPage() {
         >
           {/* Left: Score Circle */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.08)" }}>
-            <span style={{ fontSize: "0.8rem", color: "#A3A3A3", fontFamily: "Geist Mono, monospace", marginBottom: "1rem" }}>
-              OVERALL GROWTH SCORE
+            <span style={{ fontSize: "0.8rem", color: "#A3A3A3", fontFamily: "var(--font-geist-mono), monospace", marginBottom: "1rem", letterSpacing: "0.15em" }}>
+              D2C READINESS SCORE
             </span>
 
             <div
@@ -146,7 +178,7 @@ export default function AssessmentResultPage() {
                 marginBottom: "1rem",
               }}
             >
-              <span style={{ fontFamily: "Syne, sans-serif", fontSize: "3.5rem", fontWeight: 800, color: "#FFFFFF" }}>
+              <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "3.5rem", fontWeight: 800, color: "#FFFFFF" }}>
                 {result.growthScore}
               </span>
               <span style={{ fontSize: "0.85rem", color: "#A3A3A3" }}>/ 100</span>
@@ -170,14 +202,14 @@ export default function AssessmentResultPage() {
 
           {/* Right: Estimated Profit Opportunity */}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <span style={{ fontSize: "0.8rem", color: "#00F2FF", fontFamily: "Geist Mono, monospace", marginBottom: "0.5rem" }}>
-              ESTIMATED ANNUAL GROWTH OPPORTUNITY
+            <span style={{ fontSize: "0.8rem", color: "#00F2FF", fontFamily: "var(--font-geist-mono), monospace", marginBottom: "0.5rem", letterSpacing: "0.15em" }}>
+              ESTIMATED ANNUAL REVENUE &amp; MARGIN OPPORTUNITY
             </span>
-            <div style={{ fontFamily: "Syne, sans-serif", fontSize: "2.75rem", fontWeight: 800, color: "#FFFFFF", marginBottom: "0.75rem" }}>
+            <div style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "2.75rem", fontWeight: 800, color: "#FFFFFF", marginBottom: "0.75rem" }}>
               ₹{(result.totalEstimatedAnnualOpportunity || 0).toLocaleString("en-IN")}
             </div>
             <p style={{ fontSize: "0.9rem", color: "#A3A3A3", lineHeight: 1.5, marginBottom: "1.5rem" }}>
-              Total estimated annual profit leakage and capital recovery opportunity across inventory, discounting, customer retention, and marketing efficiency.
+              Total estimated annual capital recovery and growth leverage across inventory turnaround, discounting reduction, repeat purchase LTV, and digital channel acquisition.
             </p>
 
             <button
@@ -185,13 +217,13 @@ export default function AssessmentResultPage() {
               className="btn-primary"
               style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}
             >
-              <FileText style={{ width: "18px", height: "18px" }} /> Get My 90-Day Growth Blueprint
+              <FileText style={{ width: "18px", height: "18px" }} /> Build My Growth Plan
             </button>
           </div>
         </div>
 
         {/* Domain Sub-Scores Grid */}
-        <h3 style={{ fontFamily: "Syne, sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "1.25rem" }}>
+        <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "1.25rem" }}>
           Domain Breakdown Scores
         </h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "3rem" }}>
@@ -300,7 +332,7 @@ export default function AssessmentResultPage() {
                   >
                     {opp.priority} PRIORITY
                   </span>
-                  <h4 style={{ fontFamily: "Syne, sans-serif", fontSize: "1.1rem", fontWeight: 700, color: "#FFFFFF", margin: 0 }}>
+                  <h4 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.1rem", fontWeight: 700, color: "#FFFFFF", margin: 0 }}>
                     {opp.title}
                   </h4>
                 </div>
@@ -316,7 +348,7 @@ export default function AssessmentResultPage() {
 
               <div style={{ textAlign: "right" }}>
                 <span style={{ fontSize: "0.75rem", color: "#A3A3A3", display: "block", marginBottom: "0.25rem" }}>Est. Annual Value</span>
-                <span style={{ fontFamily: "Syne, sans-serif", fontSize: "1.4rem", fontWeight: 800, color: "#00F2FF" }}>
+                <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.4rem", fontWeight: 800, color: "#00F2FF" }}>
                   ₹{opp.estimatedAnnualOpportunity.toLocaleString("en-IN")}
                 </span>
               </div>
@@ -331,7 +363,7 @@ export default function AssessmentResultPage() {
 
         {/* Lead Capture Modal / Slide */}
         {showLeadModal && (
-          <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "1rem" }}>
+          <div className="no-print" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "1rem" }}>
             <div style={{ backgroundColor: "#080808", border: "1px solid rgba(0,242,255,0.3)", borderRadius: "20px", padding: "2rem", maxWidth: "500px", width: "100%", position: "relative" }}>
               <button onClick={() => setShowLeadModal(false)} style={{ position: "absolute", top: "1rem", right: "1rem", backgroundColor: "transparent", border: "none", color: "#A3A3A3", fontSize: "1.25rem", cursor: "pointer" }}>
                 &times;
@@ -340,7 +372,7 @@ export default function AssessmentResultPage() {
               {!leadSubmitted ? (
                 <>
                   <span className="editorial-tag" style={{ fontSize: "0.7rem" }}>SAVE DIAGNOSTIC &amp; GET BLUEPRINT</span>
-                  <h3 style={{ fontFamily: "Syne, sans-serif", fontSize: "1.5rem", fontWeight: 800, color: "#FFFFFF", marginTop: "0.4rem", marginBottom: "0.5rem" }}>
+                  <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.5rem", fontWeight: 800, color: "#FFFFFF", marginTop: "0.4rem", marginBottom: "0.5rem" }}>
                     Get Your 90-Day Growth Blueprint
                   </h3>
                   <p style={{ color: "#A3A3A3", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
@@ -405,7 +437,7 @@ export default function AssessmentResultPage() {
                   </p>
                   
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                    <button onClick={() => window.print()} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+                    <button onClick={handleDownloadPdf} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
                       Download PDF / Print Report
                     </button>
                     <button onClick={() => setShowLeadModal(false)} className="btn-secondary" style={{ width: "100%", justifyContent: "center" }}>

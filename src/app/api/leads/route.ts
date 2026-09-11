@@ -28,25 +28,34 @@ export async function POST(request: Request) {
 
     const { name, email, phone, business, message, budget } = parsed.data;
 
-    const { data: leadData, error: dbError } = await privilegedSupabase
-      .from('leads')
-      .insert([
-        {
-          name,
-          email,
-          phone,
-          business_type: business || "Not Specified",
-          budget: budget ? String(budget) : "0",
-          message: message || "No message provided",
-          status: (message && message.includes("CRITICAL")) ? "HOT" : "NEW"
-        }
-      ])
-      .select()
-      .single();
+    let leadRecordId = "offline_" + Date.now();
 
-    if (dbError) {
-      console.error("Supabase Insertion Error:", dbError);
-      return NextResponse.json({ error: "Failed to save lead" }, { status: 500 });
+    try {
+      if (supabaseUrl && supabaseServiceKey) {
+        const { data: leadData, error: dbError } = await privilegedSupabase
+          .from('leads')
+          .insert([
+            {
+              name,
+              email,
+              phone,
+              business_type: business || "Not Specified",
+              budget: budget ? String(budget) : "0",
+              message: message || "No message provided",
+              status: (message && message.includes("CRITICAL")) ? "HOT" : "NEW"
+            }
+          ])
+          .select()
+          .single();
+
+        if (dbError) {
+          console.error("Supabase Insertion Error:", dbError);
+        } else if (leadData?.id) {
+          leadRecordId = leadData.id;
+        }
+      }
+    } catch (dbErr) {
+      console.error("Supabase Execution Exception:", dbErr);
     }
 
     try {
@@ -57,12 +66,12 @@ export async function POST(request: Request) {
         const escapeHtml = (str: string) =>
           str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-        const telegramMsg = `<b>NEW LEAD CAPTURED</b>\n\n` +
+        const telegramMsg = `<b>NEW LEAD / BLUEPRINT REQUEST</b>\n\n` +
                             `<b>Name:</b> ${escapeHtml(name || "")}\n` +
                             `<b>Email:</b> ${escapeHtml(email || "")}\n` +
                             `<b>Phone:</b> ${escapeHtml(phone || "")}\n` +
                             `<b>Business:</b> ${escapeHtml(business || "Not Specified")}\n` +
-                            `<b>Budget:</b> ${escapeHtml(String(budget || "Not Specified"))}\n\n` +
+                            `<b>Opportunity:</b> ${escapeHtml(String(budget || "Not Specified"))}\n\n` +
                             `<b>Message:</b> ${escapeHtml(message || "No message")}\n\n` +
                             `<b>Command Center:</b> https://adyantnexa.com/admin`;
 
@@ -87,7 +96,7 @@ export async function POST(request: Request) {
       console.error("Telegram Notification Failed:", tgError);
     }
 
-    return NextResponse.json({ success: true, record_id: leadData.id });
+    return NextResponse.json({ success: true, record_id: leadRecordId });
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : "Unknown error";
     console.error("Lead Automation Error:", error);

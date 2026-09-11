@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Heading } from "@/components/ui/Heading";
 import {
   Store,
   IndianRupee,
@@ -108,17 +109,20 @@ export default function AssessmentWizardPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "6rem", paddingBottom: "4rem", position: "relative", zIndex: 10 }}>
+    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "6.5rem", paddingBottom: "4rem", position: "relative", zIndex: 10 }}>
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 1.5rem" }}>
         
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-          <span className="editorial-tag">FREE BUSINESS GROWTH ASSESSMENT</span>
-          <h1 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "2.25rem", fontWeight: 800, marginTop: "0.5rem", color: "#FFFFFF" }}>
-            Retail Profit Leakage Diagnostic
-          </h1>
-          <p style={{ color: "#A3A3A3", fontSize: "0.95rem", maxWidth: "600px", margin: "0.5rem auto 0" }}>
-            Identify where your fashion retail store is losing money across inventory, margins, retention, and marketing.
+          <span className="editorial-tag" style={{ display: "block", marginBottom: "12px" }}>
+            COMMERCIAL READINESS DIAGNOSTIC
+          </span>
+          <Heading level="h1" style={{ textAlign: "center", marginBottom: "16px" }}>
+            SHOULD YOUR PRODUCT BUSINESS <br />
+            <span style={{ color: "var(--accent-color)" }}>GO DIRECT-TO-CONSUMER?</span>
+          </Heading>
+          <p style={{ fontFamily: "var(--font-inter)", color: "rgba(229,229,229,0.75)", fontSize: "0.95rem", maxWidth: "640px", margin: "0 auto", lineHeight: 1.6 }}>
+            Not every product business should invest in D2C. This assessment evaluates whether your product economics, gross margins, inventory turnover, and retention dynamics are ready for scalable consumer commerce.
           </p>
         </div>
 
@@ -209,7 +213,7 @@ export default function AssessmentWizardPage() {
               {/* STEP 1: BUSINESS PROFILE */}
               {currentStep === 1 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  <h3 style={{ fontSize: "1.25rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
+                  <h3 style={{ fontSize: "1.25rem", fontFamily: "var(--font-syne), sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
                     1. Business Profile
                   </h3>
 
@@ -274,7 +278,7 @@ export default function AssessmentWizardPage() {
               {/* STEP 2: SALES */}
               {currentStep === 2 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  <h3 style={{ fontSize: "1.25rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
+                  <h3 style={{ fontSize: "1.25rem", fontFamily: "var(--font-syne), sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
                     2. Sales & Monthly Revenue
                   </h3>
 
@@ -325,7 +329,7 @@ export default function AssessmentWizardPage() {
               {/* STEP 3: INVENTORY */}
               {currentStep === 3 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  <h3 style={{ fontSize: "1.25rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
+                  <h3 style={{ fontSize: "1.25rem", fontFamily: "var(--font-syne), sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
                     3. Inventory & Dead Stock
                   </h3>
 
@@ -369,7 +373,7 @@ export default function AssessmentWizardPage() {
               {/* STEP 4: MARKETING */}
               {currentStep === 4 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  <h3 style={{ fontSize: "1.25rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
+                  <h3 style={{ fontSize: "1.25rem", fontFamily: "var(--font-syne), sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
                     4. Marketing & Acquisition
                   </h3>
 
@@ -407,7 +411,7 @@ export default function AssessmentWizardPage() {
               {/* STEP 5: CUSTOMER RETENTION */}
               {currentStep === 5 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  <h3 style={{ fontSize: "1.25rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
+                  <h3 style={{ fontSize: "1.25rem", fontFamily: "var(--font-syne), sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
                     5. Customer Retention & Repeat Buyers
                   </h3>
 
@@ -438,7 +442,7 @@ export default function AssessmentWizardPage() {
               {/* STEP 6: MARGINS & DISCOUNTS */}
               {currentStep === 6 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  <h3 style={{ fontSize: "1.25rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
+                  <h3 style={{ fontSize: "1.25rem", fontFamily: "var(--font-syne), sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
                     6. Gross Margins & Discounting
                   </h3>
 
@@ -474,7 +478,7 @@ export default function AssessmentWizardPage() {
               {/* STEP 7: REVIEW */}
               {currentStep === 7 && (
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  <h3 style={{ fontSize: "1.25rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
+                  <h3 style={{ fontSize: "1.25rem", fontFamily: "var(--font-syne), sans-serif", fontWeight: 700, color: "#FFFFFF" }}>
                     7. Review Submitted Diagnostic Parameters
                   </h3>
 
@@ -556,7 +560,7 @@ export default function AssessmentWizardPage() {
                   boxShadow: "0 0 20px rgba(0,242,255,0.4)",
                 }}
               >
-                {isSubmitting ? "Calculating Growth Score..." : "Calculate My Growth Score"}
+                {isSubmitting ? "Calculating Readiness Score..." : "Calculate D2C Readiness Score"}
               </button>
             )}
           </div>

@@ -31,7 +31,7 @@ export default function ProfitOpportunityCalculatorPage() {
     retOpp.estimatedAnnualOpportunity;
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#020202", color: "#E5E5E5", paddingTop: "6rem", paddingBottom: "5rem" }}>
+    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "7rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
       <div style={{ maxWidth: "900px", margin: "0 auto", padding: "0 1.5rem" }}>
         
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>

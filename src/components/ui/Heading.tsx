@@ -21,26 +21,27 @@ export const Heading: React.FC<HeadingProps> = ({
         return {
           fontFamily: "var(--font-syne)",
           fontWeight: 800,
-          fontSize: "clamp(42px, 10vw, 130px)",
-          lineHeight: 0.9,
-          letterSpacing: "-0.04em",
+          fontSize: "clamp(2rem, 4.2vw, 3.4rem)",
+          lineHeight: 1.15,
+          letterSpacing: "-0.025em",
           ...style,
         };
       case "h2":
         return {
           fontFamily: "var(--font-syne)",
           fontWeight: 800,
-          fontSize: "clamp(1.8rem, 5vw, 4rem)",
-          lineHeight: 1.1,
-          letterSpacing: "-0.03em",
+          fontSize: "clamp(1.65rem, 3vw, 2.35rem)",
+          lineHeight: 1.2,
+          letterSpacing: "-0.02em",
           ...style,
         };
       case "h3":
         return {
           fontFamily: "var(--font-syne)",
           fontWeight: 700,
-          fontSize: "clamp(1.4rem, 2.5vw, 1.8rem)",
-          lineHeight: 1.2,
+          fontSize: "clamp(1.15rem, 1.8vw, 1.35rem)",
+          lineHeight: 1.3,
+          letterSpacing: "-0.01em",
           ...style,
         };
       default:

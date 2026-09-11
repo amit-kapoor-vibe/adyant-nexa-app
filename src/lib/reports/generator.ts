@@ -20,7 +20,7 @@ export function generateHtmlReport(result: AssessmentResult, customer: ReportCus
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Adyant Nexa - Growth Assessment Report</title>
+  <title>Adyant Nexa - D2C Readiness Report</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Syne:wght@700;800&display=swap');
     
@@ -161,7 +161,7 @@ export function generateHtmlReport(result: AssessmentResult, customer: ReportCus
   <div class="header">
     <div>
       <div class="logo">ADYANT <span>NEXA</span></div>
-      <div class="tag">RETAIL GROWTH DIAGNOSTIC REPORT</div>
+      <div class="tag">D2C READINESS DIAGNOSTIC REPORT</div>
     </div>
     <div style="text-align: right; font-size: 12px; color: #A3A3A3;">
       <div><strong>Store:</strong> ${customer.businessName || "Retail Business"}</div>
@@ -172,13 +172,13 @@ export function generateHtmlReport(result: AssessmentResult, customer: ReportCus
 
   <div class="summary-grid">
     <div class="card">
-      <div class="card-title">COMPOSITE GROWTH SCORE</div>
+      <div class="card-title">D2C READINESS SCORE</div>
       <div class="score">${result.growthScore} <span style="font-size: 20px; color: #A3A3A3;">/ 100</span></div>
       <div style="font-size: 12px; color: #00F2FF; margin-top: 8px; font-weight: 600;">Status: ${(result.overallScoreStatus || "").replace(/_/g, " ").toUpperCase()}</div>
     </div>
 
     <div class="card">
-      <div class="card-title">ESTIMATED ANNUAL PROFIT OPPORTUNITY</div>
+      <div class="card-title">ESTIMATED ANNUAL GROWTH &amp; MARGIN OPPORTUNITY</div>
       <div class="opportunity">₹${result.totalEstimatedAnnualOpportunity.toLocaleString("en-IN")}</div>
       <div style="font-size: 12px; color: #A3A3A3; margin-top: 8px;">Potential annual recovery across inventory &amp; margin leakages.</div>
     </div>
