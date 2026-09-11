@@ -898,6 +898,7 @@ export default function AdyantNexaHomepage() {
                 <Link href="/#growth-system" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>Methodology</Link>
                 <Link href="/#what-we-do" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>Capabilities</Link>
                 <Link href="/#who-we-work-with" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>Who We Work With</Link>
+                <Link href="/about" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>About Us</Link>
                 <Link href="/how-it-works" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>How We Work</Link>
               </div>
 
