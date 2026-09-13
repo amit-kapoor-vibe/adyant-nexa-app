@@ -905,6 +905,7 @@ export default function AdyantNexaHomepage() {
               <div style={{ display: "flex", flexDirection: "column", gap: "10px", fontSize: "13px" }}>
                 <span className="editorial-tag" style={{ fontSize: "9px", marginBottom: "4px" }}>INTELLIGENCE_</span>
                 <Link href="/assessment" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>D2C Assessment</Link>
+                <Link href="/journal" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>Research Journal</Link>
                 <Link href="/tools" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>Growth Tools Hub</Link>
                 <Link href="/tools/dead-stock" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>Dead Stock Calculator</Link>
                 <Link href="/tools/profit-opportunity" style={{ color: "var(--muted-text)", textDecoration: "none", transition: "color 0.2s ease" }}>Profit Calculator</Link>

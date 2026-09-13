@@ -11,6 +11,54 @@ import { JOURNAL_POSTS } from "@/data/journalData";
 
 const POSTS = [
   {
+    slug: "performance-creative-velocity-advantage-plus",
+    title: "J-037: THE 20-HOOK WEEKLY CREATIVE ENGINE",
+    excerpt: "Feeding Meta's Advantage+ algorithm with modular video hooks to eliminate ad fatigue and scale CPA profitably.",
+    date: "June 12, 2026",
+    readTime: "8 min read",
+    category: "PERFORMANCE_CREATIVE"
+  },
+  {
+    slug: "whatsapp-conversational-commerce-engine",
+    title: "J-036: WHATSAPP CONVERSATIONAL COMMERCE",
+    excerpt: "Converting cold traffic inside a 120-second WhatsApp loop with native 1-click UPI checkout and 30-day replenishments.",
+    date: "June 10, 2026",
+    readTime: "7 min read",
+    category: "WHATSAPP_COMMERCE"
+  },
+  {
+    slug: "contribution-margin-cm3-matrix",
+    title: "J-035: BEYOND ROAS: THE CONTRIBUTION MARGIN (CM3) MATRIX",
+    excerpt: "Why 4x Meta ROAS can still mean negative cash in the bank. Calculating true net profit after COGS, RTO, and shipping.",
+    date: "June 08, 2026",
+    readTime: "8 min read",
+    category: "UNIT_ECONOMICS"
+  },
+  {
+    slug: "dead-stock-liquidation-playbook",
+    title: "J-034: DEAD STOCK LIQUIDATION WITHOUT BRAND DILUTION",
+    excerpt: "Clearing fashion inventory older than 90 days using SKU velocity classification, VIP flash drops, and threshold gifting.",
+    date: "June 05, 2026",
+    readTime: "7 min read",
+    category: "UNIT_ECONOMICS"
+  },
+  {
+    slug: "retail-to-d2c-transition-blueprint",
+    title: "J-033: FROM REGIONAL STORES TO ₹1CR/MO D2C",
+    excerpt: "How Surat and Jaipur apparel manufacturers bypass middleman margin squeezes and launch direct consumer brands.",
+    date: "June 03, 2026",
+    readTime: "9 min read",
+    category: "D2C_GROWTH"
+  },
+  {
+    slug: "anti-rto-playbook-indian-fashion",
+    title: "J-032: THE ANTI-RTO PLAYBOOK FOR INDIAN BRANDS",
+    excerpt: "Transforming 35% COD return losses into 80%+ pre-paid UPI conversions using automated WhatsApp verification ladders.",
+    date: "June 01, 2026",
+    readTime: "8 min read",
+    category: "UNIT_ECONOMICS"
+  },
+  {
     slug: "copilot-founder-paradigm",
     title: "J-031: THE CO-PILOT FOUNDER PARADIGM",
     excerpt: "How modern solo founders partner with advanced agentic AI architectures to bypass the hiring grind.",
@@ -324,8 +372,7 @@ export default function BlogListing() {
   const filteredAndSortedPosts = [...POSTS]
     .filter(post => {
       const hasContent = !!JOURNAL_POSTS[post.slug as keyof typeof JOURNAL_POSTS];
-      const isVisible = new Date(post.date) <= new Date();
-      return hasContent && isVisible && (activeCategory === "ALL" || post.category === activeCategory);
+      return (hasContent || post.excerpt) && (activeCategory === "ALL" || post.category === activeCategory);
     })
     .sort((a, b) => {
       const numA = parseInt(a.title.match(/J-(\d+)/)?.[1] || "0");
@@ -334,34 +381,34 @@ export default function BlogListing() {
     });
 
   return (
-    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "transparent", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
+    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1, y: isNavigating ? 20 : 0 }}
         transition={{ duration: 0.4 }}
-        style={{ padding: "140px 24px 100px", maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 10 }}
+        style={{ padding: "clamp(6rem, 12vw, 8.5rem) clamp(1rem, 4vw, 1.5rem) 5rem", maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 10 }}
       >
         <FadeSection>
-          <span className="editorial-tag" style={{ display: "block", marginBottom: 24, color: "#00F2FF" }}>The Neural Journal_</span>
-          <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.5rem, 8vw, 5rem)", lineHeight: 0.95, letterSpacing: "-0.04em", marginBottom: 60 }}>
-            Insights for <br /> <span style={{ color: "rgba(255,255,255,0.2)" }}>Digital Dominance.</span>
+          <span className="editorial-tag" style={{ display: "block", marginBottom: 20, color: "#00F2FF" }}>The Neural Journal</span>
+          <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 6vw, 4.5rem)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "clamp(2rem, 5vw, 3.5rem)" }}>
+            Insights for <br /> <span style={{ color: "rgba(255,255,255,0.25)" }}>Digital Dominance.</span>
           </h1>
         </FadeSection>
 
         {/* ─── FILTERS & CONTROLS ─── */}
-        <div style={{ marginBottom: 60, display: "flex", flexWrap: "wrap", gap: 32, alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "24px 0" }}>
+        <div style={{ marginBottom: "clamp(2rem, 5vw, 3.5rem)", display: "flex", flexWrap: "wrap", gap: 20, alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "18px 0" }}>
 
           {/* Categories */}
           <div style={{
             display: "flex",
-            gap: 28,
+            gap: 20,
             overflowX: "auto",
             whiteSpace: "nowrap",
-            paddingBottom: 8,
+            paddingBottom: 4,
             msOverflowStyle: "none",
             scrollbarWidth: "none",
             flex: 1,
-            marginRight: 20,
+            marginRight: 16,
             WebkitMaskImage: "linear-gradient(to right, black 85%, transparent 100%)",
             maskImage: "linear-gradient(to right, black 85%, transparent 100%)"
           }}>
@@ -377,17 +424,17 @@ export default function BlogListing() {
                 style={{
                   background: "none",
                   border: "none",
-                  color: activeCategory === cat ? "#00F2FF" : "rgba(255,255,255,0.3)",
+                  color: activeCategory === cat ? "#00F2FF" : "rgba(255,255,255,0.4)",
                   fontFamily: "var(--font-geist-mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.2em",
+                  fontSize: 11,
+                  letterSpacing: "0.15em",
                   cursor: "pointer",
-                  padding: "8px 0",
-                  transition: "color 0.3s ease",
+                  padding: "6px 0",
+                  transition: "color 0.2s ease",
                   flexShrink: 0
                 }}
               >
-                {cat}
+                {cat.replace(/_/g, " ")}
               </button>
             ))}
           </div>
@@ -398,49 +445,51 @@ export default function BlogListing() {
             onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
             style={{
               background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.12)",
               color: "#fff",
-              padding: "10px 20px",
+              padding: "8px 16px",
+              borderRadius: "8px",
               fontFamily: "var(--font-geist-mono)",
-              fontSize: 9,
-              letterSpacing: "0.1em",
+              fontSize: 10,
+              letterSpacing: "0.08em",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: 10
+              gap: 8,
+              touchAction: "manipulation"
             }}
           >
-            ORDER: <span style={{ color: "#00F2FF" }}>{sortOrder === "desc" ? "LATEST_FIRST" : "OLDEST_FIRST"}</span>
+            ORDER: <span style={{ color: "#00F2FF" }}>{sortOrder === "desc" ? "LATEST FIRST" : "OLDEST FIRST"}</span>
           </button>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: 40 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: "clamp(20px, 3vw, 36px)" }}>
           {filteredAndSortedPosts.map((post, i) => (
-            <FadeSection key={post.slug} delay={i * 0.05}>
+            <FadeSection key={post.slug} delay={i * 0.03}>
               <Link
                 href={`/journal/${post.slug}`}
                 onClick={(e) => handleNavigate(e, `/journal/${post.slug}`)}
-                style={{ textDecoration: "none", color: "inherit", display: "block" }}
+                style={{ textDecoration: "none", color: "inherit", display: "block", height: "100%" }}
               >
-                <div className="glass-panel" style={{ padding: 40, height: "100%", display: "flex", flexDirection: "column", gap: 24, transition: "border-color 0.3s ease, background 0.3s ease", border: "1px solid rgba(255,255,255,0.05)" }}
+                <div className="glass-panel" style={{ padding: "clamp(1.5rem, 3.5vw, 2.5rem)", height: "100%", borderRadius: "20px", display: "flex", flexDirection: "column", gap: 18, transition: "border-color 0.3s ease, background 0.3s ease", border: "1px solid rgba(255,255,255,0.08)" }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = "rgba(0,242,255,0.3)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                    e.currentTarget.style.borderColor = "rgba(0,242,255,0.4)";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.03)";
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.01)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.015)";
                   }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span className="editorial-tag" style={{ fontSize: 9, color: "#00F2FF" }}>{post.category}</span>
-                    <div style={{ display: "flex", gap: 16, opacity: 0.3 }}>
-                      <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, fontFamily: "var(--font-geist-mono)" }}><Calendar size={12} /> {post.date}</span>
+                    <span className="editorial-tag" style={{ fontSize: 9, color: "#00F2FF" }}>{post.category.replace(/_/g, " ")}</span>
+                    <div style={{ display: "flex", gap: 16, opacity: 0.5 }}>
+                      <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, fontFamily: "var(--font-geist-mono)" }}><Calendar size={12} /> {post.date}</span>
                     </div>
                   </div>
-                  <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: 24, lineHeight: 1.2, color: "#fff" }}>{post.title}</h2>
-                  <p style={{ fontFamily: "var(--font-inter)", fontSize: 14, color: "rgba(229,229,229,0.5)", lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 12, color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em" }}>
-                    ACCESS_REPORT <ArrowRight size={14} />
+                  <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "clamp(1.15rem, 2vw, 1.4rem)", lineHeight: 1.25, color: "#FFFFFF" }}>{post.title}</h2>
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: 13.5, color: "rgba(229,229,229,0.65)", lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em" }}>
+                    READ ANALYSIS <ArrowRight size={14} />
                   </div>
                 </div>
               </Link>

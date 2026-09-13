@@ -1,13 +1,219 @@
 "use client";
 
 import { useNeuralTransition } from "@/context/TransitionContext";
-import { useEffect, useState, use, useRef } from "react";
+import React, { useEffect, useState, use, useRef } from "react";
 import Lenis from "lenis";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { FadeSection } from "@/components/FadeSection";
-import { ArrowLeft, Share2, Mail } from "lucide-react";
+import { ArrowLeft, Mail } from "lucide-react";
 import { JOURNAL_POSTS } from "@/data/journalData";
+
+// Rich parser to transform markdown headings, inline links, lists, and bold text into styled interactive React elements
+function ArticleContentRenderer({ content }: { content: string }) {
+  const blocks = content.trim().split(/\n\s*\n/);
+
+  const parseInline = (text: string) => {
+    const tokenRegex = /(\[.*?\]\(.*?\)|\*\*.*?\*\*)/g;
+    const tokens = text.split(tokenRegex);
+
+    return tokens.map((token, idx) => {
+      if (!token) return null;
+
+      // Link: [label](url)
+      const linkMatch = token.match(/^\[(.*?)\]\((.*?)\)$/);
+      if (linkMatch) {
+        const [, label, url] = linkMatch;
+        return (
+          <Link
+            key={idx}
+            href={url}
+            style={{
+              color: "#00F2FF",
+              textDecoration: "underline",
+              textUnderlineOffset: "4px",
+              fontWeight: 600,
+              transition: "all 0.2s ease",
+            }}
+          >
+            {label}
+          </Link>
+        );
+      }
+
+      // Bold: **text**
+      const boldMatch = token.match(/^\*\*(.*?)\*\*$/);
+      if (boldMatch) {
+        return (
+          <strong key={idx} style={{ color: "#FFFFFF", fontWeight: 700 }}>
+            {boldMatch[1]}
+          </strong>
+        );
+      }
+
+      return <span key={idx}>{token}</span>;
+    });
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "24px", marginBottom: "60px" }}>
+      {blocks.map((block, bIdx) => {
+        const trimmed = block.trim();
+        if (!trimmed) return null;
+
+        // Horizontal Divider
+        if (trimmed === "---") {
+          return (
+            <hr
+              key={bIdx}
+              style={{
+                border: "none",
+                borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+                margin: "16px 0",
+              }}
+            />
+          );
+        }
+
+        // Heading 2 (##)
+        if (trimmed.startsWith("## ")) {
+          const title = trimmed.replace(/^##\s+/, "");
+          return (
+            <h2
+              key={bIdx}
+              style={{
+                fontFamily: "var(--font-syne)",
+                fontWeight: 700,
+                fontSize: "clamp(1.4rem, 3.5vw, 1.85rem)",
+                color: "#FFFFFF",
+                marginTop: "16px",
+                marginBottom: "4px",
+                lineHeight: 1.3,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              {parseInline(title)}
+            </h2>
+          );
+        }
+
+        // Heading 3 (###)
+        if (trimmed.startsWith("### ")) {
+          const title = trimmed.replace(/^###\s+/, "");
+          return (
+            <h3
+              key={bIdx}
+              style={{
+                fontFamily: "var(--font-syne)",
+                fontWeight: 700,
+                fontSize: "clamp(1.15rem, 2.5vw, 1.4rem)",
+                color: "#FFFFFF",
+                marginTop: "12px",
+                marginBottom: "4px",
+                lineHeight: 1.35,
+              }}
+            >
+              {parseInline(title)}
+            </h3>
+          );
+        }
+
+        // Heading 4 (####)
+        if (trimmed.startsWith("#### ")) {
+          const title = trimmed.replace(/^####\s+/, "");
+          return (
+            <h4
+              key={bIdx}
+              style={{
+                fontFamily: "var(--font-syne)",
+                fontWeight: 700,
+                fontSize: "1.1rem",
+                color: "#00F2FF",
+                marginTop: "8px",
+                marginBottom: "2px",
+              }}
+            >
+              {parseInline(title)}
+            </h4>
+          );
+        }
+
+        // Preformatted Code or ASCII Diagrams
+        if (trimmed.startsWith("```") || (trimmed.startsWith("┌") && trimmed.includes("┐")) || (trimmed.startsWith("[") && trimmed.includes("──"))) {
+          const codeText = trimmed.replace(/^```[a-z]*\n?/, "").replace(/\n?```$/, "");
+          return (
+            <div
+              key={bIdx}
+              className="glass-panel"
+              style={{
+                padding: "20px",
+                borderRadius: "14px",
+                fontFamily: "var(--font-geist-mono)",
+                fontSize: "12px",
+                color: "#00F2FF",
+                overflowX: "auto",
+                whiteSpace: "pre",
+                lineHeight: 1.5,
+                background: "rgba(0, 242, 255, 0.02)",
+                border: "1px solid rgba(0, 242, 255, 0.15)",
+                margin: "12px 0",
+              }}
+            >
+              {codeText}
+            </div>
+          );
+        }
+
+        // List items (* or - or numbered)
+        const lines = trimmed.split("\n");
+        const isList = lines.every(l => /^(\*|-|\d+\.)\s+/.test(l.trim()));
+
+        if (isList) {
+          return (
+            <div key={bIdx} style={{ display: "flex", flexDirection: "column", gap: "10px", paddingLeft: "4px" }}>
+              {lines.map((line, lIdx) => {
+                const lineTrimmed = line.trim();
+                const isNumbered = /^\d+\.\s+/.test(lineTrimmed);
+                const itemContent = lineTrimmed.replace(/^(\*|-|\d+\.)\s+/, "");
+
+                return (
+                  <div key={lIdx} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                    {isNumbered ? (
+                      <span style={{ color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: "13px", fontWeight: 700, marginTop: "2px" }}>
+                        {lineTrimmed.match(/^\d+\./)?.[0]}
+                      </span>
+                    ) : (
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#00F2FF", marginTop: "9px", flexShrink: 0 }} />
+                    )}
+                    <span style={{ flex: 1, fontFamily: "var(--font-inter)", fontSize: "clamp(15px, 1.8vw, 16.5px)", lineHeight: 1.75, color: "rgba(229,229,229,0.85)" }}>
+                      {parseInline(itemContent)}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+
+        // Standard Paragraph
+        return (
+          <p
+            key={bIdx}
+            style={{
+              fontFamily: "var(--font-inter)",
+              fontSize: "clamp(15px, 1.8vw, 17px)",
+              lineHeight: 1.85,
+              color: "rgba(229,229,229,0.8)",
+              margin: 0,
+            }}
+          >
+            {parseInline(trimmed)}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
 
 export default function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params);
@@ -70,61 +276,95 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
     triggerTransition(target, lenisRef.current);
   };
 
-  if (!post) return <div style={{ color: "#fff", padding: 100 }}>Post not found.</div>;
+  if (!post) {
+    return (
+      <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "#020202", color: "#E5E5E5", padding: "140px 24px", textAlign: "center" }}>
+        <h2 style={{ fontFamily: "var(--font-syne)", fontSize: 28, marginBottom: 16 }}>Article in Preparation</h2>
+        <p style={{ color: "rgba(229,229,229,0.7)", marginBottom: 32 }}>This journal intelligence report is currently being formatted.</p>
+        <Link href="/journal" className="btn-primary" style={{ padding: "12px 28px", borderRadius: "9999px" }}>
+          Return to Journal
+        </Link>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "transparent", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
+    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1 }}
         transition={{ duration: 0.4 }}
-        style={{ padding: "140px 24px 100px", maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 10 }}
+        style={{ padding: "clamp(6rem, 12vw, 8.5rem) clamp(1rem, 4vw, 1.5rem) 5rem", maxWidth: 840, margin: "0 auto", position: "relative", zIndex: 10 }}
       >
         <FadeSection>
+          {/* Header Metadata */}
           <div style={{ marginBottom: 40 }}>
-            <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 16, display: "block" }}>{post.category}_</span>
-            <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1, marginBottom: 24 }}>
+            <Link href="/journal" onClick={(e) => handleNavigate(e, "/journal")} style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "#00F2FF", textDecoration: "none", fontSize: 12, fontFamily: "var(--font-geist-mono)", marginBottom: 24 }}>
+              <ArrowLeft size={14} /> BACK TO JOURNAL
+            </Link>
+            <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 16, display: "block" }}>{post.category.replace(/_/g, " ")}</span>
+            <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1, marginBottom: 24, letterSpacing: "-0.03em" }}>
               {post.title}
             </h1>
-            <div style={{ display: "flex", gap: 24, opacity: 0.4, fontFamily: "var(--font-geist-mono)", fontSize: 11 }}>
+            <div style={{ display: "flex", gap: 20, opacity: 0.5, fontFamily: "var(--font-geist-mono)", fontSize: 12 }}>
               <span>{post.date}</span>
               <span>•</span>
               <span>{post.readTime}</span>
             </div>
           </div>
 
-          <div style={{ fontFamily: "var(--font-inter)", fontSize: 17, lineHeight: 1.9, color: "rgba(229,229,229,0.7)", marginBottom: 80, whiteSpace: "pre-line" }}>
-            {post.content}
+          {/* Formatted Article Content with Clickable Links */}
+          <ArticleContentRenderer content={post.content} />
+
+          {/* Bottom Diagnostic Action Strip */}
+          <div className="glass-panel" style={{ borderRadius: "20px", padding: "clamp(1.5rem, 4vw, 2.5rem)", border: "1px solid rgba(0,242,255,0.2)", marginBottom: 60, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
+            <div>
+              <span className="editorial-tag" style={{ display: "block", marginBottom: 6, fontSize: 10 }}>COMMERCIAL DIAGNOSTIC</span>
+              <h4 style={{ fontFamily: "var(--font-syne)", fontSize: "1.2rem", fontWeight: 700, color: "#FFFFFF", margin: 0 }}>
+                Evaluate Your Store Numbers
+              </h4>
+              <p style={{ color: "rgba(229,229,229,0.7)", fontSize: "0.88rem", marginTop: 4, margin: 0 }}>
+                Run our mathematical profit leakage &amp; dead stock audit in 4 minutes.
+              </p>
+            </div>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <Link href="/assessment" className="btn-primary" style={{ padding: "10px 22px", borderRadius: "9999px", fontSize: 12, fontWeight: 700 }}>
+                Check D2C Readiness
+              </Link>
+              <Link href="/tools/profit-opportunity" className="btn-secondary" style={{ padding: "10px 20px", borderRadius: "9999px", fontSize: 12, fontWeight: 600 }}>
+                Calculate Margin
+              </Link>
+            </div>
           </div>
 
           {/* ─── LEAD MAGNET / NEWSLETTER ─── */}
-          <div className="glass-panel" style={{ padding: 60, textAlign: "center", position: "relative", overflow: "hidden" }}>
+          <div className="glass-panel" style={{ padding: "clamp(2rem, 6vw, 4rem)", textAlign: "center", position: "relative", overflow: "hidden", borderRadius: "24px" }}>
              <div className="ambient-orb" style={{ top: "-50%", left: "-50%", width: "200%", height: "200%", opacity: 0.05 }} />
-             <Mail size={48} color="#00F2FF" style={{ marginBottom: 32, opacity: 0.3 }} />
-             <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 32, marginBottom: 16 }}>Join the <span style={{ color: "#00F2FF" }}>Elite.</span></h3>
-             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, color: "rgba(255,255,255,0.4)", marginBottom: 40, maxWidth: 450, margin: "0 auto 40px" }}>
-               Get our proprietary "Neural Scaling Playbook" and weekly insights on AI dominance directly in your inbox.
+             <Mail size={42} color="#00F2FF" style={{ marginBottom: 24, opacity: 0.4 }} />
+             <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 4vw, 2rem)", marginBottom: 12 }}>Join the <span style={{ color: "#00F2FF" }}>Elite.</span></h3>
+             <p style={{ fontFamily: "var(--font-inter)", fontSize: 14, color: "rgba(255,255,255,0.6)", marginBottom: 32, maxWidth: 450, margin: "0 auto 32px", lineHeight: 1.6 }}>
+               Get our proprietary "Neural Scaling Playbook" and weekly insights on retail margin protection directly in your inbox.
              </p>
              {subscribed ? (
                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 14 }}>
                  Transmission Complete. You have joined the elite.
                </motion.div>
              ) : (
-               <form onSubmit={handleSubscribe} style={{ display: "flex", flexDirection: "column", maxWidth: 400, margin: "0 auto", gap: 12, width: "100%" }}>
-                 <div style={{ display: "flex", gap: 12, width: "100%" }}>
+               <form onSubmit={handleSubscribe} style={{ display: "flex", flexDirection: "column", maxWidth: 420, margin: "0 auto", gap: 12, width: "100%" }}>
+                 <div style={{ display: "flex", gap: 10, width: "100%", flexWrap: "wrap" }}>
                    <input
                      type="email"
                      required
                      placeholder="Enter your business email"
                      value={email}
                      onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                     style={{ flex: 1, background: "rgba(255,255,255,0.03)", border: `1px solid ${error ? "#FF4444" : "rgba(255,255,255,0.1)"}`, padding: "16px 20px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none" }}
+                     style={{ flex: "1 1 220px", background: "rgba(255,255,255,0.03)", border: `1px solid ${error ? "#FF4444" : "rgba(255,255,255,0.12)"}`, padding: "14px 18px", color: "#fff", fontFamily: "var(--font-inter)", fontSize: 14, outline: "none", borderRadius: "8px" }}
                    />
-                   <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "0 24px", fontSize: 10, opacity: isSubmitting ? 0.6 : 1, cursor: "pointer" }}>
+                   <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "14px 24px", fontSize: 11, fontWeight: 700, opacity: isSubmitting ? 0.6 : 1, cursor: "pointer", borderRadius: "8px", flexShrink: 0 }}>
                      {isSubmitting ? "SYNC..." : "JOIN"}
                    </button>
                  </div>
-                 {error && <span style={{ color: "#FF4444", fontSize: 10, fontFamily: "var(--font-geist-mono)", marginTop: 4, textAlign: "left", alignSelf: "flex-start" }}>{error}</span>}
+                 {error && <span style={{ color: "#FF4444", fontSize: 11, fontFamily: "var(--font-geist-mono)", marginTop: 4, textAlign: "left", alignSelf: "flex-start" }}>{error}</span>}
                </form>
              )}
           </div>

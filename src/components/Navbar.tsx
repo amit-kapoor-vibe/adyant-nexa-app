@@ -31,7 +31,8 @@ export const Navbar = () => {
     { label: "Tools", href: "/tools" },
     { label: "How We Work", href: "/how-it-works" },
     { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" }
+    { label: "Contact", href: "/contact" },
+    { label: "Journal", href: "/journal" }
   ];
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {

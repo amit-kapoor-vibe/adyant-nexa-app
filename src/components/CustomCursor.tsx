@@ -72,7 +72,7 @@ export const CustomCursor = () => {
           boxShadow: isHovering ? "0 0 15px rgba(0, 242, 255, 0.4)" : "none",
           opacity: isVisible ? 1 : 0,
           pointerEvents: "none",
-          zIndex: 999999,
+          zIndex: 2147483647,
           mixBlendMode: "screen",
           transition: "width 0.25s, height 0.25s, opacity 0.3s",
         }}
@@ -94,7 +94,7 @@ export const CustomCursor = () => {
           boxShadow: "0 0 10px #00F2FF",
           opacity: isVisible ? 1 : 0,
           pointerEvents: "none",
-          zIndex: 999999,
+          zIndex: 2147483647,
           transition: "opacity 0.3s",
         }}
       />

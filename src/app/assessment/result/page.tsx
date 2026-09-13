@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Heading } from "@/components/ui/Heading";
@@ -12,10 +13,12 @@ import {
   ArrowRight,
   Phone,
   Lock,
+  X,
 } from "lucide-react";
 import { generateHtmlReport } from "@/lib/reports/generator";
 
 export default function AssessmentResultPage() {
+  const [mounted, setMounted] = useState(false);
   const [result, setResult] = useState<any>(null);
   const [businessName, setBusinessName] = useState("Your Store");
   const [city, setCity] = useState("India");
@@ -34,6 +37,7 @@ export default function AssessmentResultPage() {
   const [leadSubmitted, setLeadSubmitted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (typeof window !== "undefined") {
       const storedResult = localStorage.getItem("adyant_latest_assessment");
       const storedId = localStorage.getItem("adyant_assessment_id") || "";
@@ -362,20 +366,84 @@ export default function AssessmentResultPage() {
         </div>
 
         {/* Lead Capture Modal / Slide */}
-        {showLeadModal && (
-          <div className="no-print" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "1rem" }}>
-            <div style={{ backgroundColor: "#080808", border: "1px solid rgba(0,242,255,0.3)", borderRadius: "20px", padding: "2rem", maxWidth: "500px", width: "100%", position: "relative" }}>
-              <button onClick={() => setShowLeadModal(false)} style={{ position: "absolute", top: "1rem", right: "1rem", backgroundColor: "transparent", border: "none", color: "#A3A3A3", fontSize: "1.25rem", cursor: "pointer" }}>
-                &times;
+        {showLeadModal && mounted && typeof document !== "undefined" && createPortal(
+          <div 
+            className="no-print" 
+            style={{ 
+              position: "fixed", 
+              top: 0, 
+              left: 0, 
+              right: 0, 
+              bottom: 0, 
+              width: "100vw", 
+              height: "100vh", 
+              backgroundColor: "rgba(0,0,0,0.88)", 
+              backdropFilter: "blur(14px)", 
+              WebkitBackdropFilter: "blur(14px)", 
+              display: "flex", 
+              alignItems: "center", 
+              justifyContent: "center", 
+              zIndex: 99999, 
+              padding: "16px",
+              boxSizing: "border-box",
+            }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setShowLeadModal(false);
+            }}
+          >
+            <div 
+              style={{ 
+                backgroundColor: "#080808", 
+                border: "1px solid rgba(0,242,255,0.35)", 
+                borderRadius: "20px", 
+                padding: "clamp(1.25rem, 4vw, 1.75rem)", 
+                maxWidth: "460px", 
+                width: "100%", 
+                maxHeight: "calc(100dvh - 40px)",
+                overflowY: "auto",
+                WebkitOverflowScrolling: "touch",
+                position: "relative",
+                boxShadow: "0 25px 80px rgba(0,0,0,0.95), 0 0 40px rgba(0,242,255,0.12)",
+                display: "flex",
+                flexDirection: "column",
+                boxSizing: "border-box",
+              }}
+            >
+              <button 
+                type="button"
+                onClick={() => setShowLeadModal(false)} 
+                style={{ 
+                  position: "absolute", 
+                  top: "14px", 
+                  right: "14px", 
+                  backgroundColor: "rgba(255,255,255,0.06)", 
+                  border: "1px solid rgba(255,255,255,0.1)", 
+                  color: "#FFFFFF", 
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  touchAction: "manipulation",
+                  zIndex: 10,
+                }}
+                aria-label="Close modal"
+              >
+                <X size={16} />
               </button>
 
               {!leadSubmitted ? (
                 <>
-                  <span className="editorial-tag" style={{ fontSize: "0.7rem" }}>SAVE DIAGNOSTIC &amp; GET BLUEPRINT</span>
-                  <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.5rem", fontWeight: 800, color: "#FFFFFF", marginTop: "0.4rem", marginBottom: "0.5rem" }}>
-                    Get Your 90-Day Growth Blueprint
-                  </h3>
-                  <p style={{ color: "#A3A3A3", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
+                  <div style={{ paddingRight: "32px", marginBottom: "0.5rem" }}>
+                    <span className="editorial-tag" style={{ fontSize: "0.7rem", color: "#00F2FF" }}>SAVE DIAGNOSTIC &amp; GET BLUEPRINT</span>
+                    <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "clamp(1.25rem, 3vw, 1.45rem)", fontWeight: 800, color: "#FFFFFF", marginTop: "0.35rem", marginBottom: "0.4rem", lineHeight: 1.25 }}>
+                      Get Your 90-Day Growth Blueprint
+                    </h3>
+                  </div>
+                  
+                  <p style={{ color: "rgba(229,229,229,0.75)", fontSize: "0.85rem", marginBottom: "1.25rem", lineHeight: 1.5 }}>
                     Submit your details to save this diagnostic assessment and receive a personalized 90-day execution plan.
                   </p>
 
@@ -388,7 +456,7 @@ export default function AssessmentResultPage() {
                         placeholder="e.g. Rahul Sharma"
                         value={leadForm.name}
                         onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
-                        style={{ width: "100%", padding: "0.75rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "8px", color: "#FFFFFF" }}
+                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "10px", color: "#FFFFFF", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
                       />
                     </div>
 
@@ -400,7 +468,7 @@ export default function AssessmentResultPage() {
                         placeholder="+91 98765 43210"
                         value={leadForm.phone}
                         onChange={(e) => setLeadForm({ ...leadForm, phone: e.target.value })}
-                        style={{ width: "100%", padding: "0.75rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "8px", color: "#FFFFFF" }}
+                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "10px", color: "#FFFFFF", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
                       />
                     </div>
 
@@ -412,7 +480,7 @@ export default function AssessmentResultPage() {
                         placeholder="rahul@store.com"
                         value={leadForm.email}
                         onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
-                        style={{ width: "100%", padding: "0.75rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "8px", color: "#FFFFFF" }}
+                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "10px", color: "#FFFFFF", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
                       />
                     </div>
 
@@ -420,7 +488,7 @@ export default function AssessmentResultPage() {
                       type="submit"
                       disabled={isSubmittingLead}
                       className="btn-primary"
-                      style={{ marginTop: "0.5rem", width: "100%", justifyContent: "center" }}
+                      style={{ marginTop: "0.5rem", width: "100%", justifyContent: "center", padding: "0.85rem", fontSize: 13, fontWeight: 700, borderRadius: "9999px", touchAction: "manipulation" }}
                     >
                       {isSubmittingLead ? "Unlocking Blueprint..." : "Save Assessment & Unlock Blueprint"}
                     </button>
@@ -432,22 +500,23 @@ export default function AssessmentResultPage() {
                   <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", color: "#FFFFFF", marginBottom: "0.5rem" }}>
                     Blueprint Request Received!
                   </h3>
-                  <p style={{ color: "#A3A3A3", fontSize: "0.9rem", marginBottom: "1.5rem" }}>
+                  <p style={{ color: "rgba(229,229,229,0.8)", fontSize: "0.9rem", marginBottom: "1.5rem", lineHeight: 1.5 }}>
                     Thank you, {leadForm.name}. Our senior growth strategist will review your diagnostic report and contact you via WhatsApp / email within 24 hours.
                   </p>
                   
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                    <button onClick={handleDownloadPdf} className="btn-primary" style={{ width: "100%", justifyContent: "center" }}>
+                    <button onClick={handleDownloadPdf} className="btn-primary" style={{ width: "100%", justifyContent: "center", padding: "0.85rem", borderRadius: "9999px", fontSize: 13, fontWeight: 700 }}>
                       Download PDF / Print Report
                     </button>
-                    <button onClick={() => setShowLeadModal(false)} className="btn-secondary" style={{ width: "100%", justifyContent: "center" }}>
+                    <button onClick={() => setShowLeadModal(false)} className="btn-secondary" style={{ width: "100%", justifyContent: "center", padding: "0.85rem", borderRadius: "9999px", fontSize: 13, fontWeight: 600 }}>
                       Close Window
                     </button>
                   </div>
                 </div>
               )}
             </div>
-          </div>
+          </div>,
+          document.body
         )}
 
       </div>

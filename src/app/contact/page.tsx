@@ -44,11 +44,11 @@ export default function ContactPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "7rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
-      <div style={{ maxWidth: "1040px", margin: "0 auto", padding: "0 1.5rem" }}>
+    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "clamp(5.5rem, 12vw, 7rem)", paddingBottom: "clamp(3.5rem, 8vw, 5rem)", position: "relative", zIndex: 10 }}>
+      <div style={{ maxWidth: "1040px", margin: "0 auto", padding: "0 clamp(1rem, 4vw, 1.5rem)" }}>
         
         {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+        <div style={{ textAlign: "center", marginBottom: "clamp(2rem, 6vw, 3.5rem)" }}>
           <span className="editorial-tag" style={{ display: "block", marginBottom: "12px" }}>
             DIRECT COMMERCE ADVISORY &bull; INITIATE PARTNERSHIP
           </span>
@@ -56,18 +56,18 @@ export default function ContactPage() {
             Let&apos;s Build the Next <br />
             <span style={{ color: "var(--accent-color)" }}>Revenue Engine</span>
           </Heading>
-          <p style={{ color: "rgba(229,229,229,0.75)", fontSize: "1rem", maxWidth: "600px", margin: "0 auto", lineHeight: 1.6 }}>
+          <p style={{ color: "rgba(229,229,229,0.75)", fontSize: "clamp(0.9rem, 2vw, 1rem)", maxWidth: "600px", margin: "0 auto", lineHeight: 1.6 }}>
             Whether you run a physical retail store looking to scale D2C, or an apparel brand seeking profitable growth architecture, our senior team is ready to evaluate your numbers.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", gap: "2rem" }} className="grid-cols-1 md:grid-cols-2">
+        <div className="contact-grid">
           
           {/* Info Card */}
-          <div className="glass-panel" style={{ borderRadius: "24px", padding: "2.5rem", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <div className="glass-panel" style={{ borderRadius: "24px", padding: "clamp(1.5rem, 4vw, 2.5rem)", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             <div>
               <span className="editorial-tag" style={{ display: "block", marginBottom: "8px" }}>COMMUNICATION CHANNELS</span>
-              <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "1.75rem" }}>
+              <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "clamp(1.15rem, 3vw, 1.35rem)", fontWeight: 700, color: "#FFFFFF", marginBottom: "1.75rem" }}>
                 AdyantNexa Headquarters
               </h3>
 
@@ -76,7 +76,7 @@ export default function ContactPage() {
                   <Mail size={18} color="#00F2FF" style={{ flexShrink: 0, marginTop: "3px" }} />
                   <div>
                     <span style={{ fontSize: "0.75rem", color: "#666", display: "block" }}>Direct Inquiry</span>
-                    <a href="mailto:contact@adyantnexa.com" style={{ color: "#FFFFFF", textDecoration: "none", fontWeight: 600 }}>contact@adyantnexa.com</a>
+                    <a href="mailto:contact@adyantnexa.com" style={{ color: "#FFFFFF", textDecoration: "none", fontWeight: 600, wordBreak: "break-all" }}>contact@adyantnexa.com</a>
                   </div>
                 </div>
 
@@ -105,7 +105,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div style={{ marginTop: "2.5rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
+            <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
               <ShieldCheck size={20} color="#00F2FF" style={{ flexShrink: 0, marginTop: "2px" }} />
               <div>
                 <span style={{ fontSize: "0.78rem", color: "#FFFFFF", fontWeight: 700, display: "block" }}>Commercial Confidentiality Guarantee</span>
@@ -117,7 +117,7 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <div className="glass-panel" style={{ borderRadius: "24px", padding: "2.5rem", border: "1px solid rgba(0,242,255,0.2)" }}>
+          <div className="glass-panel" style={{ borderRadius: "24px", padding: "clamp(1.5rem, 4vw, 2.5rem)", border: "1px solid rgba(0,242,255,0.2)" }}>
             {!submitted ? (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
                 <div>
@@ -128,11 +128,11 @@ export default function ContactPage() {
                     placeholder="e.g. Rahul Sharma"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    style={{ width: "100%", padding: "0.8rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 14 }}
+                    style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 16 }}
                   />
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div className="form-row-2">
                   <div>
                     <label style={{ display: "block", fontSize: "0.8rem", color: "#A3A3A3", marginBottom: "0.3rem" }}>Phone / WhatsApp *</label>
                     <input
@@ -141,7 +141,7 @@ export default function ContactPage() {
                       placeholder="+91 98765 43210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      style={{ width: "100%", padding: "0.8rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 14 }}
+                      style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 16 }}
                     />
                   </div>
 
@@ -153,12 +153,12 @@ export default function ContactPage() {
                       placeholder="rahul@store.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      style={{ width: "100%", padding: "0.8rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 14 }}
+                      style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 16 }}
                     />
                   </div>
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div className="form-row-2">
                   <div>
                     <label style={{ display: "block", fontSize: "0.8rem", color: "#A3A3A3", marginBottom: "0.3rem" }}>Business / Store Name</label>
                     <input
@@ -166,7 +166,7 @@ export default function ContactPage() {
                       placeholder="e.g. Royal Ethnic Studio"
                       value={formData.business}
                       onChange={(e) => setFormData({ ...formData, business: e.target.value })}
-                      style={{ width: "100%", padding: "0.8rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 14 }}
+                      style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 16 }}
                     />
                   </div>
 
@@ -175,7 +175,7 @@ export default function ContactPage() {
                     <select
                       value={formData.monthlyRevenue}
                       onChange={(e) => setFormData({ ...formData, monthlyRevenue: e.target.value })}
-                      style={{ width: "100%", padding: "0.8rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 14 }}
+                      style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 16 }}
                     >
                       <option value="">Select Range</option>
                       <option value="Under ₹3 Lakhs">Under ₹3 Lakhs / mo</option>
@@ -194,7 +194,7 @@ export default function ContactPage() {
                     placeholder="Current channels, biggest challenges (dead stock, ROAS, scaling D2C), and what you want to achieve..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    style={{ width: "100%", padding: "0.8rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 14, resize: "none" }}
+                    style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "10px", color: "#FFFFFF", fontFamily: "var(--font-inter), sans-serif", fontSize: 16, resize: "none" }}
                   />
                 </div>
 
@@ -219,6 +219,30 @@ export default function ContactPage() {
           </div>
         </div>
 
+        <style jsx>{`
+          .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 2rem;
+          }
+          .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+          }
+          @media (max-width: 820px) {
+            .contact-grid {
+              grid-template-columns: 1fr !important;
+              gap: 1.5rem;
+            }
+          }
+          @media (max-width: 540px) {
+            .form-row-2 {
+              grid-template-columns: 1fr !important;
+              gap: 1.1rem;
+            }
+          }
+        `}</style>
       </div>
     </div>
   );
