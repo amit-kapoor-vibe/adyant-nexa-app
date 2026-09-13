@@ -49,20 +49,20 @@ export const ServicesSection = () => {
     <section id="services" style={{ padding: "clamp(4rem, 8vw, 7rem) clamp(1.25rem, 3vw, 1.75rem)", position: "relative", overflow: "hidden", background: "var(--bg-color)", transition: "background 0.4s ease" }}>
       {/* Ghost Typography BG */}
       <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none", overflow: "hidden" }}>
-        <span className="ghost-text">DIAGNOSTICS</span>
+        <span className="ghost-text">SYSTEM</span>
       </div>
 
       <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 2 }}>
         <FadeSection>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: 32, marginBottom: 72 }}>
             <div>
-              <span className="editorial-tag" style={{ display: "block", marginBottom: 20 }}>DIAGNOSTIC PILLARS_</span>
+              <span className="editorial-tag" style={{ display: "block", marginBottom: 20 }}>CONNECTED GROWTH SYSTEM_</span>
               <Heading level="h2" style={{ color: "var(--text-color)", transition: "color 0.4s ease" }}>
-                Opportunity <span style={{ color: "var(--accent-color)", transition: "color 0.4s ease" }}>Categories</span>
+                Growth System <span style={{ color: "var(--accent-color)", transition: "color 0.4s ease" }}>Architecture</span>
               </Heading>
             </div>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", opacity: 0.8, lineHeight: 1.8, maxWidth: 320, transition: "color 0.4s ease" }}>
-              Four core business pillars where Indian fashion retailers lose profit and how Adyant Nexa identifies recovery.
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--muted-text)", opacity: 0.8, lineHeight: 1.8, maxWidth: 360, transition: "color 0.4s ease" }}>
+              Core operational components of our connected growth system — engineering consumer brands with capital discipline.
             </p>
           </div>
         </FadeSection>

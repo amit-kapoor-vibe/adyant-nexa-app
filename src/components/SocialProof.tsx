@@ -15,7 +15,7 @@ const CLIENTS = [
 
 const TESTIMONIALS = [
   { 
-    quote: "Standard agencies talk about CPC. Amit talks about EBITDA. Our acquisition costs halved within 30 days while our revenue hit record highs.", 
+    quote: "Standard agencies push vanity metrics. Adyant Nexa helped us build a direct-to-consumer commerce and acquisition system tailored to our manufacturing strengths.", 
     name: "Homesh", 
     role: "Founder, TEMPTATION THREAD" 
   },

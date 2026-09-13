@@ -69,16 +69,16 @@ export function HeroContent({ onScan }: HeroContentProps) {
           display: "block"
         }}
       >
-        ADYANT NEXA // BUSINESS GROWTH INTELLIGENCE PLATFORM
+        ADYANT NEXA // CONSUMER GROWTH &amp; COMMERCE
       </motion.span>
 
       {/* Headlines */}
       <Heading level="h1" style={{ marginBottom: 20, userSelect: "none", textAlign: "center" }}>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="FIND WHERE YOUR BUSINESS" style={{ display: "block", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1 }}>
-          FIND WHERE YOUR FASHION BUSINESS
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="YOU HAVE THE PRODUCT." style={{ display: "block", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1 }}>
+          YOU HAVE THE PRODUCT.
         </motion.span>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="IS LOSING MONEY." style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1, color: "#00F2FF" }}>
-          IS LOSING MONEY.
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="WE BUILD THE BUSINESS AROUND IT." style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1, color: "#00F2FF" }}>
+          WE BUILD THE BUSINESS AROUND IT.
         </motion.span>
       </Heading>
 
@@ -94,7 +94,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
           textTransform: "uppercase",
         }}
       >
-        Analyzing Diagnostic Leakage In{" "}
+        Integrated Growth System &bull; Initial Focus in{" "}
         <span
           key={pillarIndex}
           className="animate-role-fade-in"
@@ -112,9 +112,8 @@ export function HeroContent({ onScan }: HeroContentProps) {
       </motion.div>
 
       {/* Descriptor */}
-      <motion.p variants={itemVars} className="blur-in" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.8, marginBottom: 36, maxWidth: 680, margin: "0 auto 36px", transition: "color 0.4s ease" }}>
-        We don't start by selling services. We start by finding where your business is losing money.<br />
-        Take our 4-minute diagnostic assessment to calculate your estimated Growth Score (0–100) and annual profit opportunity.
+      <motion.p variants={itemVars} className="blur-in" style={{ fontFamily: "var(--font-inter)", fontSize: 15, color: "rgba(255,255,255,0.75)", lineHeight: 1.8, marginBottom: 36, maxWidth: 680, margin: "0 auto 36px", transition: "color 0.4s ease" }}>
+        We help product businesses build, launch and scale consumer brands — unifying commerce architecture, performance acquisition, creative storytelling, and retention into one connected growth system.
       </motion.p>
 
       {/* Primary & Secondary CTA Buttons */}
@@ -145,7 +144,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
             boxShadow: "0 0 30px rgba(0,242,255,0.3)",
           }}
         >
-          Find My Profit Opportunity — Free <ArrowRight style={{ width: "16px", height: "16px" }} />
+          CHECK YOUR D2C READINESS <ArrowRight style={{ width: "16px", height: "16px" }} />
         </Link>
 
         {/* Secondary CTA */}
@@ -163,7 +162,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
             textDecoration: "none",
           }}
         >
-          See How It Works
+          EXPLORE THE GROWTH SYSTEM
         </Link>
       </motion.div>
 
