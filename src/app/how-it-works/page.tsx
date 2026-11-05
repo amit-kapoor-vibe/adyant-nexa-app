@@ -102,7 +102,7 @@ export default function HowItWorksPage() {
       style={{
         minHeight: "100vh",
         background: "transparent",
-        color: "#E5E5E5",
+        color: "var(--text-color)",
         paddingTop: "7.5rem",
         paddingBottom: "5rem",
         position: "relative",
@@ -123,7 +123,7 @@ export default function HowItWorksPage() {
           <p
             style={{
               fontFamily: "var(--font-inter)",
-              color: "rgba(229,229,229,0.75)",
+              color: "var(--muted-text)",
               fontSize: "1.05rem",
               maxWidth: "680px",
               margin: "0 auto",
@@ -165,9 +165,9 @@ export default function HowItWorksPage() {
                       width: "52px",
                       height: "52px",
                       borderRadius: "14px",
-                      backgroundColor: "rgba(0, 242, 255, 0.08)",
-                      border: "1px solid rgba(0, 242, 255, 0.25)",
-                      color: "#00F2FF",
+                      backgroundColor: "rgba(0, 71, 255, 0.06)",
+                      border: "1px solid rgba(0, 71, 255, 0.2)",
+                      color: "var(--accent-color)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -197,7 +197,7 @@ export default function HowItWorksPage() {
                         fontFamily: "var(--font-syne)",
                         fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)",
                         fontWeight: 800,
-                        color: "#FFFFFF",
+                        color: "var(--text-color)",
                         letterSpacing: "-0.02em",
                         margin: 0,
                       }}
@@ -222,7 +222,7 @@ export default function HowItWorksPage() {
                   <p
                     style={{
                       fontFamily: "var(--font-inter)",
-                      color: "rgba(229,229,229,0.7)",
+                      color: "var(--muted-text)",
                       fontSize: "14px",
                       lineHeight: 1.7,
                       marginBottom: "18px",
@@ -238,7 +238,7 @@ export default function HowItWorksPage() {
                       gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
                       gap: "10px",
                       paddingTop: "14px",
-                      borderTop: "1px solid rgba(255,255,255,0.06)",
+                      borderTop: "1px solid var(--border-color)",
                     }}
                   >
                     {stage.items.map((item, idx) => (
@@ -250,10 +250,10 @@ export default function HowItWorksPage() {
                           gap: "8px",
                           fontFamily: "var(--font-inter)",
                           fontSize: "13px",
-                          color: "#A3A3A3",
+                          color: "var(--muted-text)",
                         }}
                       >
-                        <CheckCircle2 size={14} color="#00F2FF" style={{ flexShrink: 0 }} />
+                        <CheckCircle2 size={14} color="#0047FF" style={{ flexShrink: 0 }} />
                         <span>{item}</span>
                       </div>
                     ))}
@@ -270,13 +270,13 @@ export default function HowItWorksPage() {
           style={{
             padding: " clamp(28px, 4vw, 44px)",
             borderRadius: "24px",
-            border: "1px solid rgba(0,242,255,0.25)",
+            border: "1px solid var(--border-color)",
             marginBottom: "4.5rem",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-            <ShieldCheck size={24} color="#00F2FF" />
-            <h3 style={{ fontFamily: "var(--font-syne)", fontSize: "1.3rem", fontWeight: 800, color: "#FFFFFF" }}>
+            <ShieldCheck size={24} color="#0047FF" />
+            <h3 style={{ fontFamily: "var(--font-syne)", fontSize: "1.3rem", fontWeight: 800, color: "var(--text-color)" }}>
               HOW WE PARTNER WITH YOU
             </h3>
           </div>
@@ -284,21 +284,21 @@ export default function HowItWorksPage() {
             We do not operate as an outsourced agency that dumps vanity impressions on a slide deck. We function as your strategic growth partner—aligning our work directly with your net contribution margin, inventory velocity, and long-term brand equity.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
-            <div style={{ background: "rgba(0,0,0,0.4)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "#00F2FF", display: "block", marginBottom: "4px" }}>ZERO FLUFF</span>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "#E5E5E5", margin: 0 }}>
+            <div style={{ background: "rgba(248,248,250,0.6)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--accent-color)", display: "block", marginBottom: "4px" }}>ZERO FLUFF</span>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "var(--text-color)", margin: 0 }}>
                 Direct focus on commercial reality: CAC, AOV, Contribution Margin and Repeat LTV.
               </p>
             </div>
-            <div style={{ background: "rgba(0,0,0,0.4)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "#00F2FF", display: "block", marginBottom: "4px" }}>PARALLEL ENGINE</span>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "#E5E5E5", margin: 0 }}>
+            <div style={{ background: "rgba(248,248,250,0.6)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--accent-color)", display: "block", marginBottom: "4px" }}>PARALLEL ENGINE</span>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "var(--text-color)", margin: 0 }}>
                 Keep your manufacturing and wholesale running while building the consumer arm.
               </p>
             </div>
-            <div style={{ background: "rgba(0,0,0,0.4)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "#00F2FF", display: "block", marginBottom: "4px" }}>DATA OWNERSHIP</span>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "#E5E5E5", margin: 0 }}>
+            <div style={{ background: "rgba(248,248,250,0.6)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--accent-color)", display: "block", marginBottom: "4px" }}>DATA OWNERSHIP</span>
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "var(--text-color)", margin: 0 }}>
                 You own 100% of the customer relationship, data, accounts, and creative assets.
               </p>
             </div>
@@ -325,7 +325,7 @@ export default function HowItWorksPage() {
                 padding: "16px 36px",
                 fontSize: "13px",
                 fontWeight: 700,
-                boxShadow: "0 0 35px rgba(0,242,255,0.22)",
+                boxShadow: "0 8px 24px rgba(0,71,255,0.2)",
               }}
             >
               Check Your D2C Readiness <ArrowRight size={16} />
@@ -337,7 +337,7 @@ export default function HowItWorksPage() {
                 borderRadius: "9999px",
                 padding: "16px 28px",
                 fontSize: "13px",
-                border: "1px solid rgba(255,255,255,0.12)",
+                border: "1px solid rgba(10,10,12,0.12)",
               }}
             >
               Start A Conversation

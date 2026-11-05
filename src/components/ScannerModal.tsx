@@ -187,7 +187,7 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
         aria-label="Nexa Diagnostic System"
         style={{
           position: "fixed", inset: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center",
-          background: "rgba(2,2,2,0.85)", backdropFilter: "blur(12px)", padding: 20,
+          background: "rgba(10,10,12,0.6)", backdropFilter: "blur(12px)", padding: 20,
         }}
       >
         <motion.div
@@ -196,20 +196,20 @@ export function ScannerModal({ isOpen, onClose, initialUrl = "", currency = "USD
           exit={{ scale: 0.95, y: 20, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           style={{
-            background: "#080808", width: "100%", maxWidth: 640, borderRadius: 0,
-            border: "1px solid rgba(0,242,255,0.2)", position: "relative", overflow: "hidden",
-            boxShadow: "0 20px 80px rgba(0,242,255,0.05)",
+            background: "#FFFFFF", width: "100%", maxWidth: 640, borderRadius: 16,
+            border: "1px solid rgba(10,10,12,0.08)", position: "relative", overflow: "hidden",
+            boxShadow: "0 20px 80px rgba(0,71,255,0.08)",
           }}
         >
           {/* Header */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 24px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 24px", borderBottom: "1px solid rgba(10,10,12,0.08)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 8, height: 8, background: "#00F2FF", animation: scanState === "scanning" ? "pulse-glow 1s infinite" : "none" }} />
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(8px, 3vw, 11px)", fontWeight: 600, letterSpacing: "clamp(0.1em, 1vw, 0.2em)", color: "#E5E5E5", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              <div style={{ width: 8, height: 8, background: "#0047FF", animation: scanState === "scanning" ? "pulse-glow 1s infinite" : "none" }} />
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "clamp(8px, 3vw, 11px)", fontWeight: 600, letterSpacing: "clamp(0.1em, 1vw, 0.2em)", color: "#0A0A0C", textTransform: "uppercase", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                 Nexa Diagnostic System
               </span>
             </div>
-            <button onClick={onClose} aria-label="Close diagnostic modal" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", padding: 4 }}>
+            <button onClick={onClose} aria-label="Close diagnostic modal" style={{ background: "none", border: "none", color: "rgba(10,10,12,0.4)", cursor: "pointer", padding: 4 }}>
               <X size={18} />
             </button>
           </div>

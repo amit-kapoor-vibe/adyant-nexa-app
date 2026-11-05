@@ -39,12 +39,12 @@ export function CookieConsent() {
           }}
         >
           <div style={{
-            background: "rgba(8, 8, 8, 0.9)",
+            background: "rgba(255, 255, 255, 0.95)",
             backdropFilter: "blur(12px)",
-            border: "1px solid rgba(0, 242, 255, 0.15)",
+            border: "1px solid var(--border-color)",
             padding: "24px",
-            borderRadius: "12px",
-            boxShadow: "0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 255, 0.05)",
+            borderRadius: "16px",
+            boxShadow: "0 20px 50px rgba(10, 10, 12, 0.08), 0 0 20px rgba(0, 71, 255, 0.04)",
             position: "relative",
             overflow: "hidden"
           }}>
@@ -55,18 +55,18 @@ export function CookieConsent() {
               right: "-10%",
               width: "100px",
               height: "100px",
-              background: "radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(0, 71, 255, 0.06) 0%, transparent 70%)",
               pointerEvents: "none"
             }} />
 
             <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
               <div style={{ 
                 padding: "10px", 
-                background: "rgba(0, 242, 255, 0.05)", 
-                border: "1px solid rgba(0, 242, 255, 0.2)", 
+                background: "rgba(0, 71, 255, 0.06)", 
+                border: "1px solid rgba(0, 71, 255, 0.2)", 
                 borderRadius: "8px" 
               }}>
-                <ShieldCheck size={20} color="#00F2FF" />
+                <ShieldCheck size={20} color="var(--accent-color)" />
               </div>
               
               <div style={{ flex: 1 }}>
@@ -74,7 +74,7 @@ export function CookieConsent() {
                   fontFamily: "var(--font-syne)", 
                   fontWeight: 800, 
                   fontSize: "13px", 
-                  color: "#fff", 
+                  color: "var(--text-color)", 
                   marginBottom: "8px",
                   letterSpacing: "0.05em"
                 }}>
@@ -83,7 +83,7 @@ export function CookieConsent() {
                 <p style={{ 
                   fontFamily: "var(--font-geist-mono)", 
                   fontSize: "11px", 
-                  color: "rgba(229, 229, 229, 0.45)", 
+                  color: "var(--muted-text)", 
                   lineHeight: "1.6",
                   marginBottom: "20px"
                 }}>
@@ -95,8 +95,8 @@ export function CookieConsent() {
                     onClick={handleAccept}
                     style={{
                       flex: 1,
-                      background: "#00F2FF",
-                      color: "#000",
+                      background: "var(--accent-color)",
+                      color: "#FFFFFF",
                       border: "none",
                       padding: "10px 16px",
                       fontFamily: "var(--font-geist-mono)",
@@ -105,6 +105,8 @@ export function CookieConsent() {
                       textTransform: "uppercase",
                       letterSpacing: "0.1em",
                       cursor: "pointer",
+                      borderRadius: "6px",
+                      boxShadow: "0 4px 12px rgba(0,71,255,0.2)",
                       transition: "transform 0.2s ease"
                     }}
                     onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
@@ -115,16 +117,17 @@ export function CookieConsent() {
                   <button
                     onClick={() => setIsVisible(false)}
                     style={{
-                      background: "rgba(255, 255, 255, 0.03)",
-                      border: "1px solid rgba(255, 255, 255, 0.1)",
-                      color: "rgba(255, 255, 255, 0.4)",
+                      background: "transparent",
+                      border: "1px solid var(--border-color)",
+                      color: "var(--muted-text)",
                       padding: "10px 16px",
                       fontFamily: "var(--font-geist-mono)",
                       fontWeight: 700,
                       fontSize: "10px",
                       textTransform: "uppercase",
                       letterSpacing: "0.1em",
-                      cursor: "pointer"
+                      cursor: "pointer",
+                      borderRadius: "6px"
                     }}
                   >
                     Decline

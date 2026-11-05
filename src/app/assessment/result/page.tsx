@@ -59,6 +59,13 @@ export default function AssessmentResultPage() {
     }
   }, []);
 
+  const isUk = city.toLowerCase().includes("london") || city.toLowerCase().includes("uk");
+  const formatResultMoney = (amount: number) => {
+    return isUk 
+      ? `£${Math.round(amount).toLocaleString("en-GB")}` 
+      : `AED ${Math.round(amount).toLocaleString("en-AE")}`;
+  };
+
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmittingLead(true);
@@ -72,8 +79,8 @@ export default function AssessmentResultPage() {
           email: leadForm.email,
           phone: leadForm.phone,
           business: leadForm.businessName || businessName,
-          message: `UNLOCKED D2C BLUEPRINT: Readiness Score ${result?.growthScore || 0}/100, Est Opp ₹${(result?.totalEstimatedAnnualOpportunity || 0).toLocaleString("en-IN")}`,
-          budget: `Est Opp ₹${(result?.totalEstimatedAnnualOpportunity || 0).toLocaleString("en-IN")}`,
+          message: `UNLOCKED BOUTIQUE BLUEPRINT: Readiness Score ${result?.growthScore || 0}/100, Est Opp ${formatResultMoney(result?.totalEstimatedAnnualOpportunity || 0)}`,
+          budget: `Est Opp ${formatResultMoney(result?.totalEstimatedAnnualOpportunity || 0)}`,
         }),
       });
 
@@ -117,10 +124,10 @@ export default function AssessmentResultPage() {
 
   if (!result) {
     return (
-      <div style={{ minHeight: "100vh", backgroundColor: "transparent", color: "#E5E5E5", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ minHeight: "100vh", backgroundColor: "transparent", color: "var(--text-color)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div style={{ textAlign: "center", padding: "2rem" }}>
-          <h2 style={{ fontSize: "1.5rem", color: "#FFFFFF", marginBottom: "1rem" }}>No Assessment Data Found</h2>
-          <p style={{ color: "#A3A3A3", marginBottom: "1.5rem" }}>Please complete the D2C readiness diagnostic to view your report.</p>
+          <h2 style={{ fontSize: "1.5rem", color: "var(--text-color)", marginBottom: "1rem" }}>No Assessment Data Found</h2>
+          <p style={{ color: "var(--muted-text)", marginBottom: "1.5rem" }}>Please complete the D2C readiness diagnostic to view your report.</p>
           <Link href="/assessment" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
             Start Diagnostic <ArrowRight style={{ width: "16px", height: "16px" }} />
           </Link>
@@ -130,10 +137,10 @@ export default function AssessmentResultPage() {
   }
 
   const scoreColor =
-    result.growthScore >= 80 ? "#10B981" : result.growthScore >= 60 ? "#00F2FF" : result.growthScore >= 40 ? "#F59E0B" : "#EF4444";
+    result.growthScore >= 80 ? "#00BA4A" : result.growthScore >= 60 ? "var(--accent-color)" : result.growthScore >= 40 ? "#D97706" : "#DC2626";
 
   return (
-    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "6.5rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
+    <div style={{ minHeight: "100vh", background: "transparent", color: "var(--text-color)", paddingTop: "6.5rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "0 1.5rem" }}>
         
         {/* Title Header */}
@@ -144,27 +151,27 @@ export default function AssessmentResultPage() {
           <Heading level="h1" style={{ textAlign: "center", marginBottom: "10px" }}>
             D2C Readiness Report for <span style={{ color: "var(--accent-color)" }}>{businessName}</span>
           </Heading>
-          <p style={{ color: "#A3A3A3", fontSize: "0.95rem" }}>Location: {city} &bull; Generated: {new Date().toLocaleDateString('en-IN')}</p>
+          <p style={{ color: "var(--muted-text)", fontSize: "0.95rem" }}>Location: {city} &bull; Generated: {new Date().toLocaleDateString('en-IN')}</p>
         </div>
 
         {/* Top Summary Gauge Card */}
         <div
           style={{
-            backgroundColor: "#080808",
-            border: "1px solid rgba(0,242,255,0.2)",
+            backgroundColor: "var(--surface-color)",
+            border: "1px solid var(--border-color)",
             borderRadius: "24px",
             padding: "2.5rem",
             marginBottom: "3rem",
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gap: "2rem",
-            boxShadow: "0 0 40px rgba(0,242,255,0.08)",
+            boxShadow: "0 10px 40px rgba(10,10,12,0.06)",
           }}
           className="grid-cols-1 md:grid-cols-2"
         >
           {/* Left: Score Circle */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", borderRight: "1px solid rgba(255,255,255,0.08)" }}>
-            <span style={{ fontSize: "0.8rem", color: "#A3A3A3", fontFamily: "var(--font-geist-mono), monospace", marginBottom: "1rem", letterSpacing: "0.15em" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", borderRight: "1px solid var(--border-color)" }}>
+            <span style={{ fontSize: "0.8rem", color: "var(--muted-text)", fontFamily: "var(--font-geist-mono), monospace", marginBottom: "1rem", letterSpacing: "0.15em" }}>
               D2C READINESS SCORE
             </span>
 
@@ -178,21 +185,21 @@ export default function AssessmentResultPage() {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: `0 0 30px ${scoreColor}40`,
+                boxShadow: `0 0 30px ${scoreColor}25`,
                 marginBottom: "1rem",
               }}
             >
-              <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "3.5rem", fontWeight: 800, color: "#FFFFFF" }}>
+              <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "3.5rem", fontWeight: 800, color: "var(--text-color)" }}>
                 {result.growthScore}
               </span>
-              <span style={{ fontSize: "0.85rem", color: "#A3A3A3" }}>/ 100</span>
+              <span style={{ fontSize: "0.85rem", color: "var(--muted-text)" }}>/ 100</span>
             </div>
 
             <span
               style={{
-                backgroundColor: `${scoreColor}20`,
+                backgroundColor: `${scoreColor}15`,
                 color: scoreColor,
-                border: `1px solid ${scoreColor}40`,
+                border: `1px solid ${scoreColor}30`,
                 padding: "0.35rem 1rem",
                 borderRadius: "20px",
                 fontSize: "0.8rem",
@@ -206,13 +213,13 @@ export default function AssessmentResultPage() {
 
           {/* Right: Estimated Profit Opportunity */}
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <span style={{ fontSize: "0.8rem", color: "#00F2FF", fontFamily: "var(--font-geist-mono), monospace", marginBottom: "0.5rem", letterSpacing: "0.15em" }}>
+            <span style={{ fontSize: "0.8rem", color: "var(--accent-color)", fontFamily: "var(--font-geist-mono), monospace", marginBottom: "0.5rem", letterSpacing: "0.15em" }}>
               ESTIMATED ANNUAL REVENUE &amp; MARGIN OPPORTUNITY
             </span>
-            <div style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "2.75rem", fontWeight: 800, color: "#FFFFFF", marginBottom: "0.75rem" }}>
-              ₹{(result.totalEstimatedAnnualOpportunity || 0).toLocaleString("en-IN")}
+            <div style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "2.75rem", fontWeight: 800, color: "var(--text-color)", marginBottom: "0.75rem" }}>
+              {formatResultMoney(result.totalEstimatedAnnualOpportunity || 0)}
             </div>
-            <p style={{ fontSize: "0.9rem", color: "#A3A3A3", lineHeight: 1.5, marginBottom: "1.5rem" }}>
+            <p style={{ fontSize: "0.9rem", color: "var(--muted-text)", lineHeight: 1.5, marginBottom: "1.5rem" }}>
               Total estimated annual capital recovery and growth leverage across inventory turnaround, discounting reduction, repeat purchase LTV, and digital channel acquisition.
             </p>
 
@@ -227,72 +234,72 @@ export default function AssessmentResultPage() {
         </div>
 
         {/* Domain Sub-Scores Grid */}
-        <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "1.25rem" }}>
+        <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "var(--text-color)", marginBottom: "1.25rem" }}>
           Domain Breakdown Scores
         </h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "3rem" }}>
           {Object.entries(result.domainScores || {}).map(([key, item]: [string, any]) => (
-            <div key={key} style={{ backgroundColor: "#080808", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", padding: "1.25rem" }}>
+            <div key={key} style={{ backgroundColor: "var(--surface-color)", border: "1px solid var(--border-color)", borderRadius: "14px", padding: "1.25rem", boxShadow: "0 2px 10px rgba(10,10,12,0.03)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-                <span style={{ fontSize: "0.85rem", color: "#A3A3A3" }}>{item.label}</span>
-                <span style={{ fontWeight: 700, color: item.score >= 70 ? "#00F2FF" : item.score >= 50 ? "#F59E0B" : "#EF4444" }}>
+                <span style={{ fontSize: "0.85rem", color: "var(--muted-text)" }}>{item.label}</span>
+                <span style={{ fontWeight: 700, color: item.score >= 70 ? "var(--accent-color)" : item.score >= 50 ? "#D97706" : "#DC2626" }}>
                   {item.score}/100
                 </span>
               </div>
-              <div style={{ width: "100%", height: "4px", backgroundColor: "rgba(255,255,255,0.08)", borderRadius: "2px", overflow: "hidden", marginBottom: "0.5rem" }}>
-                <div style={{ width: `${item.score}%`, height: "100%", backgroundColor: item.score >= 70 ? "#00F2FF" : item.score >= 50 ? "#F59E0B" : "#EF4444" }} />
+              <div style={{ width: "100%", height: "4px", backgroundColor: "rgba(10,10,12,0.08)", borderRadius: "2px", overflow: "hidden", marginBottom: "0.5rem" }}>
+                <div style={{ width: `${item.score}%`, height: "100%", backgroundColor: item.score >= 70 ? "var(--accent-color)" : item.score >= 50 ? "#D97706" : "#DC2626" }} />
               </div>
-              <span style={{ fontSize: "0.75rem", color: "#666" }}>{item.summary}</span>
+              <span style={{ fontSize: "0.75rem", color: "var(--muted-text)" }}>{item.summary}</span>
             </div>
           ))}
         </div>
 
         {/* Detailed Metric & Benchmark Audit Matrix */}
-        <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "1.25rem" }}>
+        <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "var(--text-color)", marginBottom: "1.25rem" }}>
           Detailed Retail Metric &amp; Benchmark Audit
         </h3>
 
-        <div style={{ backgroundColor: "#080808", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "16px", padding: "1.5rem", marginBottom: "3rem" }}>
+        <div style={{ backgroundColor: "var(--surface-color)", border: "1px solid var(--border-color)", borderRadius: "16px", padding: "1.5rem", marginBottom: "3rem", boxShadow: "0 4px 20px -2px rgba(10,10,12,0.04)" }}>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.88rem" }}>
               <thead>
-                <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.12)", textAlign: "left" }}>
-                  <th style={{ padding: "0.75rem", color: "#A3A3A3", fontFamily: "var(--font-geist-mono), monospace" }}>METRIC EVALUATED</th>
-                  <th style={{ padding: "0.75rem", color: "#A3A3A3", fontFamily: "var(--font-geist-mono), monospace" }}>YOUR STORE METRIC</th>
-                  <th style={{ padding: "0.75rem", color: "#A3A3A3", fontFamily: "var(--font-geist-mono), monospace" }}>RETAIL BENCHMARK</th>
-                  <th style={{ padding: "0.75rem", color: "#A3A3A3", fontFamily: "var(--font-geist-mono), monospace" }}>DIAGNOSTIC STATUS</th>
+                <tr style={{ borderBottom: "1px solid var(--border-color)", textAlign: "left" }}>
+                  <th style={{ padding: "0.75rem", color: "var(--muted-text)", fontFamily: "var(--font-geist-mono), monospace" }}>METRIC EVALUATED</th>
+                  <th style={{ padding: "0.75rem", color: "var(--muted-text)", fontFamily: "var(--font-geist-mono), monospace" }}>YOUR STORE METRIC</th>
+                  <th style={{ padding: "0.75rem", color: "var(--muted-text)", fontFamily: "var(--font-geist-mono), monospace" }}>RETAIL BENCHMARK</th>
+                  <th style={{ padding: "0.75rem", color: "var(--muted-text)", fontFamily: "var(--font-geist-mono), monospace" }}>DIAGNOSTIC STATUS</th>
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                  <td style={{ padding: "0.75rem", color: "#FFFFFF", fontWeight: 600 }}>Dead Stock &amp; Capital Lock</td>
-                  <td style={{ padding: "0.75rem", color: "#00F2FF" }}>{result.domainScores?.inventory?.summary || "N/A"}</td>
-                  <td style={{ padding: "0.75rem", color: "#A3A3A3" }}>&lt; 12% of total inventory</td>
-                  <td style={{ padding: "0.75rem", fontWeight: 700, color: result.domainScores?.inventory?.score >= 70 ? "#10B981" : "#EF4444" }}>
+                <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
+                  <td style={{ padding: "0.75rem", color: "var(--text-color)", fontWeight: 600 }}>Dead Stock &amp; Capital Lock</td>
+                  <td style={{ padding: "0.75rem", color: "var(--accent-color)" }}>{result.domainScores?.inventory?.summary || "N/A"}</td>
+                  <td style={{ padding: "0.75rem", color: "var(--muted-text)" }}>&lt; 12% of total inventory</td>
+                  <td style={{ padding: "0.75rem", fontWeight: 700, color: result.domainScores?.inventory?.score >= 70 ? "#00BA4A" : "#DC2626" }}>
                     {result.domainScores?.inventory?.status?.replace(/_/g, " ")}
                   </td>
                 </tr>
-                <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                  <td style={{ padding: "0.75rem", color: "#FFFFFF", fontWeight: 600 }}>Average Discounting Rate</td>
-                  <td style={{ padding: "0.75rem", color: "#00F2FF" }}>{result.domainScores?.margins?.summary || "N/A"}</td>
-                  <td style={{ padding: "0.75rem", color: "#A3A3A3" }}>&lt; 10% average markdown</td>
-                  <td style={{ padding: "0.75rem", fontWeight: 700, color: result.domainScores?.margins?.score >= 70 ? "#10B981" : "#EF4444" }}>
+                <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
+                  <td style={{ padding: "0.75rem", color: "var(--text-color)", fontWeight: 600 }}>Average Discounting Rate</td>
+                  <td style={{ padding: "0.75rem", color: "var(--accent-color)" }}>{result.domainScores?.margins?.summary || "N/A"}</td>
+                  <td style={{ padding: "0.75rem", color: "var(--muted-text)" }}>&lt; 10% average markdown</td>
+                  <td style={{ padding: "0.75rem", fontWeight: 700, color: result.domainScores?.margins?.score >= 70 ? "#00BA4A" : "#DC2626" }}>
                     {result.domainScores?.margins?.status?.replace(/_/g, " ")}
                   </td>
                 </tr>
-                <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                  <td style={{ padding: "0.75rem", color: "#FFFFFF", fontWeight: 600 }}>Repeat Buyer Retention</td>
-                  <td style={{ padding: "0.75rem", color: "#00F2FF" }}>{result.domainScores?.retention?.summary || "N/A"}</td>
-                  <td style={{ padding: "0.75rem", color: "#A3A3A3" }}>&gt; 35% repeat purchase rate</td>
-                  <td style={{ padding: "0.75rem", fontWeight: 700, color: result.domainScores?.retention?.score >= 70 ? "#10B981" : "#EF4444" }}>
+                <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
+                  <td style={{ padding: "0.75rem", color: "var(--text-color)", fontWeight: 600 }}>Repeat Buyer Retention</td>
+                  <td style={{ padding: "0.75rem", color: "var(--accent-color)" }}>{result.domainScores?.retention?.summary || "N/A"}</td>
+                  <td style={{ padding: "0.75rem", color: "var(--muted-text)" }}>&gt; 35% repeat purchase rate</td>
+                  <td style={{ padding: "0.75rem", fontWeight: 700, color: result.domainScores?.retention?.score >= 70 ? "#00BA4A" : "#DC2626" }}>
                     {result.domainScores?.retention?.status?.replace(/_/g, " ")}
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ padding: "0.75rem", color: "#FFFFFF", fontWeight: 600 }}>Marketing Lead Conversion</td>
-                  <td style={{ padding: "0.75rem", color: "#00F2FF" }}>{result.domainScores?.marketing?.summary || "N/A"}</td>
-                  <td style={{ padding: "0.75rem", color: "#A3A3A3" }}>&gt; 3.0% store conversion</td>
-                  <td style={{ padding: "0.75rem", fontWeight: 700, color: result.domainScores?.marketing?.score >= 70 ? "#10B981" : "#EF4444" }}>
+                  <td style={{ padding: "0.75rem", color: "var(--text-color)", fontWeight: 600 }}>Marketing Lead Conversion</td>
+                  <td style={{ padding: "0.75rem", color: "var(--accent-color)" }}>{result.domainScores?.marketing?.summary || "N/A"}</td>
+                  <td style={{ padding: "0.75rem", color: "var(--muted-text)" }}>&gt; 3.0% store conversion</td>
+                  <td style={{ padding: "0.75rem", fontWeight: 700, color: result.domainScores?.marketing?.score >= 70 ? "#00BA4A" : "#DC2626" }}>
                     {result.domainScores?.marketing?.status?.replace(/_/g, " ")}
                   </td>
                 </tr>
@@ -302,7 +309,7 @@ export default function AssessmentResultPage() {
         </div>
 
         {/* Top Opportunity Areas */}
-        <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "1.25rem" }}>
+        <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", fontWeight: 700, color: "var(--text-color)", marginBottom: "1.25rem" }}>
           Top Estimated Opportunity Areas
         </h3>
 
@@ -311,23 +318,24 @@ export default function AssessmentResultPage() {
             <div
               key={idx}
               style={{
-                backgroundColor: "#080808",
-                border: "1px solid rgba(255,255,255,0.1)",
+                backgroundColor: "var(--surface-color)",
+                border: "1px solid var(--border-color)",
                 borderRadius: "16px",
                 padding: "1.5rem",
                 display: "grid",
                 gridTemplateColumns: "1fr auto",
                 gap: "1rem",
                 alignItems: "start",
+                boxShadow: "0 4px 20px -2px rgba(10,10,12,0.04)",
               }}
             >
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
                   <span
                     style={{
-                      backgroundColor: opp.priority === "HIGH" ? "rgba(239,68,68,0.15)" : "rgba(245,158,11,0.15)",
-                      color: opp.priority === "HIGH" ? "#EF4444" : "#F59E0B",
-                      border: `1px solid ${opp.priority === "HIGH" ? "rgba(239,68,68,0.3)" : "rgba(245,158,11,0.3)"}`,
+                      backgroundColor: opp.priority === "HIGH" ? "rgba(220,38,38,0.12)" : "rgba(217,119,6,0.12)",
+                      color: opp.priority === "HIGH" ? "#DC2626" : "#D97706",
+                      border: `1px solid ${opp.priority === "HIGH" ? "rgba(220,38,38,0.25)" : "rgba(217,119,6,0.25)"}`,
                       padding: "0.15rem 0.6rem",
                       borderRadius: "6px",
                       fontSize: "0.7rem",
@@ -336,24 +344,24 @@ export default function AssessmentResultPage() {
                   >
                     {opp.priority} PRIORITY
                   </span>
-                  <h4 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.1rem", fontWeight: 700, color: "#FFFFFF", margin: 0 }}>
+                  <h4 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.1rem", fontWeight: 700, color: "var(--text-color)", margin: 0 }}>
                     {opp.title}
                   </h4>
                 </div>
 
-                <p style={{ color: "#A3A3A3", fontSize: "0.9rem", lineHeight: 1.5, marginBottom: "0.75rem" }}>
+                <p style={{ color: "var(--muted-text)", fontSize: "0.9rem", lineHeight: 1.5, marginBottom: "0.75rem" }}>
                   {opp.issueSummary}
                 </p>
 
-                <div style={{ backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "8px", padding: "0.75rem 1rem", fontSize: "0.85rem", color: "#00F2FF" }}>
+                <div style={{ backgroundColor: "rgba(248, 248, 250, 0.8)", border: "1px solid var(--border-color)", borderRadius: "8px", padding: "0.75rem 1rem", fontSize: "0.85rem", color: "var(--accent-color)" }}>
                   <strong>Recommended Next Step:</strong> {opp.recommendedAction}
                 </div>
               </div>
 
               <div style={{ textAlign: "right" }}>
-                <span style={{ fontSize: "0.75rem", color: "#A3A3A3", display: "block", marginBottom: "0.25rem" }}>Est. Annual Value</span>
-                <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.4rem", fontWeight: 800, color: "#00F2FF" }}>
-                  ₹{opp.estimatedAnnualOpportunity.toLocaleString("en-IN")}
+                <span style={{ fontSize: "0.75rem", color: "var(--muted-text)", display: "block", marginBottom: "0.25rem" }}>Est. Annual Value</span>
+                <span style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.4rem", fontWeight: 800, color: "var(--accent-color)" }}>
+                  {formatResultMoney(opp.estimatedAnnualOpportunity)}
                 </span>
               </div>
             </div>
@@ -361,7 +369,7 @@ export default function AssessmentResultPage() {
         </div>
 
         {/* Methodology Disclaimer */}
-        <div style={{ backgroundColor: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", padding: "1.25rem", marginBottom: "3rem", fontSize: "0.8rem", color: "#888", lineHeight: 1.5 }}>
+        <div style={{ backgroundColor: "rgba(10,10,12,0.02)", border: "1px solid var(--border-color)", borderRadius: "12px", padding: "1.25rem", marginBottom: "3rem", fontSize: "0.8rem", color: "var(--muted-text)", lineHeight: 1.5 }}>
           <strong>Diagnostic Methodology Disclaimer:</strong> {result.disclaimer}
         </div>
 
@@ -377,7 +385,7 @@ export default function AssessmentResultPage() {
               bottom: 0, 
               width: "100vw", 
               height: "100vh", 
-              backgroundColor: "rgba(0,0,0,0.88)", 
+              backgroundColor: "rgba(10,10,12,0.5)", 
               backdropFilter: "blur(14px)", 
               WebkitBackdropFilter: "blur(14px)", 
               display: "flex", 
@@ -393,8 +401,8 @@ export default function AssessmentResultPage() {
           >
             <div 
               style={{ 
-                backgroundColor: "#080808", 
-                border: "1px solid rgba(0,242,255,0.35)", 
+                backgroundColor: "var(--surface-color)", 
+                border: "1px solid var(--border-color)", 
                 borderRadius: "20px", 
                 padding: "clamp(1.25rem, 4vw, 1.75rem)", 
                 maxWidth: "460px", 
@@ -403,7 +411,7 @@ export default function AssessmentResultPage() {
                 overflowY: "auto",
                 WebkitOverflowScrolling: "touch",
                 position: "relative",
-                boxShadow: "0 25px 80px rgba(0,0,0,0.95), 0 0 40px rgba(0,242,255,0.12)",
+                boxShadow: "0 25px 80px rgba(10,10,12,0.2)",
                 display: "flex",
                 flexDirection: "column",
                 boxSizing: "border-box",
@@ -416,9 +424,9 @@ export default function AssessmentResultPage() {
                   position: "absolute", 
                   top: "14px", 
                   right: "14px", 
-                  backgroundColor: "rgba(255,255,255,0.06)", 
-                  border: "1px solid rgba(255,255,255,0.1)", 
-                  color: "#FFFFFF", 
+                  backgroundColor: "rgba(10,10,12,0.05)", 
+                  border: "1px solid var(--border-color)", 
+                  color: "var(--text-color)", 
                   width: "32px",
                   height: "32px",
                   borderRadius: "50%",
@@ -437,50 +445,50 @@ export default function AssessmentResultPage() {
               {!leadSubmitted ? (
                 <>
                   <div style={{ paddingRight: "32px", marginBottom: "0.5rem" }}>
-                    <span className="editorial-tag" style={{ fontSize: "0.7rem", color: "#00F2FF" }}>SAVE DIAGNOSTIC &amp; GET BLUEPRINT</span>
-                    <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "clamp(1.25rem, 3vw, 1.45rem)", fontWeight: 800, color: "#FFFFFF", marginTop: "0.35rem", marginBottom: "0.4rem", lineHeight: 1.25 }}>
+                    <span className="editorial-tag" style={{ fontSize: "0.7rem", color: "var(--accent-color)" }}>SAVE DIAGNOSTIC &amp; GET BLUEPRINT</span>
+                    <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "clamp(1.25rem, 3vw, 1.45rem)", fontWeight: 800, color: "var(--text-color)", marginTop: "0.35rem", marginBottom: "0.4rem", lineHeight: 1.25 }}>
                       Get Your 90-Day Growth Blueprint
                     </h3>
                   </div>
                   
-                  <p style={{ color: "rgba(229,229,229,0.75)", fontSize: "0.85rem", marginBottom: "1.25rem", lineHeight: 1.5 }}>
+                  <p style={{ color: "var(--muted-text)", fontSize: "0.85rem", marginBottom: "1.25rem", lineHeight: 1.5 }}>
                     Submit your details to save this diagnostic assessment and receive a personalized 90-day execution plan.
                   </p>
 
                   <form onSubmit={handleLeadSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
                     <div>
-                      <label style={{ display: "block", fontSize: "0.8rem", color: "#A3A3A3", marginBottom: "0.25rem" }}>Your Name *</label>
+                      <label style={{ display: "block", fontSize: "0.8rem", color: "var(--muted-text)", marginBottom: "0.25rem" }}>Your Name *</label>
                       <input
                         type="text"
                         required
                         placeholder="e.g. Rahul Sharma"
                         value={leadForm.name}
                         onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
-                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "10px", color: "#FFFFFF", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
+                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#FFFFFF", border: "1px solid var(--border-color)", borderRadius: "10px", color: "var(--text-color)", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
                       />
                     </div>
 
                     <div>
-                      <label style={{ display: "block", fontSize: "0.8rem", color: "#A3A3A3", marginBottom: "0.25rem" }}>Phone / WhatsApp *</label>
+                      <label style={{ display: "block", fontSize: "0.8rem", color: "var(--muted-text)", marginBottom: "0.25rem" }}>Phone / WhatsApp *</label>
                       <input
                         type="tel"
                         required
                         placeholder="+91 98765 43210"
                         value={leadForm.phone}
                         onChange={(e) => setLeadForm({ ...leadForm, phone: e.target.value })}
-                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "10px", color: "#FFFFFF", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
+                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#FFFFFF", border: "1px solid var(--border-color)", borderRadius: "10px", color: "var(--text-color)", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
                       />
                     </div>
 
                     <div>
-                      <label style={{ display: "block", fontSize: "0.8rem", color: "#A3A3A3", marginBottom: "0.25rem" }}>Email Address *</label>
+                      <label style={{ display: "block", fontSize: "0.8rem", color: "var(--muted-text)", marginBottom: "0.25rem" }}>Email Address *</label>
                       <input
                         type="email"
                         required
                         placeholder="rahul@store.com"
                         value={leadForm.email}
                         onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
-                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#020202", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "10px", color: "#FFFFFF", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
+                        style={{ width: "100%", padding: "0.85rem 1rem", backgroundColor: "#FFFFFF", border: "1px solid var(--border-color)", borderRadius: "10px", color: "var(--text-color)", fontSize: 16, fontFamily: "var(--font-inter), sans-serif", boxSizing: "border-box" }}
                       />
                     </div>
 
@@ -496,11 +504,11 @@ export default function AssessmentResultPage() {
                 </>
               ) : (
                 <div style={{ textAlign: "center", padding: "1rem 0" }}>
-                  <CheckCircle2 style={{ width: "48px", height: "48px", color: "#00F2FF", margin: "0 auto 1rem" }} />
-                  <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", color: "#FFFFFF", marginBottom: "0.5rem" }}>
+                  <CheckCircle2 style={{ width: "48px", height: "48px", color: "var(--accent-color)", margin: "0 auto 1rem" }} />
+                  <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.35rem", color: "var(--text-color)", marginBottom: "0.5rem" }}>
                     Blueprint Request Received!
                   </h3>
-                  <p style={{ color: "rgba(229,229,229,0.8)", fontSize: "0.9rem", marginBottom: "1.5rem", lineHeight: 1.5 }}>
+                  <p style={{ color: "var(--muted-text)", fontSize: "0.9rem", marginBottom: "1.5rem", lineHeight: 1.5 }}>
                     Thank you, {leadForm.name}. Our senior growth strategist will review your diagnostic report and contact you via WhatsApp / email within 24 hours.
                   </p>
                   

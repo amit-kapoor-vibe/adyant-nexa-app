@@ -4,16 +4,17 @@ import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/Navbar";
 import dynamic from "next/dynamic";
 
-const ChatWidget = dynamic(() => import("@/components/ChatWidget").then(mod => mod.ChatWidget), { ssr: false });
+const ChatWidget = dynamic(() => import("@/components/ChatWidget"), { ssr: false });
 
 export function ClientWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
   const isLogin = pathname?.startsWith("/login");
+  const isHome = pathname === "/";
 
   return (
     <>
-      {!isAdmin && !isLogin && <Navbar />}
+      {!isAdmin && !isLogin && !isHome && <Navbar />}
       {children}
       {!isAdmin && !isLogin && <ChatWidget />}
     </>

@@ -8,7 +8,7 @@ const cspHeader = `
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   font-src 'self' https://fonts.gstatic.com;
   img-src 'self' data: https:;
-  connect-src 'self' https://ipapi.co https://generativelanguage.googleapis.com https://www.googleapis.com https://tsupeeqkwmidzdtqcgug.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://open.larksuite.com https://api.linkedin.com https://www.linkedin.com;
+  connect-src 'self' https://ipapi.co https://generativelanguage.googleapis.com https://www.googleapis.com https://tsupeeqkwmidzdtqcgug.supabase.co https://www.google.com https://*.google.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://open.larksuite.com https://api.linkedin.com https://www.linkedin.com;
   frame-src 'self';
   worker-src 'self' blob:;
   object-src 'none';

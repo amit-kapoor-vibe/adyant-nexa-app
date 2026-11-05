@@ -6,22 +6,22 @@
 ───────────────────────────────────────── */
 :root {
   /* Core Design System — Locked */
-  --bg-color: #020202;
-  --text-color: #E5E5E5;
-  --accent-color: #00F2FF;
-  --surface-color: #080808;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --muted-text: rgba(255, 255, 255, 0.4);
-  --glass-bg: rgba(255, 255, 255, 0.025);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --shadow-color: rgba(0, 242, 255, 0.1);
-  --scroll-track: #020202;
+  --bg-color: #F8F8FA;
+  --text-color: #0A0A0C;
+  --accent-color: #0047FF;
+  --surface-color: #FFFFFF;
+  --border-color: rgba(10, 10, 12, 0.08);
+  --muted-text: #60606A;
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(10, 10, 12, 0.08);
+  --shadow-color: rgba(0, 71, 255, 0.1);
+  --scroll-track: #F8F8FA;
 
-  --void-black: #020202;
-  --platinum-white: #E5E5E5;
-  --electric-cyan: #00F2FF;
-  --background: #020202;
-  --foreground: #E5E5E5;
+  --void-black: #F8F8FA;
+  --platinum-white: #0A0A0C;
+  --electric-cyan: #0047FF;
+  --background: #F8F8FA;
+  --foreground: #0A0A0C;
 
   --font-syne: var(--font-syne);
   --font-inter: var(--font-inter);
@@ -41,7 +41,7 @@
 }
 
 html {
-  background-color: #020202;
+  background-color: var(--bg-color);
   cursor: none;
   scroll-behavior: smooth;
   transition: background-color 0.4s ease;
@@ -60,7 +60,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-syne), sans-serif;
-  color: #FFFFFF;
+  color: var(--text-color);
 }
 
 button, input, select, textarea, label {
@@ -68,8 +68,8 @@ button, input, select, textarea, label {
 }
 
 ::selection {
-  background: #00F2FF;
-  color: #000;
+  background: var(--accent-color);
+  color: #FFFFFF;
 }
 
 /* ─────────────────────────────────────────
@@ -86,7 +86,7 @@ button, input, select, textarea, label {
 .editorial-tag {
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--accent-color);
   font-family: var(--font-geist-mono), monospace;
@@ -99,11 +99,11 @@ button, input, select, textarea, label {
 .glitch-shimmer {
   background: linear-gradient(
     90deg,
-    #E5E5E5 0%,
-    #E5E5E5 30%,
-    #00F2FF 50%,
-    #E5E5E5 70%,
-    #E5E5E5 100%
+    #0A0A0C 0%,
+    #0A0A0C 30%,
+    #0047FF 50%,
+    #0A0A0C 70%,
+    #0A0A0C 100%
   );
   background-size: 250% auto;
   color: transparent;
@@ -124,13 +124,13 @@ button, input, select, textarea, label {
 }
 .glitch-text::before,
 .glitch-text::after {
-  content: attr(data-text);
+  display: none;
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
 }
 .glitch-text::before {
-  color: #00F2FF;
+  color: var(--accent-color);
   animation: glitch-1 8s infinite;
   clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
   opacity: 0;
@@ -185,13 +185,13 @@ button, input, select, textarea, label {
    HERO ELEMENTS
 ───────────────────────────────────────── */
 .radial-vignette {
-  background: radial-gradient(ellipse at center, transparent 0%, #020202 85%);
+  background: radial-gradient(ellipse at center, transparent 0%, var(--bg-color) 85%);
 }
 .neural-node {
   position: absolute;
   border-radius: 50%;
-  background: #00F2FF;
-  box-shadow: 0 0 6px #00F2FF;
+  background: var(--accent-color);
+  box-shadow: 0 0 6px rgba(0, 71, 255, 0.4);
 }
 .scan-overlay {
   position: absolute;
@@ -211,21 +211,21 @@ button, input, select, textarea, label {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #00F2FF;
-  box-shadow: 0 0 8px #00F2FF;
+  background: var(--accent-color);
+  box-shadow: 0 0 8px rgba(0, 71, 255, 0.5);
   flex-shrink: 0;
   animation: pulse-glow 2s ease-in-out infinite;
 }
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px #00F2FF, 0 0 16px rgba(0,242,255,0.3); }
-  50% { box-shadow: 0 0 4px #00F2FF, 0 0 8px rgba(0,242,255,0.1); }
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 71, 255, 0.5), 0 0 16px rgba(0, 71, 255, 0.2); }
+  50% { box-shadow: 0 0 4px rgba(0, 71, 255, 0.3), 0 0 8px rgba(0, 71, 255, 0.1); }
 }
 
 /* ─────────────────────────────────────────
    TEXT GLOW
 ───────────────────────────────────────── */
 .text-glow-cyan {
-  text-shadow: 0 0 20px rgba(0,242,255,0.5), 0 0 40px rgba(0,242,255,0.2);
+  text-shadow: 0 0 20px rgba(0, 71, 255, 0.4), 0 0 40px rgba(0, 71, 255, 0.15);
 }
 
 /* ─────────────────────────────────────────
@@ -234,7 +234,7 @@ button, input, select, textarea, label {
 .ambient-orb {
   position: absolute;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 242, 255, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 71, 255, 0.08) 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
   z-index: 0;
@@ -248,7 +248,7 @@ button, input, select, textarea, label {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  color: rgba(255,255,255,0.02);
+  color: rgba(10,10,12,0.03);
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
@@ -264,13 +264,13 @@ button, input, select, textarea, label {
   align-items: center;
   gap: 10px;
   padding: 14px 32px;
-  background: rgba(255,255,255,0.03);
+  background: #0A0A0C;
   color: #fff;
   font-weight: 600;
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid #0A0A0C;
   cursor: none;
   overflow: hidden;
   transition: border-color 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
@@ -286,7 +286,7 @@ button, input, select, textarea, label {
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
-.btn-primary:hover { border-color: rgba(0,242,255,0.5); box-shadow: 0 0 25px rgba(0,242,255,0.12); color: #00F2FF; }
+.btn-primary:hover { background: #0047FF; border-color: #0047FF; box-shadow: 0 8px 24px rgba(0,71,255,0.25); color: #FFFFFF; }
 .btn-primary:hover::before { transform: translateX(100%); }
 
 .btn-secondary {
@@ -295,7 +295,7 @@ button, input, select, textarea, label {
   gap: 8px;
   padding: 14px 32px;
   background: transparent;
-  color: rgba(229,229,229,0.45);
+  color: #0A0A0C;
   font-size: 12px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -305,7 +305,7 @@ button, input, select, textarea, label {
   text-decoration: none;
   white-space: nowrap;
 }
-.btn-secondary:hover { color: #E5E5E5; }
+.btn-secondary:hover { border-color: #0047FF; color: #0047FF; box-shadow: 0 4px 16px rgba(0, 71, 255, 0.1); }
 
 /* ─────────────────────────────────────────
    RESPONSIVE UTILITIES
@@ -375,7 +375,7 @@ button, input, select, textarea, label {
   position: absolute;
   width: 10px;
   height: 10px;
-  border-color: rgba(0, 242, 255, 0.2);
+  border-color: rgba(0, 71, 255, 0.2);
   border-style: solid;
   pointer-events: none;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -409,7 +409,7 @@ button, input, select, textarea, label {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 30%, rgba(2, 2, 2, 0.8) 100%);
+  background: radial-gradient(circle at center, transparent 30%, rgba(248, 248, 250, 0.85) 100%);
   pointer-events: none;
 }
 
@@ -431,11 +431,11 @@ button, input, select, textarea, label {
 }
 
 .glass-panel:hover {
-  border-color: rgba(0, 242, 255, 0.45);
+  border-color: rgba(0, 71, 255, 0.45);
   box-shadow: 
-    0 0 40px rgba(0, 242, 255, 0.08), 
-    0 0 80px rgba(0, 242, 255, 0.04),
-    inset 0 0 12px rgba(0, 242, 255, 0.02);
+    0 0 40px rgba(0, 71, 255, 0.08), 
+    0 0 80px rgba(0, 71, 255, 0.04),
+    inset 0 0 12px rgba(0, 71, 255, 0.02);
 }
 
 /* Cosmic Neon Shimmer Text */
@@ -447,7 +447,7 @@ button, input, select, textarea, label {
    THEME 2.0 ADVANCED MOTION UTILITIES
    ───────────────────────────────────────── */
 .accent-gradient {
-  background: linear-gradient(90deg, #00F2FF 0%, #00AACC 100%);
+  background: linear-gradient(90deg, #0047FF 0%, #0028A0 100%);
 }
 
 @keyframes scroll-down {

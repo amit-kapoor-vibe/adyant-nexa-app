@@ -52,7 +52,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div style={{ minHeight: "100vh", background: "transparent", color: "#E5E5E5", paddingTop: "7rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
+    <div style={{ minHeight: "100vh", background: "transparent", color: "var(--text-color)", paddingTop: "7rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
       <div style={{ maxWidth: "1080px", margin: "0 auto", padding: "0 1.5rem" }}>
         
         {/* Header */}
@@ -64,19 +64,19 @@ export default function AboutPage() {
             We Understand Both Sides of the <br />
             <span style={{ color: "var(--accent-color)" }}>Commerce Equation</span>
           </Heading>
-          <p style={{ color: "rgba(229,229,229,0.75)", fontSize: "1.05rem", maxWidth: "680px", margin: "0 auto", lineHeight: 1.65 }}>
+          <p style={{ color: "var(--muted-text)", fontSize: "1.05rem", maxWidth: "680px", margin: "0 auto", lineHeight: 1.65 }}>
             Most agencies know Facebook ads but don't understand inventory turns. Most retail consultants understand retail stores but can't build high-performance software. We bridge both worlds.
           </p>
         </div>
 
         {/* Narrative Section */}
-        <div style={{ backgroundColor: "#080808", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "24px", padding: "3rem 2.5rem", marginBottom: "4rem" }}>
+        <div style={{ backgroundColor: "var(--surface-color)", border: "1px solid var(--border-color)", boxShadow: "0 4px 20px -2px rgba(10, 10, 12, 0.04)", borderRadius: "24px", padding: "3rem 2.5rem", marginBottom: "4rem" }}>
           <div style={{ maxWidth: "800px", margin: "0 auto" }}>
             <span className="editorial-tag" style={{ display: "block", marginBottom: "12px" }}>OUR ORIGIN</span>
             <Heading level="h2" style={{ marginBottom: "20px" }}>
               Built from Real Retail Floors, Not Theory
             </Heading>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", color: "rgba(229,229,229,0.8)", fontSize: "0.95rem", lineHeight: 1.75 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", color: "var(--muted-text)", fontSize: "0.95rem", lineHeight: 1.75 }}>
               <p>
                 AdyantNexa was founded on a simple observation: India and global markets are full of manufacturers, designers, and retail founders who create extraordinary products—yet struggle to build scalable, profitable D2C businesses around them.
               </p>
@@ -106,15 +106,15 @@ export default function AboutPage() {
                 <div key={item.num} className="glass-panel" style={{ borderRadius: "20px", padding: "2rem", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                   <div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.25rem" }}>
-                      <span style={{ fontSize: "0.85rem", color: "#00F2FF", fontFamily: "var(--font-geist-mono), monospace", fontWeight: 700 }}>
+                      <span style={{ fontSize: "0.85rem", color: "var(--accent-color)", fontFamily: "var(--font-geist-mono), monospace", fontWeight: 700 }}>
                         {item.num}
                       </span>
-                      <Icon size={20} color="#00F2FF" />
+                      <Icon size={20} color="#0047FF" />
                     </div>
-                    <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.15rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "0.75rem", lineHeight: 1.3 }}>
+                    <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.15rem", fontWeight: 700, color: "var(--text-color)", marginBottom: "0.75rem", lineHeight: 1.3 }}>
                       {item.title}
                     </h3>
-                    <p style={{ color: "rgba(229,229,229,0.7)", fontSize: "0.88rem", lineHeight: 1.55, margin: 0 }}>
+                    <p style={{ color: "var(--muted-text)", fontSize: "0.88rem", lineHeight: 1.55, margin: 0 }}>
                       {item.desc}
                     </p>
                   </div>
@@ -125,7 +125,7 @@ export default function AboutPage() {
         </div>
 
         {/* Timeline Evolution */}
-        <div style={{ backgroundColor: "#080808", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "24px", padding: "3rem 2rem", marginBottom: "4.5rem" }}>
+        <div style={{ backgroundColor: "var(--surface-color)", border: "1px solid var(--border-color)", boxShadow: "0 4px 20px -2px rgba(10, 10, 12, 0.04)", borderRadius: "24px", padding: "3rem 2rem", marginBottom: "4.5rem" }}>
           <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
             <span className="editorial-tag" style={{ display: "block", marginBottom: "10px" }}>THE FOUNDATION</span>
             <Heading level="h2" style={{ textAlign: "center" }}>
@@ -136,17 +136,17 @@ export default function AboutPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: "2rem", maxWidth: "750px", margin: "0 auto" }}>
             {milestones.map((m, idx) => (
               <div key={idx} style={{ display: "flex", gap: "1.5rem", alignItems: "flex-start" }}>
-                <div style={{ width: "36px", height: "36px", borderRadius: "50%", backgroundColor: "rgba(0,242,255,0.12)", border: "1px solid #00F2FF", display: "flex", alignItems: "center", justifyContent: "center", color: "#00F2FF", fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, marginTop: "4px" }}>
+                <div style={{ width: "36px", height: "36px", borderRadius: "50%", backgroundColor: "rgba(0,71,255,0.08)", border: "1px solid var(--accent-color)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent-color)", fontFamily: "var(--font-geist-mono), monospace", fontSize: "0.8rem", fontWeight: 700, flexShrink: 0, marginTop: "4px" }}>
                   0{idx + 1}
                 </div>
                 <div>
-                  <span style={{ fontSize: "0.75rem", color: "#00F2FF", fontFamily: "var(--font-geist-mono), monospace", fontWeight: 600, letterSpacing: "0.1em" }}>
+                  <span style={{ fontSize: "0.75rem", color: "var(--accent-color)", fontFamily: "var(--font-geist-mono), monospace", fontWeight: 600, letterSpacing: "0.1em" }}>
                     {m.period}
                   </span>
-                  <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.2rem", fontWeight: 700, color: "#FFFFFF", margin: "4px 0 8px" }}>
+                  <h3 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.2rem", fontWeight: 700, color: "var(--text-color)", margin: "4px 0 8px" }}>
                     {m.title}
                   </h3>
-                  <p style={{ color: "rgba(229,229,229,0.7)", fontSize: "0.9rem", lineHeight: 1.6, margin: 0 }}>
+                  <p style={{ color: "var(--muted-text)", fontSize: "0.9rem", lineHeight: 1.6, margin: 0 }}>
                     {m.desc}
                   </p>
                 </div>
@@ -156,12 +156,12 @@ export default function AboutPage() {
         </div>
 
         {/* Closing CTA */}
-        <div style={{ backgroundColor: "#080808", border: "1px solid rgba(0,242,255,0.25)", borderRadius: "24px", padding: "3rem 1.5rem", textAlign: "center", boxShadow: "0 0 40px rgba(0,242,255,0.06)" }}>
+        <div style={{ backgroundColor: "var(--surface-color)", border: "1px solid var(--border-color)", borderRadius: "24px", padding: "3rem 1.5rem", textAlign: "center", boxShadow: "0 10px 30px rgba(0,71,255,0.06)" }}>
           <span className="editorial-tag" style={{ display: "block", marginBottom: "10px" }}>LET&apos;S WORK TOGETHER</span>
           <Heading level="h2" style={{ textAlign: "center", marginBottom: "12px" }}>
             You Have the Product. We Build the Business.
           </Heading>
-          <p style={{ color: "rgba(229,229,229,0.75)", fontSize: "0.95rem", maxWidth: "540px", margin: "0 auto 2rem", lineHeight: 1.6 }}>
+          <p style={{ color: "var(--muted-text)", fontSize: "0.95rem", maxWidth: "540px", margin: "0 auto 2rem", lineHeight: 1.6 }}>
             Evaluate your store readiness with our 4-minute commercial assessment or speak directly with our senior growth advisory team.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>

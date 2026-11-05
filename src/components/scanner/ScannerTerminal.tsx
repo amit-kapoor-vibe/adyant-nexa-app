@@ -20,8 +20,8 @@ export function ScannerTerminal({ logs }: ScannerTerminalProps) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ minHeight: 250 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-        <Terminal color="#00F2FF" size={20} />
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "#00F2FF" }}>
+        <Terminal color="var(--accent-color)" size={20} />
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--accent-color)" }}>
           Running Diagnostic Protocol...
         </span>
       </div>
@@ -29,7 +29,7 @@ export function ScannerTerminal({ logs }: ScannerTerminalProps) {
         role="log"
         aria-label="Diagnostic terminal output"
         style={{
-          background: "rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.05)",
+          background: "#0A0A0C", border: "1px solid var(--border-color)", borderRadius: "10px",
           padding: 20, height: 200, overflowY: "hidden", position: "relative"
         }}
       >
@@ -41,7 +41,7 @@ export function ScannerTerminal({ logs }: ScannerTerminalProps) {
               animate={{ opacity: 1, x: 0 }}
               style={{
                 fontFamily: "var(--font-geist-mono)", fontSize: 11,
-                color: log.includes("ERROR") ? "#FF3333" : log.includes("WARNING") ? "#C4A35A" : "rgba(255,255,255,0.6)"
+                color: log.includes("ERROR") ? "#FF3333" : log.includes("WARNING") ? "#C4A35A" : "rgba(255,255,255,0.7)"
               }}
             >
               {log}
@@ -49,7 +49,7 @@ export function ScannerTerminal({ logs }: ScannerTerminalProps) {
           ))}
           <div ref={logsEndRef} />
         </div>
-        <div className="scan-overlay" style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.5 }} />
+        <div className="scan-overlay" style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.3 }} />
       </div>
     </motion.div>
   );

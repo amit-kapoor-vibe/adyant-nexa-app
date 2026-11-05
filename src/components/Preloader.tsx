@@ -75,7 +75,7 @@ export function Preloader() {
             position: "fixed",
             inset: 0,
             zIndex: 99999,
-            backgroundColor: "#020202",
+            backgroundColor: "var(--bg-color)",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -91,7 +91,7 @@ export function Preloader() {
               width: "400px",
               height: "400px",
               borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(0, 242, 255, 0.12) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(0, 71, 255, 0.12) 0%, transparent 70%)",
               filter: "blur(60px)",
               pointerEvents: "none",
             }}
@@ -118,7 +118,7 @@ export function Preloader() {
               style={{
                 fontFamily: "var(--font-geist-mono), monospace",
                 fontSize: "0.75rem",
-                color: "#00F2FF",
+                color: "var(--accent-color)",
                 letterSpacing: "0.3em",
                 textTransform: "uppercase",
                 marginBottom: "2rem",
@@ -132,8 +132,8 @@ export function Preloader() {
                   width: "6px",
                   height: "6px",
                   borderRadius: "50%",
-                  backgroundColor: "#00F2FF",
-                  boxShadow: "0 0 10px #00F2FF",
+                  backgroundColor: "var(--accent-color)",
+                  boxShadow: "0 0 10px rgba(0,71,255,0.4)",
                   display: "inline-block",
                 }}
               />
@@ -160,8 +160,8 @@ export function Preloader() {
                   position: "absolute",
                   inset: 0,
                   borderRadius: "50%",
-                  border: "2px dashed rgba(0, 242, 255, 0.35)",
-                  boxShadow: "0 0 25px rgba(0, 242, 255, 0.15)",
+                  border: "2px dashed rgba(0, 71, 255, 0.35)",
+                  boxShadow: "0 0 25px rgba(0, 71, 255, 0.15)",
                 }}
               />
 
@@ -171,8 +171,8 @@ export function Preloader() {
                   position: "absolute",
                   inset: "8px",
                   borderRadius: "50%",
-                  border: "1px solid rgba(255, 255, 255, 0.1)",
-                  backgroundColor: "rgba(8, 8, 8, 0.8)",
+                  border: "1px solid rgba(10, 10, 12, 0.08)",
+                  backgroundColor: "rgba(255, 255, 255, 0.9)",
                   backdropFilter: "blur(8px)",
                 }}
               />
@@ -184,7 +184,7 @@ export function Preloader() {
                     fontFamily: "var(--font-syne), sans-serif",
                     fontSize: "2.5rem",
                     fontWeight: 800,
-                    color: "#FFFFFF",
+                    color: "var(--text-color)",
                     letterSpacing: "-0.03em",
                   }}
                 >
@@ -194,7 +194,7 @@ export function Preloader() {
                   style={{
                     fontFamily: "var(--font-geist-mono), monospace",
                     fontSize: "1rem",
-                    color: "#00F2FF",
+                    color: "var(--accent-color)",
                     fontWeight: 600,
                     marginLeft: "2px",
                   }}
@@ -209,7 +209,7 @@ export function Preloader() {
               style={{
                 width: "100%",
                 height: "3px",
-                backgroundColor: "rgba(255, 255, 255, 0.08)",
+                backgroundColor: "rgba(10, 10, 12, 0.08)",
                 borderRadius: "2px",
                 overflow: "hidden",
                 marginBottom: "1.25rem",
@@ -219,9 +219,9 @@ export function Preloader() {
               <motion.div
                 style={{
                   height: "100%",
-                  backgroundColor: "#00F2FF",
+                  backgroundColor: "var(--accent-color)",
                   width: `${progress}%`,
-                  boxShadow: "0 0 12px #00F2FF",
+                  boxShadow: "0 0 12px rgba(0, 71, 255, 0.4)",
                 }}
               />
             </div>
@@ -244,7 +244,7 @@ export function Preloader() {
                 style={{
                   fontFamily: "var(--font-geist-mono), monospace",
                   fontSize: "0.8rem",
-                  color: currentStepIdx === DIAGNOSTIC_STEPS.length - 1 ? "#00F2FF" : "#A3A3A3",
+                  color: currentStepIdx === DIAGNOSTIC_STEPS.length - 1 ? "var(--accent-color)" : "var(--muted-text)",
                   fontWeight: 500,
                   letterSpacing: "0.02em",
                 }}

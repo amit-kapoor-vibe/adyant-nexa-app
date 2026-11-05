@@ -49,10 +49,10 @@ export const Navbar = () => {
     <>
       <nav style={{ 
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000, 
-        background: scrolled ? "rgba(2,2,2,0.92)" : "transparent", 
+        background: scrolled ? "rgba(248, 248, 250, 0.94)" : "transparent", 
         backdropFilter: scrolled ? "blur(16px)" : "none", 
         WebkitBackdropFilter: scrolled ? "blur(16px)" : "none", 
-        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent", 
+        borderBottom: scrolled ? "1px solid rgba(10, 10, 12, 0.08)" : "1px solid transparent", 
         padding: scrolled ? "14px 0" : "24px 0",
         transition: "all 0.3s ease",
       }}>
@@ -61,7 +61,7 @@ export const Navbar = () => {
           <div style={{ display: "flex", alignItems: "center" }}>
             <Link href="/" onClick={(e) => handleLinkClick(e, "/")} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
               <img src="/Favicon transparent.png" alt="Adyant Nexa" width={26} height={26} />
-              <span style={{ fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, fontSize: 15, color: "#FFFFFF", letterSpacing: "0.02em" }}>
+              <span style={{ fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, fontSize: 15, color: "var(--text-color)", letterSpacing: "0.02em" }}>
                 ADYANT NEXA
               </span>
             </Link>
@@ -79,8 +79,8 @@ export const Navbar = () => {
                     fontWeight: 500, 
                     padding: "8px 16px", 
                     borderRadius: "9999px", 
-                    color: isActive ? "#00F2FF" : "rgba(229,229,229,0.7)", 
-                    background: isActive ? "rgba(0,242,255,0.06)" : "transparent",
+                    color: isActive ? "#0047FF" : "rgba(10, 10, 12, 0.7)", 
+                    background: isActive ? "rgba(0, 71, 255, 0.06)" : "transparent",
                     textDecoration: "none", 
                     transition: "all 0.2s ease" 
                   }}>
@@ -93,12 +93,12 @@ export const Navbar = () => {
           {/* Right Action Button */}
           <div className="desktop-only" style={{ display: "flex", alignItems: "center" }}>
             <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ fontSize: 12, padding: "10px 22px", borderRadius: "9999px", fontWeight: 700 }}>
-              Check D2C Readiness
+              Boutique Audit
             </Link>
           </div>
 
           {/* Mobile Toggle */}
-          <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#FFFFFF", alignItems: "center", padding: 8, borderRadius: "50%", zIndex: 2010, cursor: "pointer" }}>
+          <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} style={{ background: "#FFFFFF", border: "1px solid rgba(10, 10, 12, 0.12)", color: "#0A0A0C", alignItems: "center", padding: 8, borderRadius: "50%", zIndex: 2010, cursor: "pointer" }}>
             {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
@@ -131,18 +131,18 @@ export const Navbar = () => {
               transition={{ type: "spring", damping: 25, stiffness: 220 }}
               style={{ 
                 position: "fixed", top: 0, right: 0, bottom: 0, width: "100%", maxWidth: 300, 
-                background: "#080808", 
-                borderLeft: "1px solid rgba(255,255,255,0.1)",
+                background: "#FFFFFF", 
+                borderLeft: "1px solid rgba(10, 10, 12, 0.08)",
                 padding: "36px 28px", 
                 display: "flex", flexDirection: "column", gap: 24,
                 zIndex: 2100,
-                boxShadow: "-10px 0 40px rgba(0,0,0,0.8)",
+                boxShadow: "-10px 0 40px rgba(0,0,0,0.08)",
                 overflowY: "auto",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: 10, color: "#00F2FF", letterSpacing: "0.2em" }}>NAVIGATION</span>
-                <button onClick={() => setIsOpen(false)} style={{ background: "rgba(255,255,255,0.05)", border: "none", color: "#FFFFFF", padding: 8, borderRadius: "50%", cursor: "pointer" }}>
+                <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: 10, color: "#0047FF", letterSpacing: "0.2em" }}>NAVIGATION</span>
+                <button onClick={() => setIsOpen(false)} style={{ background: "rgba(10, 10, 12, 0.05)", border: "none", color: "#0A0A0C", padding: 8, borderRadius: "50%", cursor: "pointer" }}>
                   <X size={18} />
                 </button>
               </div>
@@ -154,7 +154,7 @@ export const Navbar = () => {
                       fontFamily: "var(--font-syne), sans-serif", 
                       fontSize: 22, 
                       fontWeight: 700, 
-                      color: pathname === link.href ? "#00F2FF" : "#E5E5E5", 
+                      color: pathname === link.href ? "#0047FF" : "#0A0A0C", 
                       textDecoration: "none",
                       display: "block"
                     }}>
@@ -165,7 +165,7 @@ export const Navbar = () => {
               
               <div style={{ marginTop: "auto", paddingTop: 20 }}>
                 <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ textAlign: "center", padding: "14px", display: "block", textDecoration: "none", borderRadius: "9999px", fontWeight: 700, fontSize: 13 }}>
-                  Check D2C Readiness
+                  Boutique Audit
                 </Link>
               </div>
             </motion.div>

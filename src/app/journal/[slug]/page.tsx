@@ -29,7 +29,7 @@ function ArticleContentRenderer({ content }: { content: string }) {
             key={idx}
             href={url}
             style={{
-              color: "#00F2FF",
+              color: "var(--accent-color)",
               textDecoration: "underline",
               textUnderlineOffset: "4px",
               fontWeight: 600,
@@ -45,7 +45,7 @@ function ArticleContentRenderer({ content }: { content: string }) {
       const boldMatch = token.match(/^\*\*(.*?)\*\*$/);
       if (boldMatch) {
         return (
-          <strong key={idx} style={{ color: "#FFFFFF", fontWeight: 700 }}>
+          <strong key={idx} style={{ color: "var(--text-color)", fontWeight: 700 }}>
             {boldMatch[1]}
           </strong>
         );
@@ -68,7 +68,7 @@ function ArticleContentRenderer({ content }: { content: string }) {
               key={bIdx}
               style={{
                 border: "none",
-                borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+                borderTop: "1px solid var(--border-color)",
                 margin: "16px 0",
               }}
             />
@@ -85,7 +85,7 @@ function ArticleContentRenderer({ content }: { content: string }) {
                 fontFamily: "var(--font-syne)",
                 fontWeight: 700,
                 fontSize: "clamp(1.4rem, 3.5vw, 1.85rem)",
-                color: "#FFFFFF",
+                color: "var(--text-color)",
                 marginTop: "16px",
                 marginBottom: "4px",
                 lineHeight: 1.3,
@@ -107,7 +107,7 @@ function ArticleContentRenderer({ content }: { content: string }) {
                 fontFamily: "var(--font-syne)",
                 fontWeight: 700,
                 fontSize: "clamp(1.15rem, 2.5vw, 1.4rem)",
-                color: "#FFFFFF",
+                color: "var(--text-color)",
                 marginTop: "12px",
                 marginBottom: "4px",
                 lineHeight: 1.35,
@@ -128,7 +128,7 @@ function ArticleContentRenderer({ content }: { content: string }) {
                 fontFamily: "var(--font-syne)",
                 fontWeight: 700,
                 fontSize: "1.1rem",
-                color: "#00F2FF",
+                color: "var(--accent-color)",
                 marginTop: "8px",
                 marginBottom: "2px",
               }}
@@ -150,12 +150,12 @@ function ArticleContentRenderer({ content }: { content: string }) {
                 borderRadius: "14px",
                 fontFamily: "var(--font-geist-mono)",
                 fontSize: "12px",
-                color: "#00F2FF",
+                color: "var(--accent-color)",
                 overflowX: "auto",
                 whiteSpace: "pre",
                 lineHeight: 1.5,
-                background: "rgba(0, 242, 255, 0.02)",
-                border: "1px solid rgba(0, 242, 255, 0.15)",
+                background: "rgba(0, 71, 255, 0.03)",
+                border: "1px solid rgba(0, 71, 255, 0.15)",
                 margin: "12px 0",
               }}
             >
@@ -179,13 +179,13 @@ function ArticleContentRenderer({ content }: { content: string }) {
                 return (
                   <div key={lIdx} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                     {isNumbered ? (
-                      <span style={{ color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: "13px", fontWeight: 700, marginTop: "2px" }}>
+                      <span style={{ color: "var(--accent-color)", fontFamily: "var(--font-geist-mono)", fontSize: "13px", fontWeight: 700, marginTop: "2px" }}>
                         {lineTrimmed.match(/^\d+\./)?.[0]}
                       </span>
                     ) : (
-                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#00F2FF", marginTop: "9px", flexShrink: 0 }} />
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent-color)", marginTop: "9px", flexShrink: 0 }} />
                     )}
-                    <span style={{ flex: 1, fontFamily: "var(--font-inter)", fontSize: "clamp(15px, 1.8vw, 16.5px)", lineHeight: 1.75, color: "rgba(229,229,229,0.85)" }}>
+                    <span style={{ flex: 1, fontFamily: "var(--font-inter)", fontSize: "clamp(15px, 1.8vw, 16.5px)", lineHeight: 1.75, color: "var(--text-color)" }}>
                       {parseInline(itemContent)}
                     </span>
                   </div>
@@ -203,7 +203,7 @@ function ArticleContentRenderer({ content }: { content: string }) {
               fontFamily: "var(--font-inter)",
               fontSize: "clamp(15px, 1.8vw, 17px)",
               lineHeight: 1.85,
-              color: "rgba(229,229,229,0.8)",
+              color: "var(--muted-text)",
               margin: 0,
             }}
           >
@@ -278,9 +278,9 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
 
   if (!post) {
     return (
-      <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "#020202", color: "#E5E5E5", padding: "140px 24px", textAlign: "center" }}>
+      <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "transparent", color: "var(--text-color)", padding: "140px 24px", textAlign: "center" }}>
         <h2 style={{ fontFamily: "var(--font-syne)", fontSize: 28, marginBottom: 16 }}>Article in Preparation</h2>
-        <p style={{ color: "rgba(229,229,229,0.7)", marginBottom: 32 }}>This journal intelligence report is currently being formatted.</p>
+        <p style={{ color: "var(--muted-text)", marginBottom: 32 }}>This journal intelligence report is currently being formatted.</p>
         <Link href="/journal" className="btn-primary" style={{ padding: "12px 28px", borderRadius: "9999px" }}>
           Return to Journal
         </Link>
@@ -289,7 +289,7 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
   }
 
   return (
-    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
+    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "transparent", color: "var(--text-color)", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1 }}
@@ -299,14 +299,14 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
         <FadeSection>
           {/* Header Metadata */}
           <div style={{ marginBottom: 40 }}>
-            <Link href="/journal" onClick={(e) => handleNavigate(e, "/journal")} style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "#00F2FF", textDecoration: "none", fontSize: 12, fontFamily: "var(--font-geist-mono)", marginBottom: 24 }}>
+            <Link href="/journal" onClick={(e) => handleNavigate(e, "/journal")} style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "var(--accent-color)", textDecoration: "none", fontSize: 12, fontFamily: "var(--font-geist-mono)", marginBottom: 24 }}>
               <ArrowLeft size={14} /> BACK TO JOURNAL
             </Link>
-            <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 16, display: "block" }}>{post.category.replace(/_/g, " ")}</span>
-            <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1, marginBottom: 24, letterSpacing: "-0.03em" }}>
+            <span className="editorial-tag" style={{ color: "var(--accent-color)", marginBottom: 16, display: "block" }}>{post.category.replace(/_/g, " ")}</span>
+            <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1, marginBottom: 24, letterSpacing: "-0.03em", color: "var(--text-color)" }}>
               {post.title}
             </h1>
-            <div style={{ display: "flex", gap: 20, opacity: 0.5, fontFamily: "var(--font-geist-mono)", fontSize: 12 }}>
+            <div style={{ display: "flex", gap: 20, opacity: 0.7, fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--muted-text)" }}>
               <span>{post.date}</span>
               <span>•</span>
               <span>{post.readTime}</span>
@@ -317,13 +317,13 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
           <ArticleContentRenderer content={post.content} />
 
           {/* Bottom Diagnostic Action Strip */}
-          <div className="glass-panel" style={{ borderRadius: "20px", padding: "clamp(1.5rem, 4vw, 2.5rem)", border: "1px solid rgba(0,242,255,0.2)", marginBottom: 60, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
+          <div className="glass-panel" style={{ borderRadius: "20px", padding: "clamp(1.5rem, 4vw, 2.5rem)", border: "1px solid var(--border-color)", backgroundColor: "var(--surface-color)", boxShadow: "0 4px 20px -2px rgba(10,10,12,0.04)", marginBottom: 60, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20 }}>
             <div>
-              <span className="editorial-tag" style={{ display: "block", marginBottom: 6, fontSize: 10 }}>COMMERCIAL DIAGNOSTIC</span>
-              <h4 style={{ fontFamily: "var(--font-syne)", fontSize: "1.2rem", fontWeight: 700, color: "#FFFFFF", margin: 0 }}>
+              <span className="editorial-tag" style={{ display: "block", marginBottom: 6, fontSize: 10, color: "var(--accent-color)" }}>COMMERCIAL DIAGNOSTIC</span>
+              <h4 style={{ fontFamily: "var(--font-syne)", fontSize: "1.2rem", fontWeight: 700, color: "var(--text-color)", margin: 0 }}>
                 Evaluate Your Store Numbers
               </h4>
-              <p style={{ color: "rgba(229,229,229,0.7)", fontSize: "0.88rem", marginTop: 4, margin: 0 }}>
+              <p style={{ color: "var(--muted-text)", fontSize: "0.88rem", marginTop: 4, margin: 0 }}>
                 Run our mathematical profit leakage &amp; dead stock audit in 4 minutes.
               </p>
             </div>
@@ -338,15 +338,15 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
           </div>
 
           {/* ─── LEAD MAGNET / NEWSLETTER ─── */}
-          <div className="glass-panel" style={{ padding: "clamp(2rem, 6vw, 4rem)", textAlign: "center", position: "relative", overflow: "hidden", borderRadius: "24px" }}>
+          <div className="glass-panel" style={{ padding: "clamp(2rem, 6vw, 4rem)", textAlign: "center", position: "relative", overflow: "hidden", borderRadius: "24px", backgroundColor: "var(--surface-color)", border: "1px solid var(--border-color)", boxShadow: "0 10px 40px rgba(10,10,12,0.05)" }}>
              <div className="ambient-orb" style={{ top: "-50%", left: "-50%", width: "200%", height: "200%", opacity: 0.05 }} />
-             <Mail size={42} color="#00F2FF" style={{ marginBottom: 24, opacity: 0.4 }} />
-             <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 4vw, 2rem)", marginBottom: 12 }}>Join the <span style={{ color: "#00F2FF" }}>Elite.</span></h3>
-             <p style={{ fontFamily: "var(--font-inter)", fontSize: 14, color: "rgba(255,255,255,0.6)", marginBottom: 32, maxWidth: 450, margin: "0 auto 32px", lineHeight: 1.6 }}>
+             <Mail size={42} color="var(--accent-color)" style={{ marginBottom: 24, opacity: 0.8 }} />
+             <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 4vw, 2rem)", marginBottom: 12, color: "var(--text-color)" }}>Join the <span style={{ color: "var(--accent-color)" }}>Elite.</span></h3>
+             <p style={{ fontFamily: "var(--font-inter)", fontSize: 14, color: "var(--muted-text)", marginBottom: 32, maxWidth: 450, margin: "0 auto 32px", lineHeight: 1.6 }}>
                Get our proprietary "Neural Scaling Playbook" and weekly insights on retail margin protection directly in your inbox.
              </p>
              {subscribed ? (
-               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 14 }}>
+               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ color: "var(--accent-color)", fontFamily: "var(--font-geist-mono)", fontSize: 14 }}>
                  Transmission Complete. You have joined the elite.
                </motion.div>
              ) : (
@@ -358,7 +358,7 @@ export default function BlogPost({ params }: { params: Promise<{ slug: string }>
                      placeholder="Enter your business email"
                      value={email}
                      onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                     style={{ flex: "1 1 220px", background: "rgba(255,255,255,0.03)", border: `1px solid ${error ? "#FF4444" : "rgba(255,255,255,0.12)"}`, padding: "14px 18px", color: "#fff", fontFamily: "var(--font-inter)", fontSize: 14, outline: "none", borderRadius: "8px" }}
+                     style={{ flex: "1 1 220px", background: "#FFFFFF", border: `1px solid ${error ? "#FF4444" : "var(--border-color)"}`, padding: "14px 18px", color: "var(--text-color)", fontFamily: "var(--font-inter)", fontSize: 14, outline: "none", borderRadius: "8px" }}
                    />
                    <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "14px 24px", fontSize: 11, fontWeight: 700, opacity: isSubmitting ? 0.6 : 1, cursor: "pointer", borderRadius: "8px", flexShrink: 0 }}>
                      {isSubmitting ? "SYNC..." : "JOIN"}

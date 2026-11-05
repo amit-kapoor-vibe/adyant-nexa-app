@@ -64,7 +64,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
         style={{
           fontSize: "10px",
           letterSpacing: "0.3em",
-          color: "#00F2FF",
+          color: "var(--accent-color)",
           marginBottom: "20px",
           display: "block"
         }}
@@ -77,7 +77,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
         <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="YOU HAVE THE PRODUCT." style={{ display: "block", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1 }}>
           YOU HAVE THE PRODUCT.
         </motion.span>
-        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="WE BUILD THE BUSINESS AROUND IT." style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1, color: "#00F2FF" }}>
+        <motion.span variants={itemVars} className="glitch-text glitch-shimmer name-reveal" data-text="WE BUILD THE BUSINESS AROUND IT." style={{ display: "block", animationDelay: "0.2s", fontSize: "clamp(2.2rem, 6.5vw, 4.8rem)", lineHeight: 1.1, color: "var(--accent-color)" }}>
           WE BUILD THE BUSINESS AROUND IT.
         </motion.span>
       </Heading>
@@ -89,7 +89,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
           fontFamily: "var(--font-geist-mono), monospace",
           fontSize: "13px",
           letterSpacing: "0.08em",
-          color: "rgba(255,255,255,0.7)",
+          color: "var(--muted-text)",
           marginBottom: "24px",
           textTransform: "uppercase",
         }}
@@ -101,7 +101,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
           style={{
             fontFamily: "var(--font-syne), sans-serif",
             fontWeight: 700,
-            color: "#00F2FF",
+            color: "var(--accent-color)",
             textTransform: "none",
             display: "inline-block",
             marginLeft: "6px"
@@ -112,7 +112,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
       </motion.div>
 
       {/* Descriptor */}
-      <motion.p variants={itemVars} className="blur-in" style={{ fontFamily: "var(--font-inter)", fontSize: 15, color: "rgba(255,255,255,0.75)", lineHeight: 1.8, marginBottom: 36, maxWidth: 680, margin: "0 auto 36px", transition: "color 0.4s ease" }}>
+      <motion.p variants={itemVars} className="blur-in" style={{ fontFamily: "var(--font-inter)", fontSize: 15, color: "var(--muted-text)", lineHeight: 1.8, marginBottom: 36, maxWidth: 680, margin: "0 auto 36px", transition: "color 0.4s ease" }}>
         We help product businesses build, launch and scale consumer brands — unifying commerce architecture, performance acquisition, creative storytelling, and retention into one connected growth system.
       </motion.p>
 
@@ -141,7 +141,7 @@ export function HeroContent({ onScan }: HeroContentProps) {
             alignItems: "center",
             gap: "8px",
             textDecoration: "none",
-            boxShadow: "0 0 30px rgba(0,242,255,0.3)",
+            boxShadow: "0 8px 24px rgba(0,71,255,0.2)",
           }}
         >
           CHECK YOUR D2C READINESS <ArrowRight style={{ width: "16px", height: "16px" }} />

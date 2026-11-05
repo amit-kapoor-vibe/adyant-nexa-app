@@ -3,34 +3,30 @@
 import { motion } from "framer-motion";
 
 const KEYWORDS = [
-  "AD-OPTIMIZATION",
+  "INVENTORY-INTELLIGENCE",
   "//",
-  "AI-INTEGRATION",
+  "MARGIN-PRESERVATION",
   "//",
-  "WEB-ARCH",
+  "DIRECT-COMMERCE",
   "//",
-  "NEURAL-MARKETING",
+  "LTV-RETENTION-ENGINE",
   "//",
-  "DIGITAL-OPERATIONS",
+  "CAPITAL-RECOVERY",
   "//",
-  "BESPOKE-SOFTWARE",
+  "DATA-OWNERSHIP",
   "//",
-  "ROI-PRECISION",
+  "OMNICHANNEL-OPS",
   "//",
-  "NEXT.JS",
-  "//",
-  "FRAMER-MOTION",
-  "//",
-  "GSAP-TRIGGERS",
+  "VIP-CLIENTELING",
   "//",
 ];
 
 export const NeuralMarquee = () => {
   return (
-    <div className="w-full py-5 border-y border-white/[0.04] overflow-hidden relative z-20 bg-[var(--void-black)]">
+    <div className="w-full py-5 border-y border-[rgba(10,10,12,0.08)] overflow-hidden relative z-20 bg-[var(--bg-color)]">
       {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[var(--void-black)] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[var(--void-black)] to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[var(--bg-color)] to-transparent z-10 pointer-events-none" />
 
       <motion.div
         className="flex items-center gap-12 whitespace-nowrap"

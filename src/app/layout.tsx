@@ -3,7 +3,6 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import { Syne, Inter, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { CustomCursor } from "@/components/CustomCursor";
-import { ChatWidget } from "@/components/ChatWidget";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navbar } from "@/components/Navbar";
 import { GlobalUI } from "@/components/GlobalUI";

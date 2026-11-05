@@ -10,7 +10,7 @@ export default function GlobalBackground() {
         inset: 0,
         zIndex: -1,
         pointerEvents: "none",
-        background: "#020202",
+        background: "var(--bg-color)",
         overflow: "hidden",
       }}
     >
@@ -25,7 +25,7 @@ export default function GlobalBackground() {
           height: "650px",
           borderRadius: "50%",
           background:
-            "radial-gradient(ellipse at center, rgba(0, 242, 255, 0.075) 0%, rgba(0, 170, 255, 0.025) 45%, transparent 72%)",
+            "radial-gradient(ellipse at center, rgba(0, 71, 255, 0.06) 0%, rgba(0, 71, 255, 0.02) 45%, transparent 72%)",
           filter: "blur(120px)",
           pointerEvents: "none",
         }}
@@ -41,7 +41,7 @@ export default function GlobalBackground() {
           height: "600px",
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(0, 242, 255, 0.035) 0%, rgba(0, 100, 255, 0.01) 50%, transparent 70%)",
+            "radial-gradient(circle, rgba(0, 71, 255, 0.03) 0%, rgba(0, 71, 255, 0.01) 50%, transparent 70%)",
           filter: "blur(140px)",
           pointerEvents: "none",
         }}
@@ -57,7 +57,7 @@ export default function GlobalBackground() {
           height: "550px",
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(0, 242, 255, 0.03) 0%, transparent 65%)",
+            "radial-gradient(circle, rgba(0, 71, 255, 0.025) 0%, transparent 65%)",
           filter: "blur(130px)",
           pointerEvents: "none",
         }}
@@ -81,7 +81,7 @@ export default function GlobalBackground() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "radial-gradient(circle at center, transparent 35%, rgba(2, 2, 2, 0.85) 100%)",
+            "radial-gradient(circle at center, transparent 40%, rgba(248, 248, 250, 0.85) 100%)",
         }}
       />
     </div>

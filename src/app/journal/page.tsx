@@ -381,7 +381,7 @@ export default function BlogListing() {
     });
 
   return (
-    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
+    <div style={{ position: "relative", zIndex: 10, minHeight: "100vh", background: "transparent", color: "var(--text-color)", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
 
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1, y: isNavigating ? 20 : 0 }}
@@ -389,14 +389,14 @@ export default function BlogListing() {
         style={{ padding: "clamp(6rem, 12vw, 8.5rem) clamp(1rem, 4vw, 1.5rem) 5rem", maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 10 }}
       >
         <FadeSection>
-          <span className="editorial-tag" style={{ display: "block", marginBottom: 20, color: "#00F2FF" }}>The Neural Journal</span>
-          <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 6vw, 4.5rem)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "clamp(2rem, 5vw, 3.5rem)" }}>
-            Insights for <br /> <span style={{ color: "rgba(255,255,255,0.25)" }}>Digital Dominance.</span>
+          <span className="editorial-tag" style={{ display: "block", marginBottom: 20, color: "var(--accent-color)" }}>The Neural Journal</span>
+          <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(2.2rem, 6vw, 4.5rem)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: "clamp(2rem, 5vw, 3.5rem)", color: "var(--text-color)" }}>
+            Insights for <br /> <span style={{ color: "rgba(10,10,12,0.3)" }}>Digital Dominance.</span>
           </h1>
         </FadeSection>
 
         {/* ─── FILTERS & CONTROLS ─── */}
-        <div style={{ marginBottom: "clamp(2rem, 5vw, 3.5rem)", display: "flex", flexWrap: "wrap", gap: 20, alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)", padding: "18px 0" }}>
+        <div style={{ marginBottom: "clamp(2rem, 5vw, 3.5rem)", display: "flex", flexWrap: "wrap", gap: 20, alignItems: "center", justifyContent: "space-between", borderTop: "1px solid var(--border-color)", borderBottom: "1px solid var(--border-color)", padding: "18px 0" }}>
 
           {/* Categories */}
           <div style={{
@@ -424,7 +424,7 @@ export default function BlogListing() {
                 style={{
                   background: "none",
                   border: "none",
-                  color: activeCategory === cat ? "#00F2FF" : "rgba(255,255,255,0.4)",
+                  color: activeCategory === cat ? "var(--accent-color)" : "var(--muted-text)",
                   fontFamily: "var(--font-geist-mono)",
                   fontSize: 11,
                   letterSpacing: "0.15em",
@@ -444,9 +444,9 @@ export default function BlogListing() {
             type="button"
             onClick={() => setSortOrder(prev => prev === "asc" ? "desc" : "asc")}
             style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.12)",
-              color: "#fff",
+              background: "var(--surface-color)",
+              border: "1px solid var(--border-color)",
+              color: "var(--text-color)",
               padding: "8px 16px",
               borderRadius: "8px",
               fontFamily: "var(--font-geist-mono)",
@@ -456,10 +456,11 @@ export default function BlogListing() {
               display: "flex",
               alignItems: "center",
               gap: 8,
-              touchAction: "manipulation"
+              touchAction: "manipulation",
+              boxShadow: "0 2px 8px rgba(10,10,12,0.04)"
             }}
           >
-            ORDER: <span style={{ color: "#00F2FF" }}>{sortOrder === "desc" ? "LATEST FIRST" : "OLDEST FIRST"}</span>
+            ORDER: <span style={{ color: "var(--accent-color)" }}>{sortOrder === "desc" ? "LATEST FIRST" : "OLDEST FIRST"}</span>
           </button>
         </div>
 
@@ -471,24 +472,24 @@ export default function BlogListing() {
                 onClick={(e) => handleNavigate(e, `/journal/${post.slug}`)}
                 style={{ textDecoration: "none", color: "inherit", display: "block", height: "100%" }}
               >
-                <div className="glass-panel" style={{ padding: "clamp(1.5rem, 3.5vw, 2.5rem)", height: "100%", borderRadius: "20px", display: "flex", flexDirection: "column", gap: 18, transition: "border-color 0.3s ease, background 0.3s ease", border: "1px solid rgba(255,255,255,0.08)" }}
+                <div className="glass-panel" style={{ padding: "clamp(1.5rem, 3.5vw, 2.5rem)", height: "100%", borderRadius: "20px", display: "flex", flexDirection: "column", gap: 18, transition: "border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease", border: "1px solid var(--border-color)", backgroundColor: "var(--surface-color)", boxShadow: "0 4px 20px -2px rgba(10,10,12,0.04)" }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = "rgba(0,242,255,0.4)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                    e.currentTarget.style.borderColor = "var(--accent-color)";
+                    e.currentTarget.style.boxShadow = "0 8px 30px rgba(0,71,255,0.08)";
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.015)";
+                    e.currentTarget.style.borderColor = "var(--border-color)";
+                    e.currentTarget.style.boxShadow = "0 4px 20px -2px rgba(10,10,12,0.04)";
                   }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span className="editorial-tag" style={{ fontSize: 9, color: "#00F2FF" }}>{post.category.replace(/_/g, " ")}</span>
-                    <div style={{ display: "flex", gap: 16, opacity: 0.5 }}>
-                      <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, fontFamily: "var(--font-geist-mono)" }}><Calendar size={12} /> {post.date}</span>
+                    <span className="editorial-tag" style={{ fontSize: 9, color: "var(--accent-color)" }}>{post.category.replace(/_/g, " ")}</span>
+                    <div style={{ display: "flex", gap: 16, opacity: 0.7 }}>
+                      <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "var(--muted-text)" }}><Calendar size={12} /> {post.date}</span>
                     </div>
                   </div>
-                  <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "clamp(1.15rem, 2vw, 1.4rem)", lineHeight: 1.25, color: "#FFFFFF" }}>{post.title}</h2>
-                  <p style={{ fontFamily: "var(--font-inter)", fontSize: 13.5, color: "rgba(229,229,229,0.65)", lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em" }}>
+                  <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "clamp(1.15rem, 2vw, 1.4rem)", lineHeight: 1.25, color: "var(--text-color)" }}>{post.title}</h2>
+                  <p style={{ fontFamily: "var(--font-inter)", fontSize: 13.5, color: "var(--muted-text)", lineHeight: 1.6, flex: 1 }}>{post.excerpt}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, color: "var(--accent-color)", fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em" }}>
                     READ ANALYSIS <ArrowRight size={14} />
                   </div>
                 </div>
@@ -499,14 +500,14 @@ export default function BlogListing() {
 
         {/* ─── NEWSLETTER & RETURN ─── */}
         <FadeSection delay={0.4}>
-          <div style={{ marginTop: 100, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 100, textAlign: "center" }}>
-            <div className="glass-panel" style={{ padding: "60px 28px", maxWidth: 800, margin: "0 auto 60px", background: "rgba(0,242,255,0.01)" }}>
-              <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 20, display: "block" }}>Subscribe to Intelligence_</span>
-              <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 4vw, 2.5rem)", color: "#fff", marginBottom: 32 }}>
-                Get the <span style={{ color: "#00F2FF" }}>Neural Scaling</span> Playbook.
+          <div style={{ marginTop: 100, borderTop: "1px solid var(--border-color)", paddingTop: 100, textAlign: "center" }}>
+            <div className="glass-panel" style={{ padding: "60px 28px", maxWidth: 800, margin: "0 auto 60px", background: "var(--surface-color)", border: "1px solid var(--border-color)", boxShadow: "0 10px 40px rgba(10,10,12,0.05)" }}>
+              <span className="editorial-tag" style={{ color: "var(--accent-color)", marginBottom: 20, display: "block" }}>Subscribe to Intelligence_</span>
+              <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "clamp(1.5rem, 4vw, 2.5rem)", color: "var(--text-color)", marginBottom: 32 }}>
+                Get the <span style={{ color: "var(--accent-color)" }}>Neural Scaling</span> Playbook.
               </h3>
               {subscribed ? (
-                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 14 }}>
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} style={{ color: "var(--accent-color)", fontFamily: "var(--font-geist-mono)", fontSize: 14 }}>
                   Transmission Complete. You have joined the elite.
                 </motion.div>
               ) : (
@@ -518,7 +519,7 @@ export default function BlogListing() {
                       placeholder="Business Email"
                       value={email}
                       onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                      style={{ flex: 1, minWidth: 200, background: "rgba(255,255,255,0.03)", border: `1px solid ${error ? "#FF4444" : "rgba(255,255,255,0.1)"}`, padding: "16px 24px", color: "#fff", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none" }}
+                      style={{ flex: 1, minWidth: 200, background: "#FFFFFF", border: `1px solid ${error ? "#FF4444" : "var(--border-color)"}`, padding: "16px 24px", color: "var(--text-color)", fontFamily: "var(--font-geist-mono)", fontSize: 13, outline: "none", borderRadius: "10px" }}
                     />
                     <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ padding: "0 32px", fontSize: 11, height: 50, opacity: isSubmitting ? 0.6 : 1, cursor: "pointer" }}>
                       {isSubmitting ? "SYNCING..." : "JOIN ELITE"}
@@ -535,7 +536,7 @@ export default function BlogListing() {
               style={{
                 fontFamily: "var(--font-geist-mono)",
                 fontSize: 10,
-                color: "rgba(255,255,255,0.3)",
+                color: "var(--muted-text)",
                 textDecoration: "none",
                 letterSpacing: "0.4em",
                 textTransform: "uppercase",
@@ -543,8 +544,8 @@ export default function BlogListing() {
                 alignItems: "center",
                 gap: 12
               }}
-              onMouseEnter={e => e.currentTarget.style.color = "#00F2FF"}
-              onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.3)"}
+              onMouseEnter={e => e.currentTarget.style.color = "var(--accent-color)"}
+              onMouseLeave={e => e.currentTarget.style.color = "var(--muted-text)"}
             >
               <ArrowLeft size={12} /> BACK TO GENESIS
             </Link>
