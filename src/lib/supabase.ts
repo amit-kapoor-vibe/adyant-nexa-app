@@ -13,6 +13,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     flowType: 'pkce',            // Use secure PKCE flow (authorization code exchange)
     persistSession: true,        // Store session in localStorage
     autoRefreshToken: false,     // Avoid unhandled background fetch failures if offline or project paused
+    lock: false as any,          // Avoid browser lock contention on concurrent mounts
   },
   global: {
     fetch: async (...args) => {
