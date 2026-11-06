@@ -909,7 +909,7 @@ export default function AdyantNexaRealEstateOS() {
         </nav>
 
         <div className="nav-actions">
-          <Link href="/admin" className="btn-pill-secondary">
+          <Link href="/terminal" className="btn-pill-secondary">
             Command Centre →
           </Link>
           <a
@@ -949,7 +949,7 @@ export default function AdyantNexaRealEstateOS() {
             >
               Launch Live WhatsApp Demo ↗
             </a>
-            <Link href="/admin" className="btn-pill-secondary btn-cta-lg">
+            <Link href="/terminal" className="btn-pill-secondary btn-cta-lg">
               Explore Internal Terminal
             </Link>
           </div>
@@ -1135,7 +1135,7 @@ export default function AdyantNexaRealEstateOS() {
             <span>·</span>
             <a href="#roi">Yield Calculator</a>
             <span>·</span>
-            <Link href="/admin">Command Centre ↗</Link>
+            <Link href="/terminal">Command Centre ↗</Link>
           </div>
 
           <div className="footer-meta-bar">

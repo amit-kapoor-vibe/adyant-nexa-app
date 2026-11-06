@@ -103,3 +103,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
+
+export async function GET() {
+  const engineUrl = process.env.NEXT_PUBLIC_ENGINE_URL || "http://localhost:3050";
+  try {
+    const res = await fetch(`${engineUrl}/api/leads`, { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      return NextResponse.json(data);
+    }
+  } catch {
+    // Engine offline or unreachable
+  }
+  return NextResponse.json([]);
+}

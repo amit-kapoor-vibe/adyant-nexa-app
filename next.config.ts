@@ -20,6 +20,16 @@ const cspHeader = `
 const nextConfig: NextConfig = {
   turbopack: {},
   output: 'standalone',
+  async rewrites() {
+    const engineUrl = process.env.NEXT_PUBLIC_ENGINE_URL || 'http://localhost:3050';
+    return [
+      { source: '/api/leads', destination: `${engineUrl}/api/leads` },
+      { source: '/api/send-message', destination: `${engineUrl}/api/send-message` },
+      { source: '/api/toggle-takeover', destination: `${engineUrl}/api/toggle-takeover` },
+      { source: '/api/dispatch-brochure', destination: `${engineUrl}/api/dispatch-brochure` },
+      { source: '/api/schedule-meet', destination: `${engineUrl}/api/schedule-meet` },
+    ];
+  },
   async headers() {
     // In development mode, disable restrictive CSP so Turbopack HMR and WebSockets connect freely
     if (isDev) {

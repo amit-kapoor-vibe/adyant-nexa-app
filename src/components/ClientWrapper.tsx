@@ -10,13 +10,14 @@ export function ClientWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
   const isLogin = pathname?.startsWith("/login");
+  const isTerminal = pathname?.startsWith("/terminal");
   const isHome = pathname === "/";
 
   return (
     <>
-      {!isAdmin && !isLogin && !isHome && <Navbar />}
+      {!isAdmin && !isLogin && !isHome && !isTerminal && <Navbar />}
       {children}
-      {!isAdmin && !isLogin && <ChatWidget />}
+      {!isAdmin && !isLogin && !isTerminal && <ChatWidget />}
     </>
   );
 }
