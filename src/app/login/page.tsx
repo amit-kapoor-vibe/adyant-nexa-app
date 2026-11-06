@@ -88,7 +88,7 @@ export default function LoginPage() {
                 Neural Authorization
               </h1>
               <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 40, letterSpacing: "0.1em" }}>
-                ESTABLISHING SECURE HANDSHAKE FOR PRICING ACCESS.
+                CENTRAL COMMAND // VERIFYING SECURE ADMINISTRATIVE CLEARANCE.
               </p>
 
               <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>

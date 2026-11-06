@@ -21,7 +21,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Invalid URL", details: parsed.error.flatten().fieldErrors }, { status: 400 });
     }
 
-    const psiKey = process.env.PSI_API_KEY || "AIzaSyB_sUcZiXO5hw4_OWUInJR0Lf5VewBFbRU";
+    const psiKey = process.env.PSI_API_KEY || "";
     const keyQuery = psiKey ? `&key=${psiKey}` : "";
     const psiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(parsed.data.url)}&strategy=mobile${keyQuery}`;
     

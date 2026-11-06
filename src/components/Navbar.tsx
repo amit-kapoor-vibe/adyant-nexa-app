@@ -26,8 +26,8 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { label: "Growth System", href: "/#growth-system" },
-    { label: "What We Do", href: "/#what-we-do" },
+    { label: "Architecture", href: "/#architecture" },
+    { label: "Intelligence", href: "/#intelligence" },
     { label: "Tools", href: "/tools" },
     { label: "How We Work", href: "/how-it-works" },
     { label: "About", href: "/about" },

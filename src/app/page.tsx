@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { SYSTEM_PILLARS, FLEET_PORTFOLIO } from "@/data/fleetData";
+
+const RoiYieldCalculator = dynamic(
+  () => import("@/components/roi/RoiYieldCalculator").then((mod) => mod.RoiYieldCalculator),
+  { ssr: false }
+);
 
 export default function AdyantNexaRealEstateOS() {
-  const [leads, setLeads] = useState<number>(300);
-
-  const extraViewings = Math.round(leads * 0.15);
-  const commission = Math.round(extraViewings * 0.1 * 40000);
 
   return (
     <div className="an-page-wrapper">
@@ -909,6 +911,10 @@ export default function AdyantNexaRealEstateOS() {
           <a href="#intelligence">BANT Intelligence</a>
           <a href="#portfolio">Developer Fleet</a>
           <a href="#roi">Yield Calculator</a>
+          <Link href="/tools">Tools</Link>
+          <Link href="/about">About</Link>
+          <Link href="/journal">Journal</Link>
+          <Link href="/contact">Contact</Link>
         </nav>
 
         <div className="nav-actions">
@@ -1066,47 +1072,19 @@ export default function AdyantNexaRealEstateOS() {
         </div>
 
         <div className="pillar-grid">
-          <div className="pillar-box">
-            <div className="pillar-img-box">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/luxury-penthouse.jpg" alt="Downtown Luxury Penthouse" className="pillar-img" />
+          {SYSTEM_PILLARS.map((pillar) => (
+            <div key={pillar.id} className="pillar-box">
+              <div className="pillar-img-box">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={pillar.image} alt={pillar.imageAlt} className="pillar-img" />
+              </div>
+              <div>
+                <div className="pillar-index">{pillar.index}</div>
+                <h3 className="pillar-title">{pillar.title}</h3>
+                <p className="pillar-text">{pillar.desc}</p>
+              </div>
             </div>
-            <div>
-              <div className="pillar-index">01 // BANT FILTERING</div>
-              <h3 className="pillar-title">Real Budgets Only</h3>
-              <p className="pillar-text">
-                Filters out window shoppers before calling your team. Confirms Golden Visa eligibility (AED 2M+), down payments, and unit preferences directly on WhatsApp.
-              </p>
-            </div>
-          </div>
-
-          <div className="pillar-box">
-            <div className="pillar-img-box">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/modern-interior.jpg" alt="Contemporary Luxury Interior" className="pillar-img" />
-            </div>
-            <div>
-              <div className="pillar-index">02 // VIP SCHEDULING</div>
-              <h3 className="pillar-title">Lock Viewings Instantly</h3>
-              <p className="pillar-text">
-                Syncs with your brokers&apos; Google Calendar and Calendly. Sends WhatsApp viewing pins and calendar invites to high-intent buyers in under 2 minutes.
-              </p>
-            </div>
-          </div>
-
-          <div className="pillar-box">
-            <div className="pillar-img-box">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/prime-villa.jpg" alt="Prime Dubai Villa Residence" className="pillar-img" />
-            </div>
-            <div>
-              <div className="pillar-index">03 // LIVE SUPERVISION</div>
-              <h3 className="pillar-title">1-Click Human Takeover</h3>
-              <p className="pillar-text">
-                Sales directors can monitor live incoming chats in the Command Centre and take over anytime without alerting the buyer or breaking conversational flow.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -1126,127 +1104,27 @@ export default function AdyantNexaRealEstateOS() {
         </div>
 
         <div className="portfolio-grid">
-          <div className="portfolio-card">
-            <div className="portfolio-img-wrap">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/dubai-skyline.jpg" alt="Emaar Downtown Dubai" />
-              <span className="portfolio-dev-pill">EMAAR PROPERTIES</span>
-            </div>
-            <div className="portfolio-card-content">
-              <div>
-                <div className="portfolio-title">Downtown Dubai &amp; Creek Harbour</div>
-                <div className="portfolio-specs">FROM AED 2.4M · 80/20 HANDOVER · 9.2% YIELD</div>
-                <p className="portfolio-desc">
-                  High-floor luxury residences with unobstructed Burj Khalifa panoramas and direct private access to Dubai Mall.
-                </p>
+          {FLEET_PORTFOLIO.map((property) => (
+            <div key={property.id} className="portfolio-card">
+              <div className="portfolio-img-wrap">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={property.image} alt={property.title} />
+                <span className="portfolio-dev-pill">{property.developer}</span>
+              </div>
+              <div className="portfolio-card-content">
+                <div>
+                  <div className="portfolio-title">{property.title}</div>
+                  <div className="portfolio-specs">{property.specs}</div>
+                  <p className="portfolio-desc">{property.desc}</p>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="portfolio-card">
-            <div className="portfolio-img-wrap">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/prime-villa.jpg" alt="Sobha Hartland II" />
-              <span className="portfolio-dev-pill">SOBHA REALTY</span>
-            </div>
-            <div className="portfolio-card-content">
-              <div>
-                <div className="portfolio-title">Sobha Hartland II Lagoon Villas</div>
-                <div className="portfolio-specs">FROM AED 3.8M · 1% MONTHLY PLAN · GOLDEN VISA</div>
-                <p className="portfolio-desc">
-                  Waterfront crystal lagoon sanctuary featuring biophilic European design finishes and private botanical parklands.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="portfolio-card">
-            <div className="portfolio-img-wrap">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/images/waterfront-towers.jpg" alt="Dubai Marina Penthouses" />
-              <span className="portfolio-dev-pill">DUBAI MARINA // PALM</span>
-            </div>
-            <div className="portfolio-card-content">
-              <div>
-                <div className="portfolio-title">Marina Waterfront Penthouses</div>
-                <div className="portfolio-specs">FROM AED 2.1M · 10% SHORT-TERM YIELD · YACHT BERTH</div>
-                <p className="portfolio-desc">
-                  Prime high-occupancy coastal units optimized for ultra-high rental yields and short-stay executive hospitality.
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
       {/* Section 3: Interactive Agency ROI Model */}
-      <section className="roi-section" id="roi">
-        <div className="roi-grid">
-          <div>
-            <div
-              className="tag-mono"
-              style={{
-                background: "rgba(0, 71, 255, 0.2)",
-                color: "var(--blue-tint)",
-                marginBottom: 16,
-                display: "inline-block",
-              }}
-            >
-              AGENCY REVENUE IMPACT
-            </div>
-            <h2 className="roi-h2">
-              Stop burning ad spend.
-              <em>Capture every lead.</em>
-            </h2>
-            <p className="roi-sub">
-              When ad leads wait more than 15 minutes, conversion rates drop by 391%. Adyant Nexa eliminates the leak entirely by engaging in 1.2 seconds.
-            </p>
-
-            <a
-              href="https://wa.me/?text=Hi%2C%20I%20am%20a%20Dubai%20Real%20Estate%20Agency%20Principal.%20I%20want%20to%20pilot%20Adyant%20Nexa."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-pill-primary"
-              style={{
-                background: "var(--cobalt)",
-                borderColor: "var(--cobalt)",
-                padding: "14px 28px",
-              }}
-            >
-              Claim Pilot Deployment ↗
-            </a>
-          </div>
-
-          <div className="slider-container">
-            <div className="slider-top">
-              <span className="slider-lbl">MONTHLY INBOUND PROPERTY LEADS</span>
-              <span className="slider-val">{leads}</span>
-            </div>
-            <input
-              type="range"
-              min="50"
-              max="1000"
-              step="25"
-              value={leads}
-              className="styled-range"
-              onChange={(e) => setLeads(Number(e.target.value))}
-            />
-
-            <div className="result-split">
-              <div>
-                <div className="result-num">+{extraViewings}</div>
-                <div className="result-lbl">Extra Qualified Viewings Booked / mo</div>
-              </div>
-              <div>
-                <div className="result-num" style={{ color: "var(--cyan-bright)" }}>
-                  AED {commission.toLocaleString()}
-                </div>
-                <div className="result-lbl">Estimated Commission Uplift (@ 2% on AED 2M)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <RoiYieldCalculator />
 
       {/* Footer */}
       <footer className="site-footer">
@@ -1266,6 +1144,16 @@ export default function AdyantNexaRealEstateOS() {
             <a href="#portfolio">Developer Fleet</a>
             <span>·</span>
             <a href="#roi">Yield Calculator</a>
+            <span>·</span>
+            <Link href="/tools">Diagnostic Tools</Link>
+            <span>·</span>
+            <Link href="/how-it-works">How We Work</Link>
+            <span>·</span>
+            <Link href="/about">About</Link>
+            <span>·</span>
+            <Link href="/journal">Journal</Link>
+            <span>·</span>
+            <Link href="/contact">Contact</Link>
             <span>·</span>
             <Link href="/admin">Command Centre ↗</Link>
           </div>

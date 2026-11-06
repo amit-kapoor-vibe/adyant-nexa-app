@@ -52,8 +52,17 @@ export const TransitionProvider = ({ children }: { children: React.ReactNode }) 
           if (lenis) lenis.scrollTo(top, { immediate: true });
         }
       } else if (target.startsWith("/#")) {
-        // For cross-page hashes, we push the route and let the browser/Next.js handle the scroll
-        router.push(target);
+        if (typeof window !== "undefined" && (window.location.pathname === "/" || window.location.pathname === "")) {
+          const id = target.replace("/#", "");
+          const element = document.getElementById(id);
+          if (element) {
+            const top = element.getBoundingClientRect().top + window.pageYOffset;
+            window.scrollTo({ top, behavior: "smooth" });
+            if (lenis) lenis.scrollTo(top, { immediate: false });
+          }
+        } else {
+          router.push(target);
+        }
       } else {
         router.push(target);
       }
