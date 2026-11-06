@@ -27,12 +27,21 @@ export const TransitionProvider = ({ children }: { children: React.ReactNode }) 
 
   React.useEffect(() => {
     const detectLocation = async () => {
-      if (window.location.hostname === "localhost") return;
+      const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+      if (
+        !hostname ||
+        hostname === "localhost" ||
+        hostname === "127.0.0.1" ||
+        hostname === "::1" ||
+        hostname.endsWith(".local")
+      ) {
+        return;
+      }
       try {
         const res = await fetch("https://ipapi.co/json/");
         if (!res.ok) return;
         const data = await res.json();
-        if (data.country_code === "IN") setCurrency("INR");
+        if (data && data.country_code === "IN") setCurrency("INR");
       } catch { /* network or JSON errors are intentionally ignored */ }
     };
     detectLocation();

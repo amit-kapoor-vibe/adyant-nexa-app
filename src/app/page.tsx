@@ -1,13 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { SYSTEM_PILLARS, FLEET_PORTFOLIO } from "@/data/fleetData";
-
-const RoiYieldCalculator = dynamic(
-  () => import("@/components/roi/RoiYieldCalculator").then((mod) => mod.RoiYieldCalculator),
-  { ssr: false }
-);
+import { RoiYieldCalculator } from "@/components/roi/RoiYieldCalculator";
 
 export default function AdyantNexaRealEstateOS() {
 
@@ -142,15 +137,15 @@ export default function AdyantNexaRealEstateOS() {
           overflow: hidden;
         }
 
-        .ghost-watermark {
+        .ghost-watermark-card {
           position: absolute;
-          top: 40px;
-          right: -20px;
+          right: -10px;
+          bottom: -15px;
           font-family: var(--font-syne), sans-serif;
           font-weight: 800;
-          font-size: clamp(8rem, 22vw, 19rem);
+          font-size: clamp(5rem, 12vw, 9rem);
           line-height: 0.8;
-          color: rgba(10, 10, 12, 0.03);
+          color: rgba(255, 255, 255, 0.035);
           user-select: none;
           pointer-events: none;
           letter-spacing: -0.04em;
@@ -911,10 +906,6 @@ export default function AdyantNexaRealEstateOS() {
           <a href="#intelligence">BANT Intelligence</a>
           <a href="#portfolio">Developer Fleet</a>
           <a href="#roi">Yield Calculator</a>
-          <Link href="/tools">Tools</Link>
-          <Link href="/about">About</Link>
-          <Link href="/journal">Journal</Link>
-          <Link href="/contact">Contact</Link>
         </nav>
 
         <div className="nav-actions">
@@ -934,8 +925,6 @@ export default function AdyantNexaRealEstateOS() {
 
       {/* Hero Section */}
       <section className="hero-wrap">
-        <div className="ghost-watermark">NEXA</div>
-
         <div className="hero-content">
           <div className="meta-pills">
             <span className="tag-mono">INTELLIGENCE / AUTOMATION / GROWTH</span>
@@ -970,7 +959,7 @@ export default function AdyantNexaRealEstateOS() {
         <div className="hero-media-showcase">
           <div className="hero-image-frame">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/dubai-skyline.jpg" alt="Dubai Downtown Architecture" className="hero-main-img" />
+            <img src="/images/burj-sunny-sky.jpg" alt="Burj Khalifa Sunny Downtown Architecture" className="hero-main-img" />
             <div className="hero-img-gradient"></div>
 
             {/* Glass Overlay Telemetry */}
@@ -1026,6 +1015,7 @@ export default function AdyantNexaRealEstateOS() {
 
           {/* Right Card: Live WhatsApp Dialogue Simulation */}
           <div className="device-card" id="intelligence">
+            <div className="ghost-watermark-card">NEXA</div>
             <div>
               <div className="device-header">
                 <div className="device-title">
@@ -1144,16 +1134,6 @@ export default function AdyantNexaRealEstateOS() {
             <a href="#portfolio">Developer Fleet</a>
             <span>·</span>
             <a href="#roi">Yield Calculator</a>
-            <span>·</span>
-            <Link href="/tools">Diagnostic Tools</Link>
-            <span>·</span>
-            <Link href="/how-it-works">How We Work</Link>
-            <span>·</span>
-            <Link href="/about">About</Link>
-            <span>·</span>
-            <Link href="/journal">Journal</Link>
-            <span>·</span>
-            <Link href="/contact">Contact</Link>
             <span>·</span>
             <Link href="/admin">Command Centre ↗</Link>
           </div>

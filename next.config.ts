@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
   turbopack: {},
   output: 'standalone',
   async headers() {
+    // In development mode, disable restrictive CSP so Turbopack HMR and WebSockets connect freely
+    if (isDev) {
+      return [];
+    }
     return [
       {
         source: "/(.*)",
