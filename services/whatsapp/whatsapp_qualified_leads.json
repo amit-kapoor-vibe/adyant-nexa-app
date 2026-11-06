@@ -1,0 +1,122 @@
+[
+  {
+    "phone": "+971 52 896 4833 (UAE)",
+    "raw_jid": "199728964833396@lid",
+    "display_title": "Dubai Investor #3396",
+    "formatted_phone": "+971 52 896 4833 (UAE)",
+    "is_lid": true,
+    "push_name": "",
+    "last_message": "📄 *ADYANT NEXA LUXURY PORTFOLIO*\nHere is our curated Downtown Dubai & Business Bay investor portfolio with verified 8-10% rental yields:\n\n👉 https://adyantnexa.com/dubai-luxury-portfolio.pdf\n\nOur Senior Advisor is available for a private walkthrough.",
+    "qualification": {
+      "status": "HOT",
+      "score": 85,
+      "intent": "HIGH_ROI_INVESTMENT",
+      "budget_aed": "AED 2,500,000",
+      "preferred_areas": [
+        "Downtown Dubai"
+      ],
+      "property_type": "3-Bed Apartment",
+      "timeline": "Immediate / Off-plan",
+      "golden_visa_interested": true
+    },
+    "action": "CONTINUE_CONVERSATION",
+    "human_takeover": false,
+    "messages": [
+      {
+        "role": "model",
+        "text": "📄 *ADYANT NEXA LUXURY PORTFOLIO*\nHere is our curated Downtown Dubai & Business Bay investor portfolio with verified 8-10% rental yields:\n\n👉 https://adyantnexa.com/dubai-luxury-portfolio.pdf\n\nOur Senior Advisor is available for a private walkthrough.",
+        "timestamp": "01:47 AM"
+      },
+      {
+        "role": "model",
+        "text": "🗓 *VIP VIEWING INVITATION (DOWNTOWN DUBAI)*\nWe have reserved a private viewing slot for you. Please select your preferred time here:\n\n👉 https://calendly.com/adyantnexa/vip-viewing\n\nOr reply directly with your available time today or tomorrow.",
+        "timestamp": "01:53 AM"
+      },
+      {
+        "role": "model",
+        "text": "🗓 *VIP VIEWING INVITATION (DOWNTOWN DUBAI)*\nWe have reserved a private viewing slot for you. Please select your preferred time here:\n\n👉 https://calendly.com/adyantnexa/vip-viewing\n\nOr reply directly with your available time today or tomorrow.",
+        "timestamp": "01:53 AM"
+      },
+      {
+        "role": "model",
+        "text": "🗓 *VIP VIEWING INVITATION (DOWNTOWN DUBAI)*\nWe have reserved a private viewing slot for you. Please select your preferred time here:\n\n👉 https://calendly.com/adyantnexa/vip-viewing\n\nOr reply directly with your available time today or tomorrow.",
+        "timestamp": "01:53 AM"
+      },
+      {
+        "role": "model",
+        "text": "🗓 *VIP VIEWING INVITATION (DOWNTOWN DUBAI)*\nWe have reserved a private viewing slot for you. Please select your preferred time here:\n\n👉 https://calendly.com/adyantnexa/vip-viewing\n\nOr reply directly with your available time today or tomorrow.",
+        "timestamp": "01:53 AM"
+      },
+      {
+        "role": "model",
+        "text": "🗓 *VIP VIEWING INVITATION (DOWNTOWN DUBAI)*\nWe have reserved a private viewing slot for you. Please select your preferred time here:\n\n👉 https://calendly.com/adyantnexa/vip-viewing\n\nOr reply directly with your available time today or tomorrow.",
+        "timestamp": "01:53 AM"
+      },
+      {
+        "role": "model",
+        "text": "🗓 *VIP VIEWING INVITATION (DOWNTOWN DUBAI)*\nWe have reserved a private viewing slot for you. Please select your preferred time here:\n\n👉 https://calendly.com/adyantnexa/vip-viewing\n\nOr reply directly with your available time today or tomorrow.",
+        "timestamp": "01:54 AM"
+      },
+      {
+        "role": "model",
+        "text": "📄 *ADYANT NEXA LUXURY PORTFOLIO*\nHere is our curated Downtown Dubai & Business Bay investor portfolio with verified 8-10% rental yields:\n\n👉 https://adyantnexa.com/dubai-luxury-portfolio.pdf\n\nOur Senior Advisor is available for a private walkthrough.",
+        "timestamp": "01:54 AM"
+      }
+    ],
+    "updated_at": "2026-11-04T20:24:03.698Z"
+  },
+  {
+    "phone": "+971 52 896 4833 (UAE)",
+    "raw_jid": "78971597271125@lid",
+    "display_title": "Dubai Investor #1125",
+    "formatted_phone": "+971 52 896 4833 (UAE)",
+    "is_lid": true,
+    "push_name": "",
+    "last_message": "50571 is your Facebook confirmation code",
+    "qualification": {
+      "status": "UNQUALIFIED",
+      "score": 0,
+      "intent": "CURIOUS",
+      "budget_aed": "UNKNOWN",
+      "preferred_areas": [],
+      "property_type": "UNKNOWN",
+      "timeline": "UNKNOWN",
+      "golden_visa_interested": false
+    },
+    "action": "CONTINUE_CONVERSATION",
+    "human_takeover": false,
+    "messages": [
+      {
+        "role": "user",
+        "text": "50571 is your Facebook confirmation code",
+        "timestamp": "02:24 AM"
+      },
+      {
+        "role": "model",
+        "text": "Hello! It seems you've sent a Facebook confirmation code. I'm Nexa AI, a Senior Real Estate Advisory Consultant specializing in luxury properties across Dubai's premier communities like Palm Jumeirah, Downtown Dubai, and Dubai Hills. If you're looking for investment opportunities or a dream home in Dubai, I'd be delighted to assist you. How can I help you with your real estate needs today?",
+        "timestamp": "02:24 AM"
+      }
+    ],
+    "updated_at": "2026-11-05T20:54:36.777Z"
+  },
+  {
+    "phone": "+test",
+    "raw_jid": "test@s.whatsapp.net",
+    "display_title": "+test",
+    "formatted_phone": "+test",
+    "is_lid": false,
+    "push_name": "",
+    "last_message": "📅 *ADYANT NEXA — 15-MIN STRATEGY CALL (GOOGLE MEET)*\nWe have reserved a 15-minute private architecture walkthrough to show how Adyant Nexa eliminates midnight lead dropoff and qualifies buyers in 90 seconds.\n\n👉 Google Meet Room: https://meet.google.com/ady-nexa-demo\n\nWhat time today or tomorrow (GST) suits you best? Reply directly with your preferred slot.",
+    "qualification": {},
+    "action": "CONTINUE_CONVERSATION",
+    "human_takeover": false,
+    "messages": [
+      {
+        "role": "model",
+        "text": "📅 *ADYANT NEXA — 15-MIN STRATEGY CALL (GOOGLE MEET)*\nWe have reserved a 15-minute private architecture walkthrough to show how Adyant Nexa eliminates midnight lead dropoff and qualifies buyers in 90 seconds.\n\n👉 Google Meet Room: https://meet.google.com/ady-nexa-demo\n\nWhat time today or tomorrow (GST) suits you best? Reply directly with your preferred slot.",
+        "timestamp": "08:15 PM"
+      }
+    ],
+    "updated_at": "2026-11-06T14:45:00.698Z"
+  }
+]

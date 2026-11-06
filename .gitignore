@@ -45,3 +45,9 @@ next-env.d.ts
 
 # scratch pad
 /scratch
+
+# WhatsApp Baileys Auth Session & Leads (Local state)
+services/whatsapp/whatsapp_auth_session/
+whatsapp_auth_session/
+*.key
+

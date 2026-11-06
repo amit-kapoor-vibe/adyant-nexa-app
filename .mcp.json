@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "meta-ads": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "C:\\Users\\mi\\.mcp\\meta-ads-mcp\\node_modules\\tsx\\dist\\cli.mjs",
+        "C:\\Users\\mi\\.mcp\\meta-ads-mcp\\src\\server.ts"
+      ],
+      "env": {
+        "META_ACCESS_TOKEN": "EAAZAw89OcENYBS0WqhmN0xMjkVniwj4MzujXQUQF2MXtY7n8w5xPZAziZCFUksgMpO2CogKm5RTCeUmXZCRIzf7hJqMTfnphsUwQ54GUmpo5x6WIZCPw9o6bpkj7Mk4DjaKryJbfOZBZAwLArpb3v5EhYYlEyjhRfqXIFrGEyyMfFsKkKSCGzvAFbxAenQRZBJ8IPNjueKinjU8zbMVsGnZAjrpyFjnvPB6xMa8JA9mYvF461RZBiUM8VDvQeOMUzHlZCZCAcZBs4BBZAnDetZCzVCG1SeQNk9b4lU7reZAlWgZDZD",
+        "META_AD_ACCOUNT_ID": "act_813332717932765",
+        "META_PAGE_ID": "988923307629678",
+        "INSTAGRAM_BUSINESS_ACCOUNT_ID": "17841480179651485",
+        "META_GRAPH_VERSION": "v21.0"
+      }
+    }
+  }
+}

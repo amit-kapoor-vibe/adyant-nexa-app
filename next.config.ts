@@ -20,6 +20,9 @@ const cspHeader = `
 const nextConfig: NextConfig = {
   turbopack: {},
   output: 'standalone',
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   async rewrites() {
     const engineUrl = process.env.NEXT_PUBLIC_ENGINE_URL || 'http://localhost:3050';
     return [

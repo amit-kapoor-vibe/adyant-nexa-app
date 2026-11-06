@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Adyant Nexa - Scan WhatsApp QR Code</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: #0A0F1D; color: #fff; margin: 0; }
+    .card { background: #131B2E; border: 1px solid #1E293B; border-radius: 16px; padding: 32px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    h1 { color: #2563EB; margin-bottom: 8px; font-size: 24px; }
+    p { color: #94A3B8; font-size: 14px; margin-bottom: 24px; }
+    canvas { background: white; padding: 16px; border-radius: 12px; }
+    .status { margin-top: 16px; font-weight: 500; font-size: 14px; color: #10B981; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>ADYANT NEXA</h1>
+    <p>Scan with WhatsApp &gt; Linked Devices to start your AI Sales Bot</p>
+    <canvas id="canvas"></canvas>
+    <div class="status">● Waiting for QR scan...</div>
+  </div>
+  <script>
+    QRCode.toCanvas(document.getElementById('canvas'), "https://wa.me/settings/linked_devices#2@K7Qu8iX6+p2sRcDdi4Go87tW6ZNN3rYdGbmrZdFD9+jpPrCaij1/ZA/SZiYe+mBGiNfv26mUkfCkQ7vtF0v+8qWhlOOVdEkt0IE=,svq3b8GJJzszyICDjxZLakNE0YXpAgSGn/gsP2fo+UA=,bgItiPm9eGH/kLEpXNo8QC0yeD+mbgxMrdtlzxjSdWc=,o9fcOuoH278Xaoba2mjArf+ID7igZ0E5aQdR3X3KqXg=,1", { width: 280 }, function (error) {
+      if (error) console.error(error);
+    });
+  </script>
+</body>
+</html>
