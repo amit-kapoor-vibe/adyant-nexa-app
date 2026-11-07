@@ -4,11 +4,11 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const DIAGNOSTIC_STEPS = [
-  "INITIALIZING ADYANT NEXA RETAIL KERNEL...",
-  "SCANNING SKU DEAD STOCK INVENTORY MODELS...",
-  "CALIBRATING GROSS MARGIN LEAKAGE DEFENSE...",
-  "OPTIMIZING CUSTOMER RETENTION LTV ENGINE...",
-  "SYSTEM ARMED. UNLOCKING TRAPPED WORKING CAPITAL.",
+  "INITIALIZING ADYANT NEXA DIGITAL OS KERNEL...",
+  "CALIBRATING AUTONOMOUS REVENUE ARCHITECTURE...",
+  "SYNCHRONIZING ZERO-LATENCY BANT INTAKE ENGINE...",
+  "OPTIMIZING HIGH-PERFORMANCE WEB ATTRIBUTION...",
+  "SYSTEM ARMED. ZERO-FRICTION PROTOCOL ACTIVE.",
 ];
 
 export function Preloader() {
@@ -137,7 +137,7 @@ export function Preloader() {
                   display: "inline-block",
                 }}
               />
-              RETAIL INTELLIGENCE OS &bull; V1.0
+              DIGITAL OPERATING SYSTEM &bull; V2.6
             </motion.div>
 
             {/* Central Pulse Ring & Numeric Counter */}

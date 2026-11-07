@@ -90,33 +90,33 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#020202", display: "flex", alignItems: "center", justifyContent: "center", padding: 20, position: "relative", overflow: "hidden" }}>
-      <div className="ambient-orb" style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)", opacity: 0.1 }} />
-      <div className="scan-overlay" />
+    <div style={{ minHeight: "100vh", background: "#F8F8FA", display: "flex", alignItems: "center", justifyContent: "center", padding: 20, position: "relative", overflow: "hidden" }}>
+      <div className="ambient-orb" style={{ top: "50%", left: "50%", transform: "translate(-50%, -50%)", opacity: 0.08 }} />
+      <div className="scan-overlay" style={{ opacity: 0.03 }} />
 
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         style={{ width: "100%", maxWidth: 450, position: "relative", zIndex: 10 }}
       >
-        <div className="glass-panel" style={{ padding: "48px", borderTop: "2px solid #00F2FF", textAlign: "center" }}>
+        <div style={{ padding: "48px 36px", background: "#FFFFFF", border: "1px solid rgba(10, 10, 12, 0.08)", borderTop: "3px solid #0047FF", borderRadius: "16px", boxShadow: "0 12px 36px rgba(10, 10, 12, 0.04)", textAlign: "center" }}>
           
           {!success ? (
             <>
-              <div style={{ display: "inline-flex", padding: 16, borderRadius: "50%", background: "rgba(0,242,255,0.05)", border: "1px solid rgba(0,242,255,0.2)", marginBottom: 24 }}>
-                <Fingerprint size={32} color="#00F2FF" />
+              <div style={{ display: "inline-flex", padding: 16, borderRadius: "50%", background: "rgba(0, 71, 255, 0.06)", border: "1px solid rgba(0, 71, 255, 0.18)", marginBottom: 24 }}>
+                <Fingerprint size={32} color="#0047FF" />
               </div>
               
-              <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 28, color: "#fff", marginBottom: 12 }}>
-                Neural Authorization
+              <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 26, color: "#0A0A0C", marginBottom: 10, letterSpacing: "-0.02em" }}>
+                Central Command Access
               </h1>
-              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 40, letterSpacing: "0.1em" }}>
-                CENTRAL COMMAND // VERIFYING SECURE ADMINISTRATIVE CLEARANCE.
+              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#60606A", marginBottom: 36, letterSpacing: "0.15em" }}>
+                AUTHENTICATION // SECURE PORTAL CLEARANCE
               </p>
 
               <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
                 <div style={{ position: "relative" }}>
-                  <Mail style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", opacity: 0.3 }} size={16} />
+                  <Mail style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: "#60606A" }} size={16} />
                   <input 
                     required 
                     type="email" 
@@ -127,7 +127,7 @@ export default function LoginPage() {
                   />
                 </div>
                 <div style={{ position: "relative" }}>
-                  <Phone style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", opacity: 0.3 }} size={16} />
+                  <Phone style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", color: "#60606A" }} size={16} />
                   <input 
                     required 
                     type="tel" 
@@ -141,37 +141,38 @@ export default function LoginPage() {
                 <button 
                   type="submit" 
                   disabled={loading}
-                  className="btn-primary"
                   style={{ 
-                    padding: "18px", fontSize: 12, width: "100%", 
-                    background: "#00F2FF", color: "#000", fontWeight: 800,
-                    letterSpacing: "0.2em"
+                    padding: "16px", fontSize: 12, width: "100%", 
+                    background: "#0047FF", color: "#FFFFFF", fontWeight: 700,
+                    borderRadius: "8px", border: "1px solid #0047FF",
+                    letterSpacing: "0.15em", cursor: loading ? "not-allowed" : "pointer",
+                    transition: "all 0.2s ease"
                   }}
                 >
-                  {loading ? "PROCESSING..." : "REQUEST NEURAL ACCESS"}
+                  {loading ? "PROCESSING..." : "REQUEST ACCESS LINK →"}
                 </button>
               </form>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24, opacity: 0.2 }}>
-                <div style={{ flex: 1, height: 1, background: "#fff" }} />
-                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)" }}>OR</span>
-                <div style={{ flex: 1, height: 1, background: "#fff" }} />
+              <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24, opacity: 0.4 }}>
+                <div style={{ flex: 1, height: 1, background: "rgba(10, 10, 12, 0.15)" }} />
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A" }}>OR</span>
+                <div style={{ flex: 1, height: 1, background: "rgba(10, 10, 12, 0.15)" }} />
               </div>
 
               <button 
                 onClick={handleGoogleLogin}
                 disabled={loading}
                 style={{ 
-                  width: "100%", padding: "18px", background: "rgba(255,255,255,0.03)", color: "#fff", 
+                  width: "100%", padding: "16px", background: "#FFFFFF", color: "#0A0A0C", 
                   fontFamily: "var(--font-inter)", fontWeight: 600, fontSize: 13, 
-                  border: "1px solid rgba(255,255,255,0.1)", cursor: loading ? "not-allowed" : "pointer",
+                  border: "1px solid rgba(10, 10, 12, 0.14)", cursor: loading ? "not-allowed" : "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: 12,
-                  borderRadius: "4px", marginBottom: 24
+                  borderRadius: "8px", marginBottom: 24
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="https://www.google.com/favicon.ico" alt="Google" width={18} height={18} />
-                {loading ? "Establishing Neural Link..." : "Continue with Google"}
+                {loading ? "Connecting..." : "Continue with Google"}
               </button>
 
               {/* Master PIN Direct Bypass */}
@@ -181,18 +182,18 @@ export default function LoginPage() {
                   placeholder="Master Admin PIN (e.g. nexa2026)"
                   value={passcode}
                   onChange={e => setPasscode(e.target.value)}
-                  style={{ ...inputStyle, flex: 1, padding: "14px 16px", fontSize: 12 }}
+                  style={{ ...inputStyle, flex: 1, padding: "12px 14px", fontSize: 12 }}
                 />
                 <button
                   type="submit"
                   style={{
-                    background: "rgba(0, 242, 255, 0.15)",
-                    border: "1px solid #00F2FF",
-                    color: "#00F2FF",
+                    background: "rgba(0, 71, 255, 0.08)",
+                    border: "1px solid #0047FF",
+                    color: "#0047FF",
                     padding: "0 18px",
                     fontWeight: 700,
                     fontSize: 11,
-                    borderRadius: 4,
+                    borderRadius: "8px",
                     cursor: "pointer",
                     fontFamily: "var(--font-geist-mono)"
                   }}
@@ -202,22 +203,22 @@ export default function LoginPage() {
               </form>
 
               {error && (
-                <p style={{ color: "#ff3333", fontSize: 12, marginTop: 24, fontFamily: "var(--font-geist-mono)" }}>{error}</p>
+                <p style={{ color: "#EF4444", fontSize: 12, marginTop: 20, fontFamily: "var(--font-geist-mono)" }}>{error}</p>
               )}
             </>
           ) : (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-              <div style={{ display: "inline-flex", padding: 16, borderRadius: "50%", background: "rgba(0,255,102,0.05)", border: "1px solid rgba(0,255,102,0.2)", marginBottom: 24 }}>
-                <MailCheck size={32} color="#00FF66" />
+              <div style={{ display: "inline-flex", padding: 16, borderRadius: "50%", background: "rgba(16, 185, 129, 0.08)", border: "1px solid rgba(16, 185, 129, 0.2)", marginBottom: 24 }}>
+                <MailCheck size={32} color="#10B981" />
               </div>
-              <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "#fff", marginBottom: 12 }}>
-                Transmission Sent
+              <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "#0A0A0C", marginBottom: 12 }}>
+                Transmission Dispatched
               </h2>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, marginBottom: 32 }}>
-                A secure neural link has been dispatched to <strong>{email}</strong>. <br /><br />
-                Check your inbox to bypass the gate and access proprietary pricing.
+              <p style={{ fontFamily: "var(--font-inter)", fontSize: 14, color: "#60606A", lineHeight: 1.6, marginBottom: 32 }}>
+                A secure login link has been dispatched to <strong>{email}</strong>. <br /><br />
+                Check your inbox to authenticate and enter the Command Centre.
               </p>
-              <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(0,242,255,0.4)" }}>
+              <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "#0047FF" }}>
                 PROTOCOL_STATUS: WAITING_FOR_USER_VERIFICATION
               </div>
             </motion.div>
@@ -231,13 +232,13 @@ export default function LoginPage() {
 
 const inputStyle = {
   width: "100%",
-  background: "rgba(255,255,255,0.03)",
-  border: "1px solid rgba(255,255,255,0.08)",
-  padding: "16px 48px",
-  color: "#fff",
+  background: "#FFFFFF",
+  border: "1px solid rgba(10, 10, 12, 0.14)",
+  padding: "14px 44px",
+  color: "#0A0A0C",
   fontFamily: "var(--font-inter)",
   fontSize: 14,
   outline: "none",
-  borderRadius: "4px",
-  transition: "all 0.3s ease"
+  borderRadius: "8px",
+  transition: "all 0.2s ease"
 };

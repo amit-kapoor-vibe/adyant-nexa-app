@@ -36,7 +36,7 @@ export default function MarketingPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "#020202", color: "#E5E5E5", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
+    <div style={{ minHeight: "100vh", background: "#F8F8FA", color: "#0A0A0C", overflowX: "hidden", fontFamily: "var(--font-inter)" }}>
       
       <motion.main
         animate={{ opacity: isNavigating ? 0 : 1, filter: isNavigating ? "blur(10px)" : "blur(0px)", scale: isNavigating ? 0.98 : 1 }}
@@ -65,10 +65,10 @@ export default function MarketingPage() {
         <MarketingFAQ />
 
         {/* Final CTA Section */}
-        <section style={{ padding: "8rem 1.75rem", textAlign: "center", background: "#080808", borderTop: "1px solid rgba(255,255,255,0.03)" }}>
+        <section style={{ padding: "8rem 1.75rem", textAlign: "center", background: "#FFFFFF", borderTop: "1px solid rgba(10, 10, 12, 0.08)" }}>
           <FadeSection>
-            <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 24, display: "block" }}>The Final Protocol_</span>
-            <Heading level="h2" style={{ color: "#fff", marginBottom: 40 }}>Ready to Build Your <br /> Revenue Empire?</Heading>
+            <span className="editorial-tag" style={{ color: "#0047FF", marginBottom: 24, display: "block" }}>The Final Protocol_</span>
+            <Heading level="h2" style={{ color: "#0A0A0C", marginBottom: 40 }}>Ready to Build Your <br /> Revenue Empire?</Heading>
             <button 
               onClick={() => setIsScannerOpen(true)}
               className="btn-primary"
@@ -83,16 +83,16 @@ export default function MarketingPage() {
       </motion.main>
 
       {/* ─── FOOTER ─── */}
-      <footer style={{ borderTop: "1px solid rgba(255,255,255,0.04)", padding: "60px 28px", background: "#020202" }}>
+      <footer style={{ borderTop: "1px solid rgba(10, 10, 12, 0.08)", padding: "60px 28px", background: "#FFFFFF" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 40 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <img src="/Favicon transparent.png" alt="Adyant Nexa" width={28} height={28} />
-            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 15, color: "#fff" }}>ADYANT NEXA</span>
+            <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 15, color: "#0A0A0C" }}>ADYANT NEXA</span>
           </div>
-          <span className="editorial-tag" style={{ fontSize: 9, opacity: 0.3 }}>© 2026 Adyant Nexa. Precision Marketing Infrastructure.</span>
+          <span className="editorial-tag" style={{ fontSize: 9, color: "#60606A" }}>© 2026 Adyant Nexa. Precision Marketing Infrastructure.</span>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
-            <Link href="/legal" className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, textDecoration: "none" }}>Privacy Policy</Link>
-            <Link href="/legal" className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, textDecoration: "none" }}>Terms of Service</Link>
+            <Link href="/legal" className="editorial-tag" style={{ fontSize: 9, color: "#60606A", textDecoration: "none" }}>Privacy Policy</Link>
+            <Link href="/legal" className="editorial-tag" style={{ fontSize: 9, color: "#60606A", textDecoration: "none" }}>Terms of Service</Link>
             <Link href="/legal" className="editorial-tag" style={{ fontSize: 9, opacity: 0.4, textDecoration: "none" }}>Refund Policy</Link>
           </div>
         </div>

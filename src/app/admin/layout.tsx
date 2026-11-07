@@ -84,9 +84,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (isLoading) {
     return (
-      <div style={{ minHeight: "100vh", background: "#020202", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 }}>
-        <Shield size={32} color="#00F2FF" className="pulse-glow" />
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.2em" }}>
+      <div style={{ minHeight: "100vh", background: "#F8F8FA", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 }}>
+        <Shield size={32} color="#0047FF" className="pulse-glow" />
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "#60606A", textTransform: "uppercase", letterSpacing: "0.2em" }}>
           Verifying Clearance...
         </span>
       </div>

@@ -31,7 +31,7 @@ Before writing a single line of code, every AI Agent MUST adopt the following pe
 The UI/UX design of this project is **FROZEN**. You MUST follow these rules at all times:
 
 1. **DO NOT redesign, restyle, or "improve" any UI component** unless the user explicitly says "redesign this" or "change the look".
-2. **DO NOT change colors** — the design uses `#020202` void black, `#00F2FF` electric cyan, `#E5E5E5` platinum white. Keep them exactly.
+2. **DO NOT change colors** — the official brand design system uses `#F8F8FA` alabaster off-white, `#0A0A0C` onyx black, `#0047FF` cobalt blue, `#FFFFFF` pure white surface, and `#60606A` muted slate grey. Keep them consistently across all interfaces.
 3. **DO NOT replace inline styles with Tailwind classes** or vice versa — the current approach (inline styles + minimal named CSS classes) is intentional and working.
 4. **DO NOT add, remove, or restructure sections** without a direct user request.
 5. **DO NOT change fonts** — Syne (headings), Inter (body), Geist Mono (code/tags) are locked.
@@ -71,10 +71,13 @@ The UI/UX design of this project is **FROZEN**. You MUST follow these rules at a
 
 ```
 Colors:
-  Background:  #020202  (void black)
-  Text:        #E5E5E5  (platinum white)
-  Accent:      #00F2FF  (electric cyan)
-  Surface:     #080808  (alternate sections)
+  Background:  #F8F8FA  (Alabaster off-white)
+  Text:        #0A0A0C  (Onyx black)
+  Accent:      #0047FF  (Electric Cobalt Blue)
+  Highlight:   #38BDF8  (Sky Cyan)
+  Surface:     #FFFFFF  (Pure White cards & panels)
+  Muted:       #60606A  (Slate Grey)
+  Border:      rgba(10, 10, 12, 0.08)
 
 Typography:
   Headings:    Syne, weight 800, tracking -0.03em

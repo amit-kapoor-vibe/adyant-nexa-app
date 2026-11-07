@@ -675,14 +675,30 @@ export default function AdyantNexaRealEstateOS() {
 
         /* Section 3: Interactive Agency ROI Model */
         .roi-section {
-          background: var(--onyx);
-          color: var(--pure-white);
-          padding: 100px 48px;
+          background: #0A0A0C;
+          color: #FFFFFF;
+          padding: 80px 48px;
           border-radius: 28px;
           max-width: 1260px;
           margin: 0 auto 100px;
           position: relative;
           overflow: hidden;
+          box-shadow: 0 24px 64px rgba(10, 10, 12, 0.25);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .roi-badge {
+          display: inline-block;
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          padding: 6px 14px;
+          border-radius: 999px;
+          background: rgba(0, 71, 255, 0.18);
+          border: 1px solid rgba(0, 71, 255, 0.4);
+          color: #60A5FA;
+          margin-bottom: 20px;
         }
         .roi-grid {
           display: grid;
@@ -692,48 +708,80 @@ export default function AdyantNexaRealEstateOS() {
         }
         .roi-h2 {
           font-family: var(--font-syne), sans-serif;
-          font-size: clamp(2rem, 3.8vw, 3.2rem);
+          font-size: clamp(2.2rem, 4vw, 3.4rem);
           font-weight: 800;
           letter-spacing: -0.025em;
-          line-height: 1.1;
-          margin-bottom: 18px;
+          line-height: 1.15;
+          margin-bottom: 20px;
+          color: #FFFFFF !important;
         }
-        .roi-h2 em {
+        .roi-h2-title {
+          display: block;
+          color: #FFFFFF !important;
+        }
+        .roi-h2-accent {
+          display: block;
+          margin-top: 6px;
           font-family: var(--font-display), serif;
           font-style: italic;
-          color: var(--cyan-bright);
+          font-weight: 400;
+          background: linear-gradient(135deg, #00F2FF 0%, #38BDF8 40%, #60A5FA 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
         .roi-sub {
           font-size: 15px;
           color: #94A3B8;
-          line-height: 1.6;
+          line-height: 1.65;
           margin-bottom: 32px;
+          max-width: 520px;
         }
-
+        .roi-cta-btn {
+          background: var(--cobalt) !important;
+          border-color: var(--cobalt) !important;
+          color: #FFFFFF !important;
+          padding: 14px 28px;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.05em;
+          box-shadow: 0 10px 30px rgba(0, 71, 255, 0.35);
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          border-radius: 999px;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+        .roi-cta-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 14px 40px rgba(0, 71, 255, 0.5);
+        }
         .slider-container {
-          background: #14141A;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 16px;
-          padding: 32px;
+          background: #121217;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 20px;
+          padding: 36px;
+          box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
         }
         .slider-top {
           display: flex;
           justify-content: space-between;
           align-items: baseline;
-          margin-bottom: 16px;
+          margin-bottom: 20px;
         }
         .slider-lbl {
           font-family: var(--font-geist-mono), monospace;
           font-size: 11px;
-          letter-spacing: 0.25em;
+          font-weight: 700;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: var(--blue-tint);
+          color: #94A3B8;
         }
         .slider-val {
           font-family: var(--font-syne), sans-serif;
-          font-size: 26px;
+          font-size: 32px;
           font-weight: 800;
-          color: var(--pure-white);
+          color: #FFFFFF;
         }
         .styled-range {
           width: 100%;
@@ -746,14 +794,14 @@ export default function AdyantNexaRealEstateOS() {
         }
         .styled-range::-webkit-slider-thumb {
           -webkit-appearance: none;
-          width: 20px;
-          height: 20px;
+          width: 22px;
+          height: 22px;
           border-radius: 50%;
           background: var(--cobalt);
-          border: 3px solid var(--pure-white);
+          border: 3px solid #FFFFFF;
           cursor: pointer;
+          box-shadow: 0 0 16px rgba(0, 71, 255, 0.6);
         }
-
         .result-split {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -765,12 +813,13 @@ export default function AdyantNexaRealEstateOS() {
           font-family: var(--font-syne), sans-serif;
           font-size: 30px;
           font-weight: 800;
-          color: var(--pure-white);
+          color: #FFFFFF;
         }
         .result-lbl {
           font-size: 12px;
           color: #94A3B8;
-          margin-top: 4px;
+          margin-top: 6px;
+          line-height: 1.4;
         }
 
         /* Footer */

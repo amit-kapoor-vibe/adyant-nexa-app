@@ -21,14 +21,14 @@ interface Message {
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
   content:
-    "Welcome to Adyant Nexa. I am your Autonomous Retail Advisor for Dubai & London fashion boutiques, ateliers, and apparel labels.\n\n" +
-    "How can I assist your boutique today with DM response latency, showroom inventory sync, or in-chat conversational checkout?",
+    "Welcome to Adyant Nexa. I am your Digital OS Strategic Advisor.\n\n" +
+    "How can I assist your enterprise today with autonomous lead qualification, real-time conversion architecture, or high-performance systems?",
 };
 
 const SUGGESTED_QUERIES = [
-  "How to cut DM delay from 4 hours to 4 seconds?",
-  "How showroom stock sync stops double-selling",
-  "In-chat checkout with Apple Pay & Tabby",
+  "Qualify Dubai property leads in 90 seconds on WhatsApp",
+  "Bespoke high-performance web architecture",
+  "Eliminate revenue leaks with autonomous systems",
 ];
 
 function FormattedContent({ text, isUser }: { text: string; isUser: boolean }) {
@@ -494,7 +494,7 @@ export function ChatWidget() {
                       color: "var(--muted-text)",
                     }}
                   >
-                    Boutique Revenue Diagnostic
+                    Architecture & Revenue Diagnostic
                   </span>
                 </div>
                 <Link

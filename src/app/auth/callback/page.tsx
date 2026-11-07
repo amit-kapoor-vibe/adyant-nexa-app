@@ -95,7 +95,7 @@ export default function AuthCallbackPage() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#020202",
+      background: "#F8F8FA",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -105,15 +105,15 @@ export default function AuthCallbackPage() {
     }}>
       <div style={{
         width: 48, height: 48,
-        border: "2px solid rgba(0,242,255,0.3)",
-        borderTopColor: "#00F2FF",
+        border: "2px solid rgba(0, 71, 255, 0.2)",
+        borderTopColor: "#0047FF",
         borderRadius: "50%",
         animation: "spin 1s linear infinite"
       }} />
       <p style={{
-        fontFamily: "monospace",
-        fontSize: 14,
-        color: "#00F2FF",
+        fontFamily: "var(--font-geist-mono), monospace",
+        fontSize: 13,
+        color: "#0047FF",
         letterSpacing: "0.05em",
         textAlign: "center",
         maxWidth: 600,

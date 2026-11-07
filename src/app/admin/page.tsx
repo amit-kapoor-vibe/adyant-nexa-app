@@ -598,26 +598,26 @@ For ${contractClientName} (Authorized Client Signature)`;
 
   if (!authorized) {
     return (
-      <div style={{ minHeight: "100vh", background: "#020202", display: "flex", alignItems: "center", justifyContent: "center", color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 13, letterSpacing: "0.2em" }}>
+      <div style={{ minHeight: "100vh", background: "#F8F8FA", display: "flex", alignItems: "center", justifyContent: "center", color: "#0047FF", fontFamily: "var(--font-geist-mono)", fontSize: 13, letterSpacing: "0.2em" }}>
         VERIFYING CREDENTIAL CLEARANCE...
       </div>
     );
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#020202", color: "#E5E5E5", fontFamily: "var(--font-inter)" }}>
+    <div style={{ minHeight: "100vh", background: "#F8F8FA", color: "#0A0A0C", fontFamily: "var(--font-inter)" }}>
       
       {/* GLOBAL HEADER */}
-      <header style={{ padding: "20px 40px", borderBottom: "1px solid rgba(255,255,255,0.05)", background: "rgba(2,2,2,0.9)", position: "sticky", top: 0, zIndex: 100, backdropFilter: "blur(20px)" }}>
+      <header style={{ padding: "20px 40px", borderBottom: "1px solid rgba(10, 10, 12, 0.08)", background: "rgba(255, 255, 255, 0.9)", position: "sticky", top: 0, zIndex: 100, backdropFilter: "blur(20px)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 1400, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
             <div>
-              <span className="editorial-tag" style={{ color: "#00F2FF", marginBottom: 4, display: "block", fontSize: 9 }}>CENTRAL COMMAND_</span>
-              <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "#fff" }}>Adyant Nexa</h1>
+              <span className="editorial-tag" style={{ color: "#0047FF", marginBottom: 4, display: "block", fontSize: 9 }}>CENTRAL COMMAND_</span>
+              <h1 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, color: "#0A0A0C" }}>Adyant Nexa</h1>
             </div>
             
             {/* TABS */}
-            <div style={{ display: "flex", background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 8, border: "1px solid rgba(255,255,255,0.05)" }}>
+            <div style={{ display: "flex", background: "rgba(10, 10, 12, 0.04)", padding: 4, borderRadius: 8, border: "1px solid rgba(10, 10, 12, 0.08)" }}>
               {[
                 { id: "DIAGNOSTICS", label: "Growth Diagnostics", icon: Activity },
                 { id: "GRID", label: "Intelligence Grid", icon: Database },
@@ -629,8 +629,8 @@ For ${contractClientName} (Authorized Client Signature)`;
                   key={tab.id} onClick={() => setActiveTab(tab.id as TabState)}
                   style={{ 
                     display: "flex", alignItems: "center", gap: 8, padding: "10px 20px", 
-                    background: activeTab === tab.id ? "rgba(0,242,255,0.1)" : "transparent",
-                    color: activeTab === tab.id ? "#00F2FF" : "rgba(255,255,255,0.5)",
+                    background: activeTab === tab.id ? "rgba(0, 71, 255, 0.1)" : "transparent",
+                    color: activeTab === tab.id ? "#0047FF" : "#60606A",
                     border: "none", borderRadius: 4, fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, cursor: "pointer", transition: "all 0.3s"
                   }}
                 >
@@ -648,9 +648,9 @@ For ${contractClientName} (Authorized Client Signature)`;
                 gap: 8,
                 padding: "8px 16px",
                 borderRadius: 6,
-                background: "rgba(0, 71, 255, 0.2)",
+                background: "rgba(0, 71, 255, 0.08)",
                 border: "1px solid #0047FF",
-                color: "#00F2FF",
+                color: "#0047FF",
                 fontFamily: "var(--font-geist-mono)",
                 fontSize: 11,
                 fontWeight: 700,
@@ -658,7 +658,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                 letterSpacing: "0.1em"
               }}
             >
-              ⚡ AI SALES COCKPIT (/terminal) ↗
+              AI SALES COCKPIT (/terminal) ↗
             </Link>
             <button onClick={handleLogout} className="btn-util" style={{ fontSize: 10 }}>DISCONNECT <X size={14}/></button>
           </div>
@@ -672,42 +672,42 @@ For ${contractClientName} (Authorized Client Signature)`;
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
             {/* KPI Stat Cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20, marginBottom: 32 }}>
-              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #00F2FF" }}>
-                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>COMPLETED DIAGNOSTICS</span>
-                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", marginTop: 8 }}>{leads.length + 12}</div>
-                <span style={{ fontSize: 11, color: "#00F2FF", marginTop: 4, display: "block" }}>Fashion &amp; Apparel Retail</span>
+              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #0047FF" }}>
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A" }}>COMPLETED DIAGNOSTICS</span>
+                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C", marginTop: 8 }}>{leads.length + 12}</div>
+                <span style={{ fontSize: 11, color: "#0047FF", marginTop: 4, display: "block" }}>Fashion &amp; Apparel Retail</span>
               </div>
 
-              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #00FF66" }}>
-                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>AVG GROWTH SCORE</span>
-                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#00FF66", marginTop: 8 }}>58 / 100</div>
-                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, display: "block" }}>Moderate Leakage Baseline</span>
+              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #16A34A" }}>
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A" }}>AVG GROWTH SCORE</span>
+                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#16A34A", marginTop: 8 }}>58 / 100</div>
+                <span style={{ fontSize: 11, color: "#60606A", marginTop: 4, display: "block" }}>Moderate Leakage Baseline</span>
               </div>
 
-              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #F59E0B" }}>
-                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>TOTAL PROFIT LEAKAGE DISCOVERED</span>
-                <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", marginTop: 8 }}>₹1.84 Crore</div>
-                <span style={{ fontSize: 11, color: "#F59E0B", marginTop: 4, display: "block" }}>Annualized Opportunity</span>
+              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #D97706" }}>
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A" }}>TOTAL PROFIT LEAKAGE DISCOVERED</span>
+                <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C", marginTop: 8 }}>₹1.84 Crore</div>
+                <span style={{ fontSize: 11, color: "#D97706", marginTop: 4, display: "block" }}>Annualized Opportunity</span>
               </div>
 
-              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #EF4444" }}>
-                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>LEADS CONVERTED</span>
-                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", marginTop: 8 }}>{leads.length}</div>
-                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4, display: "block" }}>Requested 90-Day Blueprint</span>
+              <div className="glass-panel" style={{ padding: 24, borderLeft: "2px solid #DC2626" }}>
+                <span style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A" }}>LEADS CONVERTED</span>
+                <div style={{ fontSize: 28, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C", marginTop: 8 }}>{leads.length}</div>
+                <span style={{ fontSize: 11, color: "#60606A", marginTop: 4, display: "block" }}>Requested 90-Day Blueprint</span>
               </div>
             </div>
 
             {/* Submissions Feed */}
-            <div className="glass-panel" style={{ padding: 24, border: "1px solid rgba(255,255,255,0.08)" }}>
+            <div className="glass-panel" style={{ padding: 24, border: "1px solid rgba(10, 10, 12, 0.08)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, color: "#fff" }}>Recent Retail Diagnostics &amp; Blueprint Leads</h3>
-                <span className="editorial-tag" style={{ fontSize: 10, color: "#00F2FF" }}>REALTIME PIPELINE</span>
+                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, color: "#0A0A0C" }}>Recent Retail Diagnostics &amp; Blueprint Leads</h3>
+                <span className="editorial-tag" style={{ fontSize: 10, color: "#0047FF" }}>REALTIME PIPELINE</span>
               </div>
 
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
-                    <tr style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                    <tr style={{ background: "rgba(10, 10, 12, 0.02)", borderBottom: "1px solid rgba(10, 10, 12, 0.08)" }}>
                       <th style={thStyle}>Date</th>
                       <th style={thStyle}>Business Name &amp; Contact</th>
                       <th style={thStyle}>Location</th>
@@ -718,25 +718,25 @@ For ${contractClientName} (Authorized Client Signature)`;
                   </thead>
                   <tbody>
                     {leads.map((lead) => (
-                      <tr key={lead.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                      <tr key={lead.id} style={{ borderBottom: "1px solid rgba(10, 10, 12, 0.06)" }}>
                         <td style={tdStyle}>{new Date(lead.created_at).toLocaleDateString("en-IN")}</td>
                         <td style={tdStyle}>
-                          <div style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{lead.name}</div>
-                          <div style={{ fontSize: 11, color: "#A3A3A3" }}>{lead.email} | {lead.phone}</div>
+                          <div style={{ fontWeight: 700, fontSize: 14, color: "#0A0A0C" }}>{lead.name}</div>
+                          <div style={{ fontSize: 11, color: "#60606A" }}>{lead.email} | {lead.phone}</div>
                         </td>
                         <td style={tdStyle}>{lead.business_type || "Retailer"}</td>
                         <td style={tdStyle}>
-                          <span style={{ padding: "4px 10px", background: "rgba(0,242,255,0.1)", color: "#00F2FF", fontSize: 9, fontWeight: 800, borderRadius: 4 }}>
+                          <span style={{ padding: "4px 10px", background: "rgba(0, 71, 255, 0.08)", color: "#0047FF", fontSize: 9, fontWeight: 800, borderRadius: 4 }}>
                             {lead.status}
                           </span>
                         </td>
                         <td style={tdStyle}>
-                          <span style={{ color: "#00FF66", fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700 }}>
+                          <span style={{ color: "#16A34A", fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700 }}>
                             {lead.budget || "N/A"}
                           </span>
                         </td>
                         <td style={tdStyle}>
-                          <div style={{ fontSize: 12, color: "#A3A3A3" }}>{lead.message}</div>
+                          <div style={{ fontSize: 12, color: "#60606A" }}>{lead.message}</div>
                         </td>
                       </tr>
                     ))}
@@ -758,7 +758,7 @@ For ${contractClientName} (Authorized Client Signature)`;
               </div>
               <div style={{ display: "flex", gap: 8 }}>
                 <button onClick={() => downloadCSV()} className="btn-util"><Download size={14} /> Export</button>
-                <button onClick={() => setShowAddModal(true)} className="btn-util" style={{ borderColor: "#00F2FF", color: "#00F2FF", background: "rgba(0,242,255,0.05)" }}><Plus size={14} /> Add Lead</button>
+                <button onClick={() => setShowAddModal(true)} className="btn-util" style={{ borderColor: "#0047FF", color: "#0047FF", background: "rgba(0, 71, 255, 0.05)" }}><Plus size={14} /> Add Lead</button>
               </div>
             </div>
 
@@ -766,35 +766,36 @@ For ${contractClientName} (Authorized Client Signature)`;
             <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 16, marginBottom: 32, scrollbarWidth: "none" }}>
               {STATUS_OPTIONS.map(status => (
                 <button key={status} onClick={() => setActiveStatus(status)} style={{
-                  padding: "12px 24px", background: activeStatus === status ? "rgba(0,242,255,0.1)" : "rgba(255,255,255,0.03)",
-                  border: "1px solid", borderColor: activeStatus === status ? "#00F2FF" : "rgba(255,255,255,0.1)",
-                  color: activeStatus === status ? "#00F2FF" : "rgba(255,255,255,0.4)", fontSize: 10, fontFamily: "var(--font-geist-mono)", fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", transition: "0.3s"
+                  padding: "12px 24px", background: activeStatus === status ? "rgba(0, 71, 255, 0.08)" : "#FFFFFF",
+                  border: "1px solid", borderColor: activeStatus === status ? "#0047FF" : "rgba(10, 10, 12, 0.08)",
+                  color: activeStatus === status ? "#0047FF" : "#60606A", fontSize: 10, fontFamily: "var(--font-geist-mono)", fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", transition: "0.3s",
+                  borderRadius: 4
                 }}>{status}</button>
               ))}
             </div>
 
-            {/* BULK ACTIONS BAR (Cyan) */}
+            {/* BULK ACTIONS BAR (Cobalt) */}
             <AnimatePresence>
               {selectedLeads.length > 0 && (
                 <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 50, opacity: 0 }} style={bulkBarStyles}>
                   <span style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 14 }}>{selectedLeads.length} SELECTED</span>
-                  <div style={{ height: 20, width: 1, background: "rgba(0,0,0,0.1)" }} />
+                  <div style={{ height: 20, width: 1, background: "rgba(255,255,255,0.2)" }} />
                   <div style={{ display: "flex", gap: 8 }}>
                     <button onClick={() => updateStatus(selectedLeads, "HOT")} className="btn-bulk">MARK HOT</button>
                     <button onClick={() => updateStatus(selectedLeads, "CONTACTED")} className="btn-bulk">CONTACTED</button>
-                    <button onClick={() => deleteLeads(selectedLeads)} className="btn-bulk" style={{ background: "rgba(0,0,0,0.05)" }}><Trash2 size={14} /></button>
+                    <button onClick={() => deleteLeads(selectedLeads)} className="btn-bulk" style={{ background: "rgba(255,255,255,0.15)" }}><Trash2 size={14} /></button>
                   </div>
-                  <button onClick={() => setSelectedLeads([])} style={{ background: "none", border: "none", fontWeight: 800, cursor: "pointer", fontSize: 18 }}>×</button>
+                  <button onClick={() => setSelectedLeads([])} style={{ background: "none", border: "none", color: "#FFFFFF", fontWeight: 800, cursor: "pointer", fontSize: 18 }}>×</button>
                 </motion.div>
               )}
             </AnimatePresence>
 
             {/* DATA GRID */}
-            <div className="glass-panel" style={{ overflowX: "auto", border: "1px solid rgba(255,255,255,0.05)" }}>
+            <div className="glass-panel" style={{ overflowX: "auto", border: "1px solid rgba(10, 10, 12, 0.08)" }}>
               <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 1200 }}>
                 <thead>
-                  <tr style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-                    <th style={{ width: 60, padding: "24px" }}><button onClick={toggleSelectAll} style={{ background: "none", border: "none", color: "#00F2FF", cursor: "pointer" }}>{selectedLeads.length > 0 ? <CheckSquare size={20}/> : <Square size={20}/>}</button></th>
+                  <tr style={{ background: "rgba(10, 10, 12, 0.02)", borderBottom: "1px solid rgba(10, 10, 12, 0.08)" }}>
+                    <th style={{ width: 60, padding: "24px" }}><button onClick={toggleSelectAll} style={{ background: "none", border: "none", color: "#0047FF", cursor: "pointer" }}>{selectedLeads.length > 0 ? <CheckSquare size={20}/> : <Square size={20}/>}</button></th>
                     <th style={thStyle}>Date</th>
                     <th style={thStyle}>Status</th>
                     <th style={thStyle}>Client Details</th>
@@ -805,24 +806,24 @@ For ${contractClientName} (Authorized Client Signature)`;
                 </thead>
                 <tbody>
                   {filteredLeads.map((lead, i) => (
-                    <tr key={lead.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.03)", background: selectedLeads.includes(lead.id) ? "rgba(0,242,255,0.02)" : "none" }}>
-                      <td style={{ padding: "24px" }}><button onClick={() => setSelectedLeads(prev => prev.includes(lead.id) ? prev.filter(x => x !== lead.id) : [...prev, lead.id])} style={{ background: "none", border: "none", color: selectedLeads.includes(lead.id) ? "#00F2FF" : "rgba(255,255,255,0.1)", cursor: "pointer" }}>{selectedLeads.includes(lead.id) ? <CheckSquare size={20}/> : <Square size={20}/>}</button></td>
+                    <tr key={lead.id} style={{ borderBottom: "1px solid rgba(10, 10, 12, 0.06)", background: selectedLeads.includes(lead.id) ? "rgba(0, 71, 255, 0.04)" : "none" }}>
+                      <td style={{ padding: "24px" }}><button onClick={() => setSelectedLeads(prev => prev.includes(lead.id) ? prev.filter(x => x !== lead.id) : [...prev, lead.id])} style={{ background: "none", border: "none", color: selectedLeads.includes(lead.id) ? "#0047FF" : "rgba(10, 10, 12, 0.2)", cursor: "pointer" }}>{selectedLeads.includes(lead.id) ? <CheckSquare size={20}/> : <Square size={20}/>}</button></td>
                       <td style={tdStyle}>{new Date(lead.created_at).toLocaleDateString()}</td>
-                      <td style={tdStyle}><span style={{ padding: "4px 10px", background: getStatusColor(lead.status, true), color: getStatusColor(lead.status, false), fontSize: 9, fontWeight: 800, fontFamily: "var(--font-geist-mono)" }}>{lead.status}</span></td>
+                      <td style={tdStyle}><span style={{ padding: "4px 10px", background: getStatusColor(lead.status, true), color: getStatusColor(lead.status, false), fontSize: 9, fontWeight: 800, fontFamily: "var(--font-geist-mono)", borderRadius: 4 }}>{lead.status}</span></td>
                       <td style={tdStyle}>
-                        <div style={{ fontWeight: 700, fontSize: 14, color: "#fff", marginBottom: 4 }}>{lead.name}</div>
-                        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>{lead.email} | {lead.phone}</div>
+                        <div style={{ fontWeight: 700, fontSize: 14, color: "#0A0A0C", marginBottom: 4 }}>{lead.name}</div>
+                        <div style={{ fontSize: 11, color: "#60606A" }}>{lead.email} | {lead.phone}</div>
                       </td>
                       <td style={tdStyle}>
-                        <div style={{ fontSize: 12, color: "#fff" }}>{lead.business_type}</div>
-                        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{lead.message.substring(0, 40)}...</div>
+                        <div style={{ fontSize: 12, color: "#0A0A0C" }}>{lead.business_type}</div>
+                        <div style={{ fontSize: 11, color: "#60606A", marginTop: 4 }}>{lead.message.substring(0, 40)}...</div>
                       </td>
-                      <td style={tdStyle}><span style={{ color: "#00FF66", fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700 }}>{lead.budget}</span></td>
+                      <td style={tdStyle}><span style={{ color: "#16A34A", fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700 }}>{lead.budget}</span></td>
                       <td style={tdStyle}>
                         <div style={{ display: "flex", gap: 8 }}>
-                          <button onClick={() => updateStatus([lead.id], "VICTORY")} title="Victory" style={actionIconStyle("#00FF66")}><Trophy size={14} /></button>
-                          <button onClick={() => updateStatus([lead.id], "CONTACTED")} title="Contacted" style={actionIconStyle("#00F2FF")}><MessageCircle size={14} /></button>
-                          <button onClick={() => setNoteModal({ id: lead.id, text: lead.notes || "" })} title="Note" style={actionIconStyle(lead.notes ? "#00F2FF" : "rgba(255,255,255,0.4)")}><StickyNote size={14} /></button>
+                          <button onClick={() => updateStatus([lead.id], "VICTORY")} title="Victory" style={actionIconStyle("#16A34A")}><Trophy size={14} /></button>
+                          <button onClick={() => updateStatus([lead.id], "CONTACTED")} title="Contacted" style={actionIconStyle("#0047FF")}><MessageCircle size={14} /></button>
+                          <button onClick={() => setNoteModal({ id: lead.id, text: lead.notes || "" })} title="Note" style={actionIconStyle(lead.notes ? "#0047FF" : "rgba(10, 10, 12, 0.4)")}><StickyNote size={14} /></button>
                         </div>
                       </td>
                     </tr>
@@ -851,56 +852,48 @@ For ${contractClientName} (Authorized Client Signature)`;
           const totalPendingInr = invoices.filter(i => i.status === "PENDING" && i.currency === "INR").reduce((sum, i) => sum + i.total_amount, 0);
           const totalPendingUsd = invoices.filter(i => i.status === "PENDING" && i.currency === "USD").reduce((sum, i) => sum + i.total_amount, 0);
 
-          if (!authorized) {
-    return (
-      <div style={{ minHeight: "100vh", background: "#020202", display: "flex", alignItems: "center", justifyContent: "center", color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 13, letterSpacing: "0.2em" }}>
-        VERIFYING CREDENTIAL CLEARANCE...
-      </div>
-    );
-  }
-
-  return (
+          return (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               {/* Revenue Dashboard */}
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 40 }}>
-                <div className="glass-panel" style={{ padding: 32, borderLeft: "2px solid #00F2FF" }}>
-                  <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>MONTHLY REAL CASHFLOW</div>
-                  <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", lineHeight: 1.3 }}>
+                <div className="glass-panel" style={{ padding: 32, borderLeft: "2px solid #0047FF" }}>
+                  <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A", marginBottom: 12 }}>MONTHLY REAL CASHFLOW</div>
+                  <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C", lineHeight: 1.3 }}>
                     ₹{currentMonthInr.toLocaleString()}<br/>
-                    <span style={{ fontSize: 16, color: "rgba(255,255,255,0.6)" }}>${currentMonthUsd.toLocaleString()} USD</span>
+                    <span style={{ fontSize: 16, color: "#60606A" }}>${currentMonthUsd.toLocaleString()} USD</span>
                   </div>
-                  <div style={{ fontSize: 12, color: "#00F2FF", marginTop: 8 }}>Processed in {now.toLocaleString('default', { month: 'long' })}</div>
+                  <div style={{ fontSize: 12, color: "#0047FF", marginTop: 8 }}>Processed in {now.toLocaleString('default', { month: 'long' })}</div>
                 </div>
-                <div className="glass-panel" style={{ padding: 32, borderLeft: "2px solid #00FF66" }}>
-                  <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>TOTAL PAID (YTD)</div>
-                  <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", lineHeight: 1.3 }}>
+                <div className="glass-panel" style={{ padding: 32, borderLeft: "2px solid #16A34A" }}>
+                  <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A", marginBottom: 12 }}>TOTAL PAID (YTD)</div>
+                  <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C", lineHeight: 1.3 }}>
                     ₹{totalPaidInr.toLocaleString()}<br/>
-                    <span style={{ fontSize: 16, color: "rgba(255,255,255,0.6)" }}>${totalPaidUsd.toLocaleString()} USD</span>
+                    <span style={{ fontSize: 16, color: "#60606A" }}>${totalPaidUsd.toLocaleString()} USD</span>
                   </div>
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", marginTop: 8 }}>With GST & Taxes Tracked</div>
+                  <div style={{ fontSize: 12, color: "#60606A", marginTop: 8 }}>With GST & Taxes Tracked</div>
                 </div>
-                <div className="glass-panel" style={{ padding: 32, borderLeft: "2px solid #FF3333" }}>
-                  <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>TOTAL PENDING</div>
-                  <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff", lineHeight: 1.3 }}>
+                <div className="glass-panel" style={{ padding: 32, borderLeft: "2px solid #DC2626" }}>
+                  <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A", marginBottom: 12 }}>TOTAL PENDING</div>
+                  <div style={{ fontSize: 24, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C", lineHeight: 1.3 }}>
                     ₹{totalPendingInr.toLocaleString()}<br/>
-                    <span style={{ fontSize: 16, color: "rgba(255,255,255,0.6)" }}>${totalPendingUsd.toLocaleString()} USD</span>
+                    <span style={{ fontSize: 16, color: "#60606A" }}>${totalPendingUsd.toLocaleString()} USD</span>
                   </div>
-                  <div style={{ fontSize: 12, color: "#FF3333", marginTop: 8 }}>Overdue limits monitored</div>
+                  <div style={{ fontSize: 12, color: "#DC2626", marginTop: 8 }}>Overdue limits monitored</div>
                 </div>
               </div>
 
               {/* Invoice Manager */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-                <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 20 }}>Invoice Ledger</h2>
-                <button onClick={() => setShowInvoiceModal(true)} className="btn-primary" style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, padding: "12px 24px" }}>
+                <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 20, color: "#0A0A0C" }}>Invoice Ledger</h2>
+                <button onClick={() => setShowInvoiceModal(true)} className="btn-primary" style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 11, padding: "12px 24px", background: "#0047FF", color: "#FFFFFF" }}>
                   <Plus size={16} /> GENERATE INVOICE
                 </button>
               </div>
               
-              <div className="glass-panel" style={{ overflowX: "auto" }}>
+              <div className="glass-panel" style={{ overflowX: "auto", border: "1px solid rgba(10, 10, 12, 0.08)" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
-                    <tr style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                    <tr style={{ background: "rgba(10, 10, 12, 0.02)", borderBottom: "1px solid rgba(10, 10, 12, 0.08)" }}>
                       <th style={thStyle}>Invoice ID</th>
                       <th style={thStyle}>Client Details</th>
                       <th style={thStyle}>Tax details (CGST/SGST/IGST)</th>
@@ -912,35 +905,35 @@ For ${contractClientName} (Authorized Client Signature)`;
                   </thead>
                   <tbody>
                     {invoices.map((inv) => (
-                      <tr key={inv.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                      <tr key={inv.id} style={{ borderBottom: "1px solid rgba(10, 10, 12, 0.06)" }}>
                         <td style={tdStyle}>
-                          <span style={{ fontFamily: "var(--font-geist-mono)", color: "#00F2FF", fontSize: 12, fontWeight: 700 }}>{inv.invoice_number}</span>
-                          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{inv.description}</div>
+                          <span style={{ fontFamily: "var(--font-geist-mono)", color: "#0047FF", fontSize: 12, fontWeight: 700 }}>{inv.invoice_number}</span>
+                          <div style={{ fontSize: 10, color: "#60606A", marginTop: 4 }}>{inv.description}</div>
                         </td>
                         <td style={tdStyle}>
-                          <span style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{inv.client_name}</span>
-                          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{inv.client_email}</div>
+                          <span style={{ fontWeight: 700, fontSize: 14, color: "#0A0A0C" }}>{inv.client_name}</span>
+                          <div style={{ fontSize: 11, color: "#60606A", marginTop: 2 }}>{inv.client_email}</div>
                         </td>
                         <td style={tdStyle}>
                           {inv.currency === "INR" ? (
                             <div>
-                              <div style={{ fontSize: 11, color: "#fff" }}>
+                              <div style={{ fontSize: 11, color: "#0A0A0C" }}>
                                 {inv.state_type === "INTRASTATE" ? "Haryana CGST(9%) + SGST(9%)" : "Out-State IGST(18%)"}
                               </div>
-                              <div style={{ fontSize: 10, color: "rgba(0,242,255,0.6)", marginTop: 2 }}>
+                              <div style={{ fontSize: 10, color: "#0047FF", marginTop: 2 }}>
                                 GSTIN: {inv.client_gstin || "N/A (B2C)"}
                               </div>
                             </div>
                           ) : (
-                            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>Export Services (No GST)</div>
+                            <div style={{ fontSize: 11, color: "#60606A" }}>Export Services (No GST)</div>
                           )}
                         </td>
                         <td style={tdStyle}>
-                          <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "#fff" }}>
-                            {inv.currency === "USD" ? "$" : "₹"}{inv.total_amount.toLocaleString()} <span style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>total</span>
+                          <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "#0A0A0C" }}>
+                            {inv.currency === "USD" ? "$" : "₹"}{inv.total_amount.toLocaleString()} <span style={{ fontSize: 10, color: "#60606A" }}>total</span>
                           </div>
                           {inv.currency === "INR" && (
-                            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>
+                            <div style={{ fontSize: 10, color: "#60606A", marginTop: 4 }}>
                               Base: ₹{inv.base_amount.toLocaleString()} | Tax: ₹{inv.gst_amount.toLocaleString()}
                             </div>
                           )}
@@ -951,22 +944,22 @@ For ${contractClientName} (Authorized Client Signature)`;
                             value={inv.status} 
                             onChange={(e) => updateInvoiceStatus(inv.id, e.target.value as any)}
                             style={{
-                              background: inv.status === "PAID" ? "rgba(0,255,102,0.1)" : inv.status === "PENDING" ? "rgba(255,204,0,0.1)" : "rgba(255,51,51,0.1)",
-                              color: inv.status === "PAID" ? "#00FF66" : inv.status === "PENDING" ? "#FFCC00" : "#FF3333",
-                              border: "none", padding: "4px 8px", fontSize: 9, fontFamily: "var(--font-geist-mono)", fontWeight: 800, cursor: "pointer", outline: "none"
+                              background: inv.status === "PAID" ? "rgba(22, 163, 74, 0.1)" : inv.status === "PENDING" ? "rgba(217, 119, 6, 0.1)" : "rgba(220, 38, 38, 0.1)",
+                              color: inv.status === "PAID" ? "#16A34A" : inv.status === "PENDING" ? "#D97706" : "#DC2626",
+                              border: "none", padding: "4px 8px", fontSize: 9, fontFamily: "var(--font-geist-mono)", fontWeight: 800, cursor: "pointer", outline: "none", borderRadius: 4
                             }}
                           >
-                            <option value="PENDING" style={{ background: "#020202", color: "#FFCC00" }}>PENDING</option>
-                            <option value="PAID" style={{ background: "#020202", color: "#00FF66" }}>PAID</option>
-                            <option value="OVERDUE" style={{ background: "#020202", color: "#FF3333" }}>OVERDUE</option>
+                            <option value="PENDING" style={{ background: "#FFFFFF", color: "#D97706" }}>PENDING</option>
+                            <option value="PAID" style={{ background: "#FFFFFF", color: "#16A34A" }}>PAID</option>
+                            <option value="OVERDUE" style={{ background: "#FFFFFF", color: "#DC2626" }}>OVERDUE</option>
                           </select>
                         </td>
                         <td style={tdStyle}>
                           <div style={{ display: "flex", gap: 6 }}>
-                            <button onClick={() => printInvoice(inv)} className="btn-util" style={{ fontSize: 10, padding: "6px 12px", borderColor: "rgba(0,242,255,0.2)", color: "rgba(0,242,255,0.8)" }} title="Print / Download PDF">
+                            <button onClick={() => printInvoice(inv)} className="btn-util" style={{ fontSize: 10, padding: "6px 12px", borderColor: "rgba(0, 71, 255, 0.2)", color: "#0047FF" }} title="Print / Download PDF">
                               <Download size={12} />
                             </button>
-                            <button onClick={() => deleteInvoice(inv.id)} className="btn-util" style={{ fontSize: 10, padding: "6px 12px", borderColor: "rgba(255,51,51,0.2)", color: "rgba(255,51,51,0.7)" }} title="Delete">
+                            <button onClick={() => deleteInvoice(inv.id)} className="btn-util" style={{ fontSize: 10, padding: "6px 12px", borderColor: "rgba(220, 38, 38, 0.2)", color: "#DC2626" }} title="Delete">
                               <Trash2 size={12} />
                             </button>
                           </div>
@@ -975,7 +968,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                     ))}
                     {invoices.length === 0 && (
                       <tr>
-                        <td colSpan={7} style={{ padding: 40, textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: 12 }}>No invoices recorded in backend ledger.</td>
+                        <td colSpan={7} style={{ padding: 40, textAlign: "center", color: "#60606A", fontSize: 12 }}>No invoices recorded in backend ledger.</td>
                       </tr>
                     )}
                   </tbody>
@@ -991,41 +984,41 @@ For ${contractClientName} (Authorized Client Signature)`;
             
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <div style={{ padding: 12, background: "rgba(0,128,255,0.1)", borderRadius: 8, color: "#0080FF" }}><Target size={24} /></div>
+                <div style={{ padding: 12, background: "rgba(0, 71, 255, 0.08)", borderRadius: 8, color: "#0047FF" }}><Target size={24} /></div>
                 <div>
-                  <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, lineHeight: 1 }}>Meta Ads Engine</h2>
-                  <span style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>LIVE CAPI TRACKING INITIATED</span>
+                  <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, lineHeight: 1, color: "#0A0A0C" }}>Meta Ads Engine</h2>
+                  <span style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A" }}>LIVE CAPI TRACKING INITIATED</span>
                 </div>
               </div>
-              <div style={{ display: "flex", gap: 8, background: "rgba(255,255,255,0.03)", padding: 4, borderRadius: 8 }}>
-                <button style={{ padding: "6px 16px", background: "rgba(255,255,255,0.1)", border: "none", color: "#fff", fontSize: 11, borderRadius: 4 }}>7 Days</button>
-                <button style={{ padding: "6px 16px", background: "none", border: "none", color: "rgba(255,255,255,0.4)", fontSize: 11 }}>30 Days</button>
+              <div style={{ display: "flex", gap: 8, background: "rgba(10, 10, 12, 0.04)", padding: 4, borderRadius: 8, border: "1px solid rgba(10, 10, 12, 0.08)" }}>
+                <button style={{ padding: "6px 16px", background: "#0047FF", border: "none", color: "#fff", fontSize: 11, borderRadius: 4, fontWeight: 700 }}>7 Days</button>
+                <button style={{ padding: "6px 16px", background: "none", border: "none", color: "#60606A", fontSize: 11, fontWeight: 600 }}>30 Days</button>
               </div>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24, marginBottom: 40 }}>
               <div className="glass-panel" style={{ padding: 24 }}>
-                <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>TOTAL AD SPEND</div>
-                <div style={{ fontSize: 32, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff" }}>$2,450</div>
+                <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A", marginBottom: 8 }}>TOTAL AD SPEND</div>
+                <div style={{ fontSize: 32, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C" }}>$2,450</div>
               </div>
               <div className="glass-panel" style={{ padding: 24 }}>
-                <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>COST PER LEAD (CPL)</div>
-                <div style={{ fontSize: 32, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff" }}>$45.20</div>
+                <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A", marginBottom: 8 }}>COST PER LEAD (CPL)</div>
+                <div style={{ fontSize: 32, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C" }}>$45.20</div>
               </div>
               <div className="glass-panel" style={{ padding: 24 }}>
-                <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>LEADS GENERATED</div>
-                <div style={{ fontSize: 32, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#fff" }}>54</div>
+                <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A", marginBottom: 8 }}>LEADS GENERATED</div>
+                <div style={{ fontSize: 32, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0A0A0C" }}>54</div>
               </div>
-              <div className="glass-panel" style={{ padding: 24, border: "1px solid #00FF66", background: "rgba(0,255,102,0.02)" }}>
-                <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#00FF66", marginBottom: 8 }}>RETURN ON AD SPEND (ROAS)</div>
-                <div style={{ fontSize: 32, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#00FF66" }}>4.2x</div>
+              <div className="glass-panel" style={{ padding: 24, border: "1px solid #16A34A", background: "rgba(22, 163, 74, 0.04)" }}>
+                <div style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#16A34A", marginBottom: 8 }}>RETURN ON AD SPEND (ROAS)</div>
+                <div style={{ fontSize: 32, fontFamily: "var(--font-syne)", fontWeight: 800, color: "#16A34A" }}>4.2x</div>
               </div>
             </div>
 
-            <div className="glass-panel" style={{ padding: 40, textAlign: "center", border: "1px dashed rgba(255,255,255,0.1)" }}>
-              <BarChart3 size={48} color="rgba(255,255,255,0.1)" style={{ margin: "0 auto 16px" }} />
-              <h3 style={{ fontFamily: "var(--font-syne)", fontSize: 18, marginBottom: 8 }}>Graph Module Offline</h3>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Connect Meta Pixel / CAPI API key in settings to render live conversion charts.</p>
+            <div className="glass-panel" style={{ padding: 40, textAlign: "center", border: "1px dashed rgba(10, 10, 12, 0.15)" }}>
+              <BarChart3 size={48} color="rgba(10, 10, 12, 0.2)" style={{ margin: "0 auto 16px" }} />
+              <h3 style={{ fontFamily: "var(--font-syne)", fontSize: 18, marginBottom: 8, color: "#0A0A0C" }}>Graph Module Offline</h3>
+              <p style={{ fontSize: 13, color: "#60606A" }}>Connect Meta Pixel / CAPI API key in settings to render live conversion charts.</p>
             </div>
 
           </motion.div>
@@ -1037,10 +1030,10 @@ For ${contractClientName} (Authorized Client Signature)`;
             
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <div style={{ padding: 12, background: "rgba(0,242,255,0.1)", borderRadius: 8, color: "#00F2FF" }}><Shield size={24} /></div>
+                <div style={{ padding: 12, background: "rgba(0, 71, 255, 0.08)", borderRadius: 8, color: "#0047FF" }}><Shield size={24} /></div>
                 <div>
-                  <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, lineHeight: 1 }}>Neural Vault & Legal Ops</h2>
-                  <span style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)" }}>ENCRYPTED BUSINESS LOCKER & SYSTEM AGREEMENT COMPILER</span>
+                  <h2 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 24, lineHeight: 1, color: "#0A0A0C" }}>Neural Vault & Legal Ops</h2>
+                  <span style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A" }}>ENCRYPTED BUSINESS LOCKER & SYSTEM AGREEMENT COMPILER</span>
                 </div>
               </div>
             </div>
@@ -1052,18 +1045,17 @@ For ${contractClientName} (Authorized Client Signature)`;
                 
                 {/* COMPILER CARD */}
                 <div className="glass-panel" style={{ padding: 32 }}>
-                  <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, marginBottom: 24 }}>System Contract Compiler</h3>
+                  <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, marginBottom: 24, color: "#0A0A0C" }}>System Contract Compiler</h3>
                   
                   <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 24 }}>
                     <div style={{ display: "flex", gap: 16 }}>
                       <div style={{ flex: 1.2 }}>
-                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 8 }}>CONTRACT ARCHITECTURE</label>
+                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 8 }}>CONTRACT ARCHITECTURE</label>
                         <select 
                           value={contractType} 
                           onChange={(e) => {
                             const newType = e.target.value as "WEB_DEV" | "MARKETING";
                             setContractType(newType);
-                            // Prepopulate plan value automatically based on currency!
                             if (newType === "WEB_DEV") {
                               setContractValue(contractCurrency === "INR" ? "120000" : "1500");
                             } else {
@@ -1072,19 +1064,18 @@ For ${contractClientName} (Authorized Client Signature)`;
                           }} 
                           style={inputStyle}
                         >
-                          <option value="WEB_DEV" style={{ background: "#020202", color: "#fff" }}>Web Architecture Agreement</option>
-                          <option value="MARKETING" style={{ background: "#020202", color: "#fff" }}>Growth Marketing Retainer</option>
+                          <option value="WEB_DEV" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Web Architecture Agreement</option>
+                          <option value="MARKETING" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Growth Marketing Retainer</option>
                         </select>
                       </div>
 
                       <div style={{ flex: 0.8 }}>
-                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 8 }}>CURRENCY</label>
+                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 8 }}>CURRENCY</label>
                         <select 
                           value={contractCurrency} 
                           onChange={(e) => {
                             const newCurr = e.target.value as "INR" | "USD";
                             setContractCurrency(newCurr);
-                            // Prepopulate plan value automatically!
                             if (contractType === "WEB_DEV") {
                               setContractValue(newCurr === "INR" ? "120000" : "1500");
                             } else {
@@ -1093,13 +1084,13 @@ For ${contractClientName} (Authorized Client Signature)`;
                           }} 
                           style={inputStyle}
                         >
-                          <option value="INR" style={{ background: "#020202", color: "#fff" }}>INR (₹)</option>
-                          <option value="USD" style={{ background: "#020202", color: "#fff" }}>USD ($)</option>
+                          <option value="INR" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>INR (₹)</option>
+                          <option value="USD" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>USD ($)</option>
                         </select>
                       </div>
 
                       <div style={{ flex: 1.5 }}>
-                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 8 }}>SYSTEM PLAN / PACKAGE</label>
+                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 8 }}>SYSTEM PLAN / PACKAGE</label>
                         {contractType === "WEB_DEV" ? (
                           contractCurrency === "INR" ? (
                             <select 
@@ -1107,9 +1098,9 @@ For ${contractClientName} (Authorized Client Signature)`;
                               onChange={(e) => setContractValue(e.target.value)} 
                               style={inputStyle}
                             >
-                              <option value="120000" style={{ background: "#020202", color: "#fff" }}>SPARK_ Plan (₹1,20,000)</option>
-                              <option value="350000" style={{ background: "#020202", color: "#fff" }}>MATRIX_ Plan (₹3,50,000)</option>
-                              <option value="750000" style={{ background: "#020202", color: "#fff" }}>NEXUS_ Plan (₹7,50,000)</option>
+                              <option value="120000" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>SPARK_ Plan (₹1,20,000)</option>
+                              <option value="350000" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>MATRIX_ Plan (₹3,50,000)</option>
+                              <option value="750000" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>NEXUS_ Plan (₹7,50,000)</option>
                             </select>
                           ) : (
                             <select 
@@ -1117,9 +1108,9 @@ For ${contractClientName} (Authorized Client Signature)`;
                               onChange={(e) => setContractValue(e.target.value)} 
                               style={inputStyle}
                             >
-                              <option value="1500" style={{ background: "#020202", color: "#fff" }}>SPARK_ Plan ($1,500)</option>
-                              <option value="4200" style={{ background: "#020202", color: "#fff" }}>MATRIX_ Plan ($4,200)</option>
-                              <option value="9000" style={{ background: "#020202", color: "#fff" }}>NEXUS_ Plan ($9,000)</option>
+                              <option value="1500" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>SPARK_ Plan ($1,500)</option>
+                              <option value="4200" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>MATRIX_ Plan ($4,200)</option>
+                              <option value="9000" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>NEXUS_ Plan ($9,000)</option>
                             </select>
                           )
                         ) : (
@@ -1129,9 +1120,9 @@ For ${contractClientName} (Authorized Client Signature)`;
                               onChange={(e) => setContractValue(e.target.value)} 
                               style={inputStyle}
                             >
-                              <option value="35000" style={{ background: "#020202", color: "#fff" }}>VOLT_ Retainer (₹35,000 / mo)</option>
-                              <option value="75000" style={{ background: "#020202", color: "#fff" }}>PULSE_ Retainer (₹75,000 / mo)</option>
-                              <option value="150000" style={{ background: "#020202", color: "#fff" }}>NEXA_ Retainer (₹1,50,000 / mo)</option>
+                              <option value="35000" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>VOLT_ Retainer (₹35,000 / mo)</option>
+                              <option value="75000" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>PULSE_ Retainer (₹75,000 / mo)</option>
+                              <option value="150000" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>NEXA_ Retainer (₹1,50,000 / mo)</option>
                             </select>
                           ) : (
                             <select 
@@ -1139,16 +1130,16 @@ For ${contractClientName} (Authorized Client Signature)`;
                               onChange={(e) => setContractValue(e.target.value)} 
                               style={inputStyle}
                             >
-                              <option value="400" style={{ background: "#020202", color: "#fff" }}>VOLT_ Retainer ($400 / mo)</option>
-                              <option value="900" style={{ background: "#020202", color: "#fff" }}>PULSE_ Retainer ($900 / mo)</option>
-                              <option value="2000" style={{ background: "#020202", color: "#fff" }}>NEXA_ Retainer ($2,000 / mo)</option>
+                              <option value="400" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>VOLT_ Retainer ($400 / mo)</option>
+                              <option value="900" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>PULSE_ Retainer ($900 / mo)</option>
+                              <option value="2000" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>NEXA_ Retainer ($2,000 / mo)</option>
                             </select>
                           )
                         )}
                       </div>
 
                       <div style={{ flex: 1.5 }}>
-                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 8 }}>CLIENT COMPANY / NAME</label>
+                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 8 }}>CLIENT COMPANY / NAME</label>
                         <input 
                           placeholder="Client Company Name" 
                           value={contractClientName} 
@@ -1160,7 +1151,7 @@ For ${contractClientName} (Authorized Client Signature)`;
 
                     <div style={{ display: "flex", gap: 16 }}>
                       <div style={{ flex: 1.2 }}>
-                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 8 }}>
+                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 8 }}>
                           COMMERCIAL VALUE ({contractCurrency === "USD" ? "$" : "₹"})
                         </label>
                         <input 
@@ -1172,7 +1163,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                         />
                       </div>
                       <div style={{ flex: 1 }}>
-                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 8 }}>
+                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 8 }}>
                           APPLIED DISCOUNT ({contractCurrency === "USD" ? "$" : "₹"})
                         </label>
                         <input 
@@ -1184,23 +1175,23 @@ For ${contractClientName} (Authorized Client Signature)`;
                         />
                       </div>
                       <div style={{ flex: 1.2 }}>
-                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 8 }}>DURATION COMMITMENT (MONTHS)</label>
+                        <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 8 }}>DURATION COMMITMENT (MONTHS)</label>
                         <select 
                           value={contractDuration} 
                           onChange={(e) => setContractDuration(e.target.value)} 
                           style={inputStyle}
                         >
-                          <option value="3" style={{ background: "#020202", color: "#fff" }}>3 Months Retention</option>
-                          <option value="6" style={{ background: "#020202", color: "#fff" }}>6 Months Retention</option>
-                          <option value="12" style={{ background: "#020202", color: "#fff" }}>12 Months Retention</option>
-                          <option value="1" style={{ background: "#020202", color: "#fff" }}>1 Month Single Run</option>
+                          <option value="3" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>3 Months Retention</option>
+                          <option value="6" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>6 Months Retention</option>
+                          <option value="12" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>12 Months Retention</option>
+                          <option value="1" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>1 Month Single Run</option>
                         </select>
                       </div>
                     </div>
                   </div>
 
                   <div style={{ display: "flex", gap: 12, marginBottom: 24 }}>
-                    <button onClick={handleCompileContract} className="btn-util" style={{ background: "#00F2FF", color: "#000", fontWeight: 800 }}>
+                    <button onClick={handleCompileContract} className="btn-util" style={{ background: "#0047FF", color: "#FFFFFF", fontWeight: 800 }}>
                       <FileCheck size={14} /> COMPILE DRAFT
                     </button>
                     {generatedContractText && (
@@ -1218,7 +1209,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                           onClick={handleSaveContract} 
                           disabled={isSavingContract} 
                           className="btn-util" 
-                          style={{ borderColor: "#00FF66", color: "#00FF66" }}
+                          style={{ borderColor: "#16A34A", color: "#16A34A" }}
                         >
                           <Database size={14} /> {isSavingContract ? "SAVING..." : "COMMIT TO VAULT"}
                         </button>
@@ -1231,8 +1222,8 @@ For ${contractClientName} (Authorized Client Signature)`;
                     onChange={(e) => setGeneratedContractText(e.target.value)}
                     placeholder="Legal draft offline. Provide client parameters and compile agreement."
                     style={{ 
-                      width: "100%", height: 350, background: "rgba(255,255,255,0.01)", 
-                      border: "1px solid rgba(255,255,255,0.08)", color: "#fff", 
+                      width: "100%", height: 350, background: "#FFFFFF", 
+                      border: "1px solid rgba(10, 10, 12, 0.12)", color: "#0A0A0C", 
                       padding: 20, outline: "none", fontSize: 12, 
                       fontFamily: "var(--font-geist-mono)", resize: "vertical", 
                       lineHeight: 1.6, borderRadius: 4 
@@ -1242,24 +1233,24 @@ For ${contractClientName} (Authorized Client Signature)`;
 
                 {/* SAVED CONTRACTS LIST */}
                 <div className="glass-panel" style={{ padding: 32 }}>
-                  <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, marginBottom: 24 }}>Committed Contracts Vault</h3>
+                  <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, marginBottom: 24, color: "#0A0A0C" }}>Committed Contracts Vault</h3>
                   <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     {contracts.map(contract => (
                       <div 
                         key={contract.id} 
                         style={{ 
-                          background: "rgba(255,255,255,0.01)", padding: 20, 
-                          borderRadius: 6, border: "1px solid rgba(255,255,255,0.05)",
+                          background: "#FFFFFF", padding: 20, 
+                          borderRadius: 6, border: "1px solid rgba(10, 10, 12, 0.08)",
                           display: "flex", justifyContent: "space-between", alignItems: "center"
                         }}
                       >
                         <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                          <div style={{ padding: 10, background: "rgba(0,242,255,0.05)", border: "1px solid rgba(0,242,255,0.1)", borderRadius: 6, color: "#00F2FF" }}>
+                          <div style={{ padding: 10, background: "rgba(0, 71, 255, 0.08)", border: "1px solid rgba(0, 71, 255, 0.15)", borderRadius: 6, color: "#0047FF" }}>
                             <Briefcase size={20} />
                           </div>
                           <div>
-                            <div style={{ fontWeight: 700, fontSize: 14, color: "#fff" }}>{contract.client_name}</div>
-                            <div style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", marginTop: 4 }}>
+                            <div style={{ fontWeight: 700, fontSize: 14, color: "#0A0A0C" }}>{contract.client_name}</div>
+                            <div style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", marginTop: 4 }}>
                               {contract.contract_type === "WEB_DEV" ? "WEB ARCHITECTURE" : "PERFORMANCE RETAINER"} | ₹{contract.project_value.toLocaleString()} | {contract.duration_months} Months
                             </div>
                           </div>
@@ -1292,7 +1283,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                           <button 
                             onClick={() => deleteContract(contract.id)} 
                             className="btn-util" 
-                            style={{ fontSize: 10, padding: "8px 12px", borderColor: "rgba(255,51,51,0.2)", color: "rgba(255,51,51,0.7)" }}
+                            style={{ fontSize: 10, padding: "8px 12px", borderColor: "rgba(220, 38, 38, 0.2)", color: "#DC2626" }}
                           >
                             <Trash2 size={12} />
                           </button>
@@ -1300,7 +1291,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                       </div>
                     ))}
                     {contracts.length === 0 && (
-                      <div style={{ textAlign: "center", padding: 32, color: "rgba(255,255,255,0.3)", fontSize: 12 }}>No contract agreements in legal vault.</div>
+                      <div style={{ textAlign: "center", padding: 32, color: "#60606A", fontSize: 12 }}>No contract agreements in legal vault.</div>
                     )}
                   </div>
                 </div>
@@ -1309,22 +1300,22 @@ For ${contractClientName} (Authorized Client Signature)`;
 
               {/* RIGHT COLUMN: DOCUMENT LOCKER */}
               <div className="glass-panel" style={{ padding: 32 }}>
-                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, marginBottom: 8 }}>Secure File Locker</h3>
-                <p style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", marginBottom: 24 }}>ENCRYPTED BUSINESS VAULT FOR CREDENTIALS & CERTIFICATES</p>
+                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, marginBottom: 8, color: "#0A0A0C" }}>Secure File Locker</h3>
+                <p style={{ fontSize: 11, fontFamily: "var(--font-geist-mono)", color: "#60606A", marginBottom: 24 }}>ENCRYPTED BUSINESS VAULT FOR CREDENTIALS & CERTIFICATES</p>
 
                 {/* UPLOAD FORM */}
-                <div style={{ background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.1)", padding: 24, borderRadius: 6, marginBottom: 32, textAlign: "center" }}>
-                  <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 8, textAlign: "left" }}>FILE CATEGORY</label>
+                <div style={{ background: "rgba(10, 10, 12, 0.02)", border: "1px dashed rgba(10, 10, 12, 0.15)", padding: 24, borderRadius: 6, marginBottom: 32, textAlign: "center" }}>
+                  <label style={{ fontSize: 10, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 8, textAlign: "left" }}>FILE CATEGORY</label>
                   <select 
                     value={docCategory} 
                     onChange={(e) => setDocCategory(e.target.value as any)} 
                     style={{ ...inputStyle, marginBottom: 16 }}
                   >
-                    <option value="GST" style={{ background: "#020202", color: "#fff" }}>GST Registration Certificate</option>
-                    <option value="NDA" style={{ background: "#020202", color: "#fff" }}>NDA & Signed Client Terms</option>
-                    <option value="TAX" style={{ background: "#020202", color: "#fff" }}>Tax filings & Receipts</option>
-                    <option value="TECHNICAL" style={{ background: "#020202", color: "#fff" }}>Server Keys & Domain Ownership</option>
-                    <option value="OTHER" style={{ background: "#020202", color: "#fff" }}>General Business Document</option>
+                    <option value="GST" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>GST Registration Certificate</option>
+                    <option value="NDA" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>NDA & Signed Client Terms</option>
+                    <option value="TAX" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Tax filings & Receipts</option>
+                    <option value="TECHNICAL" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Server Keys & Domain Ownership</option>
+                    <option value="OTHER" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>General Business Document</option>
                   </select>
 
                   <input 
@@ -1338,7 +1329,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                     onClick={() => docFileInputRef.current?.click()}
                     disabled={uploadingDoc}
                     className="btn-primary" 
-                    style={{ width: "100%", justifyContent: "center", background: "#00F2FF", color: "#000", fontWeight: 800, padding: 14 }}
+                    style={{ width: "100%", justifyContent: "center", background: "#0047FF", color: "#FFFFFF", fontWeight: 800, padding: 14 }}
                   >
                     <Upload size={16} /> {uploadingDoc ? "UPLOADING SYSTEM DOC..." : "INJECT FILE TO VAULT"}
                   </button>
@@ -1350,28 +1341,28 @@ For ${contractClientName} (Authorized Client Signature)`;
                     <div 
                       key={doc.id} 
                       style={{ 
-                        background: "rgba(255,255,255,0.01)", padding: 16, 
-                        borderRadius: 6, border: "1px solid rgba(255,255,255,0.05)",
+                        background: "#FFFFFF", padding: 16, 
+                        borderRadius: 6, border: "1px solid rgba(10, 10, 12, 0.08)",
                         display: "flex", justifyContent: "space-between", alignItems: "center"
                       }}
                     >
                       <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                        <div style={{ color: "#00F2FF", opacity: 0.8 }}>
+                        <div style={{ color: "#0047FF", opacity: 0.9 }}>
                           <FolderOpen size={20} />
                         </div>
                         <div style={{ maxWidth: 160 }}>
-                          <div style={{ fontWeight: 600, fontSize: 13, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{doc.name}</div>
+                          <div style={{ fontWeight: 600, fontSize: 13, color: "#0A0A0C", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{doc.name}</div>
                           <div style={{ display: "flex", gap: 6, alignItems: "center", marginTop: 4 }}>
                             <span 
                               className="editorial-tag" 
                               style={{ 
-                                fontSize: 7, padding: "2px 6px", border: "1px solid rgba(0,242,255,0.2)",
-                                color: "#00F2FF", borderRadius: 4, letterSpacing: "0.05em"
+                                fontSize: 7, padding: "2px 6px", border: "1px solid rgba(0, 71, 255, 0.2)",
+                                color: "#0047FF", borderRadius: 4, letterSpacing: "0.05em"
                               }}
                             >
                               {doc.category}
                             </span>
-                            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", fontFamily: "var(--font-geist-mono)" }}>
+                            <span style={{ fontSize: 9, color: "#60606A", fontFamily: "var(--font-geist-mono)" }}>
                               {(doc.file_size / 1024).toFixed(1)} KB
                             </span>
                           </div>
@@ -1389,7 +1380,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                         <button 
                           onClick={() => deleteDocument(doc.id)} 
                           className="btn-util" 
-                          style={{ fontSize: 9, padding: "6px 10px", borderColor: "rgba(255,51,51,0.2)", color: "rgba(255,51,51,0.7)" }}
+                          style={{ fontSize: 9, padding: "6px 10px", borderColor: "rgba(220, 38, 38, 0.2)", color: "#DC2626" }}
                         >
                           <Trash2 size={12} />
                         </button>
@@ -1397,7 +1388,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                     </div>
                   ))}
                   {documents.length === 0 && (
-                    <div style={{ textAlign: "center", padding: 32, color: "rgba(255,255,255,0.3)", fontSize: 11 }}>Vault is currently empty.</div>
+                    <div style={{ textAlign: "center", padding: 32, color: "#60606A", fontSize: 11 }}>Vault is currently empty.</div>
                   )}
                 </div>
 
@@ -1419,8 +1410,8 @@ For ${contractClientName} (Authorized Client Signature)`;
           <div style={modalOverlayStyle}>
             <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="glass-panel" style={modalBoxStyle}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
-                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 20 }}>Inject New Lead_</h3>
-                <button onClick={() => setShowAddModal(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer" }}><X size={24}/></button>
+                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 20, color: "#0A0A0C" }}>Inject New Lead_</h3>
+                <button onClick={() => setShowAddModal(false)} style={{ background: "none", border: "none", color: "#60606A", cursor: "pointer" }}><X size={24}/></button>
               </div>
               <form onSubmit={handleAddLead} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <input required placeholder="Client Name" value={newLead.name} onChange={e => setNewLead({...newLead, name: e.target.value})} style={inputStyle} />
@@ -1430,7 +1421,7 @@ For ${contractClientName} (Authorized Client Signature)`;
                 </div>
                 <input placeholder="Business Profile" value={newLead.business_type} onChange={e => setNewLead({...newLead, business_type: e.target.value})} style={inputStyle} />
                 <input placeholder="Budget" value={newLead.budget} onChange={e => setNewLead({...newLead, budget: e.target.value})} style={inputStyle} />
-                <button type="submit" disabled={loading} className="btn-util" style={{ width: "100%", background: "#00F2FF", color: "#000", marginTop: 16, justifyContent: "center", padding: 18, fontWeight: 800 }}>{loading ? "PROCESSING..." : "COMMIT TO GRID"}</button>
+                <button type="submit" disabled={loading} className="btn-util" style={{ width: "100%", background: "#0047FF", color: "#FFFFFF", marginTop: 16, justifyContent: "center", padding: 18, fontWeight: 800 }}>{loading ? "PROCESSING..." : "COMMIT TO GRID"}</button>
               </form>
             </motion.div>
           </div>
@@ -1443,8 +1434,8 @@ For ${contractClientName} (Authorized Client Signature)`;
           <div style={modalOverlayStyle}>
             <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="glass-panel" style={modalBoxStyle}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32 }}>
-                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 20 }}>Generate B2B Invoice_</h3>
-                <button onClick={() => setShowInvoiceModal(false)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer" }}><X size={24}/></button>
+                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 20, color: "#0A0A0C" }}>Generate B2B Invoice_</h3>
+                <button onClick={() => setShowInvoiceModal(false)} style={{ background: "none", border: "none", color: "#60606A", cursor: "pointer" }}><X size={24}/></button>
               </div>
               <form onSubmit={handleCreateInvoice} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <input required placeholder="Client Name / Company" value={newInvoice.client_name} onChange={e => setNewInvoice({...newInvoice, client_name: e.target.value})} style={inputStyle} />
@@ -1452,21 +1443,21 @@ For ${contractClientName} (Authorized Client Signature)`;
                 
                 <div style={{ display: "flex", gap: 12 }}>
                   <div style={{ flex: 1 }}>
-                    <label style={{ fontSize: 9, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 6 }}>CURRENCY</label>
+                    <label style={{ fontSize: 9, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 6 }}>CURRENCY</label>
                     <select value={newInvoice.currency} onChange={e => setNewInvoice({...newInvoice, currency: e.target.value})} style={inputStyle}>
-                      <option value="INR" style={{ background: "#020202", color: "#fff" }}>INR (₹)</option>
-                      <option value="USD" style={{ background: "#020202", color: "#fff" }}>USD ($)</option>
+                      <option value="INR" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>INR (₹)</option>
+                      <option value="USD" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>USD ($)</option>
                     </select>
                   </div>
                   <div style={{ flex: 2 }}>
-                    <label style={{ fontSize: 9, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 6 }}>GROSS TOTAL AMOUNT</label>
+                    <label style={{ fontSize: 9, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 6 }}>GROSS TOTAL AMOUNT</label>
                     <input required placeholder="Gross Total" value={newInvoice.total_amount} onChange={e => setNewInvoice({...newInvoice, total_amount: e.target.value})} style={inputStyle} />
                   </div>
                 </div>
 
                 <div style={{ display: "flex", gap: 12 }}>
                   <div style={{ flex: 1 }}>
-                    <label style={{ fontSize: 9, fontFamily: "var(--font-geist-mono)", color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 6 }}>SYSTEM DISCOUNT (FLAT)</label>
+                    <label style={{ fontSize: 9, fontFamily: "var(--font-geist-mono)", color: "#60606A", display: "block", marginBottom: 6 }}>SYSTEM DISCOUNT (FLAT)</label>
                     <input placeholder="e.g. 10000" value={newInvoice.discount_amount} onChange={e => setNewInvoice({...newInvoice, discount_amount: e.target.value})} style={inputStyle} />
                   </div>
                 </div>
@@ -1475,8 +1466,8 @@ For ${contractClientName} (Authorized Client Signature)`;
                   <>
                     <input placeholder="Client GSTIN (15-digit, Optional)" value={newInvoice.client_gstin} onChange={e => setNewInvoice({...newInvoice, client_gstin: e.target.value.toUpperCase()})} style={inputStyle} />
                     <select value={newInvoice.state_type} onChange={e => setNewInvoice({...newInvoice, state_type: e.target.value})} style={inputStyle}>
-                      <option value="INTERSTATE" style={{ background: "#020202", color: "#fff" }}>Outside Haryana (Interstate - 18% IGST)</option>
-                      <option value="INTRASTATE" style={{ background: "#020202", color: "#fff" }}>Haryana (Intrastate - 9% CGST + 9% SGST)</option>
+                      <option value="INTERSTATE" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Outside Haryana (Interstate - 18% IGST)</option>
+                      <option value="INTRASTATE" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Haryana (Intrastate - 9% CGST + 9% SGST)</option>
                     </select>
                   </>
                 )}
@@ -1484,9 +1475,9 @@ For ${contractClientName} (Authorized Client Signature)`;
                 <input placeholder="Description (e.g. MATRIX Plan - Milestone 1)" value={newInvoice.description} onChange={e => setNewInvoice({...newInvoice, description: e.target.value})} style={inputStyle} />
                 
                 <select value={newInvoice.status} onChange={e => setNewInvoice({...newInvoice, status: e.target.value as any})} style={inputStyle}>
-                  <option value="PENDING" style={{ background: "#020202", color: "#fff" }}>Status: PENDING</option>
-                  <option value="PAID" style={{ background: "#020202", color: "#fff" }}>Status: PAID</option>
-                  <option value="OVERDUE" style={{ background: "#020202", color: "#fff" }}>Status: OVERDUE</option>
+                  <option value="PENDING" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Status: PENDING</option>
+                  <option value="PAID" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Status: PAID</option>
+                  <option value="OVERDUE" style={{ background: "#FFFFFF", color: "#0A0A0C" }}>Status: OVERDUE</option>
                 </select>
 
                 {newInvoice.total_amount && !isNaN(parseFloat(newInvoice.total_amount)) && (() => {
@@ -1496,21 +1487,13 @@ For ${contractClientName} (Authorized Client Signature)`;
                   const base = newInvoice.currency === "INR" ? net / 1.18 : net;
                   const gst = newInvoice.currency === "INR" ? net - base : 0;
                   const symbol = newInvoice.currency === "USD" ? "$" : "₹";
-                  if (!authorized) {
-    return (
-      <div style={{ minHeight: "100vh", background: "#020202", display: "flex", alignItems: "center", justifyContent: "center", color: "#00F2FF", fontFamily: "var(--font-geist-mono)", fontSize: 13, letterSpacing: "0.2em" }}>
-        VERIFYING CREDENTIAL CLEARANCE...
-      </div>
-    );
-  }
-
-  return (
-                    <div style={{ background: "rgba(0,242,255,0.05)", padding: 16, borderLeft: "2px solid #00F2FF", fontSize: 11, fontFamily: "var(--font-geist-mono)" }}>
-                      <span style={{ color: "#00F2FF", fontWeight: 700 }}>Real-Time Invoicing Calculations Split_</span>
-                      <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4, color: "rgba(255,255,255,0.6)" }}>
+                  return (
+                    <div style={{ background: "rgba(0, 71, 255, 0.04)", padding: 16, borderLeft: "2px solid #0047FF", fontSize: 11, fontFamily: "var(--font-geist-mono)", borderRadius: 4 }}>
+                      <span style={{ color: "#0047FF", fontWeight: 700 }}>Real-Time Invoicing Calculations Split_</span>
+                      <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4, color: "#60606A" }}>
                         <div>Gross Project Value: {symbol}{gross.toLocaleString()}</div>
-                        {discount > 0 && <div style={{ color: "#FF3333" }}>Applied Discount: -{symbol}{discount.toLocaleString()}</div>}
-                        <div style={{ borderBottom: "1px dashed rgba(255,255,255,0.1)", margin: "4px 0" }} />
+                        {discount > 0 && <div style={{ color: "#DC2626" }}>Applied Discount: -{symbol}{discount.toLocaleString()}</div>}
+                        <div style={{ borderBottom: "1px dashed rgba(10, 10, 12, 0.1)", margin: "4px 0" }} />
                         {newInvoice.currency === "INR" ? (
                           <>
                             <div>Taxable Base: ₹{Math.round(base * 100)/100}</div>
@@ -1526,13 +1509,13 @@ For ${contractClientName} (Authorized Client Signature)`;
                         ) : (
                           <div>Net Taxable (USD): ${Math.round(base * 100)/100}</div>
                         )}
-                        <div style={{ color: "#00FF66", fontWeight: 800, marginTop: 4, fontSize: 12 }}>Final Net Payable: {symbol}{net.toLocaleString()}</div>
+                        <div style={{ color: "#16A34A", fontWeight: 800, marginTop: 4, fontSize: 12 }}>Final Net Payable: {symbol}{net.toLocaleString()}</div>
                       </div>
                     </div>
                   );
                 })()}
 
-                <button type="submit" disabled={loading} className="btn-util" style={{ width: "100%", background: "#00F2FF", color: "#000", marginTop: 16, justifyContent: "center", padding: 18, fontWeight: 800 }}>
+                <button type="submit" disabled={loading} className="btn-util" style={{ width: "100%", background: "#0047FF", color: "#FFFFFF", marginTop: 16, justifyContent: "center", padding: 18, fontWeight: 800 }}>
                   {loading ? "COMMITTING..." : "COMMIT INVOICE TO LEDGER"}
                 </button>
               </form>
@@ -1545,16 +1528,16 @@ For ${contractClientName} (Authorized Client Signature)`;
       <AnimatePresence>
         {noteModal && (
           <div style={modalOverlayStyle}>
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="glass-panel" style={{ width: "100%", maxWidth: 450, padding: 32, borderTop: "2px solid #00F2FF" }}>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="glass-panel" style={{ width: "100%", maxWidth: 450, padding: 32, borderTop: "2px solid #0047FF" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
-                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18 }}>Neural Remarks</h3>
-                <button onClick={() => setNoteModal(null)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer" }}><X size={24}/></button>
+                <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: 18, color: "#0A0A0C" }}>Neural Remarks</h3>
+                <button onClick={() => setNoteModal(null)} style={{ background: "none", border: "none", color: "#60606A", cursor: "pointer" }}><X size={24}/></button>
               </div>
               <textarea 
                 value={noteModal.text} onChange={(e) => setNoteModal({ ...noteModal, text: e.target.value })}
-                style={{ width: "100%", height: 180, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff", padding: 16, outline: "none", fontFamily: "var(--font-inter)", fontSize: 14, resize: "none" }}
+                style={{ width: "100%", height: 180, background: "#FFFFFF", border: "1px solid rgba(10, 10, 12, 0.12)", color: "#0A0A0C", padding: 16, outline: "none", fontFamily: "var(--font-inter)", fontSize: 14, resize: "none" }}
               />
-              <button onClick={saveNote} className="btn-util" style={{ width: "100%", background: "#00F2FF", color: "#000", marginTop: 24, justifyContent: "center", padding: 16, fontWeight: 800 }}>SAVE INTELLIGENCE</button>
+              <button onClick={saveNote} className="btn-util" style={{ width: "100%", background: "#0047FF", color: "#FFFFFF", marginTop: 24, justifyContent: "center", padding: 16, fontWeight: 800 }}>SAVE INTELLIGENCE</button>
             </motion.div>
           </div>
         )}
@@ -1722,10 +1705,10 @@ For ${contractClientName} (Authorized Client Signature)`;
       )}
 
       <style dangerouslySetInnerHTML={{__html: `
-        .btn-util { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); padding: 10px 20px; border-radius: 4px; font-family: var(--font-geist-mono); font-size: 11px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; }
-        .btn-util:hover { background: rgba(255,255,255,0.08); color: #fff; border-color: #00F2FF; }
-        .btn-bulk { background: none; border: none; color: #000; font-family: var(--font-geist-mono); font-weight: 800; font-size: 11px; cursor: pointer; padding: 8px 16px; border-radius: 100px; transition: 0.2s; }
-        .btn-bulk:hover { background: rgba(0,0,0,0.1); }
+        .btn-util { background: #FFFFFF; border: 1px solid rgba(10, 10, 12, 0.1); color: #0A0A0C; padding: 10px 20px; border-radius: 4px; font-family: var(--font-geist-mono); font-size: 11px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; }
+        .btn-util:hover { background: rgba(0, 71, 255, 0.04); color: #0047FF; border-color: #0047FF; }
+        .btn-bulk { background: none; border: none; color: #FFFFFF; font-family: var(--font-geist-mono); font-weight: 800; font-size: 11px; cursor: pointer; padding: 8px 16px; border-radius: 100px; transition: 0.2s; }
+        .btn-bulk:hover { background: rgba(255,255,255,0.2); }
         .spin { animation: spin 2s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
       `}} />
@@ -1734,21 +1717,21 @@ For ${contractClientName} (Authorized Client Signature)`;
 }
 
 // --- Styles ---
-const thStyle: React.CSSProperties = { textAlign: "left", padding: "20px 24px", fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em" };
+const thStyle: React.CSSProperties = { textAlign: "left", padding: "20px 24px", fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "#60606A", textTransform: "uppercase", letterSpacing: "0.1em" };
 const tdStyle: React.CSSProperties = { padding: "20px 24px", verticalAlign: "middle" };
-const inputStyle: React.CSSProperties = { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", padding: "14px 16px", color: "#fff", outline: "none", fontSize: 13, fontFamily: "var(--font-inter)", width: "100%", borderRadius: 4 };
-const actionIconStyle = (color: string): React.CSSProperties => ({ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)", color: color, padding: "8px", borderRadius: "6px", cursor: "pointer", display: "flex", alignItems: "center", transition: "0.2s" });
-const bulkBarStyles: React.CSSProperties = { position: "fixed", bottom: 40, left: "50%", transform: "translateX(-50%)", background: "#00F2FF", color: "#000", padding: "12px 24px", borderRadius: 100, display: "flex", alignItems: "center", gap: 24, zIndex: 1000, boxShadow: "0 20px 40px rgba(0,242,255,0.2)" };
-const modalOverlayStyle: React.CSSProperties = { position: "fixed", inset: 0, background: "rgba(0,0,0,0.9)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2000, backdropFilter: "blur(8px)", padding: 20 };
-const modalBoxStyle: React.CSSProperties = { width: "100%", maxWidth: 500, padding: 40, borderTop: "2px solid #00F2FF", maxHeight: "90vh", overflowY: "auto" };
+const inputStyle: React.CSSProperties = { background: "#FFFFFF", border: "1px solid rgba(10, 10, 12, 0.12)", padding: "14px 16px", color: "#0A0A0C", outline: "none", fontSize: 13, fontFamily: "var(--font-inter)", width: "100%", borderRadius: 4 };
+const actionIconStyle = (color: string): React.CSSProperties => ({ background: "#FFFFFF", border: "1px solid rgba(10, 10, 12, 0.08)", color: color, padding: "8px", borderRadius: "6px", cursor: "pointer", display: "flex", alignItems: "center", transition: "0.2s" });
+const bulkBarStyles: React.CSSProperties = { position: "fixed", bottom: 40, left: "50%", transform: "translateX(-50%)", background: "#0047FF", color: "#FFFFFF", padding: "12px 24px", borderRadius: 100, display: "flex", alignItems: "center", gap: 24, zIndex: 1000, boxShadow: "0 20px 40px rgba(0, 71, 255, 0.25)" };
+const modalOverlayStyle: React.CSSProperties = { position: "fixed", inset: 0, background: "rgba(10, 10, 12, 0.5)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2000, backdropFilter: "blur(8px)", padding: 20 };
+const modalBoxStyle: React.CSSProperties = { width: "100%", maxWidth: 500, padding: 40, background: "#FFFFFF", borderTop: "3px solid #0047FF", maxHeight: "90vh", overflowY: "auto", boxShadow: "0 20px 50px rgba(10, 10, 12, 0.12)" };
 
 function getStatusColor(status: string, bg: boolean) {
   switch (status) {
-    case "VICTORY": return bg ? "rgba(0,255,102,0.1)" : "#00FF66";
-    case "HOT": return bg ? "rgba(255,51,51,0.1)" : "#FF3333";
-    case "CONTACTED": return bg ? "rgba(0,242,255,0.1)" : "#00F2FF";
-    case "DEAD": return bg ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.3)";
-    default: return bg ? "rgba(255,255,255,0.05)" : "#fff";
+    case "VICTORY": return bg ? "rgba(22, 163, 74, 0.1)" : "#16A34A";
+    case "HOT": return bg ? "rgba(220, 38, 38, 0.1)" : "#DC2626";
+    case "CONTACTED": return bg ? "rgba(0, 71, 255, 0.1)" : "#0047FF";
+    case "DEAD": return bg ? "rgba(10, 10, 12, 0.05)" : "#60606A";
+    default: return bg ? "rgba(10, 10, 12, 0.04)" : "#0A0A0C";
   }
 }
 

@@ -126,19 +126,19 @@ export default function ToolsHubPage() {
             
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem", justifyContent: "center" }}>
               <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-                <CheckCircle2 size={18} color="#00F2FF" style={{ flexShrink: 0, marginTop: "2px" }} />
+                <CheckCircle2 size={18} color="#0047FF" style={{ flexShrink: 0, marginTop: "2px" }} />
                 <span style={{ fontSize: "0.88rem", color: "var(--text-color)", lineHeight: 1.4 }}>
                   <strong>Zero Obligation:</strong> Completely self-service boutique diagnostic without upfront advisory fees.
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-                <CheckCircle2 size={18} color="#00F2FF" style={{ flexShrink: 0, marginTop: "2px" }} />
+                <CheckCircle2 size={18} color="#0047FF" style={{ flexShrink: 0, marginTop: "2px" }} />
                 <span style={{ fontSize: "0.88rem", color: "var(--text-color)", lineHeight: 1.4 }}>
                   <strong>Actionable Output:</strong> Multi-currency projections in AED and GBP with estimated annual recoverable revenue.
                 </span>
               </div>
               <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-                <CheckCircle2 size={18} color="#00F2FF" style={{ flexShrink: 0, marginTop: "2px" }} />
+                <CheckCircle2 size={18} color="#0047FF" style={{ flexShrink: 0, marginTop: "2px" }} />
                 <span style={{ fontSize: "0.88rem", color: "var(--text-color)", lineHeight: 1.4 }}>
                   <strong>14-Day Deployment Blueprint:</strong> Actionable integration roadmap tailored for DIFC, D3, Mayfair, and Soho labels.
                 </span>
@@ -148,7 +148,7 @@ export default function ToolsHubPage() {
         </div>
 
         {/* Bottom Banner */}
-        <div style={{ backgroundColor: "var(--surface-color)", border: "1px solid var(--border-color)", borderRadius: "24px", padding: "2.5rem 1.5rem", textAlign: "center", boxShadow: "0 10px 30px rgba(0,242,255,0.06)" }}>
+        <div style={{ backgroundColor: "var(--surface-color)", border: "1px solid var(--border-color)", borderRadius: "24px", padding: "2.5rem 1.5rem", textAlign: "center", boxShadow: "0 10px 30px rgba(0, 71, 255, 0.06)" }}>
           <h2 style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.5rem", fontWeight: 800, color: "var(--text-color)", marginBottom: "0.5rem" }}>
             Ready for a Complete Boutique Evaluation?
           </h2>

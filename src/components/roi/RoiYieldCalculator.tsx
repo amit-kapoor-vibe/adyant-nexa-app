@@ -12,20 +12,12 @@ export function RoiYieldCalculator() {
     <section className="roi-section" id="roi">
       <div className="roi-grid">
         <div>
-          <div
-            className="tag-mono"
-            style={{
-              background: "rgba(0, 71, 255, 0.2)",
-              color: "var(--blue-tint)",
-              marginBottom: 16,
-              display: "inline-block",
-            }}
-          >
+          <div className="roi-badge">
             AGENCY REVENUE IMPACT
           </div>
           <h2 className="roi-h2">
-            Stop burning ad spend.
-            <em>Capture every lead.</em>
+            <span className="roi-h2-title">Stop burning ad spend.</span>
+            <em className="roi-h2-accent">Capture every lead.</em>
           </h2>
           <p className="roi-sub">
             When ad leads wait more than 15 minutes, conversion rates drop by 391%. Adyant Nexa eliminates the leak entirely by engaging in 1.2 seconds.
@@ -35,12 +27,7 @@ export function RoiYieldCalculator() {
             href="https://wa.me/?text=Hi%2C%20I%20am%20a%20Dubai%20Real%20Estate%20Agency%20Principal.%20I%20want%20to%20pilot%20Adyant%20Nexa."
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-pill-primary"
-            style={{
-              background: "var(--cobalt)",
-              borderColor: "var(--cobalt)",
-              padding: "14px 28px",
-            }}
+            className="btn-pill-primary roi-cta-btn"
           >
             Claim Pilot Deployment ↗
           </a>

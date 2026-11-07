@@ -98,21 +98,21 @@ export const TransitionProvider = ({ children }: { children: React.ReactNode }) 
               position: "fixed",
               inset: 0,
               zIndex: 9999,
-              background: "#020202",
+              background: "rgba(248, 248, 250, 0.98)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               pointerEvents: "none"
             }}
           >
-            <div className="scan-overlay" style={{ opacity: 0.1 }} />
+            <div className="scan-overlay" style={{ opacity: 0.05 }} />
             <motion.div
               animate={{ opacity: [0.4, 1, 0.4] }}
               transition={{ duration: 0.8, repeat: Infinity }}
               style={{ 
                 fontFamily: "var(--font-geist-mono)", 
                 fontSize: 10, 
-                color: "#00F2FF", 
+                color: "#0047FF", 
                 letterSpacing: "0.5em", 
                 textTransform: "uppercase" 
               }}

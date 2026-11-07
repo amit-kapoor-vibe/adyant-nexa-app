@@ -93,7 +93,7 @@ export const Navbar = () => {
           {/* Right Action Button */}
           <div className="desktop-only" style={{ display: "flex", alignItems: "center" }}>
             <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ fontSize: 12, padding: "10px 22px", borderRadius: "9999px", fontWeight: 700 }}>
-              Boutique Audit
+              System Audit
             </Link>
           </div>
 
@@ -165,7 +165,7 @@ export const Navbar = () => {
               
               <div style={{ marginTop: "auto", paddingTop: 20 }}>
                 <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ textAlign: "center", padding: "14px", display: "block", textDecoration: "none", borderRadius: "9999px", fontWeight: 700, fontSize: 13 }}>
-                  Boutique Audit
+                  System Audit
                 </Link>
               </div>
             </motion.div>
