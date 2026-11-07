@@ -79,12 +79,6 @@ export default function FashionRetailSolutionPage() {
             Start Free Assessment <ArrowRight style={{ width: "16px", height: "16px" }} />
           </Link>
         </div>
-            Takes under 4 minutes. Get your estimated Growth Score (0–100) and annual profit opportunity instantly.
-          </p>
-          <Link href="/assessment" className="btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.75rem" }}>
-            Start Free Assessment <ArrowRight style={{ width: "16px", height: "16px" }} />
-          </Link>
-        </div>
 
       </div>
     </div>
