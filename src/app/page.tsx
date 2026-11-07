@@ -959,7 +959,8 @@ export default function AdyantNexaRealEstateOS() {
 
         <div className="nav-actions">
           <Link href="/terminal" className="btn-pill-secondary">
-            Command Centre →
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10B981", display: "inline-block", marginRight: "6px", boxShadow: "0 0 8px #10B981" }} />
+            Live Demo Terminal ↗
           </Link>
           <a
             href="https://wa.me/?text=Hi%2C%20I%20am%20a%20Dubai%20Real%20Estate%20Agency%20Principal.%20I%20want%20to%20see%20the%20Nexa%20AI%20Sales%20Engine%20demo."

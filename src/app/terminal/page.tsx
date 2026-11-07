@@ -41,9 +41,9 @@ interface Lead {
 const FALLBACK_LEADS: Lead[] = [
   {
     raw_jid: "971528964833@s.whatsapp.net",
-    phone: "971528964833",
+    phone: "+971 52 ••• 4833",
     display_title: "Apex Horizon Realty (18 Brokers)",
-    formatted_phone: "+971 52 896 4833",
+    formatted_phone: "+971 52 ••• 4833",
     last_message: "Hi, I run an agency in Business Bay with 18 brokers. We spend $12k/mo on Meta ads. Can we see a demo?",
     qualification: {
       status: "HOT",
@@ -73,9 +73,9 @@ const FALLBACK_LEADS: Lead[] = [
   },
   {
     raw_jid: "447891234567@s.whatsapp.net",
-    phone: "447891234567",
+    phone: "+44 78 ••• 4567",
     display_title: "London Investor (Inbound Meta Ad)",
-    formatted_phone: "+44 7891 234567",
+    formatted_phone: "+44 78 ••• 4567",
     last_message: "Saw your Downtown penthouse ad. Looking for 3-bed with high rental yield, budget is around 2.8M AED.",
     qualification: {
       status: "HOT",
@@ -102,9 +102,9 @@ const FALLBACK_LEADS: Lead[] = [
   },
   {
     raw_jid: "966501234567@s.whatsapp.net",
-    phone: "966501234567",
+    phone: "+966 50 ••• 1289",
     display_title: "Riyadh Family Office (Sobha Villas)",
-    formatted_phone: "+966 50 123 4567",
+    formatted_phone: "+966 50 ••• 1289",
     last_message: "نبحث عن فيلا 4 غرف في دبي هيلز أو شوبا هارتلاند بميزانية 5 مليون درهم",
     qualification: {
       status: "HOT",
@@ -216,7 +216,22 @@ export default function CommandTerminalPage() {
     if (!composerText.trim() || !currentLead) return;
     const text = composerText.trim();
     setComposerText("");
-    notify("Sending message on WhatsApp...");
+    notify("Dispatching to lead via WhatsApp...");
+
+    const newMsg: LeadMessage = {
+      role: "model",
+      text: text,
+      timestamp: new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
+    };
+
+    // Update local state immediately for interactive demo
+    setLeads((prev) =>
+      prev.map((l) =>
+        l.raw_jid === currentLead.raw_jid
+          ? { ...l, last_message: text, messages: [...l.messages, newMsg] }
+          : l
+      )
+    );
 
     try {
       const res = await fetch("/api/send-message", {
@@ -228,15 +243,25 @@ export default function CommandTerminalPage() {
         notify("✓ Message delivered to investor");
         fetchLeads();
       } else {
-        notify("Engine queue synced (Local mode)");
+        notify("Demo Mode: Message delivered in simulated session");
       }
     } catch {
-      notify("Engine offline — message logged in local telemetry");
+      notify("Demo Mode: Message delivered in simulated session");
     }
   };
 
   const handleToggleTakeover = async () => {
     if (!currentLead) return;
+    const nextState = !currentLead.human_takeover;
+
+    // Toggle local state immediately
+    setLeads((prev) =>
+      prev.map((l) =>
+        l.raw_jid === currentLead.raw_jid ? { ...l, human_takeover: nextState } : l
+      )
+    );
+    notify(nextState ? "Human Operator In Control (AI Paused)" : "AI Supervision Resumed");
+
     try {
       const res = await fetch("/api/toggle-takeover", {
         method: "POST",
@@ -244,20 +269,31 @@ export default function CommandTerminalPage() {
         body: JSON.stringify({ jid: currentLead.raw_jid }),
       });
       if (res.ok) {
-        const data = await res.json();
-        notify(data.human_takeover ? "Human Operator In Control (AI Paused)" : "AI Supervision Resumed");
         fetchLeads();
-      } else {
-        notify("Takeover state toggled");
       }
     } catch {
-      notify("Takeover state updated");
+      // Offline fallback state already applied
     }
   };
 
   const handleSendBrief = async () => {
     if (!currentLead) return;
-    notify("Dispatching B2B Agency Architecture Brief...");
+    notify("Dispatching Luxury Agency Architecture Brief...");
+
+    const briefMsg: LeadMessage = {
+      role: "model",
+      text: "[Automated Dispatch] Sent 'Adyant Nexa Real Estate AI Architecture Dossier (PDF)' to investor WhatsApp.",
+      timestamp: new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
+    };
+
+    setLeads((prev) =>
+      prev.map((l) =>
+        l.raw_jid === currentLead.raw_jid
+          ? { ...l, messages: [...l.messages, briefMsg] }
+          : l
+      )
+    );
+
     try {
       const res = await fetch("/api/dispatch-brochure", {
         method: "POST",
@@ -269,13 +305,28 @@ export default function CommandTerminalPage() {
         fetchLeads();
       }
     } catch {
-      notify("Agency Brief queued");
+      notify("Demo Mode: Architecture Brief dispatched to chat");
     }
   };
 
   const handleSendMeet = async () => {
     if (!currentLead) return;
     notify("Generating Google Meet 15-Min Strategy Invitation...");
+
+    const meetMsg: LeadMessage = {
+      role: "model",
+      text: "[Calendar Slot Confirmed] 15-Minute Strategy Walkthrough invitation generated: https://meet.google.com/ady-nexa-demo",
+      timestamp: new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
+    };
+
+    setLeads((prev) =>
+      prev.map((l) =>
+        l.raw_jid === currentLead.raw_jid
+          ? { ...l, messages: [...l.messages, meetMsg] }
+          : l
+      )
+    );
+
     try {
       const res = await fetch("/api/schedule-meet", {
         method: "POST",
@@ -287,7 +338,7 @@ export default function CommandTerminalPage() {
         fetchLeads();
       }
     } catch {
-      notify("Google Meet link dispatched");
+      notify("Demo Mode: Google Meet link generated in chat");
     }
   };
 
@@ -723,7 +774,7 @@ export default function CommandTerminalPage() {
 
       {/* Top Header */}
       <header className="term-top-bar">
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <Link href="/" className="term-brand">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.svg" alt="Adyant Nexa Logo" className="term-logo-img" />
@@ -731,17 +782,36 @@ export default function CommandTerminalPage() {
               ADYANT <span>NEXA.</span>
             </div>
           </Link>
-          <span className="term-badge">COMMAND TERMINAL // REAL ESTATE OS</span>
+          <span className="term-badge">LIVE DEMO TERMINAL // CLIENT SHOWCASE</span>
         </div>
 
         <div className="term-telemetry">
-          <div>
-            <span className="live-dot" style={{ background: isLiveConnected ? "#10B981" : "#F59E0B" }} />
-            <span>{isLiveConnected ? "ENGINE ONLINE (ORACLE/LOCAL)" : "DEMO TELEMETRY ACTIVE"}</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <span className="live-dot" style={{ background: isLiveConnected ? "#10B981" : "#00F2FF" }} />
+            <span>{isLiveConnected ? "LIVE ENGINE CONNECTED" : "INTERACTIVE DEMO SIMULATOR"}</span>
           </div>
           <div>📍 {dubaiTime || "Dubai GST"}</div>
+          <a
+            href="https://wa.me/?text=Hi%2C%20I%20tested%20the%20Adyant%20Nexa%20demo%20terminal%20and%20want%20to%20deploy%20this%20for%20my%20agency."
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              background: "var(--term-cobalt)",
+              color: "#FFFFFF",
+              padding: "5px 14px",
+              borderRadius: "999px",
+              fontSize: "11px",
+              fontWeight: 600,
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px"
+            }}
+          >
+            Deploy For Agency ↗
+          </a>
           <Link href="/" style={{ color: "var(--term-cyan)", textDecoration: "none" }}>
-            ← Back to Platform
+            ← Back
           </Link>
         </div>
       </header>
@@ -856,7 +926,7 @@ export default function CommandTerminalPage() {
                   {currentLead?.display_title || "Verified Dubai Investor"}
                 </div>
                 <div className="chat-client-phone">
-                  {currentLead?.formatted_phone || currentLead?.phone} · WhatsApp Verified
+                  {currentLead?.formatted_phone || currentLead?.phone} · WhatsApp Verified · <span style={{ color: "var(--term-cyan)", fontSize: "10px", letterSpacing: "0.08em" }}>[DEMO SHOWCASE MASKED]</span>
                 </div>
               </div>
 
