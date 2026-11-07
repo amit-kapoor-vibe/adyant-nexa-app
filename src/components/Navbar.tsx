@@ -27,12 +27,11 @@ export const Navbar = () => {
 
   const navLinks = [
     { label: "Architecture", href: "/#architecture" },
-    { label: "Intelligence", href: "/#intelligence" },
-    { label: "Tools", href: "/tools" },
-    { label: "How We Work", href: "/how-it-works" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
-    { label: "Journal", href: "/journal" }
+    { label: "BANT Intelligence", href: "/#intelligence" },
+    { label: "Developer Fleet", href: "/#portfolio" },
+    { label: "Lead Diagnostic", href: "/#diagnostic" },
+    { label: "Yield Calculator", href: "/#roi" },
+    { label: "Founding 3 Offer", href: "/#founding-offer", highlight: true }
   ];
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
@@ -49,56 +48,118 @@ export const Navbar = () => {
     <>
       <nav style={{ 
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000, 
-        background: scrolled ? "rgba(248, 248, 250, 0.94)" : "transparent", 
-        backdropFilter: scrolled ? "blur(16px)" : "none", 
-        WebkitBackdropFilter: scrolled ? "blur(16px)" : "none", 
-        borderBottom: scrolled ? "1px solid rgba(10, 10, 12, 0.08)" : "1px solid transparent", 
-        padding: scrolled ? "14px 0" : "24px 0",
-        transition: "all 0.3s ease",
+        background: scrolled ? "rgba(248, 248, 250, 0.94)" : "rgba(248, 248, 250, 0.85)", 
+        backdropFilter: "blur(14px)", 
+        WebkitBackdropFilter: "blur(14px)", 
+        borderBottom: "1px solid rgba(10, 10, 12, 0.08)", 
+        padding: scrolled ? "12px 0" : "18px 0",
+        transition: "all 0.25s ease",
       }}>
-        <div style={{ maxWidth: 1240, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 24px" }}>
+        <div style={{ maxWidth: 1300, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px" }}>
           {/* Logo */}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Link href="/" onClick={(e) => handleLinkClick(e, "/")} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-              <img src="/Favicon transparent.png" alt="Adyant Nexa" width={26} height={26} />
-              <span style={{ fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, fontSize: 15, color: "var(--text-color)", letterSpacing: "0.02em" }}>
-                ADYANT NEXA
+              <img src="/logo.svg" alt="Adyant Nexa Logo" style={{ height: 28, width: "auto", objectFit: "contain" }} />
+              <span style={{ fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, fontSize: 16, color: "#0A0A0C", letterSpacing: "-0.02em" }}>
+                ADYANT <span style={{ color: "#0047FF" }}>NEXA.</span>
               </span>
             </Link>
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 6 }}>
             {navLinks.map(link => {
               const isActive = pathname === link.href;
               return (
-                <Link key={link.label} href={link.href} onClick={(e) => handleLinkClick(e, link.href)} 
+                <Link 
+                  key={link.label} 
+                  href={link.href} 
+                  onClick={(e) => handleLinkClick(e, link.href)} 
                   style={{ 
-                    fontFamily: "var(--font-inter), sans-serif", 
-                    fontSize: 13, 
-                    fontWeight: 500, 
-                    padding: "8px 16px", 
+                    fontFamily: "var(--font-geist-mono), monospace", 
+                    fontSize: 11, 
+                    fontWeight: link.highlight ? 700 : 500, 
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    padding: "7px 14px", 
                     borderRadius: "9999px", 
-                    color: isActive ? "#0047FF" : "rgba(10, 10, 12, 0.7)", 
-                    background: isActive ? "rgba(0, 71, 255, 0.06)" : "transparent",
+                    color: link.highlight ? "#0047FF" : isActive ? "#0A0A0C" : "#60606A", 
+                    background: link.highlight ? "rgba(0, 71, 255, 0.08)" : isActive ? "rgba(10, 10, 12, 0.05)" : "transparent",
                     textDecoration: "none", 
-                    transition: "all 0.2s ease" 
-                  }}>
+                    transition: "all 0.15s ease" 
+                  }}
+                >
                   {link.label}
                 </Link>
               );
             })}
           </div>
 
-          {/* Right Action Button */}
-          <div className="desktop-only" style={{ display: "flex", alignItems: "center" }}>
-            <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ fontSize: 12, padding: "10px 22px", borderRadius: "9999px", fontWeight: 700 }}>
-              System Audit
+          {/* Right Action Buttons */}
+          <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <Link 
+              href="/terminal" 
+              onClick={(e) => handleLinkClick(e, "/terminal")} 
+              style={{ 
+                fontFamily: "var(--font-inter), sans-serif",
+                fontSize: 12, 
+                fontWeight: 600,
+                padding: "8px 16px", 
+                borderRadius: "9999px",
+                border: "1px solid rgba(10, 10, 12, 0.16)",
+                background: "#FFFFFF",
+                color: "#0A0A0C",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                transition: "all 0.15s ease"
+              }}
+            >
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#10B981", display: "inline-block", boxShadow: "0 0 6px #10B981" }} />
+              Live Demo Terminal ↗
             </Link>
+
+            <a 
+              href="https://wa.me/?text=Hi%2C%20I%20am%20a%20Dubai%20Real%20Estate%20Agency%20Principal.%20I%20want%20to%20see%20the%20Nexa%20AI%20Sales%20Engine%20demo."
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ 
+                fontFamily: "var(--font-inter), sans-serif",
+                fontSize: 12, 
+                fontWeight: 600,
+                padding: "8px 18px", 
+                borderRadius: "9999px",
+                border: "1px solid #0047FF",
+                background: "#0047FF",
+                color: "#FFFFFF",
+                textDecoration: "none",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                transition: "all 0.15s ease"
+              }}
+            >
+              Connect WhatsApp ↗
+            </a>
           </div>
 
           {/* Mobile Toggle */}
-          <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} style={{ background: "#FFFFFF", border: "1px solid rgba(10, 10, 12, 0.12)", color: "#0A0A0C", alignItems: "center", padding: 8, borderRadius: "50%", zIndex: 2010, cursor: "pointer" }}>
+          <button 
+            className="mobile-toggle" 
+            onClick={() => setIsOpen(!isOpen)} 
+            aria-label="Toggle navigation menu"
+            style={{ 
+              background: "#FFFFFF", 
+              border: "1px solid rgba(10, 10, 12, 0.12)", 
+              color: "#0A0A0C", 
+              alignItems: "center", 
+              padding: 8, 
+              borderRadius: "50%", 
+              zIndex: 2010, 
+              cursor: "pointer" 
+            }}
+          >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
@@ -107,7 +168,7 @@ export const Navbar = () => {
           .desktop-only { display: flex; }
           .mobile-toggle { display: none; }
           
-          @media (max-width: 900px) {
+          @media (max-width: 1040px) {
             .desktop-only { display: none !important; }
             .mobile-toggle { display: flex !important; }
           }
@@ -119,9 +180,11 @@ export const Navbar = () => {
         {isOpen && (
           <>
             <motion.div 
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.6)", zIndex: 2090, backdropFilter: "blur(6px)" }}
+              style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)", zIndex: 2090, backdropFilter: "blur(6px)" }}
             />
             
             <motion.div 
@@ -130,43 +193,86 @@ export const Navbar = () => {
               exit={{ opacity: 0, x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 220 }}
               style={{ 
-                position: "fixed", top: 0, right: 0, bottom: 0, width: "100%", maxWidth: 300, 
+                position: "fixed", top: 0, right: 0, bottom: 0, width: "100%", maxWidth: 320, 
                 background: "#FFFFFF", 
                 borderLeft: "1px solid rgba(10, 10, 12, 0.08)",
-                padding: "36px 28px", 
-                display: "flex", flexDirection: "column", gap: 24,
+                padding: "32px 24px", 
+                display: "flex", flexDirection: "column", gap: 20,
                 zIndex: 2100,
                 boxShadow: "-10px 0 40px rgba(0,0,0,0.08)",
                 overflowY: "auto",
               }}
             >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: 10, color: "#0047FF", letterSpacing: "0.2em" }}>NAVIGATION</span>
-                <button onClick={() => setIsOpen(false)} style={{ background: "rgba(10, 10, 12, 0.05)", border: "none", color: "#0A0A0C", padding: 8, borderRadius: "50%", cursor: "pointer" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: 10, color: "#0047FF", letterSpacing: "0.2em", fontWeight: 700 }}>
+                  DUBAI OS NAVIGATION
+                </span>
+                <button 
+                  onClick={() => setIsOpen(false)} 
+                  aria-label="Close navigation menu"
+                  style={{ background: "rgba(10, 10, 12, 0.05)", border: "none", color: "#0A0A0C", padding: 8, borderRadius: "50%", cursor: "pointer" }}
+                >
                   <X size={18} />
                 </button>
               </div>
 
               {navLinks.map((link, i) => (
-                <motion.div key={link.label} initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
-                  <Link href={link.href} onClick={(e) => handleLinkClick(e, link.href)} 
+                <motion.div key={link.label} initial={{ opacity: 0, x: 15 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
+                  <Link 
+                    href={link.href} 
+                    onClick={(e) => handleLinkClick(e, link.href)} 
                     style={{ 
                       fontFamily: "var(--font-syne), sans-serif", 
-                      fontSize: 22, 
+                      fontSize: 18, 
                       fontWeight: 700, 
-                      color: pathname === link.href ? "#0047FF" : "#0A0A0C", 
+                      color: link.highlight ? "#0047FF" : "#0A0A0C", 
                       textDecoration: "none",
                       display: "block"
-                    }}>
+                    }}
+                  >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
               
-              <div style={{ marginTop: "auto", paddingTop: 20 }}>
-                <Link href="/assessment" onClick={(e) => handleLinkClick(e, "/assessment")} className="btn-primary" style={{ textAlign: "center", padding: "14px", display: "block", textDecoration: "none", borderRadius: "9999px", fontWeight: 700, fontSize: 13 }}>
-                  System Audit
+              <div style={{ marginTop: "auto", paddingTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+                <Link 
+                  href="/terminal" 
+                  onClick={(e) => handleLinkClick(e, "/terminal")} 
+                  style={{ 
+                    textAlign: "center", 
+                    padding: "12px", 
+                    display: "block", 
+                    textDecoration: "none", 
+                    borderRadius: "9999px", 
+                    fontWeight: 600, 
+                    fontSize: 12,
+                    background: "#F8F8FA",
+                    border: "1px solid rgba(10, 10, 12, 0.12)",
+                    color: "#0A0A0C"
+                  }}
+                >
+                  Live Demo Terminal ↗
                 </Link>
+
+                <a 
+                  href="https://wa.me/?text=Hi%2C%20I%20am%20a%20Dubai%20Real%20Estate%20Agency%20Principal.%20I%20want%20to%20see%20the%20Nexa%20AI%20Sales%20Engine%20demo."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ 
+                    textAlign: "center", 
+                    padding: "12px", 
+                    display: "block", 
+                    textDecoration: "none", 
+                    borderRadius: "9999px", 
+                    fontWeight: 700, 
+                    fontSize: 13,
+                    background: "#0047FF",
+                    color: "#FFFFFF"
+                  }}
+                >
+                  Connect WhatsApp ↗
+                </a>
               </div>
             </motion.div>
           </>

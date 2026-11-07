@@ -16,11 +16,14 @@ export interface InvoicePrintData {
 export function generateInvoiceHtml(inv: InvoicePrintData): string {
   const formattedDate = new Date(inv.created_at).toLocaleDateString();
   const isINR = inv.currency === "INR";
-  const symbol = isINR ? "₹" : "$";
+  const isAED = inv.currency === "AED";
+  const symbol = isINR ? "₹" : isAED ? "AED " : "$";
   const gstRateText = inv.state_type === "INTRASTATE" ? "CGST (9%) + SGST (9%)" : "IGST (18%)";
   const taxDetailText = isINR 
-    ? `Haryana GST: ${inv.state_type === "INTRASTATE" ? "Haryana CGST (9%) + SGST (9%)" : "Out-State IGST (18%)"}` 
-    : "Export Services (No GST)";
+    ? `GST: ${inv.state_type === "INTRASTATE" ? "CGST (9%) + SGST (9%)" : "Out-State IGST (18%)"}` 
+    : isAED
+    ? "UAE VAT Exempt / Standard 0% B2B Cross-Border"
+    : "Export Services (Tax Exempt)";
 
   return `
     <html>
@@ -58,10 +61,10 @@ export function generateInvoiceHtml(inv: InvoicePrintData): string {
             <tr>
               <td>
                 <div class="brand">ADYANT NEXA</div>
-                <div class="brand-sub">DIGITAL OPERATING SYSTEM</div>
+                <div class="brand-sub">AUTONOMOUS REAL ESTATE OPERATING SYSTEMS</div>
                 <div style="font-size: 12px; color: #555; margin-top: 10px;">
-                  Adyant Nexa India<br/>
-                  Haryana, India<br/>
+                  Adyant Nexa Operations<br/>
+                  Dubai // India Core<br/>
                   Email: contact@adyantnexa.com
                 </div>
               </td>
@@ -80,13 +83,12 @@ export function generateInvoiceHtml(inv: InvoicePrintData): string {
                 <div class="details-title">Billed To:</div>
                 <b>${inv.client_name}</b><br/>
                 Email: ${inv.client_email}<br/>
-                ${inv.client_gstin ? `GSTIN: ${inv.client_gstin}` : ""}
+                ${inv.client_gstin ? `Tax ID / Reg: ${inv.client_gstin}` : ""}
               </td>
               <td>
-                <div class="details-title">Provider Details:</div>
-                <b>Adyant Nexa Ltd.</b><br/>
-                GSTIN: Haryana Registry Active<br/>
-                Tax Treatment: ${taxDetailText}
+                <div class="details-title">Service Provider:</div>
+                <b>Adyant Nexa Operating Systems</b><br/>
+                Tax Classification: ${taxDetailText}
               </td>
             </tr>
           </table>
@@ -101,8 +103,8 @@ export function generateInvoiceHtml(inv: InvoicePrintData): string {
             <tbody>
               <tr>
                 <td>
-                  <b>Growth &amp; Performance Web Engineering Services</b>
-                  <div style="font-size: 12px; color: #666; margin-top: 4px;">${inv.description || "Bespoke digital architecture build"}</div>
+                  <b>Autonomous Real Estate AI Infrastructure Deployment</b>
+                  <div style="font-size: 12px; color: #666; margin-top: 4px;">${inv.description || "24/7 WhatsApp AI Brokerage Sales Engine & Retainer"}</div>
                 </td>
                 <td style="text-align: right;">${symbol}${inv.base_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
               </tr>
@@ -131,7 +133,7 @@ export function generateInvoiceHtml(inv: InvoicePrintData): string {
           <div style="clear: both;"></div>
 
           <div class="footer-info">
-            Thank you for partnering with Adyant Nexa. This is a computer-generated document and does not require a physical signature.
+            Thank you for deploying Adyant Nexa Autonomous Infrastructure. Computer generated document.
           </div>
         </div>
         <script>

@@ -51,3 +51,5 @@ services/whatsapp/whatsapp_auth_session/
 whatsapp_auth_session/
 *.key
 
+
+.vercel

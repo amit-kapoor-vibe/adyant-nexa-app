@@ -12,6 +12,10 @@ import {
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
+  Calendar,
+  Radio,
+  Building2,
+  PhoneCall
 } from "lucide-react";
 import { Heading } from "@/components/ui/Heading";
 
@@ -19,241 +23,119 @@ export default function HowItWorksPage() {
   const stages = [
     {
       step: "01",
-      title: "UNDERSTAND",
-      subtitle: "Product, Margins, Customers & Economics",
-      desc: "We analyze your core product advantages, manufacturing capacities, gross margins, inventory turnover cycles, and existing distribution channels to uncover the real commercial baseline.",
+      title: "CONNECT & SYNC",
+      subtitle: "WhatsApp Business API & Meta Ads CAPI",
+      desc: "Within 48 hours, we connect Adyant Nexa directly to your agency's official WhatsApp Business number and Meta advertising account with zero downtime.",
       items: [
-        "Product craft & competitive advantage",
-        "Unit economics & contribution margin limits",
-        "Current inventory volume & carrying cost",
-        "Target consumer persona & market dynamics",
-      ],
-      icon: Compass,
-    },
-    {
-      step: "02",
-      title: "STRATEGISE",
-      subtitle: "Positioning, Offer Design & GTM Roadmap",
-      desc: "We engineer a defensible market position, design high-converting hero SKU bundles, structure pricing bands for ad profitability, and lay out an actionable go-to-market plan.",
-      items: [
-        "Category positioning & narrative architecture",
-        "Hero SKU selection & bundling strategy",
-        "Pricing structure & discounting controls",
-        "Go-to-market roadmap & launch timeline",
-      ],
-      icon: Target,
-    },
-    {
-      step: "03",
-      title: "BUILD",
-      subtitle: "Brand Direction, Commerce & Tracking Stack",
-      desc: "We establish your digital storefront, custom high-converting product pages, server-side tracking (Meta CAPI & Google Analytics 4), and direct-response creative frameworks.",
-      items: [
-        "High-performance mobile-first ecommerce store",
-        "Conversion-optimized product detail pages (PDPs)",
-        "Server-side analytics, pixel & CAPI integration",
-        "Direct-response visual brand asset system",
-      ],
-      icon: Layers,
-    },
-    {
-      step: "04",
-      title: "LAUNCH",
-      subtitle: "Multi-Angle Acquisition & Creative Testing",
-      desc: "We deploy high-volume video creatives, creator UGC, and multi-campaign structures across Meta and Google to validate audience demand and establish baseline conversion economics.",
-      items: [
-        "Paid social acquisition (Meta Instagram & Facebook)",
-        "Search & Shopping intent capture (Google Ads / PMax)",
-        "Creator & influencer content seeding",
-        "Systematic creative hook & angle testing",
+        "Official WhatsApp Business Cloud integration",
+        "Meta Pixel & Server-Side Conversions API (CAPI)",
+        "Zero disruption to your brokers' existing chats",
+        "Instant webhook routing to our 24/7 autonomous engine",
       ],
       icon: Zap,
     },
     {
-      step: "05",
-      title: "OPTIMISE",
-      subtitle: "CAC, AOV, Contribution Margin & Retention",
-      desc: "We relentlessly optimize every step of the funnel—reducing customer acquisition cost, boosting average order values, and activating automated retention loops via WhatsApp and email.",
+      step: "02",
+      title: "INGEST & TRAIN",
+      subtitle: "Developer Project Catalogs & Off-Plan Rules",
+      desc: "We train your custom agency intelligence model on your active developer inventory (Emaar, Sobha, DAMAC, Nakheel), payment plans, and luxury towers.",
       items: [
-        "Conversion rate optimization (CRO) on storefront",
-        "Average Order Value (AOV) bump & upsell flows",
-        "Contribution margin & Blended ROAS tracking",
-        "WhatsApp & Email lifecycle retention automation",
+        "Off-plan projects, starting prices, and 1% payment plans",
+        "Secondary ready luxury inventory and prime areas",
+        "UAE 10-Year Golden Visa criteria (AED 2M+ threshold)",
+        "Agency commission rules and senior broker specialties",
       ],
-      icon: BarChart3,
+      icon: Building2,
     },
     {
-      step: "06",
-      title: "SCALE",
-      subtitle: "Capital Allocation & Multi-Channel Expansion",
-      desc: "Once unit economics prove that every rupee deployed generates predictable gross profit, we increase capital behind winning channels, hero products, and recurring customer flywheels.",
+      step: "03",
+      title: "QUALIFY IN 90s",
+      subtitle: "Autonomous Multilingual BANT Verification",
+      desc: "When an ad lead inquires at 2:00 AM, our AI engages in 1.2 seconds in fluent Arabic, English, or Urdu—verifying budget, intent, and timeline.",
       items: [
-        "Aggressive scaling of winning ad angles & SKUs",
-        "New product line expansion based on customer data",
-        "Omnichannel synergy (D2C + Retail + Marketplaces)",
-        "Compounding repeat customer lifetime value (LTV)",
+        "1.2-second midnight response latency",
+        "Budget qualification (AED 2M+ vs entry cash buyers)",
+        "Timeline verification (Immediate, 30 days, or off-plan)",
+        "Filtering out window-shoppers and unqualified numbers",
       ],
-      icon: TrendingUp,
+      icon: Target,
+    },
+    {
+      step: "04",
+      title: "CONVERT & BOOK",
+      subtitle: "Calendar Synchronization & 1-Click Takeover",
+      desc: "Pre-qualified leads are directly booked into your senior brokers' Google Meet or private viewing schedules with a full buyer dossier dispatched on WhatsApp.",
+      items: [
+        "Automated Google Meet & on-site viewing calendar booking",
+        "Comprehensive buyer qualification dossier sent to broker",
+        "Instant 1-click human broker takeover whenever needed",
+        "Telegram instant alerts sent to agency principals",
+      ],
+      icon: Calendar,
     },
   ];
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "transparent",
-        color: "var(--text-color)",
-        paddingTop: "7.5rem",
-        paddingBottom: "5rem",
-        position: "relative",
-        zIndex: 10,
-      }}
-    >
-      <div style={{ maxWidth: "1040px", margin: "0 auto", padding: "0 1.5rem" }}>
+    <div style={{ minHeight: "100vh", background: "#F8F8FA", color: "#0A0A0C", paddingTop: "7rem", paddingBottom: "5rem", position: "relative", zIndex: 10 }}>
+      <div style={{ maxWidth: "1080px", margin: "0 auto", padding: "0 1.5rem" }}>
         
-        {/* ─── HEADER ─── */}
+        {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-          <span className="editorial-tag" style={{ display: "block", marginBottom: "16px" }}>
-            OPERATIONAL FRAMEWORK
+          <span className="editorial-tag" style={{ display: "block", marginBottom: "12px", color: "#0047FF", letterSpacing: "0.2em", fontSize: "10px" }}>
+            HOW IT WORKS · 4-STAGE AUTONOMOUS DEPLOYMENT
           </span>
-          <Heading level="h1" style={{ textAlign: "center", marginBottom: "20px" }}>
-            HOW WE BUILD YOUR <br />
-            <span style={{ color: "var(--accent-color)" }}>GROWTH ENGINE.</span>
+          <Heading level="h1" style={{ textAlign: "center", marginBottom: "16px", color: "#0A0A0C" }}>
+            From Midnight Meta Ad Inquiries <br />
+            <span style={{ color: "#0047FF" }}>To Scheduled Property Viewings</span>
           </Heading>
-          <p
-            style={{
-              fontFamily: "var(--font-inter)",
-              color: "var(--muted-text)",
-              fontSize: "1.05rem",
-              maxWidth: "680px",
-              margin: "0 auto",
-              lineHeight: 1.7,
-            }}
-          >
-            We don't sell random marketing tactics. We build a connected commercial growth system—from product economics and brand positioning to scalable acquisition and customer retention.
+          <p style={{ color: "#60606A", fontSize: "1.05rem", maxWidth: "680px", margin: "0 auto", lineHeight: 1.65 }}>
+            Here is the exact 4-stage infrastructure Adyant Nexa deploys for Dubai real estate brokerages to eliminate lead dropoff and scale monthly transaction volume.
           </p>
         </div>
 
-        {/* ─── 6 STAGES ARCHITECTURE ─── */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px", marginBottom: "4.5rem" }}>
+        {/* 4-Stage Grid */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem", marginBottom: "4.5rem" }}>
           {stages.map((stage) => {
             const Icon = stage.icon;
             return (
-              <div
-                key={stage.step}
-                className="glass-panel"
-                style={{
-                  padding: "clamp(24px, 3.5vw, 36px)",
-                  borderRadius: "20px",
+              <div 
+                key={stage.step} 
+                style={{ 
+                  background: "#FFFFFF", 
+                  border: "1px solid rgba(10, 10, 12, 0.08)", 
+                  borderRadius: "20px", 
+                  padding: "2.5rem 3rem", 
+                  boxShadow: "0 4px 20px -2px rgba(10, 10, 12, 0.04)",
                   display: "grid",
-                  gridTemplateColumns: "auto 1fr",
-                  gap: "24px",
-                  alignItems: "flex-start",
+                  gridTemplateColumns: "100px 1fr",
+                  gap: "2rem",
+                  alignItems: "start"
                 }}
               >
-                {/* Step Badge */}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "8px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "52px",
-                      height: "52px",
-                      borderRadius: "14px",
-                      backgroundColor: "rgba(0, 71, 255, 0.06)",
-                      border: "1px solid rgba(0, 71, 255, 0.2)",
-                      color: "var(--accent-color)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon size={24} />
-                  </div>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-geist-mono)",
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      color: "var(--accent-color)",
-                      letterSpacing: "0.1em",
-                    }}
-                  >
-                    STAGE {stage.step}
+                <div>
+                  <span style={{ fontSize: "1.8rem", fontFamily: "var(--font-syne)", fontWeight: 800, color: "#0047FF", display: "block" }}>
+                    {stage.step}
                   </span>
+                  <div style={{ marginTop: "12px", width: "42px", height: "42px", borderRadius: "10px", background: "rgba(0, 71, 255, 0.08)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Icon size={20} color="#0047FF" />
+                  </div>
                 </div>
 
-                {/* Content */}
                 <div>
-                  <div style={{ marginBottom: "12px" }}>
-                    <h2
-                      style={{
-                        fontFamily: "var(--font-syne)",
-                        fontSize: "clamp(1.25rem, 2.5vw, 1.5rem)",
-                        fontWeight: 800,
-                        color: "var(--text-color)",
-                        letterSpacing: "-0.02em",
-                        margin: 0,
-                      }}
-                    >
-                      {stage.title}
-                    </h2>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-geist-mono)",
-                        fontSize: "12px",
-                        color: "var(--accent-color)",
-                        fontWeight: 600,
-                        letterSpacing: "0.04em",
-                        display: "block",
-                        marginTop: "4px",
-                      }}
-                    >
-                      {stage.subtitle}
-                    </span>
-                  </div>
-
-                  <p
-                    style={{
-                      fontFamily: "var(--font-inter)",
-                      color: "var(--muted-text)",
-                      fontSize: "14px",
-                      lineHeight: 1.7,
-                      marginBottom: "18px",
-                    }}
-                  >
+                  <span style={{ fontSize: "11px", fontFamily: "var(--font-geist-mono)", color: "#0047FF", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 700 }}>
+                    {stage.subtitle}
+                  </span>
+                  <h2 style={{ fontFamily: "var(--font-syne)", fontSize: "1.5rem", fontWeight: 800, color: "#0A0A0C", margin: "4px 0 12px" }}>
+                    {stage.title}
+                  </h2>
+                  <p style={{ color: "#60606A", fontSize: "0.95rem", lineHeight: 1.65, marginBottom: "1.5rem", maxWidth: "750px" }}>
                     {stage.desc}
                   </p>
 
-                  {/* Bullet points */}
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                      gap: "10px",
-                      paddingTop: "14px",
-                      borderTop: "1px solid var(--border-color)",
-                    }}
-                  >
-                    {stage.items.map((item, idx) => (
-                      <div
-                        key={idx}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                          fontFamily: "var(--font-inter)",
-                          fontSize: "13px",
-                          color: "var(--muted-text)",
-                        }}
-                      >
-                        <CheckCircle2 size={14} color="#0047FF" style={{ flexShrink: 0 }} />
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "10px" }}>
+                    {stage.items.map((item, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", color: "#0A0A0C" }}>
+                        <CheckCircle2 size={15} color="#10B981" style={{ flexShrink: 0 }} />
                         <span>{item}</span>
                       </div>
                     ))}
@@ -264,83 +146,58 @@ export default function HowItWorksPage() {
           })}
         </div>
 
-        {/* ─── THE PARTNERSHIP PRINCIPLE ─── */}
-        <div
-          className="glass-panel"
-          style={{
-            padding: " clamp(28px, 4vw, 44px)",
-            borderRadius: "24px",
-            border: "1px solid var(--border-color)",
-            marginBottom: "4.5rem",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-            <ShieldCheck size={24} color="#0047FF" />
-            <h3 style={{ fontFamily: "var(--font-syne)", fontSize: "1.3rem", fontWeight: 800, color: "var(--text-color)" }}>
-              HOW WE PARTNER WITH YOU
+        {/* Operating Cockpit Callout */}
+        <div style={{ background: "#0A0A0C", borderRadius: "20px", padding: "3rem", color: "#FFFFFF", marginBottom: "4.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "2rem" }}>
+          <div style={{ maxWidth: "600px" }}>
+            <span style={{ fontSize: "10px", fontFamily: "var(--font-geist-mono)", color: "#00F2FF", letterSpacing: "0.2em", fontWeight: 700 }}>
+              HUMAN OPERATOR SUPERVISION
+            </span>
+            <h3 style={{ fontFamily: "var(--font-syne)", fontWeight: 800, fontSize: "1.8rem", marginTop: "8px" }}>
+              Brokers Can Take Over in 1 Click
             </h3>
+            <p style={{ fontSize: "14px", color: "rgba(255, 255, 255, 0.7)", marginTop: "10px", lineHeight: 1.6 }}>
+              AI does not replace your top closers—it feeds them pre-qualified buyers. With our live operator cockpit, your senior agents can monitor every conversation live and take over seamlessly at any point.
+            </p>
           </div>
-          <p style={{ fontFamily: "var(--font-inter)", fontSize: "15px", color: "var(--muted-text)", lineHeight: 1.8, marginBottom: "20px" }}>
-            We do not operate as an outsourced agency that dumps vanity impressions on a slide deck. We function as your strategic growth partner—aligning our work directly with your net contribution margin, inventory velocity, and long-term brand equity.
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "16px" }}>
-            <div style={{ background: "rgba(248,248,250,0.6)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--accent-color)", display: "block", marginBottom: "4px" }}>ZERO FLUFF</span>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "var(--text-color)", margin: 0 }}>
-                Direct focus on commercial reality: CAC, AOV, Contribution Margin and Repeat LTV.
-              </p>
-            </div>
-            <div style={{ background: "rgba(248,248,250,0.6)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--accent-color)", display: "block", marginBottom: "4px" }}>PARALLEL ENGINE</span>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "var(--text-color)", margin: 0 }}>
-                Keep your manufacturing and wholesale running while building the consumer arm.
-              </p>
-            </div>
-            <div style={{ background: "rgba(248,248,250,0.6)", padding: "16px 20px", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--accent-color)", display: "block", marginBottom: "4px" }}>DATA OWNERSHIP</span>
-              <p style={{ fontFamily: "var(--font-inter)", fontSize: "13px", color: "var(--text-color)", margin: 0 }}>
-                You own 100% of the customer relationship, data, accounts, and creative assets.
-              </p>
-            </div>
-          </div>
+          <Link 
+            href="/terminal" 
+            style={{ 
+              padding: "14px 28px", 
+              background: "#0047FF", 
+              color: "#FFFFFF", 
+              borderRadius: "999px", 
+              fontFamily: "var(--font-geist-mono)", 
+              fontSize: "12px", 
+              fontWeight: 700, 
+              textDecoration: "none", 
+              letterSpacing: "0.08em",
+              whiteSpace: "nowrap"
+            }}
+          >
+            TEST DEMO COCKPIT ↗
+          </Link>
         </div>
 
-        {/* ─── CALL TO ACTION ─── */}
-        <div style={{ textAlign: "center" }}>
-          <span className="editorial-tag" style={{ display: "block", marginBottom: "16px" }}>
-            READY TO START?
-          </span>
-          <Heading level="h2" style={{ textAlign: "center", marginBottom: "20px" }}>
-            EVALUATE YOUR D2C READINESS.
+        {/* Bottom CTA */}
+        <div style={{ backgroundColor: "#FFFFFF", border: "1px solid rgba(10, 10, 12, 0.08)", borderRadius: "20px", padding: "3rem 1.5rem", textAlign: "center", boxShadow: "0 10px 30px rgba(0, 71, 255, 0.06)" }}>
+          <span className="editorial-tag" style={{ display: "block", marginBottom: "10px", color: "#0047FF" }}>48-HOUR DEPLOYMENT</span>
+          <Heading level="h2" style={{ textAlign: "center", marginBottom: "12px", color: "#0A0A0C" }}>
+            Deploy Autonomous Sales for Your Brokerage
           </Heading>
-          <p style={{ fontFamily: "var(--font-inter)", fontSize: "15px", color: "var(--muted-text)", marginBottom: "32px", maxWidth: "540px", margin: "0 auto 32px" }}>
-            Take our free 4-minute diagnostic to evaluate if your product, margins, and operational capacity are ready for direct-to-consumer scaling.
+          <p style={{ color: "#60606A", fontSize: "0.95rem", maxWidth: "540px", margin: "0 auto 2rem", lineHeight: 1.6 }}>
+            Schedule a 15-minute Google Meet walkthrough to see how Adyant Nexa integrates with your agency's lead flow.
           </p>
-          <div style={{ display: "flex", gap: "16px", justifyContent: "center", alignItems: "center", flexWrap: "wrap" }}>
-            <Link
-              href="/assessment"
-              className="btn-primary"
-              style={{
-                borderRadius: "9999px",
-                padding: "16px 36px",
-                fontSize: "13px",
-                fontWeight: 700,
-                boxShadow: "0 8px 24px rgba(0,71,255,0.2)",
-              }}
+          <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
+            <a 
+              href="https://wa.me/?text=Hi%2C%20I%20am%20a%20Dubai%20Real%20Estate%20Agency%20Principal.%20I%20want%20to%20see%20the%20Nexa%20AI%20Sales%20Engine%20demo."
+              target="_blank" 
+              rel="noopener noreferrer" 
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 2rem", textDecoration: "none", background: "#0047FF", color: "#FFFFFF", borderRadius: "999px", fontWeight: 700, fontSize: "13px" }}
             >
-              Check Your D2C Readiness <ArrowRight size={16} />
-            </Link>
-            <Link
-              href="/contact"
-              className="btn-secondary"
-              style={{
-                borderRadius: "9999px",
-                padding: "16px 28px",
-                fontSize: "13px",
-                border: "1px solid rgba(10,10,12,0.12)",
-              }}
-            >
-              Start A Conversation
+              Connect On WhatsApp ↗
+            </a>
+            <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 2rem", textDecoration: "none", background: "transparent", border: "1px solid rgba(10, 10, 12, 0.18)", color: "#0A0A0C", borderRadius: "999px", fontWeight: 600, fontSize: "13px" }}>
+              Schedule Strategy Call
             </Link>
           </div>
         </div>
@@ -349,4 +206,3 @@ export default function HowItWorksPage() {
     </div>
   );
 }
-

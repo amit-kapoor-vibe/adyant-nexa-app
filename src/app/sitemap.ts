@@ -6,10 +6,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Core commercial and system pages
   const coreRoutes = [
     '',
+    '/terminal',
     '/how-it-works',
-    '/tools',
-    '/tools/dead-stock',
-    '/tools/profit-opportunity',
     '/assessment',
     '/about',
     '/contact',

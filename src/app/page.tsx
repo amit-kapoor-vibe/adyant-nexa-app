@@ -3,6 +3,50 @@
 import Link from "next/link";
 import { SYSTEM_PILLARS, FLEET_PORTFOLIO } from "@/data/fleetData";
 import { RoiYieldCalculator } from "@/components/roi/RoiYieldCalculator";
+import { MidnightLeakageDiagnostic } from "@/components/diagnostic/MidnightLeakageDiagnostic";
+
+const SYSTEM_DELIVERABLES = [
+  {
+    num: "01",
+    title: "Official WhatsApp Cloud API",
+    desc: "Direct integration via Meta Cloud API with high throughput and zero disconnection. Runs 24/7 independently of individual broker devices."
+  },
+  {
+    num: "02",
+    title: "Sub-90s BANT Qualification",
+    desc: "Autonomous screening of buyer budget (AED 2M+), preferred towers/areas, and Golden Visa eligibility in fluent Arabic, English, or Urdu."
+  },
+  {
+    num: "03",
+    title: "Centralized Pipeline CRM",
+    desc: "Real-time dashboard tracking inquiry velocity, lead status (Hot, Viewing Scheduled), and verified buyer dossiers accessible by principals."
+  },
+  {
+    num: "04",
+    title: "1-Click Human Broker Takeover",
+    desc: "Live supervision cockpit with full transcripts. Senior brokers can seamlessly pause AI and take over conversations instantly on WhatsApp."
+  },
+  {
+    num: "05",
+    title: "Calendar & Viewing Scheduling",
+    desc: "Automated booking of Google Meet strategy walkthroughs and private on-site viewings synced directly into senior brokers' calendars."
+  },
+  {
+    num: "06",
+    title: "Automated Follow-ups & Nurturing",
+    desc: "Intelligent re-engagement sequences that follow up with overseas leads, sending updated developer brochures and 1% monthly payment plans."
+  },
+  {
+    num: "07",
+    title: "Weekly Telemetry & Reporting",
+    desc: "Attribution reports detailing Meta ad spend efficiency, Cost Per Qualified Viewing, and midnight overseas lead recovery metrics."
+  },
+  {
+    num: "08",
+    title: "Continuous Developer Ingestion",
+    desc: "Ongoing prompt tuning and catalog ingestion for newly launched off-plan and luxury projects across Emaar, Sobha, DAMAC, and Nakheel."
+  }
+];
 
 export default function AdyantNexaRealEstateOS() {
 
@@ -133,7 +177,7 @@ export default function AdyantNexaRealEstateOS() {
           position: relative;
           max-width: 1300px;
           margin: 0 auto;
-          padding: 90px 48px 80px;
+          padding: 120px 48px 80px;
           overflow: hidden;
         }
 
@@ -894,9 +938,182 @@ export default function AdyantNexaRealEstateOS() {
           color: var(--slate);
         }
 
+        /* Deliverables Section */
+        .section-deliverables {
+          max-width: 1300px;
+          margin: 0 auto;
+          padding: 80px 48px;
+        }
+        .deliverables-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+        .deliverable-card {
+          background: var(--pure-white);
+          border: 1px solid var(--border-light);
+          border-radius: 14px;
+          padding: 28px 24px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          transition: all 0.2s ease;
+        }
+        .deliverable-card:hover {
+          border-color: var(--cobalt);
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(0, 71, 255, 0.06);
+        }
+        .deliverable-num {
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 11px;
+          color: var(--cobalt);
+          font-weight: 700;
+          margin-bottom: 16px;
+        }
+        .deliverable-title {
+          font-family: var(--font-syne), sans-serif;
+          font-size: 16px;
+          font-weight: 800;
+          color: var(--onyx);
+          letter-spacing: -0.01em;
+          margin-bottom: 8px;
+        }
+        .deliverable-desc {
+          font-size: 13px;
+          color: var(--slate);
+          line-height: 1.55;
+        }
+
+        /* Founding 3 Offer Box */
+        .section-founding {
+          max-width: 1300px;
+          margin: 0 auto;
+          padding: 40px 48px 100px;
+        }
+        .founding-card {
+          background: var(--onyx);
+          color: var(--pure-white);
+          border-radius: 24px;
+          padding: 60px;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 20px 50px rgba(10, 10, 12, 0.25);
+        }
+        .founding-grid {
+          display: grid;
+          grid-template-columns: 1.3fr 0.9fr;
+          gap: 60px;
+          align-items: center;
+          position: relative;
+          z-index: 10;
+        }
+        .founding-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 14px;
+          background: rgba(0, 242, 255, 0.1);
+          border: 1px solid rgba(0, 242, 255, 0.3);
+          border-radius: 999px;
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 10px;
+          color: #00F2FF;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          font-weight: 700;
+          margin-bottom: 20px;
+        }
+        .founding-h2 {
+          font-family: var(--font-syne), sans-serif;
+          font-size: clamp(2rem, 3.5vw, 3rem);
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          line-height: 1.1;
+          color: #FFFFFF;
+          margin-bottom: 16px;
+        }
+        .founding-sub {
+          font-size: 15px;
+          color: #94A3B8;
+          line-height: 1.6;
+          margin-bottom: 28px;
+          max-width: 580px;
+        }
+        .founding-features {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 28px;
+        }
+        .founding-feature-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 13px;
+          color: #E2E8F0;
+        }
+        .founding-pricing-box {
+          background: #121218;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 18px;
+          padding: 36px 32px;
+          text-align: center;
+        }
+        .founding-price-tag {
+          font-family: var(--font-syne), sans-serif;
+          font-size: 40px;
+          font-weight: 800;
+          color: #FFFFFF;
+          letter-spacing: -0.03em;
+          line-height: 1;
+        }
+        .founding-price-sub {
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 11px;
+          color: #94A3B8;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          margin: 8px 0 16px;
+        }
+        .founding-retainer-pill {
+          display: inline-block;
+          background: rgba(0, 71, 255, 0.2);
+          border: 1px solid rgba(0, 71, 255, 0.4);
+          color: #60A5FA;
+          padding: 8px 16px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 700;
+          font-family: var(--font-geist-mono), monospace;
+          margin-bottom: 24px;
+        }
+        .founding-cta-btn {
+          display: block;
+          width: 100%;
+          background: var(--cobalt);
+          color: #FFFFFF;
+          text-align: center;
+          padding: 16px 24px;
+          border-radius: 999px;
+          font-family: var(--font-inter), sans-serif;
+          font-weight: 700;
+          font-size: 14px;
+          text-decoration: none;
+          transition: all 0.2s ease;
+          box-shadow: 0 10px 30px rgba(0, 71, 255, 0.35);
+        }
+        .founding-cta-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 14px 40px rgba(0, 71, 255, 0.5);
+        }
+
         /* Responsive Breakpoints */
         @media (max-width: 960px) {
           .showcase-grid { grid-template-columns: 1fr; }
+          .deliverables-grid { grid-template-columns: repeat(2, 1fr); }
+          .founding-grid { grid-template-columns: 1fr; gap: 36px; }
+          .founding-card { padding: 36px 24px; }
         }
         @media (max-width: 900px) {
           .pillar-grid { grid-template-columns: 1fr; }
@@ -941,37 +1158,6 @@ export default function AdyantNexaRealEstateOS() {
           .footer-meta-bar { flex-direction: column; gap: 12px; text-align: center; }
         }
       `}</style>
-
-      {/* Top Navigation */}
-      <header className="top-nav">
-        <Link href="/" className="brand-group">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.svg" alt="Adyant Nexa Logo" className="brand-logo-img" />
-          <div className="brand-logo-fallback">ADYANT <span>NEXA.</span></div>
-        </Link>
-
-        <nav className="nav-center">
-          <a href="#architecture">Architecture</a>
-          <a href="#intelligence">BANT Intelligence</a>
-          <a href="#portfolio">Developer Fleet</a>
-          <a href="#roi">Yield Calculator</a>
-        </nav>
-
-        <div className="nav-actions">
-          <Link href="/terminal" className="btn-pill-secondary">
-            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10B981", display: "inline-block", marginRight: "6px", boxShadow: "0 0 8px #10B981" }} />
-            Live Demo Terminal ↗
-          </Link>
-          <a
-            href="https://wa.me/?text=Hi%2C%20I%20am%20a%20Dubai%20Real%20Estate%20Agency%20Principal.%20I%20want%20to%20see%20the%20Nexa%20AI%20Sales%20Engine%20demo."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-pill-primary"
-          >
-            Connect WhatsApp ↗
-          </a>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="hero-wrap">
@@ -1061,6 +1247,9 @@ export default function AdyantNexaRealEstateOS() {
                 <div className="metric-desc">Viewing Conversion Multiplier</div>
               </div>
             </div>
+            <div style={{ marginTop: 14, fontSize: 10, fontFamily: "var(--font-geist-mono), monospace", color: "var(--slate)", letterSpacing: "0.05em" }}>
+              * Metrics reflect illustrative benchmark telemetry and typical overseas inquiry distributions under pilot testing.
+            </div>
           </div>
 
           {/* Right Card: Live WhatsApp Dialogue Simulation */}
@@ -1095,6 +1284,9 @@ export default function AdyantNexaRealEstateOS() {
           </div>
         </div>
       </section>
+
+      {/* Section 2: Interactive Midnight Leakage Diagnostic */}
+      <MidnightLeakageDiagnostic />
 
       {/* Editorial Pillars */}
       <section className="section-editorial">
@@ -1166,6 +1358,106 @@ export default function AdyantNexaRealEstateOS() {
       {/* Section 3: Interactive Agency ROI Model */}
       <RoiYieldCalculator />
 
+      {/* Section 4: System Deliverables */}
+      <section className="section-deliverables" id="deliverables">
+        <div className="section-head-wrap">
+          <div>
+            <div className="tag-mono" style={{ marginBottom: 12, display: "inline-block" }}>SYSTEM DELIVERABLES</div>
+            <h2 className="section-h2">
+              Everything your sales team needs.
+              <em>One intelligent system.</em>
+            </h2>
+          </div>
+          <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: 11, letterSpacing: "0.2em", color: "var(--slate)" }}>
+            48-HOUR PRODUCTION DEPLOYMENT
+          </div>
+        </div>
+
+        <div className="deliverables-grid">
+          {SYSTEM_DELIVERABLES.map((item) => (
+            <div key={item.num} className="deliverable-card">
+              <div className="deliverable-num">{item.num}</div>
+              <div>
+                <h3 className="deliverable-title">{item.title}</h3>
+                <p className="deliverable-desc">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Section 5: Founding 3 Dubai Offer */}
+      <section className="section-founding" id="founding-offer">
+        <div className="founding-card">
+          <div className="ghost-watermark-card" style={{ fontSize: "140px", bottom: -20, right: -10 }}>FOUNDING 3</div>
+          <div className="founding-grid">
+            <div>
+              <div className="founding-pill">
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00F2FF", boxShadow: "0 0 8px #00F2FF", display: "inline-block" }}></span>
+                LIMITED PILOT INITIATIVE // DUBAI BROKERAGES
+              </div>
+              <h2 className="founding-h2">
+                FOUNDING 3 · DUBAI
+              </h2>
+              <p className="founding-sub">
+                Be among the first three businesses to deploy Nexa. To establish benchmark conversion across Dubai Prime, we are accepting exactly three founding agency clients under a guaranteed founding tier.
+              </p>
+
+              <div className="founding-features">
+                <div className="founding-feature-item">
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00F2FF", display: "inline-block" }}></span>
+                  Official WhatsApp Business API integration &amp; multi-agent setup
+                </div>
+                <div className="founding-feature-item">
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00F2FF", display: "inline-block" }}></span>
+                  Full ingestion of Emaar, Sobha, DAMAC &amp; Nakheel project inventory
+                </div>
+                <div className="founding-feature-item">
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00F2FF", display: "inline-block" }}></span>
+                  Sub-90-second bilingual BANT qualification (Arabic + English)
+                </div>
+                <div className="founding-feature-item">
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00F2FF", display: "inline-block" }}></span>
+                  Direct Google Meet &amp; on-site viewing calendar synchronization
+                </div>
+                <div className="founding-feature-item">
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00F2FF", display: "inline-block" }}></span>
+                  1-Click human broker takeover cockpit &amp; real-time mobile alerts
+                </div>
+              </div>
+
+              <div style={{ fontSize: 12, color: "#94A3B8", fontFamily: "var(--font-geist-mono), monospace" }}>
+                Limited strictly to three signed founding clients.
+              </div>
+            </div>
+
+            <div className="founding-pricing-box">
+              <div className="founding-price-tag">AED 2,499</div>
+              <div className="founding-price-sub">One-time implementation</div>
+              
+              <div className="founding-retainer-pill">
+                AED 500 / month · Monthly support &amp; maintenance
+              </div>
+
+              <a
+                href="https://wa.me/?text=Hi%2C%20I%20want%20to%20claim%20the%20Founding%203%20Dubai%20Offer%20(AED%202%2C499%20setup%20%2B%20AED%20500%2Fmo).%0A%0AAgency%20Name%3A%20%0ANumber%20of%20Brokers%3A%20%0ACurrent%20Monthly%20Lead%20Volume%3A%20%0APrimary%20Requirements%3A%20"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="founding-cta-btn"
+              >
+                Claim Founding Client Offer ↗
+              </a>
+
+              <div style={{ marginTop: 16 }}>
+                <Link href="/assessment" style={{ color: "#94A3B8", fontSize: 11, fontFamily: "var(--font-geist-mono), monospace", textDecoration: "underline" }}>
+                  Calculate your agency's lead leakage first →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="site-footer">
         <div className="footer-inner">
@@ -1181,11 +1473,15 @@ export default function AdyantNexaRealEstateOS() {
             <span>·</span>
             <a href="#intelligence">BANT Intelligence</a>
             <span>·</span>
+            <a href="#diagnostic">Lead Diagnostic</a>
+            <span>·</span>
             <a href="#portfolio">Developer Fleet</a>
             <span>·</span>
             <a href="#roi">Yield Calculator</a>
             <span>·</span>
-            <Link href="/terminal">Command Centre ↗</Link>
+            <a href="#founding-offer" style={{ color: "var(--cobalt)", fontWeight: 700 }}>Founding 3 Offer ↗</a>
+            <span>·</span>
+            <Link href="/terminal">Live Demo Terminal ↗</Link>
           </div>
 
           <div className="footer-meta-bar">

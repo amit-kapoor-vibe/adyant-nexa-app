@@ -11,11 +11,9 @@ export function ClientWrapper({ children }: { children: React.ReactNode }) {
   const isAdmin = pathname?.startsWith("/admin");
   const isLogin = pathname?.startsWith("/login");
   const isTerminal = pathname?.startsWith("/terminal");
-  const isHome = pathname === "/";
-
   return (
     <>
-      {!isAdmin && !isLogin && !isHome && !isTerminal && <Navbar />}
+      {!isAdmin && !isLogin && !isTerminal && <Navbar />}
       {children}
       {!isAdmin && !isLogin && !isTerminal && <ChatWidget />}
     </>
