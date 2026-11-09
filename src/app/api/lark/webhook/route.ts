@@ -6,6 +6,71 @@ const INSTAGRAM_BUSINESS_ACCOUNT_ID = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID;
 const FACEBOOK_PAGE_ID = process.env.FACEBOOK_PAGE_ID;
 const MAKE_LINKEDIN_WEBHOOK_URL = process.env.MAKE_LINKEDIN_WEBHOOK_URL;
 
+const LARK_APP_ID = process.env.LARK_APP_ID;
+const LARK_APP_SECRET = process.env.LARK_APP_SECRET;
+const LARK_BASE_ID = process.env.LARK_BASE_ID;
+const LARK_TABLE_ID = process.env.LARK_TABLE_ID;
+
+// Fetch Lark tenant access token for direct API sync
+async function getLarkTenantToken(): Promise<string | null> {
+  if (!LARK_APP_ID || !LARK_APP_SECRET) return null;
+  try {
+    const res = await fetch("https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ app_id: LARK_APP_ID, app_secret: LARK_APP_SECRET })
+    });
+    const data = await res.json();
+    return data.code === 0 ? data.tenant_access_token : null;
+  } catch (err: any) {
+    console.error("[Lark Auth Error]:", err.message);
+    return null;
+  }
+}
+
+// Fetch the active Approved record directly from Lark Base
+async function fetchApprovedRecordFromLark(token: string): Promise<any | null> {
+  try {
+    const url = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records?page_size=20`;
+    const res = await fetch(url, { headers: { "Authorization": `Bearer ${token}` } });
+    const data = await res.json();
+    if (data.code === 0 && data.data?.items) {
+      for (const item of data.data.items) {
+        const status = extractText(item.fields?.Status || item.fields?.status || "").toLowerCase();
+        if (status === "approved") {
+          return item;
+        }
+      }
+    }
+  } catch (err: any) {
+    console.error("[Lark Direct Fetch Error]:", err.message);
+  }
+  return null;
+}
+
+// Update Lark record status to Published with live links
+async function updateLarkRecord(token: string, recordId: string, status: string, postLinks: string): Promise<void> {
+  try {
+    const url = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records/${recordId}`;
+    await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fields: {
+          "Status": status,
+          "Post Link": postLinks
+        }
+      })
+    });
+    console.log(`[Lark Table Synced] Record ${recordId} updated to "${status}"`);
+  } catch (err: any) {
+    console.error("[Lark Sync Error]:", err.message);
+  }
+}
+
 // Helper to extract clean text from string, object, or array
 function extractText(val: any): string {
   if (!val) return "";
@@ -181,13 +246,12 @@ export async function POST(req: Request) {
     } catch (parseErr) {
       console.warn("[Lark Webhook] JSON.parse failed. Attempting resilient newline & quote sanitization...");
       try {
-        // Replace unescaped raw newlines inside string values
         const sanitized = rawText
           .replace(/[\r\n]+/g, "\\n")
           .replace(/\t/g, " ");
         body = JSON.parse(sanitized);
       } catch (sanitizedErr) {
-        console.warn("[Lark Webhook] Sanitized JSON parse also failed. Falling back to regex extraction.");
+        console.warn("[Lark Webhook] Sanitized JSON parse failed. Falling back to regex extraction.");
         body = {};
         const topicMatch = rawText.match(/"topic"\s*:\s*"([^"]+)"/i);
         const captionMatch = rawText.match(/"caption"\s*:\s*"([\s\S]*?)"\s*,\s*"/i);
@@ -203,22 +267,15 @@ export async function POST(req: Request) {
 
     // Support both direct payloads and nested Lark record objects
     const fields = body.fields || body;
-    const topic = extractText(fields.Topic || fields.topic || body.topic) || "Social Post";
+    let topic = extractText(fields.Topic || fields.topic || body.topic) || "Social Post";
     let caption = extractText(fields.Caption || fields.caption || fields.Content || fields.content || body.caption) || "";
     
-    // If caption was escaped with literal \n, unescape it for human-readable social posts
     if (caption.includes("\\n")) {
       caption = caption.replace(/\\n/g, "\n");
     }
 
     const rawPlatforms = fields.Platform || fields.platform || fields.Platforms || body.platforms || body.platform;
     let platforms = normalizePlatforms(rawPlatforms);
-
-    // Fallback: If no platforms detected or if Lark passed an unparsed token, broadcast to all active channels
-    if (platforms.length === 0) {
-      console.log("[Lark Webhook] No specific platforms parsed. Defaulting to: LinkedIn, Instagram, Facebook");
-      platforms = ["LinkedIn", "Instagram", "Facebook"];
-    }
 
     // Extract clean image URL safely
     let imageUrl = cleanImageUrl(fields["Visual Design Prompt"] || fields["Image URL"] || fields.imageUrl || fields.image || body.imageUrl);
@@ -231,12 +288,52 @@ export async function POST(req: Request) {
         }
       }
     }
-    // Ultimate fallback: inspect rawText for image URL
     if (!imageUrl) {
       const rawUrlMatch = rawText.match(/https?:\/\/[^\s"'<>]+\.(jpg|jpeg|png|webp)(\?[^\s"'<>]*)?/i);
       if (rawUrlMatch) {
         imageUrl = rawUrlMatch[0];
       }
+    }
+
+    let recordId = fields.record_id || body.record_id || "";
+    let larkToken: string | null = null;
+
+    // Detect if Lark sent literal template variables like "{{Platform}}" or "{{Caption}}"
+    const hasUnresolvedTokens =
+      caption.includes("{{") ||
+      topic.includes("{{") ||
+      !caption ||
+      (typeof rawPlatforms === "string" && rawPlatforms.includes("{{")) ||
+      platforms.length === 0 ||
+      !imageUrl;
+
+    if (hasUnresolvedTokens) {
+      console.log("[Lark Webhook] Template tokens or missing fields detected. Fetching live record from Lark Base API...");
+      larkToken = await getLarkTenantToken();
+      if (larkToken) {
+        const approvedItem = await fetchApprovedRecordFromLark(larkToken);
+        if (approvedItem) {
+          recordId = approvedItem.record_id;
+          const af = approvedItem.fields || {};
+          topic = extractText(af.Topic) || topic;
+          caption = extractText(af.Caption) || caption;
+          const directPlatforms = normalizePlatforms(af.Platform);
+          if (directPlatforms.length > 0) {
+            platforms = directPlatforms;
+          }
+          const directImage = cleanImageUrl(af["Visual Design Prompt"] || af["Image URL"]);
+          if (directImage) {
+            imageUrl = directImage;
+          }
+          console.log(`[Lark Direct Sync Success] Loaded real record: "${topic}" (ID: ${recordId})`);
+        }
+      }
+    }
+
+    // Default fallback if still no platforms detected
+    if (platforms.length === 0) {
+      console.log("[Lark Webhook] Defaulting broadcast platforms to: LinkedIn, Instagram, Facebook");
+      platforms = ["LinkedIn", "Instagram", "Facebook"];
     }
 
     console.log(`[Lark Webhook Dispatching] Topic: "${topic}" | Platforms: [${platforms.join(", ")}] | Image: ${imageUrl ? "Yes" : "No"}`);
@@ -256,6 +353,20 @@ export async function POST(req: Request) {
       } catch (err: any) {
         console.error(`[Lark Webhook] Failed on ${platform}:`, err.message);
         errors[platform] = err.message || "Failed to publish";
+      }
+    }
+
+    const publishedLinks: string[] = [];
+    for (const [p, link] of Object.entries(published)) {
+      publishedLinks.push(`${p}: ${link}`);
+    }
+
+    // Auto-update Lark Base table record so user sees "Published" with live links
+    if (recordId && Object.keys(published).length > 0) {
+      if (!larkToken) larkToken = await getLarkTenantToken();
+      if (larkToken) {
+        const finalStatus = publishedLinks.length > 0 ? "Published" : "Failed";
+        await updateLarkRecord(larkToken, recordId, finalStatus, publishedLinks.join(" | "));
       }
     }
 
