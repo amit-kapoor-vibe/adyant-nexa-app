@@ -295,15 +295,17 @@ export async function POST(req: Request) {
       }
     }
 
-    let recordId = fields.record_id || body.record_id || "";
+    let recordId = fields.recordId || fields.record_id || body.recordId || body.record_id || "";
     let larkToken: string | null = null;
 
-    // Detect if Lark sent literal template variables like "{{Platform}}" or "{{Caption}}"
+    // Detect if Lark sent literal template variables like "{{Platform}}", "[Platform]", or "{{Caption}}"
     const hasUnresolvedTokens =
       caption.includes("{{") ||
+      caption.includes("[Caption]") ||
       topic.includes("{{") ||
+      topic.includes("[Topic]") ||
       !caption ||
-      (typeof rawPlatforms === "string" && rawPlatforms.includes("{{")) ||
+      (typeof rawPlatforms === "string" && (rawPlatforms.includes("{{") || rawPlatforms.includes("["))) ||
       platforms.length === 0 ||
       !imageUrl;
 
@@ -362,11 +364,20 @@ export async function POST(req: Request) {
     }
 
     // Auto-update Lark Base table record so user sees "Published" with live links
-    if (recordId && Object.keys(published).length > 0) {
+    if (Object.keys(published).length > 0) {
       if (!larkToken) larkToken = await getLarkTenantToken();
       if (larkToken) {
-        const finalStatus = publishedLinks.length > 0 ? "Published" : "Failed";
-        await updateLarkRecord(larkToken, recordId, finalStatus, publishedLinks.join(" | "));
+        if (!recordId) {
+          console.log("[Lark Webhook] recordId not in payload. Searching Lark Base by Topic / Approved status...");
+          const item = await fetchApprovedRecordFromLark(larkToken);
+          if (item) {
+            recordId = item.record_id;
+          }
+        }
+        if (recordId) {
+          const finalStatus = publishedLinks.length > 0 ? "Published" : "Failed";
+          await updateLarkRecord(larkToken, recordId, finalStatus, publishedLinks.join(" | "));
+        }
       }
     }
 
