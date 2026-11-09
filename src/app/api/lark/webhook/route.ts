@@ -4,7 +4,7 @@ const META_ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || process.env.META_PAGE
 const META_PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN || process.env.META_ACCESS_TOKEN;
 const INSTAGRAM_BUSINESS_ACCOUNT_ID = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID;
 const FACEBOOK_PAGE_ID = process.env.FACEBOOK_PAGE_ID;
-const MAKE_LINKEDIN_WEBHOOK_URL = process.env.MAKE_LINKEDIN_WEBHOOK_URL;
+const MAKE_LINKEDIN_WEBHOOK_URL = process.env.MAKE_LINKEDIN_WEBHOOK_URL || "https://hook.eu1.make.com/1319prt2fb3851gujl6bx3i9e43awxxp";
 
 // Helper to extract clean text from string, object, or array
 function extractText(val: any): string {
@@ -30,11 +30,14 @@ function normalizePlatforms(platformField: any): string[] {
     const s = extractText(p).toLowerCase();
     if (s.includes("link")) {
       normalized.add("LinkedIn");
-    } else if (s.includes("insta") || s === "ig") {
+    }
+    if (s.includes("insta") || s === "ig") {
       normalized.add("Instagram");
-    } else if (s.includes("face") || s === "fb") {
+    }
+    if (s.includes("face") || s === "fb") {
       normalized.add("Facebook");
-    } else if (s.includes("meta")) {
+    }
+    if (s.includes("meta")) {
       normalized.add("Facebook");
       normalized.add("Instagram");
     }
