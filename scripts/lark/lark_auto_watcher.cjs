@@ -36,7 +36,7 @@ const LARK_APP_SECRET = process.env.LARK_APP_SECRET;
 const LARK_BASE_ID = process.env.LARK_BASE_ID;
 const LARK_TABLE_ID = process.env.LARK_TABLE_ID;
 
-const AYRSHARE_API_KEY = process.env.AYRSHARE_API_KEY;
+const MAKE_LINKEDIN_WEBHOOK_URL = process.env.MAKE_LINKEDIN_WEBHOOK_URL;
 
 const META_ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || process.env.META_PAGE_ACCESS_TOKEN;
 const META_PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN || process.env.META_ACCESS_TOKEN;
@@ -68,29 +68,26 @@ async function getTenantAccessToken() {
 }
 
 async function publishToLinkedIn(caption, imageUrl) {
-  if (!AYRSHARE_API_KEY) {
-    throw new Error("AYRSHARE_API_KEY missing in .env.local");
+  if (!MAKE_LINKEDIN_WEBHOOK_URL) {
+    throw new Error("MAKE_LINKEDIN_WEBHOOK_URL missing in .env.local");
   }
-  console.log("Posting to LinkedIn via Ayrshare...");
+
+  console.log("Posting to LinkedIn Company Page via Make.com (Zero Watermark)...");
   const body = {
-    post: caption,
-    platforms: ["linkedin"],
-    ...(imageUrl ? { mediaUrls: [imageUrl] } : {})
+    caption: caption,
+    imageUrl: imageUrl || ""
   };
-  const ayrRes = await fetch("https://app.ayrshare.com/api/post", {
+  const res = await fetch(MAKE_LINKEDIN_WEBHOOK_URL, {
     method: "POST",
-    headers: {
-      "Authorization": `Bearer ${AYRSHARE_API_KEY}`,
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)
   });
-  const ayrData = await ayrRes.json();
-  if (ayrRes.ok && ayrData.status !== "error") {
-    const lkId = ayrData.postIds?.find(p => p.platform === "linkedin")?.id || ayrData.id;
-    return `https://www.linkedin.com/feed/update/urn:li:share:${lkId}`;
+  if (res.ok) {
+    console.log("LinkedIn post successfully delivered to Make.com Webhook!");
+    return "https://www.linkedin.com/company/adyantnexa/";
   } else {
-    throw new Error(ayrData.message || JSON.stringify(ayrData));
+    const errText = await res.text();
+    throw new Error(`Make.com Hook Error: ${errText}`);
   }
 }
 
@@ -211,6 +208,20 @@ function extractImageUrl(fields) {
   return "";
 }
 
+// 3.5 Helper to extract text from string, object, or array
+function extractText(val) {
+  if (!val) return "";
+  if (typeof val === "string") return val.trim();
+  if (typeof val === "number") return String(val);
+  if (Array.isArray(val)) {
+    return val.map(extractText).filter(Boolean).join(", ").trim();
+  }
+  if (typeof val === "object") {
+    return (val.text || val.name || val.value || "").trim();
+  }
+  return String(val).trim();
+}
+
 // 4. Flexible Platform Parser
 function normalizePlatforms(platformField) {
   if (!platformField) return [];
@@ -218,7 +229,7 @@ function normalizePlatforms(platformField) {
   const normalized = new Set();
 
   for (const p of rawList) {
-    const s = String(p).toLowerCase().trim();
+    const s = extractText(p).toLowerCase();
     if (s.includes("link")) {
       normalized.add("LinkedIn");
     } else if (s.includes("insta") || s === "ig") {
@@ -238,91 +249,120 @@ function normalizePlatforms(platformField) {
 async function checkAndPublish() {
   try {
     const token = await getTenantAccessToken();
-    const url = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records?page_size=50`;
+    const url = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records?page_size=100`;
     const res = await fetch(url, { headers: { "Authorization": `Bearer ${token}` } });
     const data = await res.json();
 
-    if (data.code === 0 && data.data?.items) {
-      const approved = data.data.items.filter(item => item.fields?.Status === "Approved");
-      if (approved.length === 0) return;
+    if (data.code !== 0) {
+      console.error(`[${new Date().toLocaleTimeString()}] Lark API Error (${data.code}): ${data.msg}`);
+      return;
+    }
 
-      console.log(`[${new Date().toLocaleTimeString()}] Found ${approved.length} APPROVED post(s) in Lark.`);
+    const items = data.data?.items || [];
+    const statusesFound = new Set();
 
-      for (const item of approved) {
-        const recordId = item.record_id;
-        const f = item.fields;
-        const topic = f.Topic || "Untitled Post";
-        const caption = f.Caption || "";
-        const platforms = normalizePlatforms(f.Platform);
-        const imageUrl = extractImageUrl(f);
+    const approved = items.filter(item => {
+      const f = item.fields || {};
+      const rawStatus = extractText(f.Status || f.status || f["Approval Status"] || f["State"]);
+      if (rawStatus) statusesFound.add(rawStatus);
 
-        console.log(`\nProcessing: "${topic}"`);
-        console.log(`Target Platforms: [${platforms.join(", ")}]`);
-        console.log(`Image Detected: ${imageUrl ? imageUrl : "None (Text Only)"}`);
+      const statusLower = rawStatus.toLowerCase();
+      if (statusLower === "approved") return true;
 
-        const publishedLinks = [];
-        const errors = [];
-
-        for (const platform of platforms) {
-          try {
-            if (platform === "LinkedIn") {
-              const link = await publishToLinkedIn(caption, imageUrl);
-              publishedLinks.push(`LinkedIn: ${link}`);
-              console.log(`Live on LinkedIn: ${link}`);
-            } else if (platform === "Instagram") {
-              const link = await publishToInstagram(imageUrl, caption);
-              publishedLinks.push(`Instagram: ${link}`);
-              console.log(`Live on Instagram: ${link}`);
-            } else if (platform === "Facebook") {
-              const link = await publishToFacebook(imageUrl, caption);
-              publishedLinks.push(`Facebook: ${link}`);
-              console.log(`Live on Facebook: ${link}`);
-            }
-          } catch (pErr) {
-            console.error(`Failed on ${platform}: ${pErr.message}`);
-            errors.push(`${platform} Error: ${pErr.message}`);
-          }
+      if (statusLower === "scheduled") {
+        const schedTime = f["Scheduled Time"] || f["Schedule Time"] || f["Publish Time"];
+        if (schedTime) {
+          const target = typeof schedTime === 'number' ? schedTime : new Date(schedTime).getTime();
+          if (!isNaN(target) && Date.now() >= target) return true;
         }
-
-        const updateUrl = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records/${recordId}`;
-        
-        let newStatus = "Failed";
-        let finalPostLink = "";
-
-        if (publishedLinks.length > 0 && errors.length === 0) {
-          newStatus = "Published";
-          finalPostLink = publishedLinks.join(" | ");
-        } else if (publishedLinks.length > 0 && errors.length > 0) {
-          newStatus = "Published";
-          finalPostLink = `${publishedLinks.join(" | ")} [Issues: ${errors.join("; ")}]`;
-        } else {
-          newStatus = "Failed";
-          finalPostLink = `Errors: ${errors.join("; ")}`;
-        }
-
-        await fetch(updateUrl, {
-          method: "PUT",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            fields: {
-              "Status": newStatus,
-              "Post Link": finalPostLink
-            }
-          })
-        });
-
-        console.log(`Updated Lark record ${recordId} to Status: "${newStatus}"`);
       }
+      return false;
+    });
+
+    if (approved.length === 0) {
+      const statusesList = Array.from(statusesFound).join(", ") || "None";
+      console.log(`[${new Date().toLocaleTimeString()}] Checked Lark (${items.length} records). No 'Approved' posts found. (Detected statuses: [${statusesList}])`);
+      return;
+    }
+
+    console.log(`\n========================================`);
+    console.log(`[${new Date().toLocaleTimeString()}] Found ${approved.length} ready post(s) in Lark!`);
+    console.log(`========================================`);
+
+    for (const item of approved) {
+      const recordId = item.record_id;
+      const f = item.fields || {};
+      const topic = extractText(f.Topic || f.topic) || "Untitled Post";
+      const caption = extractText(f.Caption || f.caption || f.Content || f.content) || "";
+      const platforms = normalizePlatforms(f.Platform || f.platform || f.Platforms);
+      const imageUrl = extractImageUrl(f);
+
+      console.log(`\nProcessing: "${topic}"`);
+      console.log(`Target Platforms: [${platforms.join(", ")}]`);
+      console.log(`Image Detected: ${imageUrl ? imageUrl : "None (Text Only)"}`);
+
+      const publishedLinks = [];
+      const errors = [];
+
+      for (const platform of platforms) {
+        try {
+          if (platform === "LinkedIn") {
+            const link = await publishToLinkedIn(caption, imageUrl);
+            publishedLinks.push(`LinkedIn: ${link}`);
+            console.log(`Live on LinkedIn: ${link}`);
+          } else if (platform === "Instagram") {
+            const link = await publishToInstagram(imageUrl, caption);
+            publishedLinks.push(`Instagram: ${link}`);
+            console.log(`Live on Instagram: ${link}`);
+          } else if (platform === "Facebook") {
+            const link = await publishToFacebook(imageUrl, caption);
+            publishedLinks.push(`Facebook: ${link}`);
+            console.log(`Live on Facebook: ${link}`);
+          }
+        } catch (pErr) {
+          console.error(`Failed on ${platform}: ${pErr.message}`);
+          errors.push(`${platform} Error: ${pErr.message}`);
+        }
+      }
+
+      const updateUrl = `https://open.larksuite.com/open-apis/bitable/v1/apps/${LARK_BASE_ID}/tables/${LARK_TABLE_ID}/records/${recordId}`;
+      
+      let newStatus = "Failed";
+      let finalPostLink = "";
+
+      if (publishedLinks.length > 0 && errors.length === 0) {
+        newStatus = "Published";
+        finalPostLink = publishedLinks.join(" | ");
+      } else if (publishedLinks.length > 0 && errors.length > 0) {
+        newStatus = "Published";
+        finalPostLink = `${publishedLinks.join(" | ")} [Issues: ${errors.join("; ")}]`;
+      } else {
+        newStatus = "Failed";
+        finalPostLink = `Errors: ${errors.join("; ")}`;
+      }
+
+      await fetch(updateUrl, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fields: {
+            "Status": newStatus,
+            "Post Link": finalPostLink
+          }
+        })
+      });
+
+      console.log(`Updated Lark record ${recordId} to Status: "${newStatus}"`);
     }
   } catch (err) {
     console.error("Watcher tick error:", err.message);
   }
 }
 
-console.log("Adyant Nexa Lark Watcher Daemon v3 started (Zero Hardcoded Secrets).");
+console.log("Adyant Nexa Lark Watcher Daemon v3.1 started (Diagnostic & Case-Insensitive Mode).");
 console.log("Listening for 'Approved' records every 15 seconds...");
 
 checkAndPublish();

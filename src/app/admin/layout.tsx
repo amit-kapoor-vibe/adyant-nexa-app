@@ -16,40 +16,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     const handleSession = (session: any) => {
       if (!isMounted) return;
-      if (typeof window !== "undefined") {
-        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-        const isBypassed = sessionStorage.getItem("nexa_admin_auth") === "true";
-        if (isLocal || isBypassed) {
-          setIsLoading(false);
-          return;
-        }
-      }
 
-      // Verify admin email dynamically from allowed list
-      const adminEmailsEnv = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "mit.kapur@gmail.com,mit.kapoor@gmail.com,amit.kapoor@gmail.com,amit.kapur@gmail.com,amit.kapoor.vibe@gmail.com";
-      const adminEmails = adminEmailsEnv.split(",").map(e => e.trim().toLowerCase());
+      const adminEmailsEnv = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "";
+      const adminEmails = adminEmailsEnv.split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
       
       const userEmail = session?.user?.email?.toLowerCase();
-      if (userEmail && adminEmails.includes(userEmail)) {
-        setIsLoading(false);
-      } else if (session) {
-        router.replace("/");
-      } else {
+      if (!session) {
         router.replace("/login");
+      } else if (adminEmails.length === 0 || (userEmail && adminEmails.includes(userEmail))) {
+        setIsLoading(false);
+      } else {
+        router.replace("/");
       }
     };
 
     const checkAuth = async () => {
-      // Local development or active bypass token:
-      if (typeof window !== "undefined") {
-        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-        const isBypassed = sessionStorage.getItem("nexa_admin_auth") === "true";
-        if (isLocal || isBypassed) {
-          if (isMounted) setIsLoading(false);
-          return;
-        }
-      }
-
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {

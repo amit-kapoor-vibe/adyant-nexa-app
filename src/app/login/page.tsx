@@ -11,14 +11,6 @@ export default function LoginPage() {
 
   useEffect(() => {
     const checkSession = async () => {
-      if (typeof window !== "undefined") {
-        const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-        const isBypassed = sessionStorage.getItem("nexa_admin_auth") === "true";
-        if (isLocal || isBypassed) {
-          router.push("/admin");
-          return;
-        }
-      }
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
@@ -31,22 +23,9 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [passcode, setPasscode] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
-
-  const handlePasscodeLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (passcode === "nexa2026" || passcode === "admin" || passcode === "adyant") {
-      if (typeof window !== "undefined") {
-        sessionStorage.setItem("nexa_admin_auth", "true");
-      }
-      router.push("/admin");
-    } else {
-      setError("Invalid Administrative Clearance Passcode.");
-    }
-  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,33 +153,6 @@ export default function LoginPage() {
                 <img src="https://www.google.com/favicon.ico" alt="Google" width={18} height={18} />
                 {loading ? "Connecting..." : "Continue with Google"}
               </button>
-
-              {/* Master PIN Direct Bypass */}
-              <form onSubmit={handlePasscodeLogin} style={{ display: "flex", gap: 8 }}>
-                <input
-                  type="password"
-                  placeholder="Master Admin PIN (e.g. nexa2026)"
-                  value={passcode}
-                  onChange={e => setPasscode(e.target.value)}
-                  style={{ ...inputStyle, flex: 1, padding: "12px 14px", fontSize: 12 }}
-                />
-                <button
-                  type="submit"
-                  style={{
-                    background: "rgba(0, 71, 255, 0.08)",
-                    border: "1px solid #0047FF",
-                    color: "#0047FF",
-                    padding: "0 18px",
-                    fontWeight: 700,
-                    fontSize: 11,
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    fontFamily: "var(--font-geist-mono)"
-                  }}
-                >
-                  UNLOCK ↗
-                </button>
-              </form>
 
               {error && (
                 <p style={{ color: "#EF4444", fontSize: 12, marginTop: 20, fontFamily: "var(--font-geist-mono)" }}>{error}</p>

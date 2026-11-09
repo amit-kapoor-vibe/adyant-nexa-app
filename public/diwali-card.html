@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Adyant Nexa - Official Diwali Brand Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@600;700&family=Inter:wght@400;500;600&family=Syne:wght@800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --alabaster: #F8F8FA;
+      --pure-white: #FFFFFF;
+      --onyx: #0A0A0C;
+      --cobalt: #0047FF;
+      --slate: #60606A;
+      --cyan: #38BDF8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #050507;
+      color: var(--pure-white);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .studio-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1080px;
+      margin-bottom: 24px;
+      padding: 16px 24px;
+      background: #101015;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+    }
+
+    .brand-meta {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    .btn-export {
+      background: var(--cobalt);
+      color: #FFFFFF;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-export:hover {
+      background: #0037D4;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 71, 255, 0.4);
+    }
+
+    /* 1080x1080 Creative Canvas */
+    .creative-stage {
+      width: 1080px;
+      height: 1080px;
+      position: relative;
+      overflow: hidden;
+      background: #0A0A0C;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+    }
+
+    .bg-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    .overlay-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 260px;
+      background: linear-gradient(180deg, rgba(10,10,12,0.85) 0%, rgba(10,10,12,0) 100%);
+      z-index: 2;
+    }
+
+    .overlay-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 520px;
+      background: linear-gradient(180deg, rgba(10,10,12,0) 0%, rgba(10,10,12,0.7) 45%, rgba(10,10,12,0.96) 100%);
+      z-index: 2;
+    }
+
+    .stage-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 80px 60px 60px;
+      text-align: center;
+    }
+
+    .badge-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 24px;
+      background: rgba(10, 10, 12, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
+    .typography-block {
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 20px;
+    }
+
+    .hairline-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.14);
+      margin-bottom: 32px;
+    }
+
+    .headline-syne {
+      font-family: 'Syne', sans-serif;
+      font-size: 78px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: #FFFFFF;
+      margin-bottom: 18px;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .sub-inter {
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      line-height: 1.5;
+      color: #E2E8F0;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .hairline-bottom {
+      width: 60%;
+      margin: 0 auto 28px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-brand-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+    }
+
+    .footer-brand-title span { color: var(--cobalt); }
+
+    .footer-brand-sub {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #94A3B8;
+    }
+
+    /* Scaling helper for preview on smaller displays */
+    @media (max-width: 1120px) {
+      .creative-stage {
+        transform: scale(0.7);
+        transform-origin: top center;
+        margin-bottom: -320px;
+      }
+    }
+    @media (max-width: 780px) {
+      .creative-stage {
+        transform: scale(0.48);
+        transform-origin: top center;
+        margin-bottom: -560px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="studio-bar">
+    <div class="brand-meta">
+      <div class="pulse"></div>
+      <span>Adyant Nexa Brand Creative Studio · 1080 × 1080</span>
+    </div>
+    <button class="btn-export" onclick="exportPNG()">
+      Download 1080 × 1080 PNG ↗
+    </button>
+  </div>
+
+  <div class="creative-stage" id="poster">
+    <img src="/images/diwali-bg.jpg" alt="Minimalist Brass Diya" class="bg-img">
+    <div class="overlay-top"></div>
+    <div class="overlay-bottom"></div>
+
+    <div class="stage-content">
+      <div class="badge-wrap">
+        <div class="badge-dot"></div>
+        <span>ADYANT NEXA // DUBAI · INDIA</span>
+      </div>
+
+      <div class="typography-block">
+        <div class="hairline-divider"></div>
+        <h1 class="headline-syne">HAPPY DIWALI</h1>
+        <p class="sub-inter">MAY THE LIGHT OF PURPOSE ILLUMINATE EVERY FOUNDATION YOU BUILD.</p>
+        <div class="hairline-bottom"></div>
+
+        <div class="footer-brand">
+          <div class="footer-brand-title">ADYANT <span>NEXA.</span></div>
+          <div class="footer-brand-sub">AUTONOMOUS REAL ESTATE OPERATING SYSTEMS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    async function exportPNG() {
+      const btn = document.querySelector('.btn-export');
+      btn.innerText = 'Rendering 1080 × 1080...';
+      btn.disabled = true;
+
+      const element = document.getElementById('poster');
+      
+      // Render at exact native 1080x1080 resolution
+      const canvas = await html2canvas(element, {
+        scale: 1,
+        width: 1080,
+        height: 1080,
+        useCORS: true,
+        backgroundColor: '#0A0A0C'
+      });
+
+      const link = document.createElement('a');
+      link.download = 'adyant_nexa_diwali_brand_1080x1080.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+
+      btn.innerText = 'Download 1080 × 1080 PNG ↗';
+      btn.disabled = false;
+    }
+  </script>
+</body>
+</html>

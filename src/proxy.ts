@@ -24,7 +24,7 @@ function extractAccessToken(req: NextRequest): string | null {
   }
 }
 
-export default async function proxy(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const path = req.nextUrl.pathname
   const isProtectedApi = path.startsWith('/api/keep-alive')
 
@@ -49,8 +49,7 @@ export default async function proxy(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid session' }, { status: 401 })
     }
 
-    const adminEmailsEnv = ADMIN_EMAIL || "mit.kapur@gmail.com,mit.kapoor@gmail.com,amit.kapoor@gmail.com,amit.kapur@gmail.com,amit.kapoor.vibe@gmail.com";
-    const adminEmails = adminEmailsEnv.split(",").map(e => e.trim().toLowerCase());
+    const adminEmails = (ADMIN_EMAIL || "").split(",").map(e => e.trim().toLowerCase()).filter(Boolean);
 
     if (adminEmails.length > 0 && adminEmails[0] !== "") {
       const userEmail = user.email?.toLowerCase() || "";
@@ -66,6 +65,8 @@ export default async function proxy(req: NextRequest) {
     return NextResponse.json({ error: 'Auth verification failed' }, { status: 401 })
   }
 }
+
+export default proxy
 
 export const config = {
   matcher: [
