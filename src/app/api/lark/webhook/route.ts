@@ -172,14 +172,53 @@ async function publishToFacebook(imageUrl: string, caption: string): Promise<str
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const rawText = await req.text();
+    console.log("[Lark Webhook] Raw body received:", rawText.slice(0, 500));
+
+    let body: any = {};
+    try {
+      body = JSON.parse(rawText);
+    } catch (parseErr) {
+      console.warn("[Lark Webhook] JSON.parse failed. Attempting resilient newline & quote sanitization...");
+      try {
+        // Replace unescaped raw newlines inside string values
+        const sanitized = rawText
+          .replace(/[\r\n]+/g, "\\n")
+          .replace(/\t/g, " ");
+        body = JSON.parse(sanitized);
+      } catch (sanitizedErr) {
+        console.warn("[Lark Webhook] Sanitized JSON parse also failed. Falling back to regex extraction.");
+        body = {};
+        const topicMatch = rawText.match(/"topic"\s*:\s*"([^"]+)"/i);
+        const captionMatch = rawText.match(/"caption"\s*:\s*"([\s\S]*?)"\s*,\s*"/i);
+        const platformMatch = rawText.match(/"platform"\s*:\s*"([^"]+)"/i);
+        const imageMatch = rawText.match(/https?:\/\/[^\s"'<>)]+/i);
+
+        if (topicMatch) body.topic = topicMatch[1];
+        if (captionMatch) body.caption = captionMatch[1].replace(/\\n/g, "\n");
+        if (platformMatch) body.platform = platformMatch[1];
+        if (imageMatch) body.imageUrl = imageMatch[0];
+      }
+    }
 
     // Support both direct payloads and nested Lark record objects
     const fields = body.fields || body;
     const topic = extractText(fields.Topic || fields.topic || body.topic) || "Social Post";
-    const caption = extractText(fields.Caption || fields.caption || fields.Content || fields.content || body.caption) || "";
+    let caption = extractText(fields.Caption || fields.caption || fields.Content || fields.content || body.caption) || "";
+    
+    // If caption was escaped with literal \n, unescape it for human-readable social posts
+    if (caption.includes("\\n")) {
+      caption = caption.replace(/\\n/g, "\n");
+    }
+
     const rawPlatforms = fields.Platform || fields.platform || fields.Platforms || body.platforms || body.platform;
-    const platforms = normalizePlatforms(rawPlatforms);
+    let platforms = normalizePlatforms(rawPlatforms);
+
+    // Fallback: If no platforms detected or if Lark passed an unparsed token, broadcast to all active channels
+    if (platforms.length === 0) {
+      console.log("[Lark Webhook] No specific platforms parsed. Defaulting to: LinkedIn, Instagram, Facebook");
+      platforms = ["LinkedIn", "Instagram", "Facebook"];
+    }
 
     // Extract clean image URL safely
     let imageUrl = cleanImageUrl(fields["Visual Design Prompt"] || fields["Image URL"] || fields.imageUrl || fields.image || body.imageUrl);
@@ -192,13 +231,15 @@ export async function POST(req: Request) {
         }
       }
     }
-
-    if (platforms.length === 0) {
-      return NextResponse.json({
-        error: "No valid platforms detected in payload",
-        received_platforms: rawPlatforms,
-      }, { status: 400 });
+    // Ultimate fallback: inspect rawText for image URL
+    if (!imageUrl) {
+      const rawUrlMatch = rawText.match(/https?:\/\/[^\s"'<>]+\.(jpg|jpeg|png|webp)(\?[^\s"'<>]*)?/i);
+      if (rawUrlMatch) {
+        imageUrl = rawUrlMatch[0];
+      }
     }
+
+    console.log(`[Lark Webhook Dispatching] Topic: "${topic}" | Platforms: [${platforms.join(", ")}] | Image: ${imageUrl ? "Yes" : "No"}`);
 
     const published: Record<string, string> = {};
     const errors: Record<string, string> = {};
@@ -213,6 +254,7 @@ export async function POST(req: Request) {
           published.Facebook = await publishToFacebook(imageUrl, caption);
         }
       } catch (err: any) {
+        console.error(`[Lark Webhook] Failed on ${platform}:`, err.message);
         errors[platform] = err.message || "Failed to publish";
       }
     }
@@ -224,6 +266,7 @@ export async function POST(req: Request) {
       errors: Object.keys(errors).length > 0 ? errors : undefined,
     });
   } catch (err: any) {
+    console.error("[Lark Webhook Critical Exception]:", err);
     return NextResponse.json({
       error: "Internal server error during webhook processing",
       details: err.message,
