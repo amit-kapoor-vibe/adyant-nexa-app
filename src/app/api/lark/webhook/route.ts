@@ -4,7 +4,7 @@ const META_ACCESS_TOKEN = process.env.META_ACCESS_TOKEN || process.env.META_PAGE
 const META_PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN || process.env.META_ACCESS_TOKEN;
 const INSTAGRAM_BUSINESS_ACCOUNT_ID = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID;
 const FACEBOOK_PAGE_ID = process.env.FACEBOOK_PAGE_ID;
-const MAKE_LINKEDIN_WEBHOOK_URL = process.env.MAKE_LINKEDIN_WEBHOOK_URL || "https://hook.eu1.make.com/1319prt2fb3851gujl6bx3i9e43awxxp";
+const MAKE_LINKEDIN_WEBHOOK_URL = process.env.MAKE_LINKEDIN_WEBHOOK_URL;
 
 // Helper to extract clean text from string, object, or array
 function extractText(val: any): string {
@@ -18,6 +18,17 @@ function extractText(val: any): string {
     return (val.text || val.name || val.value || "").trim();
   }
   return String(val).trim();
+}
+
+// Clean and extract a valid URL from any text (handles "Visual Asset CDN: https://...")
+function cleanImageUrl(raw: any): string {
+  if (!raw) return "";
+  const str = extractText(raw);
+  const match = str.match(/https?:\/\/[^\s"'<>)]+/i);
+  if (match) {
+    return match[0].replace(/[,;)]+$/, "");
+  }
+  return "";
 }
 
 // Normalize target platforms
@@ -92,13 +103,34 @@ async function publishToInstagram(imageUrl: string, caption: string): Promise<st
     throw new Error(`Instagram Container Error: ${d1.error.message}`);
   }
 
+  const creationId = d1.id;
+
+  // Poll container readiness (Instagram processes asynchronously)
+  for (let i = 0; i < 6; i++) {
+    await new Promise((r) => setTimeout(r, 2000));
+    try {
+      const statusRes = await fetch(
+        `https://graph.facebook.com/v21.0/${creationId}?fields=status_code&access_token=${META_ACCESS_TOKEN}`
+      );
+      const statusData = await statusRes.json();
+      if (statusData.status_code === "FINISHED") {
+        break;
+      }
+      if (statusData.status_code === "ERROR") {
+        throw new Error("Instagram container processing failed");
+      }
+    } catch (err: any) {
+      if (err.message.includes("failed")) throw err;
+    }
+  }
+
   // 2. Publish media container
   const publishUrl = `https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish`;
   const res2 = await fetch(publishUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      creation_id: d1.id,
+      creation_id: creationId,
       access_token: META_ACCESS_TOKEN,
     }),
   });
@@ -117,13 +149,27 @@ async function publishToFacebook(imageUrl: string, caption: string): Promise<str
     throw new Error("META_ACCESS_TOKEN or FACEBOOK_PAGE_ID missing in environment");
   }
 
+  // Fetch Page-specific Access Token
+  let pageToken = META_PAGE_ACCESS_TOKEN || META_ACCESS_TOKEN;
+  try {
+    const pageRes = await fetch(
+      `https://graph.facebook.com/v21.0/${FACEBOOK_PAGE_ID}?fields=access_token&access_token=${META_ACCESS_TOKEN}`
+    );
+    const pageData = await pageRes.json();
+    if (pageData.access_token) {
+      pageToken = pageData.access_token;
+    }
+  } catch (err) {
+    // Continue with existing token
+  }
+
   const isPhotoPost = Boolean(imageUrl);
   const endpoint = isPhotoPost ? "photos" : "feed";
   const url = `https://graph.facebook.com/v21.0/${FACEBOOK_PAGE_ID}/${endpoint}`;
 
   const payload = isPhotoPost
-    ? { url: imageUrl, message: caption, access_token: META_PAGE_ACCESS_TOKEN || META_ACCESS_TOKEN }
-    : { message: caption, access_token: META_PAGE_ACCESS_TOKEN || META_ACCESS_TOKEN };
+    ? { url: imageUrl, message: caption, access_token: pageToken }
+    : { message: caption, access_token: pageToken };
 
   const res = await fetch(url, {
     method: "POST",
@@ -139,6 +185,8 @@ async function publishToFacebook(imageUrl: string, caption: string): Promise<str
   const postId = d.post_id || d.id;
   return `https://www.facebook.com/${FACEBOOK_PAGE_ID}/posts/${postId}`;
 }
+  return `https://www.facebook.com/${FACEBOOK_PAGE_ID}/posts/${postId}`;
+}
 
 export async function POST(req: Request) {
   try {
@@ -151,11 +199,16 @@ export async function POST(req: Request) {
     const rawPlatforms = fields.Platform || fields.platform || fields.Platforms || body.platforms || body.platform;
     const platforms = normalizePlatforms(rawPlatforms);
 
-    // Extract image URL
-    let imageUrl = extractText(fields["Image URL"] || fields.imageUrl || fields.image || body.imageUrl);
-    if (!imageUrl && typeof caption === "string") {
-      const match = caption.match(/https?:\/\/[^\s"'<>)]+\.(?:jpg|jpeg|png|webp)/i);
-      if (match) imageUrl = match[0];
+    // Extract clean image URL safely
+    let imageUrl = cleanImageUrl(fields["Visual Design Prompt"] || fields["Image URL"] || fields.imageUrl || fields.image || body.imageUrl);
+    if (!imageUrl) {
+      for (const val of Object.values(fields)) {
+        const found = cleanImageUrl(val);
+        if (found && (found.includes(".jpg") || found.includes(".jpeg") || found.includes(".png") || found.includes(".webp") || found.includes("catbox.moe") || found.includes("unsplash"))) {
+          imageUrl = found;
+          break;
+        }
+      }
     }
 
     if (platforms.length === 0) {
