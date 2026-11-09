@@ -105,24 +105,8 @@ async function publishToInstagram(imageUrl: string, caption: string): Promise<st
 
   const creationId = d1.id;
 
-  // Poll container readiness (Instagram processes asynchronously)
-  for (let i = 0; i < 6; i++) {
-    await new Promise((r) => setTimeout(r, 2000));
-    try {
-      const statusRes = await fetch(
-        `https://graph.facebook.com/v21.0/${creationId}?fields=status_code&access_token=${META_ACCESS_TOKEN}`
-      );
-      const statusData = await statusRes.json();
-      if (statusData.status_code === "FINISHED") {
-        break;
-      }
-      if (statusData.status_code === "ERROR") {
-        throw new Error("Instagram container processing failed");
-      }
-    } catch (err: any) {
-      if (err.message.includes("failed")) throw err;
-    }
-  }
+  // Wait 4 seconds for Instagram CDN to process image
+  await new Promise((r) => setTimeout(r, 4000));
 
   // 2. Publish media container
   const publishUrl = `https://graph.facebook.com/v21.0/${INSTAGRAM_BUSINESS_ACCOUNT_ID}/media_publish`;
@@ -183,8 +167,6 @@ async function publishToFacebook(imageUrl: string, caption: string): Promise<str
   }
 
   const postId = d.post_id || d.id;
-  return `https://www.facebook.com/${FACEBOOK_PAGE_ID}/posts/${postId}`;
-}
   return `https://www.facebook.com/${FACEBOOK_PAGE_ID}/posts/${postId}`;
 }
 
