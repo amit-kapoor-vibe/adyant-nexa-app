@@ -30,6 +30,7 @@ interface Lead {
   formatted_phone: string;
   is_lid?: boolean;
   push_name?: string;
+  channel?: "whatsapp" | "instagram" | "facebook";
   last_message: string;
   qualification: LeadQualification;
   action?: string;
@@ -46,6 +47,7 @@ const FALLBACK_LEADS: Lead[] = [
     phone: "+971 52 ••• 4833",
     display_title: "Apex Horizon Realty (18 Brokers)",
     formatted_phone: "+971 52 ••• 4833",
+    channel: "whatsapp",
     last_message: "Hi, I run an agency in Business Bay with 18 brokers. We spend $12k/mo on Meta ads. Can we see a demo?",
     qualification: {
       status: "HOT",
@@ -74,11 +76,12 @@ const FALLBACK_LEADS: Lead[] = [
     ]
   },
   {
-    raw_jid: "447891234567@s.whatsapp.net",
-    phone: "+44 78 ••• 4567",
-    display_title: "London Investor (Inbound Meta Ad)",
-    formatted_phone: "+44 78 ••• 4567",
-    last_message: "Saw your Downtown penthouse ad. Looking for 3-bed with high rental yield, budget is around 2.8M AED.",
+    raw_jid: "ig_447891234567",
+    phone: "Instagram DM: @london.wealth",
+    display_title: "London Wealth Partner (Meta Ad Inbound)",
+    formatted_phone: "Instagram DM: @london.wealth",
+    channel: "instagram",
+    last_message: "Saw your Downtown penthouse ad on Instagram. Looking for 3-bed with high rental yield, budget is around 2.8M AED.",
     qualification: {
       status: "HOT",
       score: 88,
@@ -92,21 +95,22 @@ const FALLBACK_LEADS: Lead[] = [
     messages: [
       {
         role: "user",
-        text: "Saw your Downtown penthouse ad. Looking for 3-bed with high rental yield, budget is around 2.8M AED.",
+        text: "Saw your Downtown penthouse ad on Instagram. Looking for 3-bed with high rental yield, budget is around 2.8M AED.",
         timestamp: "17:15"
       },
       {
         role: "model",
-        text: "Welcome! Downtown offers exceptional 8-10% rental yields. At AED 2.8M, your purchase qualifies for the UAE 10-Year Golden Visa. Are you looking for immediate ready units or off-plan with 1% monthly payment plans?",
+        text: `Welcome! Downtown offers exceptional 8-10% rental yields. At AED 2.8M, your purchase qualifies for the UAE 10-Year Golden Visa. We can review prime units on a 15-minute Google Meet walkthrough: ${BOOKING_URL}`,
         timestamp: "17:15"
       }
     ]
   },
   {
-    raw_jid: "966501234567@s.whatsapp.net",
-    phone: "+966 50 ••• 1289",
-    display_title: "Riyadh Family Office (Sobha Villas)",
-    formatted_phone: "+966 50 ••• 1289",
+    raw_jid: "fb_966501234567",
+    phone: "Facebook Messenger: Riyadh Direct",
+    display_title: "Riyadh Family Office (Sobha Hartland)",
+    formatted_phone: "Facebook Messenger: Riyadh Direct",
+    channel: "facebook",
     last_message: "نبحث عن فيلا 4 غرف في دبي هيلز أو شوبا هارتلاند بميزانية 5 مليون درهم",
     qualification: {
       status: "HOT",
@@ -126,7 +130,7 @@ const FALLBACK_LEADS: Lead[] = [
       },
       {
         role: "model",
-        text: "أهلاً بك! لدينا فلل حصرية جاهزة وقيد الإنشاء في شوبا هارتلاند ودبي هيلز ضمن ميزانية 5 مليون درهم مع خطط دفع مرنة وتأشيرة الإقامة الذهبية. هل تود حجز موعد لمعاينة خاصة عبر جوجل ميت غداً؟",
+        text: `أهلاً بك! لدينا فلل حصرية جاهزة وقيد الإنشاء في شوبا هارتلاند ودبي هيلز ضمن ميزانية 5 مليون درهم مع خطط دفع مرنة وتأشيرة الإقامة الذهبية. يمكنك حجز موعد مباشر لمعاينة خاصة عبر جوجل ميت: ${BOOKING_URL}`,
         timestamp: "16:03"
       }
     ]
@@ -284,7 +288,7 @@ export default function CommandTerminalPage() {
 
     const briefMsg: LeadMessage = {
       role: "model",
-      text: "[Automated Dispatch] Sent 'Adyant Nexa Real Estate AI Architecture Dossier (PDF)' to investor WhatsApp.",
+      text: `[Executive Brief Dispatched] Sent Adyant Nexa Agency Architecture Dossier & Walkthrough Link: ${BOOKING_URL}`,
       timestamp: new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
     };
 
@@ -388,15 +392,16 @@ export default function CommandTerminalPage() {
     <div className="terminal-wrapper">
       <style jsx global>{`
         :root {
-          --term-bg: #0A0A0E;
-          --term-surface: #121218;
-          --term-card: #181822;
-          --term-border: rgba(255, 255, 255, 0.08);
+          --term-bg: #F8F8FA;
+          --term-surface: #FFFFFF;
+          --term-card: #FFFFFF;
+          --term-border: rgba(10, 10, 12, 0.08);
           --term-border-active: #0047FF;
-          --term-text: #F8F9FA;
-          --term-muted: #8E8EA0;
+          --term-text: #0A0A0C;
+          --term-muted: #60606A;
           --term-cobalt: #0047FF;
-          --term-cyan: #00F2FF;
+          --term-cyan: #0047FF;
+          --term-blue-tint: #E7ECFF;
           --term-emerald: #10B981;
           --term-amber: #F59E0B;
         }
@@ -440,20 +445,21 @@ export default function CommandTerminalPage() {
           font-family: var(--font-syne), sans-serif;
           font-size: 13px;
           font-weight: 800;
-          color: #FFFFFF;
+          color: var(--term-text);
           letter-spacing: -0.01em;
         }
-        .term-brand-name span { color: var(--term-cyan); }
+        .term-brand-name span { color: var(--term-cobalt); }
         .term-badge {
           font-family: var(--font-geist-mono), monospace;
           font-size: 10px;
           padding: 2px 8px;
           border-radius: 4px;
-          background: rgba(0, 242, 255, 0.1);
-          color: var(--term-cyan);
-          border: 1px solid rgba(0, 242, 255, 0.25);
+          background: var(--term-blue-tint);
+          color: var(--term-cobalt);
+          border: 1px solid rgba(0, 71, 255, 0.2);
           text-transform: uppercase;
           letter-spacing: 0.15em;
+          font-weight: 700;
         }
 
         .term-telemetry {
@@ -474,11 +480,11 @@ export default function CommandTerminalPage() {
           margin-right: 6px;
         }
         .kbd-pill {
-          background: rgba(255, 255, 255, 0.08);
-          border: 1px solid rgba(255, 255, 255, 0.14);
+          background: rgba(10, 10, 12, 0.05);
+          border: 1px solid rgba(10, 10, 12, 0.12);
           padding: 1px 6px;
           border-radius: 4px;
-          color: #FFFFFF;
+          color: var(--term-text);
           font-size: 10px;
           font-weight: 600;
         }
@@ -526,15 +532,19 @@ export default function CommandTerminalPage() {
           transition: all 0.15s ease;
           margin-bottom: 4px;
         }
-        .filter-btn:hover { background: rgba(255, 255, 255, 0.04); color: #FFF; }
-        .filter-btn.active { background: rgba(0, 71, 255, 0.18); color: var(--term-cyan); font-weight: 600; }
+        .filter-btn:hover { background: rgba(10, 10, 12, 0.04); color: var(--term-text); }
+        .filter-btn.active { background: var(--term-blue-tint); color: var(--term-cobalt); font-weight: 700; }
         .filter-cnt {
           font-family: var(--font-geist-mono), monospace;
           font-size: 10px;
-          background: rgba(255, 255, 255, 0.08);
+          background: rgba(10, 10, 12, 0.06);
           padding: 2px 6px;
           border-radius: 999px;
-          color: #FFF;
+          color: var(--term-muted);
+        }
+        .filter-btn.active .filter-cnt {
+          background: var(--term-cobalt);
+          color: #FFFFFF;
         }
 
         /* Col 2: Feed */
@@ -548,15 +558,16 @@ export default function CommandTerminalPage() {
         .feed-search-box {
           padding: 12px 14px;
           border-bottom: 1px solid var(--term-border);
+          background: var(--term-surface);
           position: relative;
         }
         .feed-input {
           width: 100%;
-          background: var(--term-surface);
+          background: var(--term-bg);
           border: 1px solid var(--term-border);
           border-radius: 8px;
           padding: 8px 12px;
-          color: #FFF;
+          color: var(--term-text);
           font-size: 12px;
         }
         .feed-input:focus { border-color: var(--term-cobalt); }
@@ -567,13 +578,14 @@ export default function CommandTerminalPage() {
         .lead-card {
           padding: 14px;
           border-bottom: 1px solid var(--term-border);
+          background: var(--term-surface);
           cursor: pointer;
           transition: background 0.15s ease;
         }
-        .lead-card:hover { background: rgba(255, 255, 255, 0.02); }
+        .lead-card:hover { background: #FAFAFD; }
         .lead-card.selected {
-          background: rgba(0, 71, 255, 0.1);
-          border-left: 3px solid var(--term-cyan);
+          background: var(--term-blue-tint);
+          border-left: 3px solid var(--term-cobalt);
         }
         .lead-card-top {
           display: flex;
@@ -581,14 +593,16 @@ export default function CommandTerminalPage() {
           align-items: baseline;
           margin-bottom: 4px;
         }
-        .lead-card-name { font-weight: 600; color: #FFF; font-size: 13px; }
+        .lead-card-name { font-weight: 700; color: var(--term-text); font-size: 13px; }
         .lead-card-score {
           font-family: var(--font-geist-mono), monospace;
           font-size: 10px;
-          color: var(--term-cyan);
-          background: rgba(0, 242, 255, 0.12);
+          color: var(--term-cobalt);
+          background: rgba(0, 71, 255, 0.08);
+          border: 1px solid rgba(0, 71, 255, 0.2);
           padding: 2px 6px;
           border-radius: 4px;
+          font-weight: 700;
         }
         .lead-card-preview {
           font-size: 12px;
@@ -604,7 +618,7 @@ export default function CommandTerminalPage() {
           gap: 8px;
           font-family: var(--font-geist-mono), monospace;
           font-size: 10px;
-          color: #94A3B8;
+          color: var(--term-muted);
         }
 
         /* Col 3: Canvas + Inspector */
@@ -627,10 +641,9 @@ export default function CommandTerminalPage() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          background: rgba(18, 18, 24, 0.8);
-          backdrop-filter: blur(10px);
+          background: var(--term-surface);
         }
-        .chat-client-title { font-size: 14px; font-weight: 700; color: #FFF; }
+        .chat-client-title { font-size: 14px; font-weight: 800; color: var(--term-text); }
         .chat-client-phone { font-family: var(--font-geist-mono), monospace; font-size: 11px; color: var(--term-muted); }
 
         .chat-actions {
@@ -639,9 +652,9 @@ export default function CommandTerminalPage() {
           gap: 8px;
         }
         .term-btn {
-          background: rgba(255, 255, 255, 0.06);
+          background: var(--term-bg);
           border: 1px solid var(--term-border);
-          color: #FFF;
+          color: var(--term-text);
           padding: 6px 14px;
           border-radius: 6px;
           font-size: 11px;
@@ -652,7 +665,7 @@ export default function CommandTerminalPage() {
           gap: 6px;
           transition: all 0.15s ease;
         }
-        .term-btn:hover { background: rgba(255, 255, 255, 0.12); }
+        .term-btn:hover { background: #ECECF0; }
         .term-btn-primary {
           background: var(--term-cobalt);
           border-color: var(--term-cobalt);
@@ -672,6 +685,7 @@ export default function CommandTerminalPage() {
           display: flex;
           flex-direction: column;
           gap: 16px;
+          background: var(--term-bg);
         }
         .msg-row {
           display: flex;
@@ -695,15 +709,17 @@ export default function CommandTerminalPage() {
           font-size: 13px;
         }
         .msg-row.user .msg-bubble {
-          background: var(--term-card);
-          color: #FFF;
+          background: var(--term-surface);
+          color: var(--term-text);
           border: 1px solid var(--term-border);
           border-top-left-radius: 2px;
+          box-shadow: 0 2px 8px rgba(10, 10, 12, 0.04);
         }
         .msg-row.model .msg-bubble {
-          background: #0036C7;
+          background: var(--term-cobalt);
           color: #FFF;
           border-top-right-radius: 2px;
+          box-shadow: 0 4px 14px rgba(0, 71, 255, 0.2);
         }
 
         .chat-composer {
@@ -721,7 +737,7 @@ export default function CommandTerminalPage() {
           border: 1px solid var(--term-border);
           border-radius: 8px;
           padding: 10px 14px;
-          color: #FFF;
+          color: var(--term-text);
           font-size: 13px;
         }
         .composer-input:focus { border-color: var(--term-cobalt); }
@@ -730,6 +746,7 @@ export default function CommandTerminalPage() {
         .col-inspector {
           width: 290px;
           background: var(--term-surface);
+          border-left: 1px solid var(--term-border);
           padding: 20px;
           overflow-y: auto;
           display: flex;
@@ -737,7 +754,7 @@ export default function CommandTerminalPage() {
           gap: 20px;
         }
         .dossier-card {
-          background: var(--term-card);
+          background: var(--term-bg);
           border: 1px solid var(--term-border);
           border-radius: 10px;
           padding: 16px;
@@ -752,8 +769,8 @@ export default function CommandTerminalPage() {
         }
         .dossier-val {
           font-size: 14px;
-          font-weight: 600;
-          color: #FFF;
+          font-weight: 700;
+          color: var(--term-text);
         }
 
         /* Toast */
@@ -761,14 +778,12 @@ export default function CommandTerminalPage() {
           position: fixed;
           bottom: 24px;
           right: 24px;
-          background: rgba(18, 18, 24, 0.95);
-          backdrop-filter: blur(12px);
-          border: 1px solid var(--term-cyan);
+          background: var(--term-text);
           color: #FFF;
           padding: 10px 18px;
           border-radius: 8px;
           font-size: 12px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
           z-index: 100;
           font-family: var(--font-geist-mono), monospace;
         }
@@ -789,10 +804,10 @@ export default function CommandTerminalPage() {
 
         <div className="term-telemetry">
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <span className="live-dot" style={{ background: isLiveConnected ? "#10B981" : "#00F2FF" }} />
+            <span className="live-dot" style={{ background: isLiveConnected ? "#10B981" : "#0047FF" }} />
             <span>{isLiveConnected ? "LIVE ENGINE CONNECTED" : "INTERACTIVE DEMO SIMULATOR"}</span>
           </div>
-          <div>📍 {dubaiTime || "Dubai GST"}</div>
+          <div>GST {dubaiTime || "14:00:00"}</div>
           <a
             href="https://wa.me/?text=Hi%2C%20I%20tested%20the%20Adyant%20Nexa%20demo%20terminal%20and%20want%20to%20deploy%20this%20for%20my%20agency."
             target="_blank"
@@ -810,10 +825,10 @@ export default function CommandTerminalPage() {
               gap: "4px"
             }}
           >
-            Deploy For Agency ↗
+            Deploy For Agency
           </a>
-          <Link href="/" style={{ color: "var(--term-cyan)", textDecoration: "none" }}>
-            ← Back
+          <Link href="/" style={{ color: "var(--term-cobalt)", textDecoration: "none" }}>
+            Back to Site
           </Link>
         </div>
       </header>
@@ -835,14 +850,14 @@ export default function CommandTerminalPage() {
               className={`filter-btn ${filter === "hot" ? "active" : ""}`}
               onClick={() => setFilter("hot")}
             >
-              <span>🔥 Hot Leads (BANT 80+)</span>
+              <span>Hot Leads (BANT 80+)</span>
               <span className="filter-cnt">{countHot}</span>
             </button>
             <button
               className={`filter-btn ${filter === "takeover" ? "active" : ""}`}
               onClick={() => setFilter("takeover")}
             >
-              <span>⚡ Human Takeover</span>
+              <span>Human Takeover</span>
               <span className="filter-cnt">{countTakeover}</span>
             </button>
 
@@ -907,7 +922,11 @@ export default function CommandTerminalPage() {
                   <div className="lead-card-tags">
                     <span>{areas}</span>
                     <span>·</span>
-                    <span style={{ color: "var(--term-cyan)" }}>{budget}</span>
+                    <span style={{ color: "var(--term-cobalt)", fontWeight: 600 }}>{budget}</span>
+                    <span>·</span>
+                    <span style={{ textTransform: "uppercase", fontSize: 9, fontWeight: 700, color: lead.channel === "instagram" ? "#EC4899" : (lead.channel === "facebook" ? "#0047FF" : "#10B981") }}>
+                      {lead.channel || "whatsapp"}
+                    </span>
                     {lead.human_takeover && (
                       <span style={{ color: "#EF4444", fontWeight: 700 }}>· HUMAN</span>
                     )}
@@ -928,7 +947,7 @@ export default function CommandTerminalPage() {
                   {currentLead?.display_title || "Verified Dubai Investor"}
                 </div>
                 <div className="chat-client-phone">
-                  {currentLead?.formatted_phone || currentLead?.phone} · WhatsApp Verified · <span style={{ color: "var(--term-cyan)", fontSize: "10px", letterSpacing: "0.08em" }}>[DEMO SHOWCASE MASKED]</span>
+                  {currentLead?.formatted_phone || currentLead?.phone} · {currentLead?.channel === "instagram" ? "Instagram Direct Verified" : (currentLead?.channel === "facebook" ? "Facebook Messenger Verified" : "WhatsApp Business Verified")} · <span style={{ color: "var(--term-cobalt)", fontSize: "10px", letterSpacing: "0.08em", fontWeight: 600 }}>[SHOWCASE MASKED]</span>
                 </div>
               </div>
 
@@ -983,7 +1002,7 @@ export default function CommandTerminalPage() {
                   className="composer-input"
                 />
                 <button className="term-btn term-btn-primary" onClick={handleSendMessage}>
-                  Send ↗
+                  Send
                 </button>
               </div>
             </div>
@@ -996,7 +1015,7 @@ export default function CommandTerminalPage() {
 
               <div className="dossier-card">
                 <div className="dossier-lbl">QUALIFICATION SCORE</div>
-                <div className="dossier-val" style={{ color: "var(--term-cyan)", fontSize: 18 }}>
+                <div className="dossier-val" style={{ color: "var(--term-cobalt)", fontSize: 18 }}>
                   {currentLead.qualification?.status || "HOT"} · {currentLead.qualification?.score || 85}/100
                 </div>
               </div>
@@ -1028,7 +1047,9 @@ export default function CommandTerminalPage() {
                   15-Min Google Meet Strategy Call
                 </div>
                 <div style={{ marginTop: 8, fontSize: 11, color: "var(--term-muted)", wordBreak: "break-all" }}>
-                  https://meet.google.com/ady-nexa-demo
+                  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" style={{ color: "var(--term-cobalt)", textDecoration: "underline", fontWeight: 600 }}>
+                    {BOOKING_URL}
+                  </a>
                 </div>
               </div>
             </aside>

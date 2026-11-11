@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SYSTEM_PILLARS, FLEET_PORTFOLIO } from "@/data/fleetData";
 import { RoiYieldCalculator } from "@/components/roi/RoiYieldCalculator";
 import { MidnightLeakageDiagnostic } from "@/components/diagnostic/MidnightLeakageDiagnostic";
+import { CalendlyBadge } from "@/components/CalendlyBadge";
 
 const SYSTEM_DELIVERABLES = [
   {
@@ -1569,6 +1570,7 @@ export default function AdyantNexaRealEstateOS() {
           </div>
         </div>
       </footer>
+      <CalendlyBadge />
     </main>
   );
 }

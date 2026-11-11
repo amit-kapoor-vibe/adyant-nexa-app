@@ -244,7 +244,7 @@ function startDashboardServer() {
       req.on('end', async () => {
         try {
           const { jid } = JSON.parse(body);
-          const brochureMsg = `*ADYANT NEXA — AUTONOMOUS SALES INFRASTRUCTURE BRIEF*\nHere is our executive agency briefing on how top Dubai brokerages deploy Nexa OS to capture 100% of midnight ad leads and achieve 3.2x viewing conversion:\n\nhttps://adyantnexa.com/nexa-agency-brief.pdf\n\nOur Founding Director is available for a 15-min Google Meet walkthrough. Select your preferred slot here:\n${BOOKING_URL}`;
+          const brochureMsg = `*ADYANT NEXA — AUTONOMOUS SALES INFRASTRUCTURE BRIEF*\nHere is our executive agency briefing on how top Dubai brokerages deploy Nexa OS to capture 100% of midnight ad leads and achieve 3.2x viewing conversion:\n\nhttps://adyantnexa.com/#architecture\n\nOur Founding Director is available for a 15-min Google Meet walkthrough. Select your preferred slot here:\n${BOOKING_URL}`;
 
           if (globalSock) {
             try {
@@ -398,20 +398,20 @@ function getInteractiveDashboardHTML() {
   <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-terminal: #07090E;
-      --bg-panel: #0D111A;
-      --bg-card: #121824;
-      --bg-card-hover: #182030;
-      --border-base: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(0, 71, 255, 0.4);
+      --bg-terminal: #F8F8FA;
+      --bg-panel: #FFFFFF;
+      --bg-card: #FFFFFF;
+      --bg-card-hover: #F2F4F8;
+      --border-base: rgba(10, 10, 12, 0.08);
+      --border-accent: rgba(0, 71, 255, 0.25);
       --cobalt: #0047FF;
-      --cobalt-hover: #1A5CFF;
+      --cobalt-hover: #0038D1;
       --blue-tint: #E7ECFF;
       --slate: #60606A;
-      --text-main: #F8FAFC;
-      --text-muted: #8E9BAE;
+      --text-main: #0A0A0C;
+      --text-muted: #60606A;
       --emerald: #10B981;
-      --amber: #F59E0B;
+      --amber: #D97706;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-font-smoothing: antialiased; }
@@ -446,7 +446,7 @@ function getInteractiveDashboardHTML() {
       width: 24px;
       height: 24px;
       border-radius: 4px;
-      background: #090C14;
+      background: #FFFFFF;
       border: 1px solid var(--border-accent);
       object-fit: contain;
     }
@@ -455,7 +455,7 @@ function getInteractiveDashboardHTML() {
       font-size: 13px;
       font-weight: 800;
       letter-spacing: -0.01em;
-      color: #FFFFFF;
+      color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -465,11 +465,12 @@ function getInteractiveDashboardHTML() {
       font-family: 'Geist Mono', monospace;
       font-size: 10px;
       padding: 2px 6px;
-      background: rgba(0, 71, 255, 0.15);
+      background: var(--blue-tint);
       border: 1px solid var(--border-accent);
       border-radius: 4px;
-      color: var(--blue-tint);
+      color: var(--cobalt);
       letter-spacing: 0.1em;
+      font-weight: 700;
     }
     .link-public {
       font-size: 11px;
@@ -483,7 +484,7 @@ function getInteractiveDashboardHTML() {
       margin-left: 8px;
     }
     .link-public:hover {
-      color: #FFFFFF;
+      color: var(--cobalt);
       border-color: var(--cobalt);
     }
 
@@ -548,20 +549,21 @@ function getInteractiveDashboardHTML() {
       transition: all 0.15s ease;
     }
     .nav-tab:hover {
-      background: var(--bg-card);
+      background: #F4F5F9;
       color: var(--text-main);
     }
     .nav-tab.active {
-      background: rgba(0, 71, 255, 0.14);
-      border: 1px solid rgba(0, 71, 255, 0.35);
-      color: #FFFFFF;
+      background: var(--blue-tint);
+      border: 1px solid rgba(0, 71, 255, 0.25);
+      color: var(--cobalt);
+      font-weight: 700;
     }
     .nav-badge-count {
       font-family: 'Geist Mono', monospace;
       font-size: 10px;
       padding: 1px 6px;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(10, 10, 12, 0.06);
       color: var(--text-muted);
     }
     .nav-tab.active .nav-badge-count {
@@ -572,7 +574,7 @@ function getInteractiveDashboardHTML() {
     /* Hotkey Box in Rail */
     .hotkey-legend {
       margin-top: auto;
-      background: #090C14;
+      background: var(--bg-terminal);
       border: 1px solid var(--border-base);
       border-radius: 8px;
       padding: 12px;
@@ -582,10 +584,12 @@ function getInteractiveDashboardHTML() {
       line-height: 1.8;
     }
     .key-tag {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(10, 10, 12, 0.06);
+      border: 1px solid rgba(10, 10, 12, 0.12);
       border-radius: 3px;
-      padding: 1px 4px;
-      color: #FFFFFF;
+      padding: 1px 5px;
+      color: var(--text-main);
+      font-weight: 600;
     }
 
     /* 2. Middle Leads Stream */
@@ -638,12 +642,12 @@ function getInteractiveDashboardHTML() {
       gap: 6px;
     }
     .lead-tile:hover {
-      border-color: rgba(255, 255, 255, 0.18);
-      background: var(--bg-card);
+      border-color: rgba(10, 10, 12, 0.16);
+      background: #FAFAFD;
     }
     .lead-tile.selected {
       border-color: var(--cobalt);
-      background: var(--bg-card-hover);
+      background: var(--blue-tint);
       box-shadow: inset 3px 0 0 0 var(--cobalt);
     }
     .lead-tile-top {
@@ -653,8 +657,8 @@ function getInteractiveDashboardHTML() {
     }
     .lead-tile-title {
       font-size: 13px;
-      font-weight: 600;
-      color: #FFFFFF;
+      font-weight: 700;
+      color: var(--text-main);
     }
     .lead-tile-time {
       font-family: 'Geist Mono', monospace;
@@ -664,7 +668,8 @@ function getInteractiveDashboardHTML() {
     .lead-tile-meta {
       font-family: 'Geist Mono', monospace;
       font-size: 11px;
-      color: var(--blue-tint);
+      color: var(--cobalt);
+      font-weight: 600;
       display: flex;
       gap: 8px;
     }
@@ -680,7 +685,7 @@ function getInteractiveDashboardHTML() {
       justify-content: space-between;
       align-items: center;
       padding-top: 6px;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      border-top: 1px solid var(--border-base);
       font-family: 'Geist Mono', monospace;
       font-size: 10px;
     }
@@ -717,7 +722,7 @@ function getInteractiveDashboardHTML() {
       width: 38px;
       height: 38px;
       border-radius: 8px;
-      background: #090C14;
+      background: var(--blue-tint);
       border: 1px solid var(--border-accent);
       display: flex;
       align-items: center;
@@ -725,14 +730,14 @@ function getInteractiveDashboardHTML() {
       font-family: 'Syne', sans-serif;
       font-size: 13px;
       font-weight: 800;
-      color: var(--blue-tint);
+      color: var(--cobalt);
     }
     .buyer-name-h2 {
       font-family: 'Syne', sans-serif;
       font-size: 15px;
       font-weight: 800;
       letter-spacing: -0.01em;
-      color: #FFFFFF;
+      color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -769,18 +774,18 @@ function getInteractiveDashboardHTML() {
     }
     .btn-cobalt:hover { background: var(--cobalt-hover); }
     .btn-ghost-dark {
-      background: var(--bg-card);
+      background: var(--bg-terminal);
       border: 1px solid var(--border-base);
       color: var(--text-main);
     }
     .btn-ghost-dark:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-      background: var(--bg-card-hover);
+      border-color: rgba(10, 10, 12, 0.2);
+      background: #ECECF0;
     }
     .btn-takeover-alert {
-      background: rgba(245, 158, 11, 0.15) !important;
-      border: 1px solid var(--amber) !important;
-      color: #FCD34D !important;
+      background: #DC2626 !important;
+      border: 1px solid #DC2626 !important;
+      color: #FFFFFF !important;
     }
 
     /* BANT Compact Ribbon */
@@ -792,7 +797,7 @@ function getInteractiveDashboardHTML() {
       border-bottom: 1px solid var(--border-base);
     }
     .bant-cell {
-      background: var(--bg-terminal);
+      background: var(--bg-panel);
       padding: 10px 18px;
     }
     .bant-tag {
@@ -808,7 +813,7 @@ function getInteractiveDashboardHTML() {
       font-family: 'Geist Mono', monospace;
       font-size: 12px;
       font-weight: 600;
-      color: #FFFFFF;
+      color: var(--text-main);
     }
 
     /* WhatsApp Chat Transcript Stream */
@@ -819,7 +824,7 @@ function getInteractiveDashboardHTML() {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      background: #080A10;
+      background: var(--bg-terminal);
     }
     .msg-row {
       display: flex;
@@ -840,7 +845,8 @@ function getInteractiveDashboardHTML() {
     }
     .msg-row.bot .msg-meta {
       justify-content: flex-end;
-      color: var(--blue-tint);
+      color: var(--cobalt);
+      font-weight: 600;
     }
 
     .bubble-card {
@@ -850,16 +856,18 @@ function getInteractiveDashboardHTML() {
       line-height: 1.55;
     }
     .msg-row.user .bubble-card {
-      background: #141722;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #F8FAFC;
+      background: #FFFFFF;
+      border: 1px solid var(--border-base);
+      color: var(--text-main);
       border-bottom-left-radius: 2px;
+      box-shadow: 0 2px 8px rgba(10, 10, 12, 0.04);
     }
     .msg-row.bot .bubble-card {
-      background: #071536;
-      border: 1px solid var(--border-accent);
+      background: var(--cobalt);
+      border: 1px solid var(--cobalt);
       color: #FFFFFF;
       border-bottom-right-radius: 2px;
+      box-shadow: 0 4px 14px rgba(0, 71, 255, 0.2);
     }
 
     /* Canned Response Shortcuts */
@@ -879,14 +887,15 @@ function getInteractiveDashboardHTML() {
       border-radius: 4px;
       background: var(--bg-terminal);
       border: 1px solid var(--border-base);
-      color: var(--text-muted);
+      color: var(--slate);
       cursor: pointer;
       white-space: nowrap;
       transition: all 0.15s ease;
     }
     .canned-chip:hover {
       border-color: var(--cobalt);
-      color: #FFFFFF;
+      color: var(--cobalt);
+      background: var(--blue-tint);
     }
 
     /* Bottom Input Bar */
@@ -897,6 +906,39 @@ function getInteractiveDashboardHTML() {
       display: flex;
       align-items: center;
       gap: 12px;
+    }
+    .chat-text-input {
+      flex: 1;
+      background: var(--bg-terminal);
+      border: 1px solid var(--border-base);
+      border-radius: 6px;
+      padding: 9px 14px;
+      font-size: 12px;
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+    }
+    .chat-text-input:focus { border-color: var(--cobalt); }
+
+    /* Animated Toast Notification */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0A0A0C;
+      color: #FFFFFF;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      animation: slideIn 0.2s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(12px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
     .chat-text-input {
       flex: 1;
@@ -944,15 +986,15 @@ function getInteractiveDashboardHTML() {
       <img src="/brand-logo.png" alt="AN" class="brand-logo-sq" onerror="this.style.display='none'">
       <div class="brand-logotype">
         ADYANT <span>NEXA.</span>
-        <span class="badge-terminal">TERMINAL v1.4</span>
+        <span class="badge-terminal">COMMAND TERMINAL</span>
       </div>
-      <a href="/" class="link-public">← Public Site</a>
+      <a href="/" class="link-public">Back to Site</a>
     </div>
 
     <div class="telemetry-rack">
       <div class="tele-stat">
         <div class="pulse-dot"></div>
-        <span>WHATSAPP ENGINE: ONLINE</span>
+        <span>ENGINE STATUS: ONLINE</span>
       </div>
       <div class="tele-stat">
         <span>FAILOVER: 0ms</span>
@@ -971,12 +1013,12 @@ function getInteractiveDashboardHTML() {
       <div>
         <div class="nav-label">PIPELINE TIERS</div>
         <div class="nav-tab active" onclick="setPipelineFilter('all', this)">
-          <span>All Inquiries</span>
-          <span class="nav-badge-count" id="countAll">1</span>
+          <span>All Inbound</span>
+          <span class="nav-badge-count" id="countAll">0</span>
         </div>
         <div class="nav-tab" onclick="setPipelineFilter('hot', this)">
-          <span>HOT Buyers (80+)</span>
-          <span class="nav-badge-count" id="countHot">1</span>
+          <span>Hot Leads (80+)</span>
+          <span class="nav-badge-count" id="countHot">0</span>
         </div>
         <div class="nav-tab" onclick="setPipelineFilter('warm', this)">
           <span>Under Nurture</span>
@@ -991,22 +1033,26 @@ function getInteractiveDashboardHTML() {
       <div>
         <div class="nav-label">CHANNELS</div>
         <div class="nav-tab">
-          <span>WhatsApp Multi-Device</span>
-          <span style="color: var(--emerald); font-family: monospace;">● ON</span>
+          <span>WhatsApp Business</span>
+          <span style="color: var(--emerald); font-family: monospace; font-weight: 700;">ONLINE</span>
         </div>
         <div class="nav-tab">
-          <span>Instagram Direct</span>
-          <span style="color: var(--slate); font-family: monospace;">STANDBY</span>
+          <span>Meta Direct / Ads</span>
+          <span style="color: var(--cobalt); font-family: monospace; font-weight: 700;">CONNECTED</span>
+        </div>
+        <div class="nav-tab">
+          <span>Instagram DM</span>
+          <span style="color: #EC4899; font-family: monospace; font-weight: 700;">CONNECTED</span>
         </div>
       </div>
 
       <!-- Hotkeys Legend -->
       <div class="hotkey-legend">
-        <div style="font-weight: 600; color: #FFFFFF; margin-bottom: 4px;">OPERATOR SHORTCUTS</div>
+        <div style="font-weight: 700; color: var(--text-main); margin-bottom: 4px;">OPERATOR HOTKEYS</div>
         <div><span class="key-tag">J</span> / <span class="key-tag">K</span> Navigate leads</div>
         <div><span class="key-tag">T</span> Toggle Takeover</div>
-        <div><span class="key-tag">B</span> Dispatch Brochure</div>
-        <div><span class="key-tag">V</span> Schedule VIP</div>
+        <div><span class="key-tag">B</span> Dispatch Brief</div>
+        <div><span class="key-tag">M</span> Schedule Meet</div>
         <div><span class="key-tag">/</span> Focus Search</div>
       </div>
     </aside>
@@ -1016,9 +1062,9 @@ function getInteractiveDashboardHTML() {
       <div class="inbox-search-bar">
         <div style="display: flex; justify-content: space-between; align-items: baseline;">
           <span style="font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 600; color: var(--slate); letter-spacing: 0.2em;">INBOUND PIPELINE</span>
-          <span style="font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--cobalt);">SYNCED</span>
+          <span style="font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--cobalt); font-weight: 700;">SYNCED</span>
         </div>
-        <input type="text" id="leadSearchBox" class="inbox-input" placeholder="Search investor name, budget, area... (/)" oninput="filterLeads(this.value)">
+        <input type="text" id="leadSearchBox" class="inbox-input" placeholder="Search investor, budget, area... (/)" oninput="filterLeads(this.value)">
       </div>
 
       <div class="inbox-scroll" id="leadsContainer"></div>
@@ -1033,11 +1079,11 @@ function getInteractiveDashboardHTML() {
           <div class="buyer-avatar" id="leadAvatar">DI</div>
           <div>
             <div class="buyer-name-h2">
-              <span id="leadTitle">Verified Dubai Investor</span>
-              <span class="score-chip" id="leadScoreBadge" style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34D399;">HOT · 85</span>
-              <span id="takeoverIndicator" style="display: none; font-size: 9px; padding: 2px 6px; border-radius: 4px; background: rgba(245, 158, 11, 0.2); border: 1px solid var(--amber); color: #FCD34D; font-family: monospace;">HUMAN ACTIVE</span>
+              <span id="leadTitle">Verified Inbound Lead</span>
+              <span class="score-chip" id="leadScoreBadge" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #059669;">HOT · 85</span>
+              <span id="takeoverIndicator" style="display: none; font-size: 9px; padding: 2px 6px; border-radius: 4px; background: rgba(220, 38, 38, 0.1); border: 1px solid #DC2626; color: #DC2626; font-family: monospace; font-weight: 700;">HUMAN OPERATOR ACTIVE</span>
             </div>
-            <div class="buyer-phone-sub" id="leadPhoneSubtitle">+971 52 896 4833 (UAE)</div>
+            <div class="buyer-phone-sub" id="leadPhoneSubtitle">+971 52 896 4833</div>
           </div>
         </div>
 
@@ -1046,10 +1092,10 @@ function getInteractiveDashboardHTML() {
             <span>Take Over Chat</span> <span class="key-tag">T</span>
           </button>
           <button id="btnBrochureAction" class="btn-terminal btn-ghost-dark" onclick="doBrochure()">
-            <span>Dispatch Brochure</span> <span class="key-tag">B</span>
+            <span>Agency Brief</span> <span class="key-tag">B</span>
           </button>
           <button id="btnViewingAction" class="btn-terminal btn-cobalt" onclick="doViewing()">
-            <span>Schedule VIP</span> <span class="key-tag">V</span>
+            <span>Google Meet</span> <span class="key-tag">M</span>
           </button>
         </div>
       </div>
@@ -1058,7 +1104,7 @@ function getInteractiveDashboardHTML() {
       <div class="bant-ribbon">
         <div class="bant-cell">
           <div class="bant-tag">VERIFIED BUDGET</div>
-          <div class="bant-val-text" id="bantBudgetField" style="color: var(--blue-tint);">AED 2,500,000</div>
+          <div class="bant-val-text" id="bantBudgetField" style="color: var(--cobalt);">AED 2,500,000</div>
         </div>
         <div class="bant-cell">
           <div class="bant-tag">TARGET LOCATION</div>
@@ -1079,16 +1125,16 @@ function getInteractiveDashboardHTML() {
 
       <!-- 1-Click Canned Response Ribbon -->
       <div class="canned-ribbon">
-        <span style="font-family: 'Geist Mono', monospace; font-size: 9px; color: var(--slate);">MACROS:</span>
-        <div class="canned-chip" onclick="pasteMacro('Here are 3 handpicked Downtown luxury apartments ready for Q3 2026 handover with 1% monthly payment plan:')">+ Downtown 1% Plan</div>
-        <div class="canned-chip" onclick="pasteMacro('Our Senior Investment Director is available for a private 5-minute briefing today. Would 3 PM or 5 PM GST suit you?')">+ Request Call</div>
-        <div class="canned-chip" onclick="pasteMacro('With a purchase of AED 2M+, you qualify for the UAE 10-Year Golden Visa. We handle the paperwork with DLD.')">+ Golden Visa Info</div>
+        <span style="font-family: 'Geist Mono', monospace; font-size: 9px; color: var(--slate); font-weight: 700;">MACROS:</span>
+        <div class="canned-chip" onclick="pasteMacro('Hello. Thank you for contacting Adyant Nexa. To review your requirements on a 15-minute Google Meet walkthrough, please select a slot here: ${BOOKING_URL}')">Schedule Strategy Call</div>
+        <div class="canned-chip" onclick="pasteMacro('Here is our executive agency briefing on deploying autonomous 24/7 sales infrastructure: https://adyantnexa.com/#architecture')">Share Agency Brief</div>
+        <div class="canned-chip" onclick="pasteMacro('We eliminate midnight ad dropoff and qualify inbound inquiries within 90 seconds. Does tomorrow 2:00 PM or 5:30 PM GST work for a quick demo?')">Propose Demo Slot</div>
       </div>
 
       <!-- Bottom Chat Input -->
       <div class="input-dock">
-        <input type="text" id="chatInputMessage" class="chat-text-input" placeholder="Type a message to dispatch directly on WhatsApp to this lead..." onkeydown="if(event.key==='Enter') doSendMessage()">
-        <button class="btn-terminal btn-cobalt" onclick="doSendMessage()">Send to WhatsApp ↗</button>
+        <input type="text" id="chatInputMessage" class="chat-text-input" placeholder="Type a message to dispatch directly to this lead... (Press Enter to Send)" onkeydown="if(event.key==='Enter') doSendMessage()">
+        <button class="btn-terminal btn-cobalt" onclick="doSendMessage()">Send Message</button>
       </div>
 
     </section>
@@ -1191,25 +1237,25 @@ function getInteractiveDashboardHTML() {
           : 'background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #FBBF24;';
 
         html += \`
-          <div class="lead-tile \${isSel}" onclick="selectLead(\${idx})">
+          <div class="lead-tile ${isSel}" onclick="selectLead(${idx})">
             <div class="lead-tile-top">
-              <span class="lead-tile-title">\${lead.display_title || lead.formatted_phone || 'Dubai Investor'}</span>
+              <span class="lead-tile-title">${lead.display_title || lead.formatted_phone || 'Inbound Lead'}</span>
               <span class="lead-tile-time">Active</span>
             </div>
             <div class="lead-tile-meta">
-              <span>📍 \${(q.preferred_areas && q.preferred_areas[0]) || 'Downtown'}</span>
+              <span>${(q.preferred_areas && q.preferred_areas[0]) || 'Downtown'}</span>
               <span>·</span>
-              <span>💰 \${q.budget_aed || 'AED 2.5M'}</span>
+              <span>${q.budget_aed || 'AED 2.5M'}</span>
             </div>
-            <div class="lead-tile-msg">"\${lead.last_message || ''}"</div>
+            <div class="lead-tile-msg">"${lead.last_message || ''}"</div>
             <div class="lead-tile-bottom">
-              <span style="color: var(--slate);">\${lead.formatted_phone || lead.phone}</span>
-              <span class="score-chip" style="\${scoreStyle}">
-                \${q.status || 'WARM'} · \${score}
+              <span style="color: var(--slate);">${lead.formatted_phone || lead.phone}</span>
+              <span class="score-chip" style="${scoreStyle}">
+                ${q.status || 'WARM'} · ${score}
               </span>
             </div>
           </div>
-        \`;
+        `;
       });
       container.innerHTML = html;
     }
@@ -1219,11 +1265,11 @@ function getInteractiveDashboardHTML() {
       const q = lead.qualification || {};
       const score = q.score || 0;
 
-      document.getElementById('leadTitle').innerText = lead.display_title || 'Verified Dubai Investor';
+      document.getElementById('leadTitle').innerText = lead.display_title || 'Verified Inbound Lead';
       document.getElementById('leadPhoneSubtitle').innerText = lead.formatted_phone || lead.phone;
-      document.getElementById('leadScoreBadge').innerText = \`\${q.status || 'WARM'} · \${score}\`;
+      document.getElementById('leadScoreBadge').innerText = `${q.status || 'WARM'} · ${score}`;
 
-      const initials = (lead.display_title || 'DI').split(' ').map(n => n[0]).join('').slice(0, 2);
+      const initials = (lead.display_title || 'IN').split(' ').map(n => n[0]).join('').slice(0, 2);
       document.getElementById('leadAvatar').innerText = initials;
 
       const btnTakeover = document.getElementById('btnTakeoverAction');
@@ -1250,13 +1296,13 @@ function getInteractiveDashboardHTML() {
       messages.forEach(m => {
         const isBot = m.role === 'model';
         const roleClass = isBot ? 'bot' : 'user';
-        const authorLabel = isBot ? '⚡ NEXA AI ENGINE' : '👤 VERIFIED INVESTOR';
+        const authorLabel = isBot ? 'ADYANT NEXA AI' : 'INBOUND LEAD';
 
-        chatHtml += \`
-          <div class="msg-row \${roleClass}">
+        chatHtml += `
+          <div class="msg-row ${roleClass}">
             <div class="msg-meta">
-              <span>\${authorLabel}</span>
-              <span>\${m.timestamp || ''}</span>
+              <span>${authorLabel}</span>
+              <span>${m.timestamp || ''}</span>
             </div>
             <div class="bubble-card">
               \${m.text.replace(/\\n/g, '<br>')}
@@ -1302,7 +1348,7 @@ function getInteractiveDashboardHTML() {
         doTakeover();
       } else if (e.key === 'b' || e.key === 'B') {
         doBrochure();
-      } else if (e.key === 'v' || e.key === 'V') {
+      } else if (e.key === 'm' || e.key === 'M' || e.key === 'v' || e.key === 'V') {
         doViewing();
       } else if (e.key === '/') {
         e.preventDefault();
@@ -1322,7 +1368,7 @@ function getInteractiveDashboardHTML() {
       if (!current) return;
 
       input.value = '';
-      notify('Delivering message to WhatsApp...');
+      notify('Delivering message...');
 
       try {
         const res = await fetch('/api/send-message', {
@@ -1332,7 +1378,7 @@ function getInteractiveDashboardHTML() {
         });
         const data = await res.json();
         if (data.success) {
-          notify('✓ Message delivered to investor on WhatsApp');
+          notify('Message delivered successfully');
           refreshData();
         }
       } catch (err) {
@@ -1352,7 +1398,7 @@ function getInteractiveDashboardHTML() {
         });
         const data = await res.json();
         if (data.success) {
-          notify(data.human_takeover ? 'AI paused. Human operator in control.' : 'AI bot resumed.');
+          notify(data.human_takeover ? 'AI paused. Human operator in control.' : 'AI resumed.');
           refreshData();
         }
       } catch (err) {
@@ -1364,7 +1410,7 @@ function getInteractiveDashboardHTML() {
       const current = visibleLeads[selectedLeadIndex];
       if (!current) return;
 
-      notify('Dispatching luxury PDF portfolio...');
+      notify('Dispatching Agency Architecture Brief...');
       try {
         const res = await fetch('/api/dispatch-brochure', {
           method: 'POST',
@@ -1373,7 +1419,7 @@ function getInteractiveDashboardHTML() {
         });
         const data = await res.json();
         if (data.success) {
-          notify('✓ Portfolio delivered on WhatsApp');
+          notify('Agency Brief delivered');
           refreshData();
         }
       } catch (err) {
@@ -1385,7 +1431,7 @@ function getInteractiveDashboardHTML() {
       const current = visibleLeads[selectedLeadIndex];
       if (!current) return;
 
-      notify('Dispatching VIP viewing calendar...');
+      notify('Generating Google Meet strategy invitation...');
       try {
         const res = await fetch('/api/schedule-viewing', {
           method: 'POST',
@@ -1394,7 +1440,7 @@ function getInteractiveDashboardHTML() {
         });
         const data = await res.json();
         if (data.success) {
-          notify('✓ VIP viewing invite sent on WhatsApp');
+          notify('Google Meet invite sent');
           refreshData();
         }
       } catch (err) {

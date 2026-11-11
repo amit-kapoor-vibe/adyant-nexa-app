@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Mail, Phone, MapPin, CheckCircle2, ArrowRight, ShieldCheck } from "lucide-react";
 import { Heading } from "@/components/ui/Heading";
+import { CalendlyBadge } from "@/components/CalendlyBadge";
+import { CalendlyBookingCard } from "@/components/CalendlyBookingCard";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -103,6 +105,8 @@ export default function ContactPage() {
                   GSTIN: 06CPKPK2852M1ZH
                 </div>
               </div>
+
+              <CalendlyBookingCard />
             </div>
 
             <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border-color)", display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
@@ -243,6 +247,7 @@ export default function ContactPage() {
             }
           }
         `}</style>
+        <CalendlyBadge />
       </div>
     </div>
   );
