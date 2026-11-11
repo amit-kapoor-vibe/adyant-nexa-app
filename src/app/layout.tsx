@@ -39,11 +39,17 @@ const instrumentSerif = Instrument_Serif({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://adyantnexa.com"),
-  title: "Adyant Nexa | Digital Operating System for the Future",
+  alternates: {
+    canonical: "/",
+  },
+  title: {
+    default: "Adyant Nexa | Autonomous AI Sales Engine & Digital Operating System",
+    template: "%s | Adyant Nexa",
+  },
   description:
-    "Adyant Nexa is your Digital OS — Ultra-fast cinematic web architecture, neural-marketing with AI-driven ROI precision, and bespoke AI tools for business automation.",
+    "Adyant Nexa is your Digital OS — Autonomous AI sales engines and high-performance web architecture. Qualify Dubai property buyers in 90 seconds, eliminate midnight lead loss, and scale conversion velocity.",
   keywords:
-    "digital agency india, neural marketing, AI tools, next.js agency, meta ads india, web architecture, adyant nexa",
+    "dubai real estate ai, autonomous sales agent, whatsapp bant qualification, meta ads dubai, digital operating system, adyant nexa",
   icons: {
     icon: [
       { url: "/Favicon transparent.png", sizes: "32x32", type: "image/png" },
@@ -59,13 +65,16 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Adyant Nexa | Digital Operating System for the Future",
+    title: "Adyant Nexa | Autonomous AI Sales Engine & Digital Operating System",
     description:
-      "High-Performance Web Architecture. Neural-Marketing. Custom AI Tools.",
+      "Autonomous AI sales engines and high-performance web architecture. Qualify Dubai property buyers in 90 seconds and eliminate midnight lead loss.",
+    url: "https://adyantnexa.com",
+    siteName: "Adyant Nexa",
+    locale: "en_US",
     type: "website",
     images: [
       {
-        url: "/Fb &Insta.png",
+        url: "/Fb%20%26Insta.png",
         width: 1080,
         height: 1080,
         alt: "Adyant Nexa — Digital Operating System",
@@ -74,10 +83,36 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Adyant Nexa | Digital Operating System for the Future",
-    description: "High-Performance Web Architecture. Neural-Marketing. Custom AI Tools.",
-    images: ["/Fb &Insta.png"],
+    title: "Adyant Nexa | Autonomous AI Sales Engine & Digital Operating System",
+    description: "Autonomous AI sales engines and high-performance web architecture. Qualify Dubai property buyers in 90 seconds.",
+    images: ["/Fb%20%26Insta.png"],
   },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://adyantnexa.com/#organization",
+      "name": "Adyant Nexa",
+      "url": "https://adyantnexa.com",
+      "logo": "https://adyantnexa.com/Favicon%20transparent.png",
+      "description": "Autonomous AI Sales Engines and High-Performance Digital Architecture.",
+      "sameAs": [
+        "https://www.instagram.com/adyantnexa"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://adyantnexa.com/#website",
+      "url": "https://adyantnexa.com",
+      "name": "Adyant Nexa",
+      "publisher": {
+        "@id": "https://adyantnexa.com/#organization"
+      }
+    }
+  ]
 };
 
 import { ClientWrapper } from "@/components/ClientWrapper";
@@ -93,6 +128,10 @@ export default function RootLayout({
       className={`${syne.variable} ${inter.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
     >
       <body className="antialiased" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <ErrorBoundary>
           <TransitionProvider>
             <GlobalUI />

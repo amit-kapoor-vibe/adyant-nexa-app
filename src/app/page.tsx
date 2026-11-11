@@ -44,14 +44,17 @@ const SYSTEM_DELIVERABLES = [
   {
     num: "08",
     title: "Continuous Developer Ingestion",
-    desc: "Ongoing prompt tuning and catalog ingestion for newly launched off-plan and luxury projects across Emaar, Sobha, DAMAC, and Nakheel."
+    desc: "Ongoing prompt tuning and catalog ingestion for newly launched off-plan and luxury projects across your agency's developer inventory."
   }
 ];
 
 export default function AdyantNexaRealEstateOS() {
 
   return (
-    <div className="an-page-wrapper">
+    <main id="main-content" className="an-page-wrapper">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <style jsx global>{`
         :root {
           --alabaster: #F8F8FA;
@@ -63,6 +66,34 @@ export default function AdyantNexaRealEstateOS() {
           --cyan-bright: #38BDF8;
           --border-light: rgba(10, 10, 12, 0.08);
           --border-dark: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Accessibility Skip Link & Focus Rings */
+        .skip-link {
+          position: fixed;
+          top: -120px;
+          left: 20px;
+          background: var(--onyx);
+          color: var(--pure-white);
+          padding: 12px 20px;
+          border-radius: 9999px;
+          border: 2px solid var(--cobalt);
+          font-family: var(--font-geist-mono), monospace;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-decoration: none;
+          z-index: 99999;
+          box-shadow: 0 8px 24px rgba(0, 71, 255, 0.25);
+          transition: top 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .skip-link:focus {
+          top: 16px;
+        }
+
+        :focus-visible {
+          outline: 2px solid var(--cobalt);
+          outline-offset: 3px;
         }
 
         .an-page-wrapper {
@@ -177,7 +208,7 @@ export default function AdyantNexaRealEstateOS() {
           position: relative;
           max-width: 1300px;
           margin: 0 auto;
-          padding: 120px 48px 80px;
+          padding: 132px 48px 80px;
           overflow: hidden;
         }
 
@@ -300,7 +331,8 @@ export default function AdyantNexaRealEstateOS() {
           color: var(--onyx);
           letter-spacing: -0.02em;
           margin-bottom: 16px;
-          line-height: 1.2;
+          line-height: 1.25;
+          text-wrap: balance;
         }
         .arch-body {
           font-size: 15px;
@@ -562,14 +594,17 @@ export default function AdyantNexaRealEstateOS() {
           font-size: clamp(2rem, 4vw, 3rem);
           font-weight: 800;
           letter-spacing: -0.02em;
-          line-height: 1.1;
+          line-height: 1.15;
           color: var(--onyx);
+          text-wrap: balance;
         }
         .section-h2 em {
           font-family: var(--font-display), serif;
           font-style: italic;
           font-weight: 400;
           color: var(--cobalt);
+          display: block;
+          margin-top: 6px;
         }
 
         .pillar-grid {
@@ -923,6 +958,10 @@ export default function AdyantNexaRealEstateOS() {
           color: var(--onyx);
           text-decoration: none;
           transition: color 0.15s ease;
+          min-height: 44px;
+          display: inline-flex;
+          align-items: center;
+          padding: 0 4px;
         }
         .footer-links a:hover { color: var(--cobalt); }
         .footer-meta-bar {
@@ -1134,7 +1173,7 @@ export default function AdyantNexaRealEstateOS() {
           .section-editorial, .section-portfolio { padding: 60px 24px; }
         }
         @media (max-width: 640px) {
-          .hero-wrap { padding: 48px 20px 40px; }
+          .hero-wrap { padding: 96px 20px 40px; }
           .meta-pills { flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
           .hero-h1 { font-size: clamp(2rem, 7.5vw, 2.9rem); line-height: 1.1; margin-bottom: 18px; }
           .hero-sub { font-size: 15px; line-height: 1.55; margin-bottom: 28px; }
@@ -1182,10 +1221,15 @@ export default function AdyantNexaRealEstateOS() {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-pill-primary btn-cta-lg"
+              aria-label="Launch Live WhatsApp Demo in WhatsApp (opens in new window)"
             >
               Launch Live WhatsApp Demo ↗
             </a>
-            <Link href="/terminal" className="btn-pill-secondary btn-cta-lg">
+            <Link 
+              href="/terminal" 
+              className="btn-pill-secondary btn-cta-lg"
+              aria-label="Explore Internal Terminal Interactive Demo"
+            >
               Explore Internal Terminal
             </Link>
           </div>
@@ -1195,7 +1239,15 @@ export default function AdyantNexaRealEstateOS() {
         <div className="hero-media-showcase">
           <div className="hero-image-frame">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/burj-sunny-sky.jpg" alt="Burj Khalifa Sunny Downtown Architecture" className="hero-main-img" />
+            <img 
+              src="/images/burj-sunny-sky.jpg" 
+              alt="Burj Khalifa Sunny Downtown Architecture" 
+              className="hero-main-img" 
+              width={1280}
+              height={540}
+              loading="eager"
+              decoding="async"
+            />
             <div className="hero-img-gradient"></div>
 
             {/* Glass Overlay Telemetry */}
@@ -1299,7 +1351,7 @@ export default function AdyantNexaRealEstateOS() {
             </h2>
           </div>
           <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: 11, letterSpacing: "0.2em", color: "var(--slate)" }}>
-            BUILT FOR EMAAR, DAMAC &amp; SOBHA PORTFOLIOS
+            STRUCTURED LEAD QUALIFICATION
           </div>
         </div>
 
@@ -1308,7 +1360,15 @@ export default function AdyantNexaRealEstateOS() {
             <div key={pillar.id} className="pillar-box">
               <div className="pillar-img-box">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={pillar.image} alt={pillar.imageAlt} className="pillar-img" />
+                <img 
+                  src={pillar.image} 
+                  alt={pillar.imageAlt} 
+                  className="pillar-img" 
+                  width={400}
+                  height={220}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <div>
                 <div className="pillar-index">{pillar.index}</div>
@@ -1324,14 +1384,14 @@ export default function AdyantNexaRealEstateOS() {
       <section className="section-portfolio" id="portfolio">
         <div className="section-head-wrap">
           <div>
-            <div className="tag-mono" style={{ marginBottom: 12, display: "inline-block" }}>PORTFOLIO EXCLUSIVES</div>
+            <div className="tag-mono" style={{ marginBottom: 12, display: "inline-block" }}>INVENTORY COMPATIBILITY</div>
             <h2 className="section-h2">
-              Pre-integrated with
-              <em>Dubai&apos;s Tier-1 Developers.</em>
+              Trained on your agency&apos;s active listings.
+              <em>Off-plan or ready units, matched in seconds.</em>
             </h2>
           </div>
           <div style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: 11, letterSpacing: "0.2em", color: "var(--slate)" }}>
-            AUTOMATED INVENTORY MATCHING &amp; VIP VIEWINGS
+            SAMPLE BUYER INQUIRY MATCHES
           </div>
         </div>
 
@@ -1340,7 +1400,14 @@ export default function AdyantNexaRealEstateOS() {
             <div key={property.id} className="portfolio-card">
               <div className="portfolio-img-wrap">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={property.image} alt={property.title} />
+                <img 
+                  src={property.image} 
+                  alt={property.title} 
+                  width={600}
+                  height={220}
+                  loading="lazy"
+                  decoding="async"
+                />
                 <span className="portfolio-dev-pill">{property.developer}</span>
               </div>
               <div className="portfolio-card-content">
@@ -1352,6 +1419,9 @@ export default function AdyantNexaRealEstateOS() {
               </div>
             </div>
           ))}
+        </div>
+        <div style={{ marginTop: 20, fontSize: 11, fontFamily: "var(--font-geist-mono), monospace", color: "var(--slate)", letterSpacing: "0.04em", textAlign: "center", lineHeight: 1.6 }}>
+          * Illustrates autonomous buyer matching across price points, payment plans, and location criteria for your agency&apos;s inventory.
         </div>
       </section>
 
@@ -1410,7 +1480,7 @@ export default function AdyantNexaRealEstateOS() {
                 </div>
                 <div className="founding-feature-item">
                   <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00F2FF", display: "inline-block" }}></span>
-                  Full ingestion of Emaar, Sobha, DAMAC &amp; Nakheel project inventory
+                  Full ingestion of your brokerage&apos;s developer project inventory &amp; brochures
                 </div>
                 <div className="founding-feature-item">
                   <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#00F2FF", display: "inline-block" }}></span>
@@ -1444,13 +1514,14 @@ export default function AdyantNexaRealEstateOS() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="founding-cta-btn"
+                aria-label="Claim Founding Client Offer on WhatsApp (opens in new window)"
               >
                 Claim Founding Client Offer ↗
               </a>
 
               <div style={{ marginTop: 16 }}>
                 <Link href="/assessment" style={{ color: "#94A3B8", fontSize: 11, fontFamily: "var(--font-geist-mono), monospace", textDecoration: "underline" }}>
-                  Calculate your agency's lead leakage first →
+                  Calculate your agency&apos;s lead leakage first →
                 </Link>
               </div>
             </div>
@@ -1463,7 +1534,15 @@ export default function AdyantNexaRealEstateOS() {
         <div className="footer-inner">
           <div className="footer-brand-emblem">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.svg" alt="Adyant Nexa Logo" className="footer-logo-img" />
+            <img 
+              src="/images/logo.svg" 
+              alt="Adyant Nexa Logo" 
+              className="footer-logo-img" 
+              width={72}
+              height={72}
+              loading="lazy"
+              decoding="async"
+            />
             <div className="footer-brand-title">ADYANT <span>NEXA.</span></div>
             <div className="footer-brand-sub">Autonomous Real Estate Operating Systems · Dubai // India Core</div>
           </div>
@@ -1490,6 +1569,6 @@ export default function AdyantNexaRealEstateOS() {
           </div>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

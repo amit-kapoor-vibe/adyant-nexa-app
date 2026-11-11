@@ -10,7 +10,61 @@ import { qualifyDubaiLead } from './nexa_sales_engine.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = process.env.PORT || 3050;
+// Load .env.local safely
+function loadEnv() {
+  const candidatePaths = [
+    path.resolve(process.cwd(), '.env.local'),
+    path.resolve(__dirname, '../../.env.local'),
+    path.resolve(__dirname, '.env.local'),
+    path.resolve(process.cwd(), '.env'),
+    path.resolve(__dirname, '../../.env'),
+    path.resolve(__dirname, '.env')
+  ];
+
+  const env = {};
+  for (const envPath of candidatePaths) {
+    if (fs.existsSync(envPath)) {
+      const content = fs.readFileSync(envPath, 'utf8');
+      for (const line of content.split('\n')) {
+        const trimmed = line.trim();
+        if (trimmed && !trimmed.startsWith('#')) {
+          const idx = trimmed.indexOf('=');
+          if (idx !== -1) {
+            const k = trimmed.substring(0, idx).trim();
+            const v = trimmed.substring(idx + 1).trim();
+            if (!env[k]) env[k] = v;
+          }
+        }
+      }
+    }
+  }
+  return { ...process.env, ...env };
+}
+
+const env = loadEnv();
+const BOOKING_URL = env.BOOKING_URL || env.CALENDLY_URL || 'https://calendly.com/mit-kapur/30min';
+const TELEGRAM_BOT_TOKEN = env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = env.TELEGRAM_CHAT_ID;
+
+async function sendTelegramAlert(title, details) {
+  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
+  try {
+    const text = `<b>${title}</b>\n\n${details}`;
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text,
+        parse_mode: 'HTML'
+      })
+    });
+  } catch (err) {
+    console.warn('[Telegram Alert Warning]', err.message);
+  }
+}
+
+const PORT = process.env.PORT || env.PORT || 3050;
 const AUTH_FOLDER = path.resolve(__dirname, 'whatsapp_auth_session');
 const LEADS_FILE = path.resolve(__dirname, 'whatsapp_qualified_leads.json');
 const BRAND_DIR = path.resolve(__dirname, '../../public/brand');
@@ -190,7 +244,7 @@ function startDashboardServer() {
       req.on('end', async () => {
         try {
           const { jid } = JSON.parse(body);
-          const brochureMsg = "📄 *ADYANT NEXA — AUTONOMOUS SALES INFRASTRUCTURE BRIEF*\nHere is our executive agency briefing on how top Dubai brokerages deploy Nexa OS to capture 100% of midnight ad leads and achieve 3.2x viewing conversion:\n\n👉 https://adyantnexa.com/nexa-agency-brief.pdf\n\nOur Founding Director is available for a 15-min Google Meet walkthrough: https://meet.google.com/ady-nexa-demo";
+          const brochureMsg = `*ADYANT NEXA — AUTONOMOUS SALES INFRASTRUCTURE BRIEF*\nHere is our executive agency briefing on how top Dubai brokerages deploy Nexa OS to capture 100% of midnight ad leads and achieve 3.2x viewing conversion:\n\nhttps://adyantnexa.com/nexa-agency-brief.pdf\n\nOur Founding Director is available for a 15-min Google Meet walkthrough. Select your preferred slot here:\n${BOOKING_URL}`;
 
           if (globalSock) {
             try {
@@ -226,7 +280,7 @@ function startDashboardServer() {
       req.on('end', async () => {
         try {
           const { jid } = JSON.parse(body);
-          const viewingMsg = "📅 *ADYANT NEXA — 15-MIN STRATEGY CALL (GOOGLE MEET)*\nWe have reserved a 15-minute private architecture walkthrough to show how Adyant Nexa eliminates midnight lead dropoff and qualifies buyers in 90 seconds.\n\n👉 Google Meet Room: https://meet.google.com/ady-nexa-demo\n\nWhat time today or tomorrow (GST) suits you best? Reply directly with your preferred slot.";
+          const viewingMsg = `*ADYANT NEXA — 15-MIN STRATEGY CALL (GOOGLE MEET)*\nWe have reserved a 15-minute private architecture walkthrough to show how Adyant Nexa eliminates midnight lead dropoff and qualifies buyers in 90 seconds.\n\nLock in your slot directly on our calendar (Google Meet invitation generated automatically):\n${BOOKING_URL}\n\nPrefer to book directly in chat? Simply reply with your preferred day/time (GST) and email address, and our director will confirm your calendar invite.`;
 
           if (globalSock) {
             try {
@@ -244,6 +298,12 @@ function startDashboardServer() {
           const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           history.push({ role: 'model', text: viewingMsg, timestamp: time });
           recordLead(jid, viewingMsg, null, '', history);
+
+          const phoneInfo = formatCleanPhone(jid);
+          sendTelegramAlert(
+            'VIP VIEWING INVITE DISPATCHED',
+            `<b>Recipient:</b> ${phoneInfo.formatted_phone}\n<b>Booking Link:</b> ${BOOKING_URL}\n<b>Time:</b> ${time}`
+          );
 
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ success: true, message: "Google Meet invitation sent on WhatsApp" }));
@@ -1427,10 +1487,36 @@ async function startWhatsAppBot() {
         const replyTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         history.push({ role: 'model', text: replyText, timestamp: replyTime });
 
-        console.log(`🤖 AI Reply sent to ${remoteJid}`);
+        console.log(`[AI Response] Reply sent to ${remoteJid}`);
         recordLead(remoteJid, userText, result, pushName, history);
+
+        // Instant notification when a meeting or preferred slot is mentioned
+        const q = result.qualification || {};
+        if (
+          result.action_required === 'SCHEDULE_GOOGLE_MEET' ||
+          q.google_meet_requested === true ||
+          q.preferred_slot ||
+          userText.toLowerCase().includes('meet') ||
+          userText.toLowerCase().includes('call') ||
+          userText.toLowerCase().includes('zoom') ||
+          userText.toLowerCase().includes('schedule')
+        ) {
+          const phoneInfo = formatCleanPhone(remoteJid, pushName);
+          const alertBody = [
+            `<b>Investor/Broker:</b> ${phoneInfo.display_title}`,
+            `<b>Phone:</b> ${phoneInfo.formatted_phone}`,
+            `<b>Preferred Slot:</b> ${q.preferred_slot || 'Pending confirmation'}`,
+            `<b>Email:</b> ${q.lead_email || 'Not provided'}`,
+            `<b>Agency:</b> ${q.agency_name || 'N/A'} (${q.team_size || 'N/A'})`,
+            `<b>Message:</b> ${userText}`,
+            `<b>AI Reply:</b> ${replyText}`,
+            `<b>Booking Link:</b> ${BOOKING_URL}`,
+            `<b>Terminal:</b> https://adyantnexa.com/terminal`
+          ].join('\n');
+          sendTelegramAlert('HIGH INTENT: GOOGLE MEET INQUIRY', alertBody);
+        }
       } catch (err) {
-        console.error('❌ Error processing message with Gemini:', err.message);
+        console.error('[Gemini Error]', err.message);
       }
     }
   });

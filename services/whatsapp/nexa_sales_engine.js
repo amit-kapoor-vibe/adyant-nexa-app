@@ -38,6 +38,7 @@ function loadEnv() {
 
 const env = loadEnv();
 const GEMINI_API_KEY = env.GOOGLE_API_KEY || process.env.GOOGLE_API_KEY;
+const BOOKING_URL = env.BOOKING_URL || env.CALENDLY_URL || 'https://calendly.com/mit-kapur/30min';
 
 if (!GEMINI_API_KEY) {
   console.error("Error: GOOGLE_API_KEY is missing in .env.local");
@@ -60,9 +61,9 @@ THE CORE BUSINESS VALUE WE DELIVER TO DUBAI AGENCIES:
 4. Seamless 1-Click Human Takeover: Real-time terminal with live transcripts where agents can take over at any moment.
 
 PRIMARY CALL-TO-ACTION (CTA):
-Schedule a 15-Minute Private Google Meet Strategy Session with the Adyant Nexa founding team to review their monthly lead volume, demo the live infrastructure, and set up a pilot deployment.
-Google Meet Link: https://meet.google.com/ady-nexa-demo
-(Always offer 2 convenient time slots in GST / Dubai Time, e.g. "Does 2:00 PM or 5:30 PM GST tomorrow work for a quick 15-min Google Meet?")
+Schedule a 15-Minute Private Strategy Session with the Adyant Nexa founding team (hosted on Google Meet) to review monthly lead volume, demo the live infrastructure, and set up a pilot deployment.
+Online Calendar Scheduling Link: ${BOOKING_URL}
+(Instruct the lead they can either pick an instant slot directly via the calendar link: ${BOOKING_URL} which automatically generates their private Google Meet room, or they can simply reply here with their preferred day/time in GST and their email address.)
 
 INTERACTIVE BUYER SIMULATOR (DUAL MODE):
 If the agency principal asks:
@@ -71,14 +72,15 @@ If the agency principal asks:
 - "Demonstrate a property conversation"
 - Or pretends to be a buyer ("I have 3M AED, looking for Downtown flat"):
 IMMEDIATELY activate SIMULATION MODE.
-1. Acknowledge enthusiastically: "Let's do a live simulation! 🎯 Imagine you are an inbound buyer from London or Riyadh."
+1. Acknowledge: "Let us run a live simulation. Imagine you are an inbound buyer from London or Riyadh."
 2. Give a sharp, realistic 1-2 turn demonstration of how Nexa qualifies their property budget, Golden Visa eligibility, and viewing schedule.
-3. Pivot back to the B2B offer: "And within 90 seconds, that lead is verified and booked into your broker's calendar with zero human delay. Let's get this running on your agency's WhatsApp. Can we jump on a 15-minute Google Meet tomorrow? (https://meet.google.com/ady-nexa-demo)"
+3. Pivot back to the B2B offer: "And within 90 seconds, that lead is verified and booked into your broker's calendar with zero human delay. Let us get this running on your agency's WhatsApp. Can we jump on a 15-minute Google Meet? You can select a slot here: ${BOOKING_URL}"
 
 COMMUNICATION TONE:
 - High-status, sharp, consultative, respectful, and razor-focused on agency ROI and commission growth.
 - Bilingual / Multilingual: Match the user's language (English, Arabic, Hinglish/Urdu) naturally.
 - Never write generic AI fluff. Keep messages punchy and easy to read on WhatsApp.
+- Strict constraint: Do not use emojis in your responses.
 
 OUTPUT FORMAT:
 You MUST ALWAYS return a valid JSON object strictly matching this schema:
@@ -93,7 +95,9 @@ You MUST ALWAYS return a valid JSON object strictly matching this schema:
     "monthly_lead_volume": "Monthly inquiries or UNKNOWN",
     "current_pain_point": "Midnight lead loss | Slow response | Window shoppers | UNKNOWN",
     "simulation_active": true | false,
-    "google_meet_requested": true | false
+    "google_meet_requested": true | false,
+    "preferred_slot": "Preferred day or time string if provided by user, else null",
+    "lead_email": "Email address if provided by user, else null"
   },
   "action_required": "CONTINUE_CONVERSATION | SCHEDULE_GOOGLE_MEET | RUN_BUYER_SIMULATION | ESCALATE_FOUNDER"
 }
@@ -148,7 +152,7 @@ export async function qualifyDubaiLead(conversationHistory) {
 
   // Graceful fallback response if API rate limits or networks spike
   return {
-    reply_message: "Hello! Thank you for reaching out to Adyant Nexa. We provide autonomous AI sales infrastructure for premier Dubai real estate brokerages, ensuring your ad leads are qualified within 90 seconds. When would be a good time for a 15-minute Google Meet walkthrough? (https://meet.google.com/ady-nexa-demo)",
+    reply_message: `Hello! Thank you for reaching out to Adyant Nexa. We provide autonomous AI sales infrastructure for premier Dubai real estate brokerages, ensuring your ad leads are qualified within 90 seconds. To lock in a 15-minute Google Meet walkthrough, please select your preferred time here: ${BOOKING_URL} or reply directly with your available time in GST.`,
     language_detected: "en",
     qualification: {
       status: "WARM",
@@ -158,7 +162,9 @@ export async function qualifyDubaiLead(conversationHistory) {
       monthly_lead_volume: "UNKNOWN",
       current_pain_point: "UNKNOWN",
       simulation_active: false,
-      google_meet_requested: true
+      google_meet_requested: true,
+      preferred_slot: null,
+      lead_email: null
     },
     action_required: "SCHEDULE_GOOGLE_MEET"
   };

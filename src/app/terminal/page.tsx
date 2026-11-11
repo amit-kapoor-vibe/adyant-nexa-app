@@ -38,6 +38,8 @@ interface Lead {
   updated_at?: string;
 }
 
+const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL || "https://calendly.com/mit-kapur/30min";
+
 const FALLBACK_LEADS: Lead[] = [
   {
     raw_jid: "971528964833@s.whatsapp.net",
@@ -66,7 +68,7 @@ const FALLBACK_LEADS: Lead[] = [
       },
       {
         role: "model",
-        text: "Excellent to connect! For Apex Horizon Realty with 18 brokers, Adyant Nexa eliminates midnight lead dropoff. We qualify inbound inquiries in 1.2s and book viewings directly into your team's calendar. Does tomorrow 2:00 PM or 5:30 PM GST work for a quick 15-min Google Meet walkthrough? (https://meet.google.com/ady-nexa-demo)",
+        text: `Excellent to connect. For Apex Horizon Realty with 18 brokers, Adyant Nexa eliminates midnight lead dropoff. We qualify inbound inquiries in 1.2s and book viewings directly into your team's calendar. Does tomorrow 2:00 PM or 5:30 PM GST work for a quick 15-min Google Meet walkthrough? You can also reserve an instant slot on our calendar: ${BOOKING_URL}`,
         timestamp: "18:43"
       }
     ]
@@ -315,7 +317,7 @@ export default function CommandTerminalPage() {
 
     const meetMsg: LeadMessage = {
       role: "model",
-      text: "[Calendar Slot Confirmed] 15-Minute Strategy Walkthrough invitation generated: https://meet.google.com/ady-nexa-demo",
+      text: `[Calendar Slot Confirmed] 15-Minute Strategy Walkthrough invitation generated: ${BOOKING_URL}`,
       timestamp: new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })
     };
 
@@ -777,7 +779,7 @@ export default function CommandTerminalPage() {
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <Link href="/" className="term-brand">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.svg" alt="Adyant Nexa Logo" className="term-logo-img" />
+            <img src="/images/logo.svg" alt="Adyant Nexa Logo" className="term-logo-img" />
             <div className="term-brand-name">
               ADYANT <span>NEXA.</span>
             </div>

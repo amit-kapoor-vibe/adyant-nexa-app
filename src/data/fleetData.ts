@@ -46,7 +46,7 @@ export const SYSTEM_PILLARS: PillarItem[] = [
 export const FLEET_PORTFOLIO: PortfolioProperty[] = [
   {
     id: "emaar",
-    developer: "EMAAR PROPERTIES",
+    developer: "DOWNTOWN // OFF-PLAN INQUIRY",
     title: "Downtown Dubai & Creek Harbour",
     specs: "FROM AED 2.4M · 80/20 HANDOVER · 9.2% YIELD",
     desc: "High-floor luxury residences with unobstructed Burj Khalifa panoramas and direct private access to Dubai Mall.",
@@ -54,7 +54,7 @@ export const FLEET_PORTFOLIO: PortfolioProperty[] = [
   },
   {
     id: "sobha",
-    developer: "SOBHA REALTY",
+    developer: "LAGOON VILLAS // 1% PAYMENT PLAN",
     title: "Sobha Hartland II Lagoon Villas",
     specs: "FROM AED 3.8M · 1% MONTHLY PLAN · GOLDEN VISA",
     desc: "Waterfront crystal lagoon sanctuary featuring biophilic European design finishes and private botanical parklands.",
@@ -62,7 +62,7 @@ export const FLEET_PORTFOLIO: PortfolioProperty[] = [
   },
   {
     id: "marina",
-    developer: "DUBAI MARINA // PALM",
+    developer: "COASTAL // HIGH RENTAL YIELD",
     title: "Marina Waterfront Penthouses",
     specs: "FROM AED 2.1M · 10% SHORT-TERM YIELD · YACHT BERTH",
     desc: "Prime high-occupancy coastal units optimized for ultra-high rental yields and short-stay executive hospitality.",

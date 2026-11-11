@@ -16,7 +16,10 @@ export function RoiYieldCalculator() {
             AGENCY REVENUE IMPACT
           </div>
           <h2 className="roi-h2">
-            <span className="roi-h2-title">Stop burning ad spend.</span>
+            <span className="roi-h2-title">
+              Stop burning <br />
+              ad spend.
+            </span>
             <em className="roi-h2-accent">Capture every lead.</em>
           </h2>
           <p className="roi-sub">
@@ -28,6 +31,7 @@ export function RoiYieldCalculator() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-pill-primary roi-cta-btn"
+            aria-label="Claim Pilot Deployment via WhatsApp (opens in new window)"
           >
             Claim Pilot Deployment ↗
           </a>
@@ -35,16 +39,24 @@ export function RoiYieldCalculator() {
 
         <div className="slider-container">
           <div className="slider-top">
-            <span className="slider-lbl">MONTHLY INBOUND PROPERTY LEADS</span>
-            <span className="slider-val">{leads}</span>
+            <label htmlFor="roi-leads-slider" className="slider-lbl">
+              MONTHLY INBOUND PROPERTY LEADS
+            </label>
+            <span className="slider-val" aria-live="polite">{leads}</span>
           </div>
           <input
+            id="roi-leads-slider"
             type="range"
             min="50"
             max="1000"
             step="25"
             value={leads}
             className="styled-range"
+            aria-label="Monthly inbound property leads"
+            aria-valuemin={50}
+            aria-valuemax={1000}
+            aria-valuenow={leads}
+            aria-valuetext={`${leads} leads per month`}
             onChange={(e) => setLeads(Number(e.target.value))}
           />
 

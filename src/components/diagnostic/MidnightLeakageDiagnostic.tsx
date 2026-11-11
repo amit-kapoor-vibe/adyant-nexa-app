@@ -8,6 +8,7 @@ export function MidnightLeakageDiagnostic() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Form State
   const [agencyName, setAgencyName] = useState("Apex Horizon Real Estate");
@@ -39,9 +40,10 @@ export function MidnightLeakageDiagnostic() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!contactPhone.trim()) {
-      alert("Please enter a valid WhatsApp phone number.");
+      setErrorMsg("Please enter a valid WhatsApp phone number.");
       return;
     }
+    setErrorMsg(null);
     setIsSubmitting(true);
 
     try {
@@ -235,6 +237,11 @@ export function MidnightLeakageDiagnostic() {
                       max={150000} 
                       step={5000}
                       value={monthlyAdSpend} 
+                      aria-label="Monthly ad spend in AED"
+                      aria-valuemin={10000}
+                      aria-valuemax={150000}
+                      aria-valuenow={monthlyAdSpend}
+                      aria-valuetext={`AED ${monthlyAdSpend.toLocaleString()}`}
                       onChange={e => setMonthlyAdSpend(Number(e.target.value))}
                       style={{ width: "100%", accentColor: "#0047FF", cursor: "pointer" }}
                     />
@@ -245,7 +252,7 @@ export function MidnightLeakageDiagnostic() {
                       <label style={{ fontSize: "11px", fontFamily: "var(--font-geist-mono), monospace", color: "#60606A", fontWeight: 700 }}>
                         ESTIMATED INBOUND LEADS PER MONTH
                       </label>
-                      <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "13px", fontWeight: 700, color: "#0047FF" }}>
+                      <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "13px", fontWeight: 700, color: "#0047FF" }} aria-live="polite">
                         {monthlyInquiries} Leads / mo
                       </span>
                     </div>
@@ -255,6 +262,11 @@ export function MidnightLeakageDiagnostic() {
                       max={1200} 
                       step={25}
                       value={monthlyInquiries} 
+                      aria-label="Estimated inbound leads per month"
+                      aria-valuemin={100}
+                      aria-valuemax={1200}
+                      aria-valuenow={monthlyInquiries}
+                      aria-valuetext={`${monthlyInquiries} leads per month`}
                       onChange={e => setMonthlyInquiries(Number(e.target.value))}
                       style={{ width: "100%", accentColor: "#0047FF", cursor: "pointer" }}
                     />
@@ -265,7 +277,7 @@ export function MidnightLeakageDiagnostic() {
                       <label style={{ fontSize: "11px", fontFamily: "var(--font-geist-mono), monospace", color: "#60606A", fontWeight: 700 }}>
                         % OVERSEAS INQUIRIES (10 PM – 6 AM GST)
                       </label>
-                      <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "13px", fontWeight: 700, color: "#D97706" }}>
+                      <span style={{ fontFamily: "var(--font-geist-mono), monospace", fontSize: "13px", fontWeight: 700, color: "#D97706" }} aria-live="polite">
                         {midnightLeadPercent}% ({overseasInquiries} leads)
                       </span>
                     </div>
@@ -275,6 +287,11 @@ export function MidnightLeakageDiagnostic() {
                       max={90} 
                       step={5}
                       value={midnightLeadPercent} 
+                      aria-label="Percentage of overseas inquiries"
+                      aria-valuemin={20}
+                      aria-valuemax={90}
+                      aria-valuenow={midnightLeadPercent}
+                      aria-valuetext={`${midnightLeadPercent} percent`}
                       onChange={e => setMidnightLeadPercent(Number(e.target.value))}
                       style={{ width: "100%", accentColor: "#D97706", cursor: "pointer" }}
                     />
@@ -309,6 +326,11 @@ export function MidnightLeakageDiagnostic() {
                       max={200000} 
                       step={5000}
                       value={avgCommissionAed} 
+                      aria-label="Average commission per deal in AED"
+                      aria-valuemin={30000}
+                      aria-valuemax={200000}
+                      aria-valuenow={avgCommissionAed}
+                      aria-valuetext={`AED ${avgCommissionAed.toLocaleString()}`}
                       onChange={e => setAvgCommissionAed(Number(e.target.value))}
                       style={{ width: "100%", accentColor: "#10B981", cursor: "pointer" }}
                     />
@@ -321,13 +343,13 @@ export function MidnightLeakageDiagnostic() {
                         <span style={{ fontSize: "10px", fontFamily: "var(--font-geist-mono), monospace", color: "#60606A", letterSpacing: "0.15em", textTransform: "uppercase" }}>
                           ESTIMATED MONTHLY COMMISSION LEAKAGE
                         </span>
-                        <div style={{ fontSize: "24px", fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, color: "#DC2626", marginTop: "2px" }}>
+                        <div style={{ fontSize: "24px", fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, color: "#DC2626", marginTop: "2px" }} aria-live="polite">
                           AED {estimatedMonthlyCommissionLost.toLocaleString()} / mo
                         </div>
                       </div>
                       <div style={{ textAlign: "right" }}>
                         <span style={{ fontSize: "11px", color: "#60606A" }}>Annual Drag</span>
-                        <div style={{ fontSize: "16px", fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, color: "#0A0A0C" }}>
+                        <div style={{ fontSize: "16px", fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, color: "#0A0A0C" }} aria-live="polite">
                           AED {estimatedAnnualLostRevenue.toLocaleString()}
                         </div>
                       </div>
@@ -339,19 +361,48 @@ export function MidnightLeakageDiagnostic() {
                     <label style={{ fontSize: "11px", fontFamily: "var(--font-geist-mono), monospace", color: "#0047FF", fontWeight: 700 }}>
                       WHERE SHOULD WE SEND YOUR 90-DAY RECOVERY BLUEPRINT?
                     </label>
+
+                    {errorMsg && (
+                      <div 
+                        role="alert" 
+                        style={{ 
+                          background: "#FEE2E2", 
+                          color: "#991B1B", 
+                          fontSize: "12px", 
+                          fontWeight: 600, 
+                          padding: "10px 14px", 
+                          borderRadius: "6px", 
+                          border: "1px solid #FCA5A5" 
+                        }}
+                      >
+                        {errorMsg}
+                      </div>
+                    )}
+
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                       <input 
                         required
+                        aria-label="Agency Principal Name"
                         placeholder="Your Name (Agency Principal)"
                         value={contactName}
-                        onChange={e => setContactName(e.target.value)}
+                        onChange={e => {
+                          setContactName(e.target.value);
+                          if (errorMsg) setErrorMsg(null);
+                        }}
                         style={{ padding: "11px 14px", borderRadius: "6px", border: "1px solid rgba(10, 10, 12, 0.12)", fontSize: "13px", outline: "none", boxSizing: "border-box" }}
                       />
                       <input 
                         required
+                        type="tel"
+                        inputMode="tel"
+                        autoComplete="tel"
+                        aria-label="WhatsApp Phone Number with country code"
                         placeholder="WhatsApp Number (+971 ...)"
                         value={contactPhone}
-                        onChange={e => setContactPhone(e.target.value)}
+                        onChange={e => {
+                          setContactPhone(e.target.value);
+                          if (errorMsg) setErrorMsg(null);
+                        }}
                         style={{ padding: "11px 14px", borderRadius: "6px", border: "1px solid rgba(10, 10, 12, 0.12)", fontSize: "13px", outline: "none", boxSizing: "border-box" }}
                       />
                     </div>

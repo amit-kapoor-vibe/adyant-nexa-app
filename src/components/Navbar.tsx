@@ -26,12 +26,11 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { label: "Architecture", href: "/#architecture" },
-    { label: "BANT Intelligence", href: "/#intelligence" },
-    { label: "Developer Fleet", href: "/#portfolio" },
-    { label: "Lead Diagnostic", href: "/#diagnostic" },
-    { label: "Yield Calculator", href: "/#roi" },
-    { label: "Founding 3 Offer", href: "/#founding-offer", highlight: true }
+    { label: "Architecture", href: "/#architecture", mobileLabel: "Architecture" },
+    { label: "Fleet", href: "/#portfolio", mobileLabel: "Developer Fleet" },
+    { label: "Diagnostic", href: "/#diagnostic", mobileLabel: "Lead Diagnostic" },
+    { label: "Yield", href: "/#roi", mobileLabel: "Yield Calculator" },
+    { label: "Founding 3", href: "/#founding-offer", mobileLabel: "Founding 3 Dubai Offer", highlight: true }
   ];
 
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
@@ -48,7 +47,7 @@ export const Navbar = () => {
     <>
       <nav style={{ 
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000, 
-        background: scrolled ? "rgba(248, 248, 250, 0.94)" : "rgba(248, 248, 250, 0.85)", 
+        background: scrolled ? "rgba(248, 248, 250, 0.94)" : "rgba(248, 248, 250, 0.88)", 
         backdropFilter: "blur(14px)", 
         WebkitBackdropFilter: "blur(14px)", 
         borderBottom: "1px solid rgba(10, 10, 12, 0.08)", 
@@ -56,18 +55,28 @@ export const Navbar = () => {
         transition: "all 0.25s ease",
       }}>
         <div style={{ maxWidth: 1300, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px" }}>
-          {/* Logo */}
+          {/* Official Brand Logo from /images/logo.svg */}
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Link href="/" onClick={(e) => handleLinkClick(e, "/")} style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-              <img src="/logo.svg" alt="Adyant Nexa Logo" style={{ height: 28, width: "auto", objectFit: "contain" }} />
+            <Link href="/" onClick={(e) => handleLinkClick(e, "/")} style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }} aria-label="Adyant Nexa Home">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/images/logo.svg" 
+                alt="Adyant Nexa Logo" 
+                style={{ 
+                  height: 32, 
+                  width: 32, 
+                  objectFit: "contain",
+                  borderRadius: 6
+                }} 
+              />
               <span style={{ fontFamily: "var(--font-syne), sans-serif", fontWeight: 800, fontSize: 16, color: "#0A0A0C", letterSpacing: "-0.02em" }}>
                 ADYANT <span style={{ color: "#0047FF" }}>NEXA.</span>
               </span>
             </Link>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+          {/* Streamlined Desktop Navigation Links */}
+          <div className="desktop-only" style={{ display: "flex", alignItems: "center", gap: 8 }}>
             {navLinks.map(link => {
               const isActive = pathname === link.href;
               return (
@@ -79,7 +88,7 @@ export const Navbar = () => {
                     fontFamily: "var(--font-geist-mono), monospace", 
                     fontSize: 11, 
                     fontWeight: link.highlight ? 700 : 500, 
-                    letterSpacing: "0.15em",
+                    letterSpacing: "0.12em",
                     textTransform: "uppercase",
                     padding: "7px 14px", 
                     borderRadius: "9999px", 
@@ -102,11 +111,11 @@ export const Navbar = () => {
               onClick={(e) => handleLinkClick(e, "/terminal")} 
               style={{ 
                 fontFamily: "var(--font-inter), sans-serif",
-                fontSize: 12, 
+                fontSize: 11, 
                 fontWeight: 600,
                 padding: "8px 16px", 
                 borderRadius: "9999px",
-                border: "1px solid rgba(10, 10, 12, 0.16)",
+                border: "1px solid rgba(10, 10, 12, 0.12)",
                 background: "#FFFFFF",
                 color: "#0A0A0C",
                 textDecoration: "none",
@@ -115,9 +124,10 @@ export const Navbar = () => {
                 gap: 6,
                 transition: "all 0.15s ease"
               }}
+              aria-label="Explore Internal Demo Terminal"
             >
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#10B981", display: "inline-block", boxShadow: "0 0 6px #10B981" }} />
-              Live Demo Terminal ↗
+              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#10B981", display: "inline-block" }} />
+              Terminal ↗
             </Link>
 
             <a 
@@ -126,7 +136,7 @@ export const Navbar = () => {
               rel="noopener noreferrer"
               style={{ 
                 fontFamily: "var(--font-inter), sans-serif",
-                fontSize: 12, 
+                fontSize: 11, 
                 fontWeight: 600,
                 padding: "8px 18px", 
                 borderRadius: "9999px",
@@ -139,8 +149,9 @@ export const Navbar = () => {
                 gap: 6,
                 transition: "all 0.15s ease"
               }}
+              aria-label="Connect on WhatsApp (opens in new window)"
             >
-              Connect WhatsApp ↗
+              WhatsApp ↗
             </a>
           </div>
 
@@ -168,7 +179,7 @@ export const Navbar = () => {
           .desktop-only { display: flex; }
           .mobile-toggle { display: none; }
           
-          @media (max-width: 1040px) {
+          @media (max-width: 1080px) {
             .desktop-only { display: none !important; }
             .mobile-toggle { display: flex !important; }
           }
@@ -230,7 +241,7 @@ export const Navbar = () => {
                       display: "block"
                     }}
                   >
-                    {link.label}
+                    {link.mobileLabel || link.label}
                   </Link>
                 </motion.div>
               ))}

@@ -1,42 +1,70 @@
 import { MetadataRoute } from 'next';
+import { JOURNAL_POSTS } from '@/data/journalData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://adyantnexa.com';
 
-  // Core commercial and system pages
-  const coreRoutes = [
-    '',
-    '/terminal',
-    '/how-it-works',
-    '/assessment',
-    '/about',
-    '/contact',
-    '/journal',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date().toISOString().split('T')[0],
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
-  }));
-
-  // Add individual journal slugs
-  const blogSlugs = [
-    'death-of-chatbots-rise-of-agents',
-    'zero-click-marketing-ai-overviews',
-    'post-search-era-ai-discovery',
-    'minimalist-architecture-lean-agency',
-    'creative-is-the-new-targeting',
-    'signal-recovery-sst-2026',
-    'attribution-gap-capi-ios14',
-    'ai-agent-economy-revenue'
+  const coreRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}`,
+      lastModified: '2026-04-15',
+      changeFrequency: 'weekly',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/terminal`,
+      lastModified: '2026-04-15',
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/how-it-works`,
+      lastModified: '2026-04-15',
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/assessment`,
+      lastModified: '2026-04-15',
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: '2026-04-15',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: '2026-04-15',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/journal`,
+      lastModified: '2026-04-15',
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
   ];
 
-  const blogRoutes = blogSlugs.map((slug) => ({
-    url: `${baseUrl}/journal/${slug}`,
-    lastModified: new Date().toISOString().split('T')[0],
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }));
+  const blogRoutes: MetadataRoute.Sitemap = Object.entries(JOURNAL_POSTS).map(([slug, post]) => {
+    let dateStr = '2026-04-20';
+    if (post && post.date) {
+      const parsed = new Date(post.date);
+      if (!isNaN(parsed.getTime())) {
+        dateStr = parsed.toISOString().split('T')[0];
+      }
+    }
+
+    return {
+      url: `${baseUrl}/journal/${slug}`,
+      lastModified: dateStr,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    };
+  });
 
   return [...coreRoutes, ...blogRoutes];
 }

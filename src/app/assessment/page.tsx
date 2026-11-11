@@ -2,8 +2,11 @@ import { MidnightLeakageDiagnostic } from "@/components/diagnostic/MidnightLeaka
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dubai Brokerage Midnight Lead Leakage Diagnostic | Adyant Nexa",
+  title: "Dubai Brokerage Midnight Lead Leakage Diagnostic",
   description: "Calculate your agency's lost overseas property commissions from delayed midnight inquiry responses and discover recoverable revenue.",
+  alternates: {
+    canonical: "/assessment",
+  },
 };
 
 export default function AssessmentWizardPage() {
