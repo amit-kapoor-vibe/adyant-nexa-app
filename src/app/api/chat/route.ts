@@ -139,7 +139,7 @@ export async function POST(req: Request) {
     const { message, history } = parsed.data;
 
     // 1. Google Gemini API via official SDK
-    const apiKey = process.env.GOOGLE_API_KEY || "AIzaSyAOCv2pJsptEkFSS37t4iXG6OXeEeuLVmY";
+    const apiKey = process.env.GOOGLE_API_KEY;
     if (apiKey) {
       const modelsToTry = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-pro"];
 
